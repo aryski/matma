@@ -36,14 +36,16 @@ class StairsSimulation extends FlameGame
   @override
   FutureOr<void> onLoad() {
     removeAll(children);
-    // var unit = canvasSize.y / 40; TODO
-
+    double unit = canvasSize.y / 18;
+    double horizUnit = canvasSize.x / 66;
+    //4 units text component
     add(TextComponent(
         text: stairs.toString(),
-        textRenderer: TextPaint(style: TextStyle(fontSize: 80)),
-        position: Vector2(canvasSize.x / 2, 100),
+        textRenderer: TextPaint(style: TextStyle(fontSize: 2 * unit)),
+        position: Vector2(canvasSize.x / 2, 1.5 * unit),
         anchor: Anchor.center));
-    add(stairs.generateStairsComponent());
+    //14 units stairs component
+    add(stairs.generateStairsComponent(unit, horizUnit));
     return super.onLoad();
   }
 }

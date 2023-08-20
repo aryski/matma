@@ -12,10 +12,10 @@ void main() {
     home: Padding(
       padding: const EdgeInsets.all(20.0),
       child: ClipRect(
-          child: SizedBox(
-              width: 300,
-              height: 390,
-              child: GameWidget(game: StairsSimulation()))),
+        child: GameWidget(
+          game: StairsSimulation(),
+        ),
+      ),
     ),
   ));
 }

@@ -22,24 +22,98 @@ class Stairs {
     stairs.addAll(result);
   }
 
+  int maxHeightSinceIndex(int index) {
+    var current_sum = 0;
+    for (int i = 0; i < index; i++) {
+      if (stairs[i] == Stair.up) {
+        current_sum += 1;
+      } else if (stairs[i] == Stair.down) {
+        current_sum -= 1;
+      }
+    }
+    var sum = 0;
+    var max = 0;
+    for (int i = index; i < stairs.length; i++) {
+      if (stairs[i] == Stair.up) {
+        sum += 1;
+        if (sum > max) {
+          max = sum;
+        }
+      } else if (stairs[i] == Stair.down) {
+        sum -= 1;
+      }
+    }
+    //current sum;
+    //max;
+    return current_sum + max;
+    //o ile do gory max leci
+  }
+
+  int maxLowSinceIndex(int index) {
+    var current_sum = 0;
+    for (int i = 0; i < index; i++) {
+      if (stairs[i] == Stair.up) {
+        current_sum += 1;
+      } else if (stairs[i] == Stair.down) {
+        current_sum -= 1;
+      }
+    }
+    var sum = 0;
+    var min = 0;
+    for (int i = index; i < stairs.length; i++) {
+      if (stairs[i] == Stair.up) {
+        sum += 1;
+      } else if (stairs[i] == Stair.down) {
+        sum -= 1;
+        if (sum < min) {
+          min = sum;
+        }
+      }
+    }
+    //current sum;
+    //max;
+    return current_sum + min;
+    //o ile do gory max leci
+  }
+
+  int lines() {
+    var result = 0;
+    for (int i = 0; i < stairs.length; i++) {
+      if (isFlat(stairs[i])) {
+        result++;
+      }
+    }
+    return result;
+  }
+
   void scroll(int index, int scrollDeltaNormalized) {
     if (stairs[index] == Stair.up) {
       if (scrollDeltaNormalized > 0) {
-        stairs.insert(index, Stair.futureFlat);
-        stairs.insert(index, Stair.up);
+        if (lines() < 60) {
+          if (maxHeightSinceIndex(index) < 7) {
+            stairs.insert(index, Stair.futureFlat);
+            stairs.insert(index, Stair.up);
+          }
+        }
       }
     }
     if (stairs[index] == Stair.down) {
       if (scrollDeltaNormalized < 0) {
-        stairs.insert(index, Stair.futureFlat);
-        stairs.insert(index, Stair.down);
+        if (lines() < 60) {
+          if (maxLowSinceIndex(index) > -7) {
+            stairs.insert(index, Stair.futureFlat);
+            stairs.insert(index, Stair.down);
+          }
+        }
       }
     }
 
     if (stairs[index] == Stair.flat) {
       if (scrollDeltaNormalized > 0) {
-        for (int i = 0; i < scrollDeltaNormalized && i < 3; i++) {
-          stairs.insert(index, Stair.flat);
+        if (lines() < 60) {
+          for (int i = 0; i < scrollDeltaNormalized && i < 3; i++) {
+            stairs.insert(index, Stair.flat);
+          }
         }
       } else {
         //i kiedy po lewej lub po prawej jest kreska
@@ -89,7 +163,7 @@ class Stairs {
     return res;
   }
 
-  StairsComponent generateStairsComponent() {
-    return StairsComponent(stairs);
+  StairsComponent generateStairsComponent(double unit, double horizUnit) {
+    return StairsComponent(stairs, unit, horizUnit);
   }
 }

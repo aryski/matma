@@ -22,30 +22,31 @@ import 'items/item.dart';
 class StairsComponent extends PositionComponent
     with ParentIsA<StairsSimulation> {
   final List<Stair> stairs;
+  double unit;
+  double horizUnit;
 
-  StairsComponent(this.stairs);
+  StairsComponent(this.stairs, this.unit, this.horizUnit);
+
   @override
   FutureOr<void> onLoad() {
     removeAll(children);
     //centerPoint
-    var maxHeight = 7 * lineLength * 2;
-    var pointer =
-        Vector2(50, (parent.canvasSize.y - maxHeight) / 2 + maxHeight / 2);
+    var pointer = Vector2(3 * horizUnit, 10 * unit);
     for (int i = 0; i < stairs.length; i++) {
       switch (stairs[i]) {
         case Stair.up:
-          add(ArrowUp(i)
+          add(ArrowUp(i, unit, horizUnit)
             ..position = pointer
             ..priority = 2);
-          pointer += Vector2(0, -lineLength);
+          pointer += Vector2(0, -unit);
         case Stair.down:
-          add(ArrowDown(i)
+          add(ArrowDown(i, unit, horizUnit)
             ..position = pointer
             ..priority = 2);
-          pointer += Vector2(0, lineLength);
+          pointer += Vector2(0, unit);
         case Stair.flat:
-          add(Line(i)..position = pointer);
-          pointer += Vector2(horizontalLineLength, 0);
+          add(Line(i, unit, horizUnit)..position = pointer);
+          pointer += Vector2(horizUnit, 0);
         default:
       }
     }
