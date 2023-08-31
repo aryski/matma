@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-Color arrowColor = Colors.blueAccent;
 Color flatColor = Colors.redAccent;
 
 class Item extends PositionComponent {

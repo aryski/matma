@@ -6,7 +6,7 @@ import 'package:matma/stairs_simulation/items/item.dart';
 
 class Line extends Item {
   Line(super.index, super.unit, super.horizUnit);
-
+  Color flatColor = Colors.grey;
   @override
   FutureOr<void> onLoad() {
     add(

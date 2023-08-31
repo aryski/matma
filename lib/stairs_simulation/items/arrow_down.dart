@@ -6,6 +6,7 @@ import 'package:matma/stairs_simulation/items/item.dart';
 
 class ArrowDown extends Item {
   ArrowDown(super.index, super.unit, super.horizUnit);
+  Color arrowColor = Colors.redAccent;
 
   @override
   FutureOr<void> onLoad() {

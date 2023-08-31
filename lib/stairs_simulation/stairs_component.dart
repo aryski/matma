@@ -1,14 +1,12 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
 import 'package:matma/stairs_simulation/items/arrow_down.dart';
 import 'package:matma/stairs_simulation/items/arrow_up.dart';
 import 'package:matma/stairs_simulation/items/line.dart';
 import 'package:matma/stairs_simulation/stairs_logic.dart';
 import 'package:matma/stairs_simulation/starts_simulation.dart';
 
-import 'items/item.dart';
 
 // double scale = 0.5;
 // Color arrowColor = Colors.blueAccent;
@@ -20,7 +18,7 @@ import 'items/item.dart';
 // int maxNumber = 10;
 
 class StairsComponent extends PositionComponent
-    with ParentIsA<StairsSimulation> {
+    with ParentIsA<StepsSimulation> {
   final List<Stair> stairs;
   double unit;
   double horizUnit;

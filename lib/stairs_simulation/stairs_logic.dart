@@ -23,12 +23,12 @@ class Stairs {
   }
 
   int maxHeightSinceIndex(int index) {
-    var current_sum = 0;
+    var currentSum = 0;
     for (int i = 0; i < index; i++) {
       if (stairs[i] == Stair.up) {
-        current_sum += 1;
+        currentSum += 1;
       } else if (stairs[i] == Stair.down) {
-        current_sum -= 1;
+        currentSum -= 1;
       }
     }
     var sum = 0;
@@ -45,17 +45,17 @@ class Stairs {
     }
     //current sum;
     //max;
-    return current_sum + max;
+    return currentSum + max;
     //o ile do gory max leci
   }
 
   int maxLowSinceIndex(int index) {
-    var current_sum = 0;
+    var currentSum = 0;
     for (int i = 0; i < index; i++) {
       if (stairs[i] == Stair.up) {
-        current_sum += 1;
+        currentSum += 1;
       } else if (stairs[i] == Stair.down) {
-        current_sum -= 1;
+        currentSum -= 1;
       }
     }
     var sum = 0;
@@ -72,7 +72,7 @@ class Stairs {
     }
     //current sum;
     //max;
-    return current_sum + min;
+    return currentSum + min;
     //o ile do gory max leci
   }
 
@@ -89,22 +89,12 @@ class Stairs {
   void scroll(int index, int scrollDeltaNormalized) {
     if (stairs[index] == Stair.up) {
       if (scrollDeltaNormalized > 0) {
-        if (lines() < 60) {
-          if (maxHeightSinceIndex(index) < 7) {
-            stairs.insert(index, Stair.futureFlat);
-            stairs.insert(index, Stair.up);
-          }
-        }
+        addOnIndex(index);
       }
     }
     if (stairs[index] == Stair.down) {
       if (scrollDeltaNormalized < 0) {
-        if (lines() < 60) {
-          if (maxLowSinceIndex(index) > -7) {
-            stairs.insert(index, Stair.futureFlat);
-            stairs.insert(index, Stair.down);
-          }
-        }
+        substractOnIndex(index);
       }
     }
 
@@ -148,7 +138,7 @@ class Stairs {
               (i + 1 >= stairs.length || stairs[i + 1] == Stair.flat) ||
           (i - 1 >= 0 && stairs[i + 1] != stairs[i - 1])) {
         if (sum != 0) {
-          if (sum >= 0 && !summary.isEmpty) {
+          if (sum >= 0 && summary.isNotEmpty) {
             res += " + ";
           } else if (sum < 0) {
             res += " - ";
@@ -165,5 +155,31 @@ class Stairs {
 
   StairsComponent generateStairsComponent(double unit, double horizUnit) {
     return StairsComponent(stairs, unit, horizUnit);
+  }
+
+  void addOnIndex(int index) {
+    if (lines() < 60) {
+      if (maxHeightSinceIndex(index) < 7) {
+        stairs.insert(index, Stair.futureFlat);
+        stairs.insert(index, Stair.up);
+      }
+    }
+  }
+
+  void substractOnIndex(int index) {
+    if (lines() < 60) {
+      if (maxLowSinceIndex(index) > -7) {
+        stairs.insert(index, Stair.futureFlat);
+        stairs.insert(index, Stair.down);
+      }
+    }
+  }
+
+  void addOnEnd() {
+    addOnIndex(stairs.length - 1);
+  }
+
+  void substractOnEnd() {
+    substractOnIndex(stairs.length - 1);
   }
 }

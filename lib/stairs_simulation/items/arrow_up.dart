@@ -6,7 +6,7 @@ import 'package:matma/stairs_simulation/items/item.dart';
 
 class ArrowUp extends Item {
   ArrowUp(super.index, super.unit, super.horizUnit);
-
+  Color arrowColor = const Color.fromARGB(255, 68, 157, 114);
   @override
   FutureOr<void> onLoad() {
     add(RectangleComponent(

@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/stairs_simulation/items/item.dart';
 import 'package:matma/stairs_simulation/stairs_logic.dart';
 
-class StairsSimulation extends FlameGame
+class StepsSimulation extends FlameGame
     with ScrollDetector, MouseMovementDetector {
   final Stairs stairs = Stairs([4, -2, 1, -3]);
 
@@ -41,11 +40,20 @@ class StairsSimulation extends FlameGame
     //4 units text component
     add(TextComponent(
         text: stairs.toString(),
-        textRenderer: TextPaint(style: TextStyle(fontSize: 2 * unit)),
+        textRenderer: TextPaint(
+            style: TextStyle(fontSize: 2 * unit, fontWeight: FontWeight.bold)),
         position: Vector2(canvasSize.x / 2, 1.5 * unit),
         anchor: Anchor.center));
     //14 units stairs component
     add(stairs.generateStairsComponent(unit, horizUnit));
+
+    // add(CircularButton(unit, "+"));
+
+    // add(TextComponent(
+    //     text: "+",
+    //     textRenderer: TextPaint(style: TextStyle(fontSize: 2 * unit)),
+    //     position: Vector2(canvasSize.x / 2, 1.5 * unit),
+    //     anchor: Anchor.center));
     return super.onLoad();
   }
 }
