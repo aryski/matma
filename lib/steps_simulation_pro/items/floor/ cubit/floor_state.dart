@@ -1,4 +1,4 @@
-import 'package:matma/stairs_simulation_native/items/simulation_item_state.dart';
+import 'package:matma/steps_simulation_pro/items/simulation_item_state.dart';
 
 class FloorState extends SimulationItemState {
   FloorState(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/stairs_simulation_native/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/stairs_simulation_native/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/stairs_simulation_native/items/arrow/presentation/arrow_controls.dart';
-import 'package:matma/stairs_simulation_native/items/arrow/presentation/arrow_painter.dart';
+import 'package:matma/steps_simulation_pro/items/arrow/bloc/arrow_bloc.dart';
+import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
+import 'package:matma/steps_simulation_pro/items/arrow/presentation/arrow_controls.dart';
+import 'package:matma/steps_simulation_pro/items/arrow/presentation/arrow_painter.dart';
 
 class Arrow extends StatelessWidget {
   const Arrow({super.key, required this.cubit});

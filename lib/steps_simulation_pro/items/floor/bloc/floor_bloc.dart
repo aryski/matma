@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:matma/stairs_simulation_native/simulation_item_state.dart';
+import 'package:flutter/material.dart';
+import 'package:matma/steps_simulation_pro/items/simulation_item_state.dart';
 import 'package:meta/meta.dart';
 
 part 'floor_event.dart';

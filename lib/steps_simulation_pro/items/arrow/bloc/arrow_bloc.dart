@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:matma/stairs_simulation_native/items/simulation_item_state.dart';
 import 'package:matma/stairs_simulation_native/simulation_item_state.dart';
 import 'package:bloc/bloc.dart';
 
