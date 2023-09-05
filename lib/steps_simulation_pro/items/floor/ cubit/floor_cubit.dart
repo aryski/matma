@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/stairs_simulation_native/items/floor/bloc/floor_bloc.dart';
+import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_state.dart';
+import 'package:matma/steps_simulation_pro/items/simulation_item/cubit/simulation_item_cubit.dart';
 
-class FloorCubit extends Cubit<FloorState> {
+class FloorCubit extends SimulationItemCubit<FloorState> {
   FloorCubit(super.initialState);
-
-  void updatePosition(Offset delta) {}
-
-  void hoverStart() {}
-
-  void hoverEnd() {}
 
   void updateSize(Size delta) {}
 }

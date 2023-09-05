@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/stairs_simulation_native/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/stairs_simulation_native/items/floor/bloc/floor_bloc.dart';
+import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_cubit.dart';
+import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_state.dart';
 
-import 'package:matma/stairs_simulation_native/items/floor/presentation/floor_gesture_detector.dart';
-import 'package:matma/stairs_simulation_native/items/floor/presentation/floor_painter.dart';
+import 'package:matma/steps_simulation_pro/items/floor/presentation/floor_gesture_detector.dart';
+import 'package:matma/steps_simulation_pro/items/floor/presentation/floor_painter.dart';
 
 class Floor extends StatelessWidget {
   const Floor({super.key, required this.cubit});
