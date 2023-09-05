@@ -56,80 +56,81 @@ class StepsSimulationNative extends StatelessWidget {
                     return Stack(children: [
                       ...state.items.map(
                         (e) {
-                          return e.generateWidget();
-                          // return AnimatedPositioned(
-                          //   key: e.id,
-                          //   curve: Curves.decelerate,
-                          //   duration: Duration(milliseconds: 200),
-                          //   top: e.position.dy,
-                          //   left: e.position.dx,
-                          //   child: AnimatedOpacity(
-                          //     duration: const Duration(milliseconds: 200),
-                          //     opacity: e.opacity,
-                          //     child: (e is FlatSimulationItem &&
-                          //             e.orientation == Direction.up)
-                          //         ? HoverableFlatLine(
-                          //             width: e.width,
-                          //             height: e.height,
-                          //             radius: e.radius,
-                          //             id: e.id,
-                          //           )
-                          //         : (e is FlatSimulationItem &&
-                          //                 e.orientation == Direction.down)
-                          //             ? HoverableFlatLine(
-                          //                 width: e.width,
-                          //                 height: e.height,
-                          //                 radius: e.radius,
-                          //                 id: e.id,
-                          //               )
-                          //             : (e is StepSimulationItem &&
-                          //                     e.orientation == Direction.up)
-                          //                 ? AnimatedScale(
-                          //                     alignment: Alignment.bottomCenter,
-                          //                     scale: e.opacity,
-                          //                     curve: Curves.easeIn,
-                          //                     duration: const Duration(
-                          //                         milliseconds: 200),
-                          //                     child: HoverableArrowUp(
-                          //                       def: const Color.fromARGB(
-                          //                           255, 68, 157, 114),
-                          //                       hov: const Color.fromARGB(
-                          //                           255, 54, 126, 92),
-                          //                       width: e.width,
-                          //                       height: e.height,
-                          //                       id: e.id,
-                          //                     ))
-                          //                 : AnimatedScale(
-                          //                     alignment: Alignment.topCenter,
-                          //                     scale: e.opacity,
-                          //                     curve: Curves.easeIn,
-                          //                     duration: const Duration(
-                          //                         milliseconds: 200),
-                          //                     child:
-                          //                         ((e is StepSimulationItem &&
-                          //                                 e.orientation ==
-                          //                                     Direction.down)
-                          //                             ? AnimatedScale(
-                          //                                 alignment: Alignment
-                          //                                     .topCenter,
-                          //                                 duration:
-                          //                                     const Duration(
-                          //                                         milliseconds:
-                          //                                             2000),
-                          //                                 scale:
-                          //                                     e.height / unit,
-                          //                                 child:
-                          //                                     HoverableArrowDown(
-                          //                                   width: e.width,
-                          //                                   height: e.height,
-                          //                                   id: e.id,
-                          //                                 ),
-                          //                               )
-                          //                             : const SizedBox
-                          //                                 .shrink()),
-                          //                   ),
-                          //   ),
-                          // );
+                          // return SizedBox.shrink();
+                          // return e.generateWidget();
+                          return AnimatedPositioned(
+                            key: e.id,
+                            curve: Curves.decelerate,
+                            duration: Duration(milliseconds: 200),
+                            top: e.position.dy,
+                            left: e.position.dx,
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 200),
+                              opacity: e.opacity,
+                              child: (e is FlatSimulationItem &&
+                                      e.orientation == Direction.up)
+                                  ? HoverableFlatLine(
+                                      width: e.width,
+                                      height: e.height,
+                                      radius: e.radius,
+                                      id: e.id,
+                                    )
+                                  : (e is FlatSimulationItem &&
+                                          e.orientation == Direction.down)
+                                      ? HoverableFlatLine(
+                                          width: e.width,
+                                          height: e.height,
+                                          radius: e.radius,
+                                          id: e.id,
+                                        )
+                                      : (e is StepSimulationItem &&
+                                              e.orientation == Direction.up)
+                                          ? AnimatedScale(
+                                              alignment: Alignment.bottomCenter,
+                                              scale: e.opacity,
+                                              curve: Curves.easeIn,
+                                              duration: const Duration(
+                                                  milliseconds: 200),
+                                              child: HoverableArrowUp(
+                                                def: const Color.fromARGB(
+                                                    255, 68, 157, 114),
+                                                hov: const Color.fromARGB(
+                                                    255, 54, 126, 92),
+                                                width: e.width,
+                                                height: e.height,
+                                                id: e.id,
+                                              ))
+                                          : AnimatedScale(
+                                              alignment: Alignment.topCenter,
+                                              scale: e.opacity,
+                                              curve: Curves.easeIn,
+                                              duration: const Duration(
+                                                  milliseconds: 200),
+                                              child:
+                                                  ((e is StepSimulationItem &&
+                                                          e.orientation ==
+                                                              Direction.down)
+                                                      ? AnimatedScale(
+                                                          alignment: Alignment
+                                                              .topCenter,
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      2000),
+                                                          scale:
+                                                              e.height / unit,
+                                                          child:
+                                                              HoverableArrowDown(
+                                                            width: e.width,
+                                                            height: e.height,
+                                                            id: e.id,
+                                                          ),
+                                                        )
+                                                      : const SizedBox
+                                                          .shrink()),
+                                            ),
+                            ),
+                          );
                         },
                       ),
                       // ...state.items.map(

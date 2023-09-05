@@ -1,7 +1,7 @@
-import 'package:matma/stairs_simulation_native/items/%20cubit/simulation_item_state.dart';
+import 'package:matma/stairs_simulation_native/items/simulation_item_state.dart';
 
-class ArrowState extends SimulationItemState {
-  ArrowState(
+class FloorState extends SimulationItemState {
+  FloorState(
       {required super.defColor,
       required super.hovColor,
       required super.id,
@@ -10,8 +10,8 @@ class ArrowState extends SimulationItemState {
       required super.color,
       required super.opacity});
 
-  ArrowState copy() {
-    return ArrowState(
+  FloorState copy() {
+    return FloorState(
         defColor: defColor,
         hovColor: hovColor,
         id: id,

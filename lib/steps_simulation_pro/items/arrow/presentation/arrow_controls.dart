@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/stairs_simulation_native/bloc/stairs_simulation_bloc.dart';
-import 'package:matma/stairs_simulation_native/items/arrow/arrow_cubit.dart';
+import 'package:matma/stairs_simulation_native/items/arrow/cubit/arrow_cubit.dart';
 
 class ArrowGestureDetector extends StatelessWidget {
   const ArrowGestureDetector({super.key, required this.child});
