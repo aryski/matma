@@ -1,15 +1,11 @@
-import 'dart:html';
-
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/stairs_simulation/starts_simulation.dart';
-import 'package:matma/stairs_simulation_native/stairs_simulation_native.dart';
+import 'package:matma/steps_simulation_pro/stairs_simulation_pro.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     color: Colors.white,
     home: Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0),
       child: Elo(),
     ),
     // home: Padding(
@@ -28,7 +24,7 @@ class Elo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StepsSimulationNative(
+    return StepsSimulationPro(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height -
             MediaQuery.of(context).padding.top -

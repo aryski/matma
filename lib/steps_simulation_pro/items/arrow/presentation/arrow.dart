@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/bloc/arrow_bloc.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/presentation/arrow_controls.dart';
@@ -18,13 +17,14 @@ class Arrow extends StatelessWidget {
       child: BlocBuilder<ArrowCubit, ArrowState>(
         builder: (context, state) {
           return TweenAnimationBuilder(
+            key: state.id,
             tween: Tween<Offset>(
                 begin: initialState.position, end: state.position),
             duration: const Duration(milliseconds: 200),
             builder: (context, offset, widget) {
               return Positioned(
-                left: offset.dy,
-                top: offset.dx,
+                left: offset.dx,
+                top: offset.dy,
                 child: ArrowGestureDetector(
                   child: CustomPaint(
                     size: Size(state.size.width, state.size.height),

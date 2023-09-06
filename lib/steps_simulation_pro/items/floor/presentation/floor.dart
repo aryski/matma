@@ -18,13 +18,14 @@ class Floor extends StatelessWidget {
       child: BlocBuilder<FloorCubit, FloorState>(
         builder: (context, state) {
           return TweenAnimationBuilder(
+            key: state.id,
             tween: Tween<Offset>(
                 begin: initialState.position, end: state.position),
             duration: const Duration(milliseconds: 200),
             builder: (context, offset, widget) {
               return Positioned(
-                left: offset.dy,
-                top: offset.dx,
+                left: offset.dx,
+                top: offset.dy,
                 child: FloorGestureDetector(
                   child: CustomPaint(
                     size: Size(state.size.width, state.size.height),

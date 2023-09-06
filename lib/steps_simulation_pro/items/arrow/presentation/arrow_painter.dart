@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/bloc/arrow_bloc.dart';
+import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
 
 class ArrowPainter extends CustomPainter {
   final ArrowState state;

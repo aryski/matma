@@ -9,7 +9,16 @@ class SimulationItemCubit<T> extends Cubit<T> {
     if (state is SimulationItemState) {}
   }
 
-  void hoverStart() {}
+  void hoverStart() {
+    debugPrint("XD");
+    (state as SimulationItemState).color =
+        (state as SimulationItemState).hovColor;
+    emit(state);
+  }
 
-  void hoverEnd() {}
+  void hoverEnd() {
+    (state as SimulationItemState).color =
+        (state as SimulationItemState).defColor;
+    emit(state);
+  }
 }
