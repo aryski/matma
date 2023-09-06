@@ -23,11 +23,18 @@ class StepsSimulationProBloc
       : super(StepsSimulationProState(
             hUnit: hUnit, wUnit: wUnit, hUnits: hUnits, wUnits: wUnits)) {
     state.initializeItemsList(init);
-    on<StepsSimulationProEventScroll>((event, emit) {});
+    on<StepsSimulationProEventScroll>((event, emit) {
+      scrollHandler(event);
+    });
   }
 
   void scrollHandler(StepsSimulationProEventScroll event) {
-    event.id;
-    event.dy;
+    var item =
+        state.items.firstWhere((element) => element.state.id == event.id);
+    if (item is FloorCubit) {
+      item.updateSize(Offset(event.dy, 0));
+    }
+    // event.id;
+    // event.dy;
   }
 }

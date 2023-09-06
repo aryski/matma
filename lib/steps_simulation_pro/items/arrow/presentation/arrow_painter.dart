@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flame/image_composition.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
 
@@ -13,11 +14,12 @@ class ArrowPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    path = Path();
     var progress = 1.0; //TODO
-    var radius = state.size.width / 15;
-    final width = state.size.width;
-    final height = state.size.height;
-    final tHeight = 3 * sqrt(3) / 6 * state.size.width;
+    var radius = state.size.dx / 15;
+    final width = state.size.dx;
+    final height = state.size.dy;
+    final tHeight = 3 * sqrt(3) / 6 * state.size.dx;
     var xd1 = sqrt(3) * radius;
     var xd2 = sqrt(3) / 2 * radius;
     var yd = 3 / 2 * radius;
@@ -58,19 +60,22 @@ class ArrowPainter extends CustomPainter {
         bottomRight: Radius.circular(radius)));
     path = path.shift(Offset(0, -radius));
     // if (progress >= 0.25) {
-    path = path.shift(Offset(0, -height * progress + height));
+    // path = path.shift(Offset(0, -height * progress + height));
 
-    path2 = path2.shift(Offset(0, -radius));
-    // if (progress >= 0.25) {
-    path2 = path2.shift(Offset(0, -height * progress + height));
+    // path2 = path2.shift(Offset(0, -radius));
+    // // if (progress >= 0.25) {
+    // path2 = path2.shift(Offset(0, -height * progress + height));
 
-//
+    if (state.direction == Direction.down) {
+      path = path.transform((Matrix4.identity()..rotateX(pi)).storage);
+      path = path.shift(Offset(0, height));
+    }
 
     // 1 2 3 4
     // 0.1
     // double radius = width / 15;
     canvas.drawPath(path, Paint()..color = state.color);
-    canvas.drawPath(path2, Paint()..color = state.color);
+    // canvas.drawPath(path2, Paint()..color = state.color);
   }
 
   @override

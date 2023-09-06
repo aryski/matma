@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_state.dart';
 
-class SimulationItemState {
+abstract class SimulationItemState {
   UniqueKey id;
   Offset position;
-  Size size;
+  Offset size;
   Color color;
   Color defColor;
   Color hovColor;
@@ -17,26 +19,6 @@ class SimulationItemState {
       required this.size,
       required this.color,
       required this.opacity});
+
+  SimulationItemState copy();
 }
-
-// class FloorState extends SimulationItemState {
-//   FloorState(
-//       {required super.defColor,
-//       required super.hovColor,
-//       required super.id,
-//       required super.position,
-//       required super.size,
-//       required super.color,
-//       required super.opacity});
-
-//   FloorState copy() {
-//     return FloorState(
-//         defColor: defColor,
-//         hovColor: hovColor,
-//         id: id,
-//         position: position,
-//         size: size,
-//         color: color,
-//         opacity: opacity);
-//   }
-// }

@@ -26,12 +26,23 @@ class Floor extends StatelessWidget {
               return Positioned(
                 left: offset.dx,
                 top: offset.dy,
-                child: FloorGestureDetector(
-                  child: CustomPaint(
-                    size: Size(state.size.width, state.size.height),
-                    painter: FloorPainter(state),
-                  ),
-                ),
+                child: TweenAnimationBuilder(
+                    curve: Curves.ease,
+                    key: state.id,
+                    tween: Tween<Offset>(
+                        begin: initialState.size, end: state.size),
+                    duration: const Duration(milliseconds: 100),
+                    builder: (context, offset, widget) {
+                      print(initialState.size);
+                      print(Size(offset.dx, offset.dy));
+                      state.size = Offset(offset.dx, offset.dy);
+                      return FloorGestureDetector(
+                        child: CustomPaint(
+                          size: Size(offset.dx, offset.dy),
+                          painter: FloorPainter(state),
+                        ),
+                      );
+                    }),
               );
             },
           );
@@ -40,3 +51,33 @@ class Floor extends StatelessWidget {
     );
   }
 }
+
+// class SizeAnimation extends StatelessWidget {
+//   const SizeAnimation({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<FloorCubit, FloorState>(
+//       builder: (context, state) {
+//         return TweenAnimationBuilder(
+//           key: state.id,
+//           tween:
+//               Tween<Offset>(begin: initialState.position, end: state.position),
+//           duration: const Duration(milliseconds: 200),
+//           builder: (context, offset, widget) {
+//             return Positioned(
+//               left: offset.dx,
+//               top: offset.dy,
+//               child: FloorGestureDetector(
+//                 child: CustomPaint(
+//                   size: Size(state.size.dx, state.size.dy),
+//                   painter: FloorPainter(state),
+//                 ),
+//               ),
+//             );
+//           },
+//         );
+//       },
+//     );
+//   }
+// }

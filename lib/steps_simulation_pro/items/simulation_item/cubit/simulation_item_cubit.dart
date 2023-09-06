@@ -2,23 +2,18 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/steps_simulation_pro/items/simulation_item/cubit/simulation_item_state.dart';
 
-class SimulationItemCubit<T> extends Cubit<T> {
+class SimulationItemCubit<T extends SimulationItemState> extends Cubit<T> {
   SimulationItemCubit(super.initialState);
 
-  void updatePosition(Offset delta) {
-    if (state is SimulationItemState) {}
-  }
+  void updatePosition(Offset delta) {}
 
   void hoverStart() {
-    debugPrint("XD");
-    (state as SimulationItemState).color =
-        (state as SimulationItemState).hovColor;
-    emit(state);
+    state.color = state.hovColor;
+    emit(state.copy() as T);
   }
 
   void hoverEnd() {
-    (state as SimulationItemState).color =
-        (state as SimulationItemState).defColor;
-    emit(state);
+    state.color = state.defColor;
+    emit(state.copy() as T);
   }
 }

@@ -5,5 +5,8 @@ import 'package:matma/steps_simulation_pro/items/simulation_item/cubit/simulatio
 class FloorCubit extends SimulationItemCubit<FloorState> {
   FloorCubit(super.initialState);
 
-  void updateSize(Size delta) {}
+  void updateSize(Offset delta) {
+    state.size += Offset(delta.dx, delta.dy);
+    emit(state.copy());
+  }
 }

@@ -27,7 +27,7 @@ class Arrow extends StatelessWidget {
                 top: offset.dy,
                 child: ArrowGestureDetector(
                   child: CustomPaint(
-                    size: Size(state.size.width, state.size.height),
+                    size: Size(state.size.dx, state.size.dy),
                     painter: ArrowPainter(state),
                   ),
                 ),

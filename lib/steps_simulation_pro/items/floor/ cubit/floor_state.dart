@@ -10,6 +10,7 @@ class FloorState extends SimulationItemState {
       required super.color,
       required super.opacity});
 
+  @override
   FloorState copy() {
     return FloorState(
         defColor: defColor,

@@ -11,10 +11,10 @@ class FloorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var path = Path();
-    var radius = state.size.width / 15;
+    var radius = state.size.dx / 15; //TODO
     path.addRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, state.size.width, state.size.height),
+        Rect.fromLTWH(0, 0, state.size.dx, state.size.dy),
         Radius.circular(radius),
       ),
     );
