@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flame/image_composition.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
 
