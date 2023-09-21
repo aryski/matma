@@ -1,8 +1,10 @@
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+part of 'number_cubit.dart';
 
-class FloorState extends SimulationItemState {
-  FloorState(
-      {required super.defColor,
+class NumberState extends SimulationItemState {
+  int value;
+  NumberState(
+      {required this.value,
+      required super.defColor,
       required super.hovColor,
       required super.id,
       required super.position,
@@ -12,8 +14,9 @@ class FloorState extends SimulationItemState {
       required super.radius});
 
   @override
-  FloorState copy() {
-    return FloorState(
+  NumberState copy() {
+    return NumberState(
+      value: value,
       defColor: defColor,
       hovColor: hovColor,
       id: id,

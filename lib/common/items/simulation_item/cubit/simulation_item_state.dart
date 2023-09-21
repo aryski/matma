@@ -10,6 +10,7 @@ abstract class SimulationItemState {
   Color defColor;
   Color hovColor;
   double opacity;
+  double radius;
 
   SimulationItemState(
       {required this.defColor,
@@ -18,7 +19,8 @@ abstract class SimulationItemState {
       required this.position,
       required this.size,
       required this.color,
-      required this.opacity});
+      required this.opacity,
+      required this.radius});
 
   SimulationItemState copy();
 }

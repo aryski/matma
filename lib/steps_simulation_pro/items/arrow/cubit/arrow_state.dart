@@ -1,9 +1,10 @@
-import 'package:matma/steps_simulation_pro/items/simulation_item/cubit/simulation_item_state.dart';
+import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 
 enum Direction { up, down }
 
 class ArrowState extends SimulationItemState {
   final Direction direction;
+  final double animProgress;
   ArrowState(
       {required super.defColor,
       required super.hovColor,
@@ -12,7 +13,9 @@ class ArrowState extends SimulationItemState {
       required super.size,
       required super.color,
       required super.opacity,
-      required this.direction});
+      required this.direction,
+      required super.radius,
+      required this.animProgress});
 
   @override
   ArrowState copy() {
@@ -24,6 +27,8 @@ class ArrowState extends SimulationItemState {
         size: size,
         color: color,
         opacity: opacity,
-        direction: direction);
+        direction: direction,
+        radius: radius,
+        animProgress: animProgress);
   }
 }

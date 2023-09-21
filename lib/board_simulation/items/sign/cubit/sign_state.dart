@@ -1,8 +1,12 @@
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+part of 'sign_cubit.dart';
 
-class FloorState extends SimulationItemState {
-  FloorState(
-      {required super.defColor,
+enum Signs { addition, substraction }
+
+class SignState extends SimulationItemState {
+  Signs value;
+  SignState(
+      {required this.value,
+      required super.defColor,
       required super.hovColor,
       required super.id,
       required super.position,
@@ -12,8 +16,9 @@ class FloorState extends SimulationItemState {
       required super.radius});
 
   @override
-  FloorState copy() {
-    return FloorState(
+  SignState copy() {
+    return SignState(
+      value: value,
       defColor: defColor,
       hovColor: hovColor,
       id: id,

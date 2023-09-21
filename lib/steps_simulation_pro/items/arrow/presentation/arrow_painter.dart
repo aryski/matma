@@ -6,8 +6,9 @@ import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
 
 class ArrowPainter extends CustomPainter {
   final ArrowState state;
-
-  ArrowPainter(this.state);
+  final Offset initialSize;
+  final double animationProgress;
+  ArrowPainter(this.state, this.initialSize, this.animationProgress);
 
   Path path = Path();
   Path path2 = Path();
@@ -15,67 +16,27 @@ class ArrowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     path = Path();
-    var progress = 1.0; //TODO
-    var radius = state.size.dx / 15;
+    var radius = state.radius;
     final width = state.size.dx;
     final height = state.size.dy;
-    final tHeight = 3 * sqrt(3) / 6 * state.size.dx;
-    var xd1 = sqrt(3) * radius;
-    var xd2 = sqrt(3) / 2 * radius;
-    var yd = 3 / 2 * radius;
-
-    path.moveTo(width * 1 / 2, tHeight);
-    path.lineTo(width * 1 - xd1, tHeight);
-    path.arcToPoint(Offset(width - xd2, tHeight - yd),
-        radius: Radius.circular(radius), clockwise: false);
-    path.lineTo(width * 1 / 2 + xd2, 0 + yd);
-    path.arcToPoint(Offset(width * 1 / 2 - xd2, 0 + yd),
-        clockwise: false, radius: Radius.circular(radius));
-    path.lineTo(0 + xd2, tHeight - yd);
-    path.arcToPoint(Offset(0 + xd1, tHeight),
-        clockwise: false, radius: Radius.circular(radius));
-    path.lineTo(width * 1 / 2, tHeight);
-
-    if (progress > 1.50) {
-      var elo = (2 - progress) * width / 4;
-      path2.moveTo(width * 1 / 2, tHeight + height);
-      // path.moveTo(width * 1 / 2, tHeight);
-      path2.lineTo(width * 1 - xd1 - elo, tHeight + height);
-      path2.arcToPoint(Offset(width - xd2 - elo, tHeight - yd + height),
-          radius: Radius.circular(radius), clockwise: false);
-      path2.lineTo(width * 1 / 2 + xd2 - elo, 0 + yd + height);
-      path2.arcToPoint(Offset(width * 1 / 2 - xd2 + elo, 0 + yd + height),
-          clockwise: false, radius: Radius.circular(radius));
-      path2.lineTo(0 + xd2 + elo, tHeight - yd + height);
-      path2.arcToPoint(Offset(0 + xd1 + elo, tHeight + height),
-          clockwise: false, radius: Radius.circular(radius));
-      path2.lineTo(width * 1 / 2, tHeight + height);
-      path2.moveTo(width * 1 / 2, tHeight);
-    }
+    final initialHeight = initialSize.dy;
+    final tHeight = 3 * sqrt(3) / 6 * width;
+    // var progress = state.animProgress; TODO fix so you just display current state
+    var progress = animationProgress;
+    path.addPath(
+        generateTriangle(width, tHeight, radius, progress), Offset.zero);
 
     path.addRRect(RRect.fromRectAndCorners(
-        Rect.fromLTWH(0.25 * width, tHeight, width * 0.5,
-            progress * height - tHeight + radius),
+        Rect.fromLTWH(
+            0.25 * width, tHeight, width * 0.5, height - tHeight + radius),
         bottomLeft: Radius.circular(radius),
         bottomRight: Radius.circular(radius)));
     path = path.shift(Offset(0, -radius));
-    // if (progress >= 0.25) {
-    // path = path.shift(Offset(0, -height * progress + height));
-
-    // path2 = path2.shift(Offset(0, -radius));
-    // // if (progress >= 0.25) {
-    // path2 = path2.shift(Offset(0, -height * progress + height));
-
     if (state.direction == Direction.down) {
       path = path.transform((Matrix4.identity()..rotateX(pi)).storage);
       path = path.shift(Offset(0, height));
     }
-
-    // 1 2 3 4
-    // 0.1
-    // double radius = width / 15;
     canvas.drawPath(path, Paint()..color = state.color);
-    // canvas.drawPath(path2, Paint()..color = state.color);
   }
 
   @override
@@ -87,4 +48,34 @@ class ArrowPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
+}
+
+Path generateTriangle(
+    double width, double tHeight, double radius, double progress) {
+  var rectOffset = 1 / 4 * width * (1 - progress);
+  var xd1 = sqrt(3) * radius * progress;
+  var xd2 = sqrt(3) / 2 * radius * progress;
+  var yd = 3 / 2 * radius * progress;
+  var rectOffsetVertical = radius * (1 - progress);
+  if (progress > 0) {
+    radius = radius * 1 / progress;
+  } else {
+    radius = 10000;
+  }
+
+  Path path = Path();
+  path.moveTo(width * 1 / 2, tHeight);
+  path.lineTo(width * 1 - xd1 - rectOffset, 1 * tHeight);
+  path.arcToPoint(Offset(width - xd2 - rectOffset, tHeight - yd),
+      radius: Radius.circular(radius), clockwise: false);
+  path.lineTo(width * 1 / 2 + xd2 + rectOffset, 0 + yd + rectOffsetVertical);
+  path.arcToPoint(
+      Offset(width * 1 / 2 - xd2 - rectOffset, 0 + yd + rectOffsetVertical),
+      clockwise: false,
+      radius: Radius.circular(radius));
+  path.lineTo(0 + xd2 + rectOffset, tHeight - yd);
+  path.arcToPoint(Offset(0 + xd1 + rectOffset, tHeight),
+      clockwise: false, radius: Radius.circular(radius));
+  path.lineTo(width * 1 / 2, tHeight);
+  return path;
 }

@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:matma/steps_simulation_pro/stairs_simulation_pro.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
+    theme: ThemeData(useMaterial3: true, textTheme: Typography.dense2021),
     color: Colors.white,
     home: Padding(
       padding: EdgeInsets.all(20.0),
-      child: Elo(),
+      child: Scaffold(
+        body: Center(child: Elo()),
+      ),
     ),
-    // home: Padding(
-    //   padding: const EdgeInsets.all(20.0),
-    //   child: ClipRect(
-    //     child: GameWidget(
-    //       game: StairsSimulation(),
-    //     ),
-    //   ),
-    // ),
   ));
 }
 
