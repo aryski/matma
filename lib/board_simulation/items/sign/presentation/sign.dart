@@ -27,12 +27,16 @@ class Sign extends StatelessWidget {
                 return SizedBox(
                   width: tweenState.size.dx,
                   height: tweenState.size.dy,
-                  child: FittedBox(
-                    child: Text(
-                      tweenState.value == Signs.addition ? "+" : "-",
-                      style: TextStyle(
-                          color: Colors.amber[900],
-                          fontWeight: FontWeight.bold),
+                  child: Container(
+                    color: Colors.black,
+                    child: Center(
+                      child: Text(
+                        tweenState.value == Signs.addition ? "+" : "-",
+                        style: TextStyle(
+                            color: Colors.amber[900],
+                            fontWeight: FontWeight.bold,
+                            fontSize: tweenState.size.dx),
+                      ),
                     ),
                   ),
                 );

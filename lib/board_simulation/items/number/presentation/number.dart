@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
@@ -28,12 +30,34 @@ class Number extends StatelessWidget {
                 return SizedBox(
                   width: tweenState.size.dx,
                   height: tweenState.size.dy,
-                  child: FittedBox(
-                    child: Text(
-                      tweenState.value.abs().toString(),
-                      style: TextStyle(
-                          color: Colors.amber[900],
-                          fontWeight: FontWeight.bold),
+                  child: Container(
+                    color: Colors.red,
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: AnimatedSwitcher(
+                          key: state.id,
+                          switchInCurve: Curves.ease,
+                          switchOutCurve: Curves.ease,
+                          transitionBuilder: (child, animation) {
+                            return RotationTransition(
+                              turns: animation,
+                              child: ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              ),
+                            );
+                          },
+                          duration: const Duration(milliseconds: 200),
+                          child: Center(
+                            key: UniqueKey(),
+                            child: Text(
+                              tweenState.value.abs().toString(),
+                              style: TextStyle(
+                                  color: Colors.amber[900],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: tweenState.size.dx),
+                            ),
+                          )),
                     ),
                   ),
                 );

@@ -29,24 +29,38 @@ class StepsSimulationProBloc
     extends Bloc<StepsSimulationProEvent, StepsSimulationProState> {
   final BoardSimulationCubit board;
   final SimulationSize simSize;
+  final List<UniqueKey> lockedIds = [];
   @override
   StepsSimulationProBloc(this.simSize, this.board)
       : super(StepsSimulationProState(simSize: simSize, items: [])) {
     state.items.addAll(initializeItemsList());
     on<StepsSimulationProEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);
+      board.update(currentNumbers());
     });
 
     on<StepsSimulationProEventPointerDown>((event, emit) async {
-      await handleClick(state, event, simSize, emit);
+      print(lockedIds);
+      print(event.id);
+      if (!lockedIds.contains(event.id)) {
+        print("ADD ${event.id}");
+        lockedIds.add(event.id);
+        await handleClick(state, event, simSize, emit);
+      }
     });
 
     on<StepsSimulationProEventPointerUp>((event, emit) async {
-      if (event.pressTime.inMilliseconds >
-          const Duration(milliseconds: 20).inMilliseconds) {
-        await handleArrowInsertion(event, emit);
-      } else {
-        await handleClick(state, event, simSize, emit);
+      if (lockedIds.contains(event.id)) {
+        if (event.pressTime.inMilliseconds >
+            const Duration(milliseconds: 20).inMilliseconds) {
+          await handleArrowInsertion(event, emit);
+          board.update(currentNumbers());
+        } else {
+          await handleClick(state, event, simSize, emit);
+        }
+        print("REMOVE ${event.id}");
+        await Future.delayed(Duration(milliseconds: 220));
+        lockedIds.remove(event.id);
       }
     });
   }

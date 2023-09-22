@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/steps_simulation_pro/bloc/bloc_ext/items_generator.dart';
+import 'package:matma/steps_simulation_pro/bloc/bloc_ext/scroll_handler.dart';
 import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';

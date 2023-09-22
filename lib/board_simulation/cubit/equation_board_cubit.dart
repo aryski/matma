@@ -16,12 +16,6 @@ class BoardSimulationCubit extends Cubit<BoardSimulationState> {
   BoardSimulationCubit({required this.init, required this.simSize})
       : super(init);
 
-  insert(int ind, double number) {}
-
-  decrease(int ind) {}
-
-  increase(int ind) {}
-
   void update(List<int> updatedNumbers) {
     print("update: $updatedNumbers");
     if (!listEquals(updatedNumbers, state.numbers)) {
@@ -30,12 +24,68 @@ class BoardSimulationCubit extends Cubit<BoardSimulationState> {
       //zlaczenie dwoch liczb
       //dodanie liczby
       //w pozostalym przypadku wykonac calkowity print nowych cyferek
+      int? _elo = _isUpdateOfOneDigit(updatedNumbers);
       int? _insertionIndex = _isInsertion(updatedNumbers);
-      if (_insertionIndex != null) {
+
+      if (_elo != null) {
         int j = 0;
         for (int i = 0; i < state.numCubits.length; i++) {
-          if (state.numCubits[i] is NumberCubit) {}
+          if (state.numCubits[i] is NumberCubit) {
+            if (j == _elo) {
+              var cubit = (state.numCubits[i] as NumberCubit);
+              var oldValue = cubit.state.value.abs();
+              if (cubit.state.value > 0) {
+                cubit.increase();
+              } else {
+                cubit.decrease();
+              }
+              if (cubit.state.value.abs() == 10 && oldValue == 9) {
+                //resize widgets and move them
+                //na lewo o wUnit i na prawo o wUnit wszystkie od tego cubita
+                for (int j = 0; j <= i; j++) {
+                  //te wszystkie o wUnit na lewo
+                  state.numCubits[j].updatePosition(Offset(-simSize.wUnit, 0));
+                }
+                cubit.updateSize(Offset(2 * simSize.wUnit, 0));
+                // cubit.updatePosition(Offset(-simSize.wUnit, 0));
+                for (int j = i + 1; j < state.numCubits.length; j++) {
+                  //te wszystkie o wUnit na prawo
+                  state.numCubits[j].updatePosition(Offset(simSize.wUnit, 0));
+                }
+              } else if (oldValue == 10 && cubit.state.value.abs() == 9) {
+                //decrrease non existent for now
+                //resize widgets and move them
+                //na lewo o wUnit i na prawo o wUnit wszystkie od tego cubita
+                for (int j = 0; j <= i; j++) {
+                  //te wszystkie o wUnit na lewo
+                  state.numCubits[j].updatePosition(Offset(simSize.wUnit, 0));
+                }
+                cubit.updateSize(Offset(-2 * simSize.wUnit, 0));
+                // cubit.resize();
+                for (int j = i + 1; j < state.numCubits.length; j++) {
+                  //te wszystkie o wUnit na prawo
+                  state.numCubits[j].updatePosition(Offset(-simSize.wUnit, 0));
+                }
+              }
+              break;
+            }
+            j++;
+          }
         }
+      } else if (_insertionIndex != null) {
+        // int j = 0;
+        // print("insetrtion");
+        // for (int i = 0; i < state.numCubits.length; i++) {
+        //   if (state.numCubits[i] is NumberCubit) {
+        //     if (j == _insertionIndex) {
+        //       //wtedy to jest to
+        //       print("XD $j");
+        //       (state.numCubits[i] as NumberCubit).increase();
+        //       break;
+        //     }
+        //     j++;
+        //   }
+        // }
 
         // state.numCubits.insert(
         //     _insertionIndex,
@@ -47,29 +97,27 @@ class BoardSimulationCubit extends Cubit<BoardSimulationState> {
         var widthSpace = simSize.wUnit * simSize.wUnits;
         //wiec od centrumr
         double length = 0;
-        var signMargin = 0.125 * simSize.hUnit;
-        var horizMargin = 0.25 * simSize.wUnit;
+        var signMargin = -0.0 * simSize.hUnit;
+        var horizMargin = 0.0 * simSize.wUnit;
         List<SimulationItemCubit> numCubits = [];
         List<SimulationItemState> states = [];
         for (int i = 0; i < updatedNumbers.length; i++) {
           var number = updatedNumbers[i];
           SignState? signState;
           if (number > 0 && i != 0) {
-            signState = _generateSignState(
-                Signs.addition, Offset(length + horizMargin, top + signMargin));
+            signState = _generateSignState(Signs.addition, Offset(length, top));
           } else if (number < 0) {
-            signState = _generateSignState(Signs.substraction,
-                Offset(length + horizMargin, top + signMargin));
+            signState =
+                _generateSignState(Signs.substraction, Offset(length, top));
           }
           if (signState != null) {
-            length += signState.position.dx - length;
-            length += signState.size.dx;
             states.add(signState);
-            length += horizMargin;
+            length += signState.size.dx;
           }
+
           var numberState = _generateNumberState(number, Offset(length, top));
-          length += numberState.size.dx;
           states.add(numberState);
+          length += numberState.size.dx;
         }
         var allMargin = (widthSpace - length) / 2;
         for (var state in states) {
@@ -94,7 +142,9 @@ class BoardSimulationCubit extends Cubit<BoardSimulationState> {
         hovColor: Color.fromARGB(255, 255, 217, 0),
         id: UniqueKey(),
         position: position,
-        size: Offset(simSize.wUnit * 2, simSize.hUnit * 2),
+        size: number.abs() >= 10
+            ? Offset(simSize.wUnit * 4, simSize.hUnit * 2)
+            : Offset(simSize.wUnit * 2, simSize.hUnit * 2),
         opacity: 1,
         radius: 5);
   }
@@ -107,7 +157,7 @@ class BoardSimulationCubit extends Cubit<BoardSimulationState> {
         hovColor: Color.fromARGB(255, 255, 217, 0),
         id: UniqueKey(),
         position: position,
-        size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 1.5),
+        size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),
         opacity: 1,
         radius: 5);
   }
@@ -125,6 +175,25 @@ class BoardSimulationCubit extends Cubit<BoardSimulationState> {
       }
       currentNumbers.insert(lastInd, updatedNumbers[lastInd]);
       if (listEquals(updatedNumbers, currentNumbers)) return lastInd;
+    }
+    return null;
+  }
+
+  int? _isUpdateOfOneDigit(List<int> updatedNumbers) {
+    var currentNumbers = state.numbers;
+    int? lastInd;
+    int same = 0;
+    if (updatedNumbers.length == currentNumbers.length) {
+      for (int i = 0; i < currentNumbers.length; i++) {
+        if (currentNumbers[i] != updatedNumbers[i]) {
+          lastInd = i;
+        } else {
+          same++;
+        }
+      }
+      if (same + 1 == updatedNumbers.length) {
+        return lastInd;
+      }
     }
     return null;
   }

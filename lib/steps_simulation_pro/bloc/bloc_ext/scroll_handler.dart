@@ -46,8 +46,6 @@ extension ScrollHandler on StepsSimulationProBloc {
         }
         emit(state.copy());
       }
-      //update currentNumbers
-      board.update(currentNumbers());
     }
   }
 
