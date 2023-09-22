@@ -28,7 +28,7 @@ class Sign extends StatelessWidget {
                   width: tweenState.size.dx,
                   height: tweenState.size.dy,
                   child: Container(
-                    color: Colors.black,
+                    color: Colors.grey.withOpacity(0.2),
                     child: Center(
                       child: Text(
                         tweenState.value == Signs.addition ? "+" : "-",

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/board_simulation/cubit/equation_board_cubit.dart';
 import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
 import 'package:matma/board_simulation/equation_board.dart';
@@ -24,14 +25,16 @@ class StepsSimulationPro extends StatelessWidget {
     double horizUnit = width / 66;
     var simSize =
         SimulationSize(hUnit: unit, wUnit: horizUnit, hUnits: 15, wUnits: 60);
-    var eqCubit =
-        BoardSimulationCubit(init: BoardSimulationState(), simSize: simSize)
-          ..update([7, -4, 1, -2]);
+    var eqCubit = EquationBoardBloc(
+        init: EquationBoardState(),
+        simSize: simSize,
+        initNumbers: [7, -4, 1, -2]);
+
     var bloc = StepsSimulationProBloc(simSize, eqCubit);
     return MultiBlocProvider(
       providers: [
         BlocProvider<StepsSimulationProBloc>(create: (context) => bloc),
-        BlocProvider<BoardSimulationCubit>(create: (context) => eqCubit)
+        BlocProvider<EquationBoardBloc>(create: (context) => eqCubit)
       ],
       child: SizedBox(
         width: width,

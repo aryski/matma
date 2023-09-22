@@ -11,7 +11,8 @@ class NumberState extends SimulationItemState {
       required super.size,
       required super.color,
       required super.opacity,
-      required super.radius});
+      required super.radius})
+      : assert(value >= 0);
 
   @override
   NumberState copy() {

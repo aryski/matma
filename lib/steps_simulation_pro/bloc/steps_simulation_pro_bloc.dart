@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/board_simulation/cubit/equation_board_cubit.dart';
 import 'package:matma/steps_simulation_pro/bloc/bloc_ext/arrow_insertor.dart';
 import 'package:matma/steps_simulation_pro/bloc/bloc_ext/click_handler.dart';
@@ -27,7 +28,7 @@ class SimulationSize {
 
 class StepsSimulationProBloc
     extends Bloc<StepsSimulationProEvent, StepsSimulationProState> {
-  final BoardSimulationCubit board;
+  final EquationBoardBloc board;
   final SimulationSize simSize;
   final List<UniqueKey> lockedIds = [];
   @override
@@ -36,30 +37,32 @@ class StepsSimulationProBloc
     state.items.addAll(initializeItemsList());
     on<StepsSimulationProEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);
-      board.update(currentNumbers());
+      board.add(EquationBoardEventUpdate(currentNumbers()));
     });
 
     on<StepsSimulationProEventPointerDown>((event, emit) async {
-      print(lockedIds);
-      print(event.id);
+      print("XD2");
       if (!lockedIds.contains(event.id)) {
-        print("ADD ${event.id}");
         lockedIds.add(event.id);
         await handleClick(state, event, simSize, emit);
       }
     });
 
     on<StepsSimulationProEventPointerUp>((event, emit) async {
+      print("XD3");
       if (lockedIds.contains(event.id)) {
+        print("adding to lockeditd ${event.id}");
         if (event.pressTime.inMilliseconds >
             const Duration(milliseconds: 20).inMilliseconds) {
           await handleArrowInsertion(event, emit);
-          board.update(currentNumbers());
         } else {
           await handleClick(state, event, simSize, emit);
         }
-        print("REMOVE ${event.id}");
+
         await Future.delayed(Duration(milliseconds: 220));
+        print("XD2");
+        board.add(EquationBoardEventUpdate(currentNumbers()));
+        print("removing from lockeditd ${event.id}");
         lockedIds.remove(event.id);
       }
     });

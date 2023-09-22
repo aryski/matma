@@ -10,22 +10,10 @@ part 'number_state.dart';
 class NumberCubit extends SimulationItemCubit<NumberState> {
   NumberCubit(super.initialState);
 
-  increase() {
+  updateValue(int value) {
+    assert(value >= 0);
     emit(NumberState(
-        value: state.value + 1,
-        defColor: state.defColor,
-        hovColor: state.hovColor,
-        id: state.id,
-        position: state.position,
-        size: state.size,
-        color: state.color,
-        opacity: state.opacity,
-        radius: state.radius));
-  }
-
-  decrease() {
-    emit(NumberState(
-        value: state.value - 1,
+        value: value,
         defColor: state.defColor,
         hovColor: state.hovColor,
         id: state.id,

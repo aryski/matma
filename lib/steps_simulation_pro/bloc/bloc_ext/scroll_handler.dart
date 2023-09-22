@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/steps_simulation_pro/bloc/bloc_ext/items_merger.dart';
 import 'package:matma/steps_simulation_pro/bloc/bloc_ext/simulation_items_generator.dart';
 import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
@@ -34,18 +35,10 @@ extension ScrollHandler on StepsSimulationProBloc {
       state.moveAllSince(item, Offset(delta, 0));
       if (isReducable) {
         if (currentWidth + delta < defaultWidth) {
-          tryMerge(item, state);
+          await tryPerformMerge(item);
         }
       }
-
       emit(state.copy());
-      if (isReducable) {
-        await Future.delayed(const Duration(milliseconds: 200));
-        if (currentWidth + delta < defaultWidth) {
-          tryFinishMerge(item, state);
-        }
-        emit(state.copy());
-      }
     }
   }
 
@@ -53,20 +46,30 @@ extension ScrollHandler on StepsSimulationProBloc {
     BoardVisualizer vis = BoardVisualizer();
     for (int i = 0; i < state.items.length; i++) {
       var item = state.items[i];
-      if (item is ArrowCubit) {
-        var direction = (item as ArrowCubit).state.direction;
+      if (item is ArrowCubit && (item as ArrowCubit).state.opacity == 1.0) {
+        var direction = item.state.direction;
         if (direction == Direction.up) {
-          if (vis.value < 0) vis.save();
+          if (vis.value < 0) {
+            if (vis.value == 1) {}
+            vis.save();
+          }
           vis.value += 1;
         } else if (direction == Direction.down) {
-          if (vis.value > 0) vis.save();
+          if (vis.value > 0) {
+            vis.save();
+          }
           vis.value -= 1;
         }
-      } else if (item is FloorCubit) {
-        if (item.state.size.dx > simSize.wUnit * 1.25) vis.save();
+      } else if (item is FloorCubit &&
+          (item as FloorCubit).state.opacity == 1.0) {
+        //TODO opacity
+        if (item.state.size.dx > simSize.wUnit * 1.25) {
+          vis.save();
+        }
       }
     }
     vis.save();
+
     return vis.results;
   }
 }
