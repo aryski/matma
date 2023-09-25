@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/board_simulation/cubit/equation_board_cubit.dart';
+import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
 import 'package:matma/board_simulation/equation_board.dart';
 import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
@@ -61,8 +62,14 @@ class StepsSimulationPro extends StatelessWidget {
                 child: BlocBuilder<StepsSimulationProBloc,
                     StepsSimulationProState>(
                   builder: (context, state) {
+                    List<SimulationItemCubit> items = [];
+                    for (var number in state.numbers) {
+                      for (var item in number.items) {
+                        items.add(item);
+                      }
+                    }
                     return Stack(children: [
-                      ...state.items.map(
+                      ...items.map(
                         (cubit) {
                           if (cubit is FloorCubit) {
                             return Floor(cubit: cubit, key: cubit.state.id);
@@ -71,7 +78,7 @@ class StepsSimulationPro extends StatelessWidget {
                           }
                         },
                       ),
-                      ...state.items.map(
+                      ...items.map(
                         (cubit) {
                           if (cubit is ArrowCubit) {
                             return Arrow(cubit: cubit, key: cubit.state.id);

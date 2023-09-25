@@ -13,8 +13,7 @@ extension ClickHandler on StepsSimulationProBloc {
   ) async {
     if (event is StepsSimulationProEventPointerDown ||
         event is StepsSimulationProEventPointerUp) {
-      var item =
-          state.items.firstWhere((element) => element.state.id == event.id);
+      var item = state.getItem(event.id);
       if (item is ArrowCubit) {
         var delta = simSize.hUnit / 2;
         if (event is StepsSimulationProEventPointerDown) {

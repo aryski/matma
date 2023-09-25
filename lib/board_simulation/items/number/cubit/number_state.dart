@@ -1,6 +1,7 @@
 part of 'number_cubit.dart';
 
 class NumberState extends SimulationItemState {
+  final UniqueKey textKey;
   int value;
   NumberState(
       {required this.value,
@@ -11,7 +12,8 @@ class NumberState extends SimulationItemState {
       required super.size,
       required super.color,
       required super.opacity,
-      required super.radius})
+      required super.radius,
+      required this.textKey})
       : assert(value >= 0);
 
   @override
@@ -26,6 +28,7 @@ class NumberState extends SimulationItemState {
       color: color,
       opacity: opacity,
       radius: radius,
+      textKey: textKey,
     );
   }
 }

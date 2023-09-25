@@ -19,6 +19,7 @@ class Number extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<NumberCubit, NumberState>(
         builder: (context, state) {
+          print(state.value);
           return TweenAnimatedPosition(
             initialPosition: initialState.position,
             updatedPosition: state.position,
@@ -50,7 +51,7 @@ class Number extends StatelessWidget {
                           },
                           duration: const Duration(milliseconds: 200),
                           child: Center(
-                            key: UniqueKey(),
+                            key: state.textKey,
                             child: Text(
                               tweenState.value.abs().toString(),
                               style: TextStyle(

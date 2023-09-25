@@ -33,11 +33,11 @@ class StepsSimulationProBloc
   final List<UniqueKey> lockedIds = [];
   @override
   StepsSimulationProBloc(this.simSize, this.board)
-      : super(StepsSimulationProState(simSize: simSize, items: [])) {
-    state.items.addAll(initializeItemsList());
+      : super(StepsSimulationProState(simSize: simSize, numbers: [])) {
+    state.numbers.addAll(initializeItemsList());
     on<StepsSimulationProEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);
-      board.add(EquationBoardEventUpdate(currentNumbers()));
+      // board.add(EquationBoardEventUpdate(currentNumbers()));
     });
 
     on<StepsSimulationProEventPointerDown>((event, emit) async {
@@ -54,14 +54,14 @@ class StepsSimulationProBloc
         print("adding to lockeditd ${event.id}");
         if (event.pressTime.inMilliseconds >
             const Duration(milliseconds: 20).inMilliseconds) {
-          await handleArrowInsertion(event, emit);
+          await handleArrowInsertion(event, emit, board);
         } else {
           await handleClick(state, event, simSize, emit);
         }
 
         await Future.delayed(Duration(milliseconds: 220));
         print("XD2");
-        board.add(EquationBoardEventUpdate(currentNumbers()));
+        // board.add(EquationBoardEventUpdate(currentNumbers()));
         print("removing from lockeditd ${event.id}");
         lockedIds.remove(event.id);
       }

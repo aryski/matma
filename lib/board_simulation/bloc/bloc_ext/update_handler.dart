@@ -29,9 +29,8 @@ extension UpdateHandler on EquationBoardBloc {
   }
 
   void updateCubitValueByForce(int cubitInd, int value) {
-    if (cubitInd < state.numCubits.length &&
-        state.numCubits[cubitInd] is NumberCubit) {
-      var cubit = (state.numCubits[cubitInd] as NumberCubit);
+    if (cubitInd < state.items.length && state.items[cubitInd] is NumberCubit) {
+      var cubit = (state.items[cubitInd] as NumberCubit);
       var oldValue = cubit.state.value.abs();
       cubit.updateValue(value); //updated value
       //resizing for bigger numbers
@@ -62,10 +61,65 @@ extension UpdateHandler on EquationBoardBloc {
       }
     }
     if (ind == null) return false;
-    int? cubitInd = state.cubitIndex(ind);
+    int? cubitInd = state.itemIndex(ind);
     if (cubitInd == null) return false;
     updateCubitValueByForce(cubitInd, updatedNumbers[ind].abs());
     return true;
+  }
+
+  bool tryUpdatingHalfMerge(List<int> updatedNumbers) {
+    //lecisz od konca i sprawdzasz czy jakis sie zw/zm o 1
+    //11111 i nagle masz 111 jak oba zniknely, ale to zeby zniknac musza byc
+    // dwie przeciwstawne czyli np 1, -1, 1, -1 zamienia sie w 1-1 i nie wiadomo ktore zniknelo xDDD
+    //lecisz od poczatku czy jakis sie zw/zm o 1 // chyba ostry refactoring musi wleciec TODO
+    List<int> differentIndexes = [];
+    var currentNumbers = state.numbers;
+    if (currentNumbers.length - 1 == updatedNumbers.length) {
+      //jeden zniknal
+      for (int i = 0; i < currentNumbers.length; i++) {
+        if (currentNumbers[i] != updatedNumbers[i]) {
+          differentIndexes.add(i);
+        }
+      }
+    }
+    if (differentIndexes.length != 2) return false;
+    //two neighboring elements are updated
+    var left = differentIndexes[0];
+    var right = differentIndexes[1];
+    if (right - left != 1) return false; //are not neighboring
+
+    //neighboring indexes
+    //albo lewy sie zwiekszyl a prawy zmniejszyl albo na odwrot
+    int? cubitIndLeft = state.itemIndex(left);
+    int? cubitIndRight = state.itemIndex(left);
+    if (cubitIndLeft == null || cubitIndRight == null) return false;
+    print("XD");
+    print(currentNumbers);
+    print(updatedNumbers);
+
+    print(updatedNumbers[left] - currentNumbers[left]);
+    print(updatedNumbers[right] - currentNumbers[right]);
+    if (updatedNumbers[left] - currentNumbers[left] == 1 &&
+        updatedNumbers[right] - currentNumbers[right] == -1) {
+      //lewy increase by 1 prawy decrease by 1
+      //update values for both of them
+      // success = true;
+
+      updateCubitValueByForce(cubitIndLeft, updatedNumbers[left]);
+      updateCubitValueByForce(cubitIndRight, updatedNumbers[left]);
+      return true;
+    } else if (updatedNumbers[left] - currentNumbers[left] == -1 &&
+        updatedNumbers[right] - currentNumbers[right] == 1) {
+      //lewy decrease prawy increase
+      //update values for both of them
+
+      updateCubitValueByForce(cubitIndLeft, updatedNumbers[left]);
+      updateCubitValueByForce(cubitIndRight, updatedNumbers[left]);
+      return true;
+    }
+    //dwa kolejne indeksy po sobie rozne wiec jest duza szansa na ten wariant
+    //albo 2-2 -> 1-1 albo -2+ 2 przeszlo w -1 + 1
+    return false;
   }
 
   bool tryUpdatingFullMerge(List<int> updatedNumbers) {
@@ -86,8 +140,8 @@ extension UpdateHandler on EquationBoardBloc {
 
     //neighboring indexes
     //albo lewy sie zwiekszyl a prawy zmniejszyl albo na odwrot
-    int? cubitIndLeft = state.cubitIndex(left);
-    int? cubitIndRight = state.cubitIndex(left);
+    int? cubitIndLeft = state.itemIndex(left);
+    int? cubitIndRight = state.itemIndex(left);
     if (cubitIndLeft == null || cubitIndRight == null) return false;
     print("XD");
     print(currentNumbers);
@@ -144,7 +198,7 @@ extension UpdateHandler on EquationBoardBloc {
     double length = 0;
     var signMargin = -0.0 * simSize.hUnit;
     var horizMargin = 0.0 * simSize.wUnit;
-    List<SimulationItemCubit> numCubits = [];
+    List<SimulationItemCubit> cubits = [];
     List<SimulationItemState> states = [];
     for (int i = 0; i < updatedNumbers.length; i++) {
       var number = updatedNumbers[i];
@@ -170,11 +224,11 @@ extension UpdateHandler on EquationBoardBloc {
     for (var state in states) {
       state.position += Offset(allMargin, 0);
       if (state is SignState) {
-        numCubits.add(SignCubit(state));
+        cubits.add(SignCubit(state));
       } else if (state is NumberState) {
-        numCubits.add(NumberCubit(state));
+        cubits.add(NumberCubit(state));
       }
     }
-    return EquationBoardState(numCubits: numCubits);
+    return EquationBoardState(items: cubits);
   }
 }

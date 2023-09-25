@@ -4,14 +4,15 @@ import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
 extension Initializer on StepsSimulationProBloc {
-  List<SimulationItemCubit> initializeItemsList() {
-    final List<SimulationItemCubit> items = [];
+  List<StepsSimulationProNumberState> initializeItemsList() {
     List<int> init = board.state.numbers;
     var currentTop = (simSize.hUnits / 2).ceil() * simSize.hUnit;
     var currentLeft = simSize.wUnit * 3;
-    for (var element in init) {
-      if (element > 0) {
-        for (int i = 0; i < element; i++) {
+    List<StepsSimulationProNumberState> result = [];
+    for (int number in init) {
+      final List<SimulationItemCubit> items = [];
+      if (number > 0) {
+        for (int i = 0; i < number; i++) {
           var pos = Offset(currentLeft, currentTop);
           items.add(generateArrowUp(position: pos, delta: Offset.zero));
           items.add(generateFloor(
@@ -21,7 +22,7 @@ extension Initializer on StepsSimulationProBloc {
           currentLeft += simSize.wUnit;
         }
       } else {
-        for (int i = 0; i > element; i--) {
+        for (int i = 0; i > number; i--) {
           var pos = Offset(currentLeft, currentTop);
           items.add(generateArrowDown(
               position: pos,
@@ -34,7 +35,8 @@ extension Initializer on StepsSimulationProBloc {
           currentLeft += simSize.wUnit;
         }
       }
+      result.add(StepsSimulationProNumberState(number, items));
     }
-    return items;
+    return result;
   }
 }

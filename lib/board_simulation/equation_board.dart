@@ -15,7 +15,7 @@ class EquationBoard extends StatelessWidget {
     return BlocBuilder<EquationBoardBloc, EquationBoardState>(
         builder: (context, state) {
       return Stack(children: [
-        ...state.numCubits.map((cubit) {
+        ...state.items.map((cubit) {
           if (cubit is NumberCubit) {
             return Number(cubit: cubit, key: cubit.state.id);
           } else if (cubit is SignCubit) {

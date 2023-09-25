@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 import 'package:meta/meta.dart';
@@ -21,7 +22,8 @@ class NumberCubit extends SimulationItemCubit<NumberState> {
         size: state.size,
         color: state.color,
         opacity: state.opacity,
-        radius: state.radius));
+        radius: state.radius,
+        textKey: UniqueKey()));
   }
 
   void updateSize(Offset offset) {
@@ -34,6 +36,7 @@ class NumberCubit extends SimulationItemCubit<NumberState> {
         size: state.size + offset,
         color: state.color,
         opacity: state.opacity,
-        radius: state.radius));
+        radius: state.radius,
+        textKey: state.textKey));
   }
 }

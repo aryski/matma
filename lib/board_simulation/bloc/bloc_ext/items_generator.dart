@@ -18,7 +18,8 @@ extension BoardItemsGenerator on EquationBoardBloc {
             ? Offset(simSize.wUnit * 4, simSize.hUnit * 2)
             : Offset(simSize.wUnit * 2, simSize.hUnit * 2),
         opacity: 1,
-        radius: 5);
+        radius: 5,
+        textKey: UniqueKey());
   }
 
   static SignState generateSignState(

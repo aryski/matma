@@ -2,11 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
-import 'package:matma/board_simulation/cubit/equation_board_cubit.dart';
+import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -21,10 +20,103 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
       required this.simSize,
       required List<int> initNumbers})
       : super(UpdateHandler.hardResetState(initNumbers, simSize)) {
-    on<EquationBoardEventUpdate>((event, emit) async {
-      print(event.updatedNumbers);
-      await handleUpdate(event.updatedNumbers, emit);
+    on<EquationBoardEventIncreaseNumber>((event, emit) async {
+      print("XD");
+      var itemInd = state.itemIndex(event.ind);
+      if (itemInd != null) {
+        var cubit = state.items[itemInd];
+        if (cubit is NumberCubit) {
+          cubit.updateValue(cubit.state.value + 1); //updated value
+          //resizing for bigger numbers
+          if (cubit.state.value == 10) {
+            //TODO two digits one digit
+            resize(itemInd, simSize.wUnit * 2);
+          }
+        }
+      }
     });
+    on<EquationBoardEventMergeNumbers>((event, emit) async {
+      var itemIndLeft = state.itemIndex(event.indLeft);
+      var itemIndRight = state.itemIndex(event.indRight);
+      print("merge: ${event.indLeft} ${event.indRight}");
+      print("merge: $itemIndLeft $itemIndRight");
+
+      if (itemIndLeft != null && itemIndRight != null) {
+        var leftCubit = state.items[itemIndLeft];
+        var rightCubit = state.items[itemIndRight];
+        if (leftCubit is NumberCubit && rightCubit is NumberCubit) {
+          if (leftCubit.state.value == 10) {
+            //TODO two digits one digit
+            resize(itemIndLeft, -simSize.wUnit * 2);
+          }
+          if (rightCubit.state.value == 10) {
+            //TODO two digits one digit
+            resize(itemIndRight, -simSize.wUnit * 2);
+          }
+          leftCubit.updateValue(leftCubit.state.value - 1);
+          rightCubit.updateValue(rightCubit.state.value - 1);
+          if (leftCubit.state.value == 0) {
+            //update pozycji
+            resize(itemIndLeft, -simSize.wUnit * 2);
+            if (itemIndLeft - 1 >= 0 && itemIndLeft - 1 < state.items.length) {
+              var item = state.items[itemIndLeft - 1];
+              if (item is SignCubit) {
+                resize(itemIndLeft - 1, -simSize.wUnit * 2);
+              }
+            }
+
+            //TODO 0 i wylatuje kolezka
+          }
+          if (rightCubit.state.value == 0) {
+            resize(itemIndRight, -simSize.wUnit * 2);
+            if (itemIndRight - 1 >= 0 &&
+                itemIndRight - 1 < state.items.length) {
+              var item = state.items[itemIndRight - 1];
+              if (item is SignCubit) {
+                resize(itemIndRight - 1, -simSize.wUnit * 1.5);
+              }
+            }
+          }
+          List<SimulationItemCubit> toRemove = [];
+          if (leftCubit.state.value == 0) {
+            //update pozycji
+            if (itemIndLeft - 1 >= 0 && itemIndLeft - 1 < state.items.length) {
+              var item = state.items[itemIndLeft - 1];
+              if (item is SignCubit) {
+                toRemove.add(item);
+              }
+            }
+            toRemove.add(leftCubit);
+            //TODO 0 i wylatuje kolezka
+          }
+          if (rightCubit.state.value == 0) {
+            if (itemIndRight - 1 >= 0 &&
+                itemIndRight - 1 < state.items.length) {
+              var item = state.items[itemIndRight - 1];
+              if (item is SignCubit) {
+                print("REMOVAL");
+                toRemove.add(item);
+              }
+            }
+            toRemove.add(rightCubit);
+          }
+          for (var item in toRemove) {
+            state.items.remove(item);
+          }
+          emit(EquationBoardState(items: state.items));
+        }
+      }
+      event.indRight;
+      //oba sie zmniejszaja
+
+      //tutaj sie dzieje
+      // event.indLeft;
+      // event.indRight;
+    });
+    // on<EquationBoardEventUpdate>((event, emit) async {
+    //   print(event.updatedNumbers);
+    //   await handleUpdate(event.updatedNumbers, emit);
+    // },
   }
 }
 
@@ -42,19 +134,21 @@ extension ItemsGenerator on EquationBoardBloc {
             ? Offset(simSize.wUnit * 4, simSize.hUnit * 2)
             : Offset(simSize.wUnit * 2, simSize.hUnit * 2),
         opacity: 1,
-        radius: 5);
+        radius: 5,
+        textKey: UniqueKey());
   }
 
   SignState generateSignState(Signs sign, Offset position) {
     return SignState(
-        value: sign,
-        color: Color.fromARGB(255, 255, 217, 0),
-        defColor: Color.fromARGB(255, 255, 217, 0),
-        hovColor: Color.fromARGB(255, 255, 217, 0),
-        id: UniqueKey(),
-        position: position,
-        size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),
-        opacity: 1,
-        radius: 5);
+      value: sign,
+      color: Color.fromARGB(255, 255, 217, 0),
+      defColor: Color.fromARGB(255, 255, 217, 0),
+      hovColor: Color.fromARGB(255, 255, 217, 0),
+      id: UniqueKey(),
+      position: position,
+      size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),
+      opacity: 1,
+      radius: 5,
+    );
   }
 }

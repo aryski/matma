@@ -1,16 +1,16 @@
 part of 'equation_board_bloc.dart';
 
 class EquationBoardState {
-  final List<SimulationItemCubit> numCubits;
+  final List<SimulationItemCubit> items;
 
-  EquationBoardState({this.numCubits = const []});
+  EquationBoardState({this.items = const []});
 
   List<int> get numbers => genNum();
 
   List<int> genNum() {
     List<int> result = [];
     bool isMinus = false;
-    for (var cubit in numCubits) {
+    for (var cubit in items) {
       if (cubit is SignCubit && cubit.state.value == Signs.substraction) {
         isMinus = true;
       }
@@ -27,11 +27,11 @@ class EquationBoardState {
     return result;
   }
 
-  int? cubitIndex(int numberIndex) {
+  int? itemIndex(int numberIndex) {
     var result = 0;
 
-    for (int i = 0; i < numCubits.length; i++) {
-      if (numCubits[i] is NumberCubit) {
+    for (int i = 0; i < items.length; i++) {
+      if (items[i] is NumberCubit) {
         if (result == numberIndex) {
           return i;
         }
