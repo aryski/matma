@@ -48,9 +48,6 @@ extension ItemsMerger on StepsSimulationProBloc {
         if (rightAfterRight is FloorCubit) {
           state.removeItem(rightAfterRight);
         }
-        //righ i left parents
-        state.reduceItemNumber(left);
-        state.reduceItemNumber(right);
 
         var indLeft = state.getNumberIndex(left);
         var indRight = state.getNumberIndex(right);

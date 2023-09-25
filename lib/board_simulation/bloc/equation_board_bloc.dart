@@ -20,6 +20,40 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
       required this.simSize,
       required List<int> initNumbers})
       : super(UpdateHandler.hardResetState(initNumbers, simSize)) {
+    on<EquationBoardEventSplitNumber>(
+      (event, emit) {
+        var itemInd = state.itemIndex(event.ind);
+        if (itemInd != null) {
+          var cubit = state.items[itemInd];
+          if (cubit is NumberCubit) {
+            cubit.updateValue(event.leftValue.abs());
+          }
+          print("l: ${event.leftValue.abs()}");
+          print("r: ${event.rightValue.abs()}");
+          state.items.insert(
+              itemInd + 1,
+              NumberCubit(
+                generateNumberState(
+                    event.rightValue.abs(),
+                    Offset(cubit.state.position.dx + cubit.state.size.dx,
+                        cubit.state.position.dy)),
+              ));
+          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
+          state.items.insert(
+              itemInd + 1,
+              SignCubit(
+                generateSignState(
+                    event.rightValue > 0 ? Signs.addition : Signs.substraction,
+                    Offset(cubit.state.position.dx + cubit.state.size.dx,
+                        cubit.state.position.dy)),
+              ));
+          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
+        }
+
+        emit(EquationBoardState(items: state.items));
+        //insert at itemInd+1 sign and value xdd
+      },
+    );
     on<EquationBoardEventIncreaseNumber>((event, emit) async {
       print("XD");
       var itemInd = state.itemIndex(event.ind);
@@ -138,7 +172,10 @@ extension ItemsGenerator on EquationBoardBloc {
         textKey: UniqueKey());
   }
 
-  SignState generateSignState(Signs sign, Offset position) {
+  SignState generateSignState(
+    Signs sign,
+    Offset position,
+  ) {
     return SignState(
       value: sign,
       color: Color.fromARGB(255, 255, 217, 0),

@@ -35,7 +35,7 @@ extension Initializer on StepsSimulationProBloc {
           currentLeft += simSize.wUnit;
         }
       }
-      result.add(StepsSimulationProNumberState(number, items));
+      result.add(StepsSimulationProNumberState(items));
     }
     return result;
   }

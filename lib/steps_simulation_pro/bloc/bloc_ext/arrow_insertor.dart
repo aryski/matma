@@ -79,7 +79,7 @@ extension ArrowInsertor on StepsSimulationProBloc {
         for (int j = 0; j < number.items.length; j++) {
           if (number.items[j] == item) {
             number.items.replaceRange(j, j + 1, [arrow1, floor, arrow2]);
-            number.expand();
+
             board.add(EquationBoardEventIncreaseNumber(ind: i));
             break;
           }

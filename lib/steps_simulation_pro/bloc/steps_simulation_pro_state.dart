@@ -1,24 +1,21 @@
 part of 'steps_simulation_pro_bloc.dart';
 
 class StepsSimulationProNumberState {
-  int number;
   List<SimulationItemCubit> items;
-  StepsSimulationProNumberState(this.number, this.items);
+  StepsSimulationProNumberState(this.items);
 
-  void expand() {
-    if (number > 0) {
-      number += 1;
-    } else if (number < 0) {
-      number -= 1;
+  int get number {
+    int value = 0;
+    for (var item in items) {
+      if (item is ArrowCubit) {
+        if (item.state.direction == Direction.up) {
+          value++;
+        } else if (item.state.direction == Direction.down) {
+          value--;
+        }
+      }
     }
-  }
-
-  void reduce() {
-    if (number > 0) {
-      number -= 1;
-    } else if (number < 0) {
-      number += 1;
-    }
+    return value;
   }
 }
 
@@ -83,22 +80,6 @@ class StepsSimulationProState {
           cubit.updatePosition(offset);
         }
         move = true;
-      }
-    }
-  }
-
-  void expandItemNumber(SimulationItemCubit item) {
-    for (var number in numbers) {
-      if (number.items.contains(item)) {
-        number.expand();
-      }
-    }
-  }
-
-  void reduceItemNumber(SimulationItemCubit item) {
-    for (var number in numbers) {
-      if (number.items.contains(item)) {
-        number.reduce();
       }
     }
   }

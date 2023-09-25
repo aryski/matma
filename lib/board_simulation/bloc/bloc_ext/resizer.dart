@@ -14,4 +14,14 @@ extension Resizer on EquationBoardBloc {
       state.items[j].updatePosition(Offset(delta / 2, 0));
     }
   }
+
+  spread(int cubitsInd, double delta) {
+    for (int j = 0; j <= cubitsInd; j++) {
+      state.items[j].updatePosition(Offset(-delta / 2, 0));
+    }
+
+    for (int j = cubitsInd + 1; j < state.items.length; j++) {
+      state.items[j].updatePosition(Offset(delta / 2, 0));
+    }
+  }
 }
