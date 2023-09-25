@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
+import 'package:matma/board_simulation/bloc/bloc_ext/remover.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
@@ -20,6 +21,27 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
       required this.simSize,
       required List<int> initNumbers})
       : super(UpdateHandler.hardResetState(initNumbers, simSize)) {
+    on<EquationBoardEventJoinNumbers>((event, emit) {
+      event.leftInd;
+      event.rightInd;
+      var leftItemInd = state.itemIndex(event.leftInd);
+      var rightItemInd = state.itemIndex(event.rightInd);
+      if (leftItemInd != null && rightItemInd != null) {
+        var leftItem = state.items[leftItemInd];
+        var rightItem = state.items[rightItemInd];
+        if (leftItem is NumberCubit && rightItem is NumberCubit) {
+          leftItem.updateValue(leftItem.state.value + rightItem.state.value);
+          var rightSignInd = rightItemInd - 1;
+          var rightSignItem = state.items[rightSignInd];
+          if (rightSignItem is SignCubit) {
+            removeWithPositionUpdate(rightSignItem);
+          }
+          removeWithPositionUpdate(rightItem);
+
+          emit(EquationBoardState(items: state.items));
+        }
+      }
+    });
     on<EquationBoardEventSplitNumber>(
       (event, emit) {
         var itemInd = state.itemIndex(event.ind);
@@ -28,8 +50,6 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           if (cubit is NumberCubit) {
             cubit.updateValue(event.leftValue.abs());
           }
-          print("l: ${event.leftValue.abs()}");
-          print("r: ${event.rightValue.abs()}");
           state.items.insert(
               itemInd + 1,
               NumberCubit(
@@ -89,28 +109,28 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           }
           leftCubit.updateValue(leftCubit.state.value - 1);
           rightCubit.updateValue(rightCubit.state.value - 1);
-          if (leftCubit.state.value == 0) {
-            //update pozycji
-            resize(itemIndLeft, -simSize.wUnit * 2);
-            if (itemIndLeft - 1 >= 0 && itemIndLeft - 1 < state.items.length) {
-              var item = state.items[itemIndLeft - 1];
-              if (item is SignCubit) {
-                resize(itemIndLeft - 1, -simSize.wUnit * 2);
-              }
-            }
+          // if (leftCubit.state.value == 0) {
+          //   //update pozycji
+          //   resize(itemIndLeft, -simSize.wUnit * 2);
+          //   if (itemIndLeft - 1 >= 0 && itemIndLeft - 1 < state.items.length) {
+          //     var item = state.items[itemIndLeft - 1];
+          //     if (item is SignCubit) {
+          //       resize(itemIndLeft - 1, -simSize.wUnit * 2);
+          //     }
+          //   }
 
-            //TODO 0 i wylatuje kolezka
-          }
-          if (rightCubit.state.value == 0) {
-            resize(itemIndRight, -simSize.wUnit * 2);
-            if (itemIndRight - 1 >= 0 &&
-                itemIndRight - 1 < state.items.length) {
-              var item = state.items[itemIndRight - 1];
-              if (item is SignCubit) {
-                resize(itemIndRight - 1, -simSize.wUnit * 1.5);
-              }
-            }
-          }
+          //   //TODO 0 i wylatuje kolezka
+          // }
+          // if (rightCubit.state.value == 0) {
+          //   resize(itemIndRight, -simSize.wUnit * 2);
+          //   if (itemIndRight - 1 >= 0 &&
+          //       itemIndRight - 1 < state.items.length) {
+          //     var item = state.items[itemIndRight - 1];
+          //     if (item is SignCubit) {
+          //       resize(itemIndRight - 1, -simSize.wUnit * 1.5);
+          //     }
+          //   }
+          // }
           List<SimulationItemCubit> toRemove = [];
           if (leftCubit.state.value == 0) {
             //update pozycji
@@ -135,7 +155,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
             toRemove.add(rightCubit);
           }
           for (var item in toRemove) {
-            state.items.remove(item);
+            removeWithPositionUpdate(item);
           }
           emit(EquationBoardState(items: state.items));
         }

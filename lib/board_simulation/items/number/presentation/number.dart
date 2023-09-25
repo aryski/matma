@@ -28,40 +28,44 @@ class Number extends StatelessWidget {
               updated: state.size,
               builder: (context, size, child) {
                 var tweenState = state.copy()..size = size;
-                return SizedBox(
-                  width: tweenState.size.dx,
-                  height: tweenState.size.dy,
-                  child: Container(
-                    color: const Color.fromARGB(255, 255, 201, 201)
-                        .withOpacity(0.2),
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: AnimatedSwitcher(
-                          key: state.id,
-                          switchInCurve: Curves.ease,
-                          switchOutCurve: Curves.ease,
-                          transitionBuilder: (child, animation) {
-                            return RotationTransition(
-                              turns: animation,
-                              child: ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              ),
-                            );
-                          },
-                          duration: const Duration(milliseconds: 200),
-                          child: Center(
-                            key: state.textKey,
-                            child: Text(
-                              tweenState.value.abs().toString(),
-                              style: TextStyle(
-                                  color: Colors.amber[900],
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: tweenState.size.dx),
-                            ),
-                          )),
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: tweenState.size.dx,
+                      height: tweenState.size.dy,
+                      child: Container(
+                        color: const Color.fromARGB(255, 255, 201, 201)
+                            .withOpacity(0.2),
+                        child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: AnimatedSwitcher(
+                              key: state.id,
+                              switchInCurve: Curves.ease,
+                              switchOutCurve: Curves.ease,
+                              transitionBuilder: (child, animation) {
+                                return RotationTransition(
+                                  turns: animation,
+                                  child: ScaleTransition(
+                                    scale: animation,
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              duration: const Duration(milliseconds: 200),
+                              child: Center(
+                                key: state.textKey,
+                                child: Text(
+                                  tweenState.value.abs().toString(),
+                                  style: TextStyle(
+                                      color: Colors.amber[900],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: tweenState.size.dx),
+                                ),
+                              )),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 );
               },
             ),

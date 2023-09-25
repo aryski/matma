@@ -30,3 +30,11 @@ class EquationBoardEventSplitNumber extends EquationBoardEvent {
   EquationBoardEventSplitNumber(
       {required this.ind, required this.leftValue, required this.rightValue});
 }
+
+class EquationBoardEventJoinNumbers extends EquationBoardEvent {
+  final int leftInd;
+  final int rightInd;
+
+  EquationBoardEventJoinNumbers(
+      {required this.leftInd, required this.rightInd});
+}

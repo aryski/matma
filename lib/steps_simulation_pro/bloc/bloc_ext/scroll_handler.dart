@@ -67,11 +67,30 @@ extension ScrollHandler on StepsSimulationProBloc {
               state.numbers[numberInd].items.addAll(left);
               state.numbers
                   .insert(numberInd + 1, StepsSimulationProNumberState(right));
-
               board.add(EquationBoardEventSplitNumber(
                   ind: numberInd,
                   leftValue: state.numbers[numberInd].number,
                   rightValue: state.numbers[numberInd + 1].number));
+            }
+          }
+        }
+        print(item.state.size.dx);
+        print(1.25 * simSize.wUnit);
+        if (item.state.size.dx <= 1.25 * simSize.wUnit) {
+          int? numberInd = state.getNumberIndex(item);
+
+          if (numberInd != null) {
+            int? nextInd = numberInd + 1;
+            if (nextInd < state.numbers.length) {
+              var number = state.numbers[numberInd];
+              var nextNumber = state.numbers[nextInd];
+              if (number.number * nextNumber.number > 0) {
+                //same sign trzeba zmergowac
+                board.add(EquationBoardEventJoinNumbers(
+                    leftInd: numberInd, rightInd: nextInd));
+                number.items.addAll(nextNumber.items);
+                state.numbers.remove(nextNumber);
+              }
             }
           }
         }
