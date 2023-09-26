@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/number/presentation/number.dart';
+import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
+import 'package:matma/board_simulation/items/shadow_number/presentation/shadow_number.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/board_simulation/items/sign/presentation/sign.dart';
 
@@ -23,6 +25,13 @@ class EquationBoard extends StatelessWidget {
             return Number(cubit: cubit, key: cubit.state.id);
           } else if (cubit is SignCubit) {
             return Sign(cubit: cubit, key: cubit.state.id);
+          } else {
+            return const SizedBox.shrink();
+          }
+        }),
+        ...state.extraItems.map((cubit) {
+          if (cubit is ShadowNumberCubit) {
+            return ShadowNumber(cubit: cubit, key: cubit.state.id);
           } else {
             return const SizedBox.shrink();
           }

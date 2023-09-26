@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
@@ -17,7 +16,6 @@ class Number extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<NumberCubit, NumberState>(
         builder: (context, state) {
-          print(state.value);
           return TweenAnimatedPosition(
             initialPosition: initialState.position,
             updatedPosition: state.position,

@@ -10,6 +10,13 @@ class SimulationItemCubit<T extends SimulationItemState> extends Cubit<T> {
     emit(state.copy() as T);
   }
 
+  void updatePositionDelayed(Offset delta, Duration delay) async {
+    await Future.delayed(delay);
+    state.position += delta;
+
+    emit(state.copy() as T);
+  }
+
   void setOpacity(double opacity) {
     state.opacity = opacity;
     emit(state.copy() as T);

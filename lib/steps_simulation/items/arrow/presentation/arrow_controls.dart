@@ -12,6 +12,7 @@ class ArrowGestureDetector extends StatelessWidget {
     var stepsSimulationBloc = context.read<StepsSimulationBloc>();
     var id = context.read<ArrowCubit>().state.id;
     DateTime downClick = DateTime.now();
+    bool stop = false;
 
     return Listener(
       onPointerDown: (event) {
@@ -20,6 +21,7 @@ class ArrowGestureDetector extends StatelessWidget {
       },
       onPointerUp: (event) {
         Duration pressTime = DateTime.now().difference(downClick);
+        downClick = DateTime.now();
         stepsSimulationBloc
             .add(StepsSimulationEventPointerUp(id: id, pressTime: pressTime));
       },

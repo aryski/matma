@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 
 class TweenAnimatedPosition extends StatelessWidget {
-  const TweenAnimatedPosition(
-      {super.key,
-      required this.child,
-      required this.initialPosition,
-      required this.updatedPosition});
+  const TweenAnimatedPosition({
+    super.key,
+    required this.child,
+    required this.initialPosition,
+    required this.updatedPosition,
+    this.duration = const Duration(milliseconds: 200),
+  });
   final Widget child;
   final Offset initialPosition;
   final Offset updatedPosition;
+  final Duration duration;
 
   @override
   Widget build(BuildContext context) {
     return DefaultTweenAnimationBuilder(
+        duration: duration,
         initial: initialPosition,
         updated: updatedPosition,
         builder: (context, position, widget) {

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
+import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/board_simulation/items/sign/presentation/sign.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
@@ -35,7 +37,8 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           }
           removeWithPositionUpdate(rightItem);
 
-          emit(EquationBoardState(items: state.items));
+          emit(EquationBoardState(
+              items: state.items, extraItems: state.extraItems));
         }
       }
     });
@@ -67,12 +70,11 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
         }
 
-        emit(EquationBoardState(items: state.items));
-        //insert at itemInd+1 sign and value xdd
+        emit(EquationBoardState(
+            items: state.items, extraItems: state.extraItems));
       },
     );
     on<EquationBoardEventIncreaseNumber>((event, emit) async {
-      print("XD");
       var itemInd = state.itemIndex(event.ind);
       if (itemInd != null) {
         var cubit = state.items[itemInd];
@@ -80,9 +82,12 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           cubit.updateValue(cubit.state.value + 1); //updated value
           //resizing for bigger numbers
           if (cubit.state.value == 10) {
-            //TODO two digits one digit
             resize(itemInd, simSize.wUnit * 2);
           }
+          updateValue(cubit, 1);
+
+          emit(EquationBoardState(
+              items: state.items, extraItems: state.extraItems));
         }
       }
     });
@@ -97,37 +102,14 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
         var rightCubit = state.items[itemIndRight];
         if (leftCubit is NumberCubit && rightCubit is NumberCubit) {
           if (leftCubit.state.value == 10) {
-            //TODO two digits one digit
             resize(itemIndLeft, -simSize.wUnit * 2);
           }
           if (rightCubit.state.value == 10) {
-            //TODO two digits one digit
             resize(itemIndRight, -simSize.wUnit * 2);
           }
           leftCubit.updateValue(leftCubit.state.value - 1);
           rightCubit.updateValue(rightCubit.state.value - 1);
-          // if (leftCubit.state.value == 0) {
-          //   //update pozycji
-          //   resize(itemIndLeft, -simSize.wUnit * 2);
-          //   if (itemIndLeft - 1 >= 0 && itemIndLeft - 1 < state.items.length) {
-          //     var item = state.items[itemIndLeft - 1];
-          //     if (item is SignCubit) {
-          //       resize(itemIndLeft - 1, -simSize.wUnit * 2);
-          //     }
-          //   }
 
-          //   //TODO 0 i wylatuje kolezka
-          // }
-          // if (rightCubit.state.value == 0) {
-          //   resize(itemIndRight, -simSize.wUnit * 2);
-          //   if (itemIndRight - 1 >= 0 &&
-          //       itemIndRight - 1 < state.items.length) {
-          //     var item = state.items[itemIndRight - 1];
-          //     if (item is SignCubit) {
-          //       resize(itemIndRight - 1, -simSize.wUnit * 1.5);
-          //     }
-          //   }
-          // }
           List<SimulationItemCubit> toRemove = [];
           if (leftCubit.state.value == 0) {
             //update pozycji
@@ -138,14 +120,12 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
               }
             }
             toRemove.add(leftCubit);
-            //TODO 0 i wylatuje kolezka
           }
           if (rightCubit.state.value == 0) {
             if (itemIndRight - 1 >= 0 &&
                 itemIndRight - 1 < state.items.length) {
               var item = state.items[itemIndRight - 1];
               if (item is SignCubit) {
-                print("REMOVAL");
                 toRemove.add(item);
               }
             }
@@ -154,31 +134,28 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           for (var item in toRemove) {
             removeWithPositionUpdate(item);
           }
-          emit(EquationBoardState(items: state.items));
+          updateValue(leftCubit, -1);
+          updateValue(rightCubit, -1);
+
+          emit(EquationBoardState(
+              items: state.items, extraItems: state.extraItems));
         }
       }
       event.indRight;
-      //oba sie zmniejszaja
-
-      //tutaj sie dzieje
-      // event.indLeft;
-      // event.indRight;
     });
-    // on<EquationBoardEventUpdate>((event, emit) async {
-    //   print(event.updatedNumbers);
-    //   await handleUpdate(event.updatedNumbers, emit);
-    // },
   }
 }
+
+final Color defaultGrey = const Color.fromARGB(255, 161, 161, 161);
 
 extension ItemsGenerator on EquationBoardBloc {
   NumberState generateNumberState(int number, Offset position) {
     assert(number >= 0);
     return NumberState(
         value: number,
-        color: Color.fromARGB(255, 255, 217, 0),
-        defColor: Color.fromARGB(255, 255, 217, 0),
-        hovColor: Color.fromARGB(255, 255, 217, 0),
+        color: const Color.fromARGB(255, 255, 217, 0),
+        defColor: const Color.fromARGB(255, 255, 217, 0),
+        hovColor: const Color.fromARGB(255, 255, 217, 0),
         id: UniqueKey(),
         position: position,
         size: number.abs() >= 10
@@ -189,15 +166,30 @@ extension ItemsGenerator on EquationBoardBloc {
         textKey: UniqueKey());
   }
 
+  ShadowNumberState generateShadowNumberState(
+      String value, Offset position, SimulationSize simSize) {
+    return ShadowNumberState(
+      value: value,
+      color: defaultGrey,
+      defColor: defaultGrey,
+      hovColor: defaultGrey,
+      id: UniqueKey(),
+      position: position,
+      size: Offset(simSize.wUnit * 2, simSize.hUnit * 2),
+      opacity: 1,
+      radius: 5,
+    );
+  }
+
   SignState generateSignState(
     Signs sign,
     Offset position,
   ) {
     return SignState(
       value: sign,
-      color: Color.fromARGB(255, 255, 217, 0),
-      defColor: Color.fromARGB(255, 255, 217, 0),
-      hovColor: Color.fromARGB(255, 255, 217, 0),
+      color: const Color.fromARGB(255, 255, 217, 0),
+      defColor: const Color.fromARGB(255, 255, 217, 0),
+      hovColor: const Color.fromARGB(255, 255, 217, 0),
       id: UniqueKey(),
       position: position,
       size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),

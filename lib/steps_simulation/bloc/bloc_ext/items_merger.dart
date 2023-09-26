@@ -20,7 +20,6 @@ extension ItemsMerger on StepsSimulationBloc {
   }
 
   Future<bool> tryMerge(FloorCubit item) async {
-    //TODO merging board update
     var left = state.leftItem(item);
     var right = state.rightItem(item);
     if (left is ArrowCubit && right is ArrowCubit) {
@@ -59,6 +58,5 @@ extension ItemsMerger on StepsSimulationBloc {
       }
     }
     return true;
-    // emit(state.copy());
   }
 }

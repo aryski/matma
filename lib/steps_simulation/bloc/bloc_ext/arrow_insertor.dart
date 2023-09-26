@@ -23,15 +23,8 @@ extension ArrowInsertor on StepsSimulationBloc {
 
       await Future.delayed(const Duration(milliseconds: 200));
       var inserted = _insertArrow(item, item.state.direction);
-
-      //tutaj trzeba sie dowiedziec ktora to liczba XD
-      //todo zmienic architekture tak zeby nie bylo itemsow tylko klasy liczb z itemsami
-      //czyli de facto dochodzimy do gramatyki, w ktorej mamy
-      //(wyrazenie) -  wyrazenie
-      // board.add(EquationBoardEventIncreaseNumber(ind: ));
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
-      //TODO
 
       //animate scroll
       if (inserted[0] is ArrowCubit) {

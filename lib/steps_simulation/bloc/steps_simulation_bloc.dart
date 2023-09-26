@@ -32,40 +32,25 @@ class StepsSimulationBloc
   final EquationBoardBloc board;
   final SimulationSize simSize;
   final List<UniqueKey> lockedIds = [];
+
   @override
   StepsSimulationBloc(this.simSize, this.board)
       : super(StepsSimulationState(simSize: simSize, numbers: [])) {
     state.numbers.addAll(initializeItemsList());
     on<StepsSimulationEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);
-      // board.add(EquationBoardEventUpdate(currentNumbers()));
     });
 
     on<StepsSimulationEventPointerDown>((event, emit) async {
-      //TODO better event queue
-      print("XD2");
-      if (!lockedIds.contains(event.id)) {
-        lockedIds.add(event.id);
-        await handleClick(state, event, simSize, emit);
-      }
+      await handleClick(state, event, simSize, emit);
     });
 
     on<StepsSimulationEventPointerUp>((event, emit) async {
-      print("XD3");
-      if (lockedIds.contains(event.id)) {
-        print("adding to lockeditd ${event.id}");
-        if (event.pressTime.inMilliseconds >
-            const Duration(milliseconds: 20).inMilliseconds) {
-          await handleArrowInsertion(event, emit, board);
-        } else {
-          await handleClick(state, event, simSize, emit);
-        }
-
-        await Future.delayed(Duration(milliseconds: 220));
-        print("XD2");
-        // board.add(EquationBoardEventUpdate(currentNumbers()));
-        print("removing from lockeditd ${event.id}");
-        lockedIds.remove(event.id);
+      if (event.pressTime.inMilliseconds >
+          const Duration(milliseconds: 20).inMilliseconds) {
+        await handleArrowInsertion(event, emit, board);
+      } else {
+        await handleClick(state, event, simSize, emit);
       }
     });
   }

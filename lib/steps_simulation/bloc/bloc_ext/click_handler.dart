@@ -19,12 +19,13 @@ extension ClickHandler on StepsSimulationBloc {
         if (event is StepsSimulationEventPointerDown) {
           delta = -delta;
         }
-        item.updateHeight(delta);
         if (item.state.direction == Direction.down) {
           state.moveAllSince(item, Offset(0, delta));
         } else {
           state.moveAllSinceIncluded(item, Offset(0, -delta));
         }
+        item.updateHeight(delta);
+
         await Future.delayed(Duration(milliseconds: 200));
       }
     }

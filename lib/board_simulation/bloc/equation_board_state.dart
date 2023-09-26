@@ -2,10 +2,32 @@ part of 'equation_board_bloc.dart';
 
 class EquationBoardState {
   final List<SimulationItemCubit> items;
+  final List<SimulationItemCubit> extraItems;
 
-  EquationBoardState({this.items = const []});
+  EquationBoardState({this.items = const [], this.extraItems = const []});
 
   List<int> get numbers => genNum();
+
+  Signs getNumberSign(NumberCubit number) {
+    bool foundNumber = false;
+
+    for (int i = items.length - 1; i >= 0; i--) {
+      if (foundNumber) {
+        var cubit = items[i];
+        if (cubit is SignCubit) {
+          if (cubit.state.value == Signs.substraction) {
+            return Signs.substraction;
+          } else {
+            return Signs.addition;
+          }
+        }
+      }
+      if (items[i] == number) {
+        foundNumber = true;
+      }
+    }
+    return Signs.addition;
+  }
 
   List<int> genNum() {
     List<int> result = [];
@@ -23,7 +45,6 @@ class EquationBoardState {
         isMinus = false;
       }
     }
-    print(result);
     return result;
   }
 

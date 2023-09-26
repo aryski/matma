@@ -1,7 +1,10 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/steps_simulation/stairs_simulation.dart';
 
 void main() {
+  Bloc.transformer = sequential();
   runApp(MaterialApp(
     theme: ThemeData(useMaterial3: true, textTheme: Typography.dense2021),
     color: Colors.white,
