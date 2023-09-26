@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_simulation/items/floor/%20cubit/floor_state.dart';
 
 abstract class SimulationItemState {
   UniqueKey id;

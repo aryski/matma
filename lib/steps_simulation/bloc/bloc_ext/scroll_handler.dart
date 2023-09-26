@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/bloc/bloc_ext/items_merger.dart';
-import 'package:matma/steps_simulation/bloc/bloc_ext/simulation_items_generator.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
-import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 
 extension ScrollHandler on StepsSimulationBloc {
