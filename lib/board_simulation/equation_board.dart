@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
-import 'package:matma/board_simulation/cubit/equation_board_cubit.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/number/presentation/number.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
@@ -14,6 +13,10 @@ class EquationBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<EquationBoardBloc, EquationBoardState>(
         builder: (context, state) {
+      //TODO moze warto by zrobic tak ze jak cos znika z listy to nie znaczy ze znika z outputu???
+      //zwlaszcza, ale sam sobie jestem winien w sumie przez to ze stany wygladaja jak wygladaja
+      //moznaby zrobic osobna liste z niedawno usunietymi ktora tez renderujemy w stacku!!!
+      //zeby mogla dogorzec koncowka animacji czy cos xddd
       return Stack(children: [
         ...state.items.map((cubit) {
           if (cubit is NumberCubit) {

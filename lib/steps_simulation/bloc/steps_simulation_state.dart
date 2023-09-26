@@ -1,8 +1,8 @@
-part of 'steps_simulation_pro_bloc.dart';
+part of 'steps_simulation_bloc.dart';
 
-class StepsSimulationProNumberState {
+class StepsSimulationNumberState {
   List<SimulationItemCubit> items;
-  StepsSimulationProNumberState(this.items);
+  StepsSimulationNumberState(this.items);
 
   int get number {
     int value = 0;
@@ -19,11 +19,11 @@ class StepsSimulationProNumberState {
   }
 }
 
-class StepsSimulationProState {
+class StepsSimulationState {
   final SimulationSize simSize;
-  final List<StepsSimulationProNumberState> numbers;
+  final List<StepsSimulationNumberState> numbers;
 
-  StepsSimulationProState({required this.simSize, required this.numbers});
+  StepsSimulationState({required this.simSize, required this.numbers});
 
   void removeItem(SimulationItemCubit item) {
     for (var number in numbers) {
@@ -84,7 +84,7 @@ class StepsSimulationProState {
     }
   }
 
-  // StepsSimulationProNumberState? getNumber(SimulationItemCubit item) {
+  // StepsSimulationNumberState? getNumber(SimulationItemCubit item) {
   //   for (var number in numbers) {
   //     if (number.items.contains(item)) {
   //       return number;
@@ -110,8 +110,8 @@ class StepsSimulationProState {
     _moveAllSince(item, offset, 0);
   }
 
-  StepsSimulationProState copy() {
-    return StepsSimulationProState(simSize: simSize, numbers: [...numbers]);
+  StepsSimulationState copy() {
+    return StepsSimulationState(simSize: simSize, numbers: [...numbers]);
   }
 
   SimulationItemCubit? getItem(UniqueKey id) {

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/scroll_handler.dart';
-import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/items_generator.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/scroll_handler.dart';
+import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
-import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_cubit.dart';
+import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 
-extension ArrowInsertor on StepsSimulationProBloc {
-  Future<void> handleArrowInsertion(StepsSimulationProEventPointerUp event,
-      Emitter<StepsSimulationProState> emit, EquationBoardBloc board) async {
+extension ArrowInsertor on StepsSimulationBloc {
+  Future<void> handleArrowInsertion(StepsSimulationEventPointerUp event,
+      Emitter<StepsSimulationState> emit, EquationBoardBloc board) async {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       item.updateHeight(3 * simSize.hUnit / 2);

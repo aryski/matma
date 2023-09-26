@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/items_merger.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/simulation_items_generator.dart';
-import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_cubit.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/items_merger.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/simulation_items_generator.dart';
+import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 
-extension ScrollHandler on StepsSimulationProBloc {
+extension ScrollHandler on StepsSimulationBloc {
   Future<void> handleScroll(
-      StepsSimulationProState state,
-      StepsSimulationProEventScroll event,
+      StepsSimulationState state,
+      StepsSimulationEventScroll event,
       SimulationSize simSize,
-      Emitter<StepsSimulationProState> emit) async {
+      Emitter<StepsSimulationState> emit) async {
     var item = state.getItem(event.id);
     var minWidth = simSize.wUnit * 1.25;
     var defaultWidth = 1.25 * simSize.wUnit;
@@ -66,7 +66,7 @@ extension ScrollHandler on StepsSimulationProBloc {
               state.numbers[numberInd].items.clear();
               state.numbers[numberInd].items.addAll(left);
               state.numbers
-                  .insert(numberInd + 1, StepsSimulationProNumberState(right));
+                  .insert(numberInd + 1, StepsSimulationNumberState(right));
               board.add(EquationBoardEventSplitNumber(
                   ind: numberInd,
                   leftValue: state.numbers[numberInd].number,

@@ -57,7 +57,7 @@ class Number extends StatelessWidget {
                                 child: Text(
                                   tweenState.value.abs().toString(),
                                   style: TextStyle(
-                                      color: Colors.amber[900],
+                                      color: state.color,
                                       fontWeight: FontWeight.bold,
                                       fontSize: tweenState.size.dx),
                                 ),

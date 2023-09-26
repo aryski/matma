@@ -1,18 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
-import 'package:matma/board_simulation/cubit/equation_board_cubit.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/arrow_insertor.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/click_handler.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/list_initializer.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/scroll_handler.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/arrow_insertor.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/click_handler.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/list_initializer.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/scroll_handler.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_cubit.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 
-part 'steps_simulation_pro_event.dart';
-part 'steps_simulation_pro_state.dart';
+part 'steps_simulation_event.dart';
+part 'steps_simulation_state.dart';
 
 UniqueKey? hoverKepper;
 
@@ -29,21 +28,22 @@ class SimulationSize {
       required this.wUnits});
 }
 
-class StepsSimulationProBloc
-    extends Bloc<StepsSimulationProEvent, StepsSimulationProState> {
+class StepsSimulationBloc
+    extends Bloc<StepsSimulationEvent, StepsSimulationState> {
   final EquationBoardBloc board;
   final SimulationSize simSize;
   final List<UniqueKey> lockedIds = [];
   @override
-  StepsSimulationProBloc(this.simSize, this.board)
-      : super(StepsSimulationProState(simSize: simSize, numbers: [])) {
+  StepsSimulationBloc(this.simSize, this.board)
+      : super(StepsSimulationState(simSize: simSize, numbers: [])) {
     state.numbers.addAll(initializeItemsList());
-    on<StepsSimulationProEventScroll>((event, emit) async {
+    on<StepsSimulationEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);
       // board.add(EquationBoardEventUpdate(currentNumbers()));
     });
 
-    on<StepsSimulationProEventPointerDown>((event, emit) async {
+    on<StepsSimulationEventPointerDown>((event, emit) async {
+      //TODO better event queue
       print("XD2");
       if (!lockedIds.contains(event.id)) {
         lockedIds.add(event.id);
@@ -51,7 +51,7 @@ class StepsSimulationProBloc
       }
     });
 
-    on<StepsSimulationProEventPointerUp>((event, emit) async {
+    on<StepsSimulationEventPointerUp>((event, emit) async {
       print("XD3");
       if (lockedIds.contains(event.id)) {
         print("adding to lockeditd ${event.id}");

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_state.dart';
+import 'package:matma/steps_simulation/items/floor/%20cubit/floor_state.dart';
 
 class FloorPainter extends CustomPainter {
   final FloorState state;

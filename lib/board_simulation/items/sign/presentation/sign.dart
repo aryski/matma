@@ -33,7 +33,7 @@ class Sign extends StatelessWidget {
                       child: Text(
                         tweenState.value == Signs.addition ? "+" : "-",
                         style: TextStyle(
-                            color: Colors.amber[900],
+                            color: state.color,
                             fontWeight: FontWeight.bold,
                             fontSize: tweenState.size.dx),
                       ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation_pro/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
+import 'package:matma/steps_simulation/bloc/bloc_ext/items_generator.dart';
+import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
-extension Initializer on StepsSimulationProBloc {
-  List<StepsSimulationProNumberState> initializeItemsList() {
+extension Initializer on StepsSimulationBloc {
+  List<StepsSimulationNumberState> initializeItemsList() {
     List<int> init = board.state.numbers;
-    var currentTop = (simSize.hUnits / 2).ceil() * simSize.hUnit;
-    var currentLeft = simSize.wUnit * 3;
-    List<StepsSimulationProNumberState> result = [];
+    var currentTop = (simSize.hUnits / 2).floor() * simSize.hUnit;
+    var currentLeft = simSize.wUnit * 2;
+    List<StepsSimulationNumberState> result = [];
     for (int number in init) {
       final List<SimulationItemCubit> items = [];
       if (number > 0) {
@@ -35,7 +35,7 @@ extension Initializer on StepsSimulationProBloc {
           currentLeft += simSize.wUnit;
         }
       }
-      result.add(StepsSimulationProNumberState(items));
+      result.add(StepsSimulationNumberState(items));
     }
     return result;
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation_pro/stairs_simulation_pro.dart';
+import 'package:matma/steps_simulation/stairs_simulation.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -19,7 +19,7 @@ class Elo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StepsSimulationPro(
+    return StepsSimulation(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height -
             MediaQuery.of(context).padding.top -

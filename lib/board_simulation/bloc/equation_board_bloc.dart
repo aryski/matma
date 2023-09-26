@@ -1,14 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/remover.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
 part 'equation_board_event.dart';
 part 'equation_board_state.dart';

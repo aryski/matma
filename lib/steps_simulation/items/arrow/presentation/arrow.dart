@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/presentation/arrow_controls.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/presentation/arrow_painter.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_simulation/items/arrow/presentation/arrow_controls.dart';
+import 'package:matma/steps_simulation/items/arrow/presentation/arrow_painter.dart';
 
 class Arrow extends StatelessWidget {
   const Arrow({super.key, required this.cubit});

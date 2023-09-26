@@ -8,7 +8,7 @@ import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
-import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
+import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
 extension UpdateHandler on EquationBoardBloc {
   static EquationBoardState hardResetState(
@@ -42,7 +42,7 @@ extension UpdateHandler on EquationBoardBloc {
       states.add(numberState);
       length += numberState.size.dx;
     }
-    var allMargin = (widthSpace - length) / 2;
+    var allMargin = (widthSpace - length) / 2 - simSize.wUnit;
     for (var state in states) {
       state.position += Offset(allMargin, 0);
       if (state is SignState) {

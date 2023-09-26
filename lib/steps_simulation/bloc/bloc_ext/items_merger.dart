@@ -1,15 +1,14 @@
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
-import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
+import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation_pro/bloc/steps_simulation_pro_bloc.dart';
-import 'package:matma/steps_simulation_pro/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_simulation_pro/items/floor/%20cubit/floor_cubit.dart';
+import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
+import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
+import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 
-extension ItemsMerger on StepsSimulationProBloc {
-  bool isMergeCandidate(
-      SimulationItemCubit? item, StepsSimulationProState state) {
+extension ItemsMerger on StepsSimulationBloc {
+  bool isMergeCandidate(SimulationItemCubit? item, StepsSimulationState state) {
     if (item != null) {
       var left = state.leftItem(item);
       var right = state.rightItem(item);
