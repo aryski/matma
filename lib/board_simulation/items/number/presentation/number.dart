@@ -31,7 +31,7 @@ class Number extends StatelessWidget {
                       height: tweenState.size.dy,
                       child: Container(
                         color: const Color.fromARGB(255, 255, 201, 201)
-                            .withOpacity(0.2),
+                            .withOpacity(0.0),
                         child: FittedBox(
                           fit: BoxFit.fitHeight,
                           child: AnimatedSwitcher(

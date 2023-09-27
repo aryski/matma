@@ -22,8 +22,12 @@ class StepsSimulationNumberState {
 class StepsSimulationState {
   final SimulationSize simSize;
   final List<StepsSimulationNumberState> numbers;
+  Map<UniqueKey, SimulationItemCubit> unorderedItems;
 
-  StepsSimulationState({required this.simSize, required this.numbers});
+  StepsSimulationState(
+      {required this.simSize,
+      required this.numbers,
+      required this.unorderedItems});
 
   void removeItem(SimulationItemCubit item) {
     for (var number in numbers) {
@@ -33,6 +37,119 @@ class StepsSimulationState {
           numbers.remove(number);
         }
         break;
+      }
+    }
+  }
+
+  int? minimumLevelSince(SimulationItemCubit item) {
+    bool result = false;
+    int value = 0;
+    int minimum = 0;
+    for (var number in numbers) {
+      if (number.items.contains(item)) {
+        //tutaj podlicz do tego
+        for (int i = 0; i < number.items.length; i++) {
+          var cubit = number.items[i];
+          if (cubit is ArrowCubit) {
+            if (cubit.state.direction == Direction.up) {
+              value++;
+              if (value < minimum) {
+                minimum = value;
+              }
+              print("val: $value");
+            } else if (cubit.state.direction == Direction.down) {
+              value--;
+              if (value < minimum) {
+                minimum = value;
+              }
+              print("val: $value");
+            }
+          }
+          if (cubit == item) {
+            result = true;
+            minimum = value;
+          }
+        }
+      } else {
+        value += number.number;
+        if (value < minimum) {
+          minimum = value;
+        }
+        print("val: $value");
+      }
+    }
+    if (result) {
+      return minimum;
+    }
+  }
+
+  int? maxiumumLevelSince(SimulationItemCubit item) {
+    bool result = false;
+    int value = 0;
+    int maximum = 0;
+    for (var number in numbers) {
+      if (number.items.contains(item)) {
+        //tutaj podlicz do tego
+        for (int i = 0; i < number.items.length; i++) {
+          var cubit = number.items[i];
+          if (cubit is ArrowCubit) {
+            if (cubit.state.direction == Direction.up) {
+              value++;
+              if (value > maximum) {
+                maximum = value;
+              }
+              print("val: $value");
+            } else if (cubit.state.direction == Direction.down) {
+              value--;
+              if (value > maximum) {
+                maximum = value;
+              }
+              print("val: $value");
+            }
+          }
+          if (cubit == item) {
+            result = true;
+            maximum = value;
+          }
+        }
+      } else {
+        value += number.number;
+        if (value > maximum) {
+          maximum = value;
+        }
+        print("val: $value");
+      }
+    }
+    if (result) {
+      return maximum;
+    }
+  }
+
+  //jakie jest minimum maximum OD tego itemka?
+  int? levelOfSimulationItemCubit(SimulationItemCubit item) {
+    int value = 0;
+    print("val: $value");
+    for (var number in numbers) {
+      if (number.items.contains(item)) {
+        //tutaj podlicz do tego
+        for (int i = 0; i < number.items.length; i++) {
+          var cubit = number.items[i];
+          if (cubit is ArrowCubit) {
+            if (cubit.state.direction == Direction.up) {
+              value++;
+              print("val: $value");
+            } else if (cubit.state.direction == Direction.down) {
+              value--;
+              print("val: $value");
+            }
+          }
+          if (cubit == item) {
+            return value;
+          }
+        }
+      } else {
+        value += number.number;
+        print("val: $value");
       }
     }
   }
@@ -111,7 +228,10 @@ class StepsSimulationState {
   }
 
   StepsSimulationState copy() {
-    return StepsSimulationState(simSize: simSize, numbers: [...numbers]);
+    return StepsSimulationState(
+        simSize: simSize,
+        numbers: [...numbers],
+        unorderedItems: {...unorderedItems});
   }
 
   SimulationItemCubit? getItem(UniqueKey id) {

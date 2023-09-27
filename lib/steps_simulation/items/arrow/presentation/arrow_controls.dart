@@ -16,6 +16,7 @@ class ArrowGestureDetector extends StatelessWidget {
 
     return Listener(
       onPointerDown: (event) {
+        print("CLICK");
         downClick = DateTime.now();
         stepsSimulationBloc.add(StepsSimulationEventPointerDown(id: id));
       },

@@ -8,6 +8,7 @@ import 'package:matma/steps_simulation/bloc/bloc_ext/scroll_handler.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_simulation/items/equator/cubit/equator_cubit.dart';
 
 part 'steps_simulation_event.dart';
 part 'steps_simulation_state.dart';
@@ -35,10 +36,13 @@ class StepsSimulationBloc
 
   @override
   StepsSimulationBloc(this.simSize, this.board)
-      : super(StepsSimulationState(simSize: simSize, numbers: [])) {
+      : super(StepsSimulationState(
+            simSize: simSize, numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeItemsList());
+
     on<StepsSimulationEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);
+      // board.add(EquationBoardEventUpdate(currentNumbers()));
     });
 
     on<StepsSimulationEventPointerDown>((event, emit) async {
@@ -46,12 +50,33 @@ class StepsSimulationBloc
     });
 
     on<StepsSimulationEventPointerUp>((event, emit) async {
+      bool handled = false;
       if (event.pressTime.inMilliseconds >
           const Duration(milliseconds: 20).inMilliseconds) {
-        await handleArrowInsertion(event, emit, board);
-      } else {
+        var item = state.getItem(event.id);
+        if (item != null) {
+          if (item is ArrowCubit) {
+            int? elo;
+            if (item.state.direction == Direction.up) {
+              elo = state.maxiumumLevelSince(item);
+            } else if (item.state.direction == Direction.down) {
+              elo = state.minimumLevelSince(item);
+            }
+            if (elo != null) {
+              if (elo < 7 && elo > -7) {
+                await handleArrowInsertion(event, emit, board);
+                handled = true;
+              }
+            }
+          }
+        }
+      }
+      if (!handled) {
         await handleClick(state, event, simSize, emit);
       }
+
+      // board.add(EquationBoardEventUpdate(currentNumbers()));
+      // print("removing from lockeditd ${event.id}");
     });
   }
 }

@@ -12,6 +12,7 @@ import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 extension ArrowInsertor on StepsSimulationBloc {
   Future<void> handleArrowInsertion(StepsSimulationEventPointerUp event,
       Emitter<StepsSimulationState> emit, EquationBoardBloc board) async {
+    print("INSERT1");
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       item.updateHeight(3 * simSize.hUnit / 2);
@@ -20,12 +21,12 @@ extension ArrowInsertor on StepsSimulationBloc {
       } else {
         state.moveAllSinceIncluded(item, Offset(0, -simSize.hUnit * 3 / 2));
       }
-
+      print("INSERT2"); //here next click, przydaloby sie usunac te delayed TODO
       await Future.delayed(const Duration(milliseconds: 200));
       var inserted = _insertArrow(item, item.state.direction);
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
-
+      print("INSERT3");
       //animate scroll
       if (inserted[0] is ArrowCubit) {
         (inserted[0] as ArrowCubit).animate(1);
@@ -36,6 +37,7 @@ extension ArrowInsertor on StepsSimulationBloc {
         (inserted[1] as FloorCubit).updateSize(Offset(delta, 0));
         state.moveAllSince(inserted[1], Offset(delta, 0));
       }
+      print("INSERT4");
     }
   }
 

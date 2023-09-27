@@ -9,7 +9,9 @@ import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.d
 final Color defaultGreen = Color.alphaBlend(
     Color.fromARGB(255, 32, 200, 107).withOpacity(0.9),
     Color.fromARGB(255, 23, 33, 50));
-final Color defaultGrey = Color.fromARGB(255, 217, 217, 217).withOpacity(0.5);
+final Color defaultGrey = Color.alphaBlend(
+    Color.fromARGB(255, 217, 217, 217).withOpacity(0.5),
+    Color.fromARGB(255, 23, 33, 50));
 final Color defaultRed = Color.alphaBlend(
     Color.fromARGB(255, 249, 56, 101).withOpacity(0.9),
     Color.fromARGB(255, 23, 33, 50));

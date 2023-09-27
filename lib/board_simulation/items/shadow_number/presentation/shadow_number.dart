@@ -36,7 +36,7 @@ class ShadowNumber extends StatelessWidget {
                             opacity < 0.5 ? opacity * 2 : (1 - opacity) * 2,
                         child: Container(
                           color: const Color.fromARGB(255, 255, 201, 201)
-                              .withOpacity(0),
+                              .withOpacity(0.0),
                           child: Center(
                             child: Text(
                               state.value,

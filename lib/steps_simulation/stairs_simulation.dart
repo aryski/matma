@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +9,8 @@ import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/presentation/arrow.dart';
+import 'package:matma/steps_simulation/items/equator/cubit/equator_cubit.dart';
+import 'package:matma/steps_simulation/items/equator/presentation/equator.dart';
 import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_simulation/items/floor/presentation/floor.dart';
 
@@ -28,7 +29,7 @@ class StepsSimulation extends StatelessWidget {
     var eqCubit = EquationBoardBloc(
         init: EquationBoardState(),
         simSize: simSize,
-        initNumbers: [7, -4, 1, -2]);
+        initNumbers: [5, -7, 4, -3]);
 
     var bloc = StepsSimulationBloc(simSize, eqCubit);
     return MultiBlocProvider(
@@ -76,7 +77,23 @@ class StepsSimulation extends StatelessWidget {
                               items.add(item);
                             }
                           }
-                          return Stack(children: [
+                          for (var value in state.unorderedItems.values) {
+                            items.add(value);
+                          }
+
+                          return Stack(clipBehavior: Clip.hardEdge, children: [
+                            ...state.unorderedItems.values.map(
+                              (cubit) {
+                                if (cubit is EquatorCubit) {
+                                  return Equator(
+                                    cubit: cubit,
+                                    key: cubit.state.id,
+                                  );
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              },
+                            ),
                             ...items.map(
                               (cubit) {
                                 if (cubit is FloorCubit) {
