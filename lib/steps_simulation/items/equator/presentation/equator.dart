@@ -18,7 +18,6 @@ class Equator extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<EquatorCubit, EquatorState>(
         builder: (context, state) {
-          print(state.position);
           return TweenAnimatedPosition(
             initialPosition: initialState.position,
             updatedPosition: state.position,

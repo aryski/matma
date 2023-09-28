@@ -43,7 +43,6 @@ class StepsSimulationBloc
 
     on<StepsSimulationEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);
-      // board.add(EquationBoardEventUpdate(currentNumbers()));
     });
 
     on<StepsSimulationEventPointerDown>((event, emit) async {
@@ -75,9 +74,6 @@ class StepsSimulationBloc
       if (!handled) {
         await handleClick(state, event, simSize, emit);
       }
-
-      // board.add(EquationBoardEventUpdate(currentNumbers()));
-      // print("removing from lockeditd ${event.id}");
     });
   }
 }

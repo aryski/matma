@@ -78,6 +78,7 @@ class StepsSimulationState {
     if (result) {
       return minimum;
     }
+    return null;
   }
 
   int? maxiumumLevelSince(SimulationItemCubit item) {
@@ -117,6 +118,7 @@ class StepsSimulationState {
     if (result) {
       return maximum;
     }
+    return null;
   }
 
   SimulationItemCubit? leftItem(SimulationItemCubit item) {
@@ -166,15 +168,6 @@ class StepsSimulationState {
     }
   }
 
-  // StepsSimulationNumberState? getNumber(SimulationItemCubit item) {
-  //   for (var number in numbers) {
-  //     if (number.items.contains(item)) {
-  //       return number;
-  //     }
-  //   }
-  //   return null;
-  // }
-
   int? getNumberIndex(SimulationItemCubit item) {
     for (int i = 0; i < numbers.length; i++) {
       if (numbers[i].items.contains(item)) {
@@ -209,8 +202,4 @@ class StepsSimulationState {
     }
     return null;
   }
-
-  // int getIndex(UniqueKey id) {
-  //   return numbers.indexWhere((element) => element.state.id == id);
-  // }
 }

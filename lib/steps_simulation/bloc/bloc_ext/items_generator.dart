@@ -89,7 +89,3 @@ extension ItemsGenerator on StepsSimulationBloc {
     );
   }
 }
-
-    //  color: const Color.fromARGB(255, 158, 158, 158).withOpacity(0.5),
-    //     defColor: Colors.grey.withOpacity(0.5),
-    //     hovColor: const Color.fromARGB(255, 112, 112, 112).withOpacity(0.5),

@@ -18,7 +18,6 @@ class ArrowPainter extends CustomPainter {
     var radius = state.radius;
     final width = state.size.dx;
     final height = state.size.dy;
-    final initialHeight = initialSize.dy;
     final tHeight = 3 * sqrt(3) / 6 * width;
     // var progress = state.animProgress; TODO fix so you just display current state
     var progress = animationProgress;
