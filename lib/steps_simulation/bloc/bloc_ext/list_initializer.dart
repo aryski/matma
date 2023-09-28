@@ -16,8 +16,8 @@ extension Initializer on StepsSimulationBloc {
         hovColor: const Color.fromARGB(255, 255, 217, 0).withOpacity(0.7),
         id: id,
         position: Offset(0, currentTop + simSize.hUnit),
-        size: Offset(simSize.wUnit * (simSize.wUnits), simSize.hUnit / 7),
-        color: Color.fromARGB(255, 33, 45, 67),
+        size: Offset(simSize.wUnit * (simSize.wUnits), simSize.hUnit / 5),
+        color: const Color.fromARGB(255, 33, 45, 67),
         opacity: 1,
         radius: simSize.wUnit / 15));
     List<StepsSimulationNumberState> result = [];
@@ -38,7 +38,7 @@ extension Initializer on StepsSimulationBloc {
           var pos = Offset(currentLeft, currentTop);
           items.add(generateArrowDown(
               position: pos,
-              delta: Offset(0, simSize.hUnit + simSize.hUnit / 7)));
+              delta: Offset(0, simSize.hUnit + simSize.hUnit / 5)));
           items.add(generateFloor(
               position: pos,
               delta: Offset(simSize.wUnit / 2, 2 * simSize.hUnit)));

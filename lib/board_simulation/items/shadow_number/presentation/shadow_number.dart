@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
@@ -18,11 +17,11 @@ class ShadowNumber extends StatelessWidget {
       child: BlocBuilder<ShadowNumberCubit, ShadowNumberState>(
         builder: (context, state) {
           return TweenAnimatedPosition(
-            duration: Duration(milliseconds: 1000),
+            duration: const Duration(milliseconds: 1000),
             initialPosition: initialState.position,
             updatedPosition: state.position,
             child: DefaultTweenAnimationBuilder(
-              duration: Duration(milliseconds: 1000),
+              duration: const Duration(milliseconds: 1000),
               initial: 0,
               updated: 1.0,
               builder: (context, opacity, child) {

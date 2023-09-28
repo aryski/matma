@@ -56,13 +56,11 @@ class StepsSimulationState {
               if (value < minimum) {
                 minimum = value;
               }
-              print("val: $value");
             } else if (cubit.state.direction == Direction.down) {
               value--;
               if (value < minimum) {
                 minimum = value;
               }
-              print("val: $value");
             }
           }
           if (cubit == item) {
@@ -75,7 +73,6 @@ class StepsSimulationState {
         if (value < minimum) {
           minimum = value;
         }
-        print("val: $value");
       }
     }
     if (result) {
@@ -98,13 +95,11 @@ class StepsSimulationState {
               if (value > maximum) {
                 maximum = value;
               }
-              print("val: $value");
             } else if (cubit.state.direction == Direction.down) {
               value--;
               if (value > maximum) {
                 maximum = value;
               }
-              print("val: $value");
             }
           }
           if (cubit == item) {
@@ -117,40 +112,10 @@ class StepsSimulationState {
         if (value > maximum) {
           maximum = value;
         }
-        print("val: $value");
       }
     }
     if (result) {
       return maximum;
-    }
-  }
-
-  //jakie jest minimum maximum OD tego itemka?
-  int? levelOfSimulationItemCubit(SimulationItemCubit item) {
-    int value = 0;
-    print("val: $value");
-    for (var number in numbers) {
-      if (number.items.contains(item)) {
-        //tutaj podlicz do tego
-        for (int i = 0; i < number.items.length; i++) {
-          var cubit = number.items[i];
-          if (cubit is ArrowCubit) {
-            if (cubit.state.direction == Direction.up) {
-              value++;
-              print("val: $value");
-            } else if (cubit.state.direction == Direction.down) {
-              value--;
-              print("val: $value");
-            }
-          }
-          if (cubit == item) {
-            return value;
-          }
-        }
-      } else {
-        value += number.number;
-        print("val: $value");
-      }
     }
   }
 

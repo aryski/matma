@@ -13,6 +13,8 @@ import 'package:matma/steps_simulation/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_simulation/items/equator/presentation/equator.dart';
 import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_simulation/items/floor/presentation/floor.dart';
+import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
+import 'package:matma/task_simulation/task_simulator.dart';
 
 class StepsSimulation extends StatelessWidget {
   final double width;
@@ -27,15 +29,14 @@ class StepsSimulation extends StatelessWidget {
     var simSize =
         SimulationSize(hUnit: unit, wUnit: horizUnit, hUnits: 15, wUnits: 66);
     var eqCubit = EquationBoardBloc(
-        init: EquationBoardState(),
-        simSize: simSize,
-        initNumbers: [5, -7, 4, -3]);
-
-    var bloc = StepsSimulationBloc(simSize, eqCubit);
+        init: EquationBoardState(), simSize: simSize, initNumbers: [2, -3]);
+    var taskCubit = TaskSimulationCubit();
+    var bloc = StepsSimulationBloc(simSize, eqCubit, taskCubit);
     return MultiBlocProvider(
       providers: [
         BlocProvider<StepsSimulationBloc>(create: (context) => bloc),
-        BlocProvider<EquationBoardBloc>(create: (context) => eqCubit)
+        BlocProvider<EquationBoardBloc>(create: (context) => eqCubit),
+        BlocProvider<TaskSimulationCubit>(create: (context) => taskCubit)
       ],
       child: SizedBox(
         width: width,
@@ -52,9 +53,24 @@ class StepsSimulation extends StatelessWidget {
           child: Container(
             height: 18 * unit,
             width: 66 * horizUnit,
-            color: Color.fromARGB(255, 23, 33, 50),
+            color: const Color.fromARGB(255, 23, 33, 50),
             child: Stack(
               children: [
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: BackButton(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 4 * unit,
+                  ),
+                  child: const Center(child: Tutorial()),
+                ),
                 SizedBox(
                   height: 18 * unit,
                   width: 66 * horizUnit,

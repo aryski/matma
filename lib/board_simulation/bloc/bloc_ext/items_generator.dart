@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
-import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
-final Color defaultGrey = Color.fromARGB(255, 255, 217, 0);
+const Color defaultGrey = Color.fromARGB(255, 255, 217, 0);
 
 extension BoardItemsGenerator on EquationBoardBloc {
   static NumberState generateNumberState(

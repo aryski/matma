@@ -7,14 +7,14 @@ import 'package:matma/steps_simulation/items/floor/%20cubit/floor_state.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
 final Color defaultGreen = Color.alphaBlend(
-    Color.fromARGB(255, 32, 200, 107).withOpacity(0.9),
-    Color.fromARGB(255, 23, 33, 50));
+    const Color.fromARGB(255, 32, 200, 107).withOpacity(0.9),
+    const Color.fromARGB(255, 23, 33, 50));
 final Color defaultGrey = Color.alphaBlend(
-    Color.fromARGB(255, 217, 217, 217).withOpacity(0.5),
-    Color.fromARGB(255, 23, 33, 50));
+    const Color.fromARGB(255, 217, 217, 217).withOpacity(0.5),
+    const Color.fromARGB(255, 23, 33, 50));
 final Color defaultRed = Color.alphaBlend(
-    Color.fromARGB(255, 249, 56, 101).withOpacity(0.9),
-    Color.fromARGB(255, 23, 33, 50));
+    const Color.fromARGB(255, 249, 56, 101).withOpacity(0.9),
+    const Color.fromARGB(255, 23, 33, 50));
 
 int reduceNegative(int value) {
   return value < 0 ? 0 : value;
@@ -82,7 +82,7 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultGrey, 20),
         id: UniqueKey(),
         position: position,
-        size: Offset(simSize.wUnit * widthRatio, simSize.hUnit / 7),
+        size: Offset(simSize.wUnit * widthRatio, simSize.hUnit / 5),
         opacity: 1.0,
         radius: simSize.wUnit / 15,
       ),

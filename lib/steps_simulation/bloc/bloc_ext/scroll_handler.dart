@@ -16,9 +16,9 @@ extension ScrollHandler on StepsSimulationBloc {
     var minWidth = simSize.wUnit * 1.25;
     var defaultWidth = 1.25 * simSize.wUnit;
     bool isReducable = isMergeCandidate(item, state);
+    var delta = -event.dy;
     if (isReducable) {
       if (item is FloorCubit && item.state.opacity > 0) {
-        var delta = event.dy;
         var currentWidth = item.state.size.dx;
         if (currentWidth + delta < defaultWidth) {
           delta = -currentWidth; //zerujemy dlugosc
@@ -26,18 +26,21 @@ extension ScrollHandler on StepsSimulationBloc {
         item.updateSize(Offset(delta, 0));
         state.moveAllSince(item, Offset(delta, 0));
         if (currentWidth + delta < defaultWidth) {
-          await tryMerge(item);
+          var result = await tryMerge(item);
+          if (result) {
+            taskCubit.merged();
+          }
         }
         emit(state.copy());
       }
     } else {
       if (item is FloorCubit && item.state.opacity > 0) {
-        var delta = event.dy;
         //adjusting delta, so the width is at least endW
         var currentWidth = item.state.size.dx;
         if (currentWidth + delta < minWidth) {
           delta = minWidth - currentWidth;
         }
+
         item.updateSize(Offset(delta, 0));
         if (item.state.size.dx > 1.25 * simSize.wUnit) {
           //TODO
@@ -68,6 +71,7 @@ extension ScrollHandler on StepsSimulationBloc {
                   ind: numberInd,
                   leftValue: state.numbers[numberInd].number,
                   rightValue: state.numbers[numberInd + 1].number));
+              taskCubit.splited();
             }
           }
         }
@@ -82,7 +86,7 @@ extension ScrollHandler on StepsSimulationBloc {
               var number = state.numbers[numberInd];
               var nextNumber = state.numbers[nextInd];
               if (number.number * nextNumber.number > 0) {
-                //same sign trzeba zmergowac
+                //same sign trzeba zmergowac TODO bledy czasem
                 board.add(EquationBoardEventJoinNumbers(
                     leftInd: numberInd, rightInd: nextInd));
                 number.items.addAll(nextNumber.items);
@@ -90,6 +94,9 @@ extension ScrollHandler on StepsSimulationBloc {
               }
             }
           }
+        }
+        if (delta != 0) {
+          taskCubit.scrolled();
         }
         state.moveAllSince(item, Offset(delta, 0));
         emit(state.copy());

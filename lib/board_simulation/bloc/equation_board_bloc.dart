@@ -5,7 +5,6 @@ import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/board_simulation/items/sign/presentation/sign.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
@@ -146,7 +145,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
   }
 }
 
-final Color defaultGrey = const Color.fromARGB(255, 161, 161, 161);
+const Color defaultGrey = Color.fromARGB(255, 161, 161, 161);
 
 extension ItemsGenerator on EquationBoardBloc {
   NumberState generateNumberState(int number, Offset position) {

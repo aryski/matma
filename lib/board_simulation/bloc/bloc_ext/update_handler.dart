@@ -61,7 +61,7 @@ extension UpdateHandler on EquationBoardBloc {
       states.add(numberState);
       length += numberState.size.dx;
     }
-    var allMargin = (widthSpace - length) / 2 - simSize.wUnit;
+    var allMargin = (widthSpace - length) / 2 - simSize.wUnit / 6.7;
     for (var state in states) {
       state.position += Offset(allMargin, 0);
       if (state is SignState) {

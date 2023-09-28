@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:matma/steps_simulation/items/equator/cubit/equator_cubit.dart';
-import 'package:matma/steps_simulation/items/floor/%20cubit/floor_state.dart';
 
 class EquatorPainter extends CustomPainter {
   final EquatorState state;
@@ -15,7 +14,6 @@ class EquatorPainter extends CustomPainter {
     var radius = state.radius;
     for (int i = 0; i <= 79; i++) {
       if (i.isEven) {
-        print(i);
         path.addRRect(
           RRect.fromRectAndRadius(
             Rect.fromLTWH(

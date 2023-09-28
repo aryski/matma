@@ -8,10 +8,14 @@ import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
+import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
 
 extension ArrowInsertor on StepsSimulationBloc {
-  Future<void> handleArrowInsertion(StepsSimulationEventPointerUp event,
-      Emitter<StepsSimulationState> emit, EquationBoardBloc board) async {
+  Future<void> handleArrowInsertion(
+      StepsSimulationEventPointerUp event,
+      Emitter<StepsSimulationState> emit,
+      EquationBoardBloc board,
+      TaskSimulationCubit taskCubit) async {
     print("INSERT1");
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
@@ -38,6 +42,7 @@ extension ArrowInsertor on StepsSimulationBloc {
         state.moveAllSince(inserted[1], Offset(delta, 0));
       }
       print("INSERT4");
+      taskCubit.inserted(item.state.direction);
     }
   }
 
@@ -64,7 +69,7 @@ extension ArrowInsertor on StepsSimulationBloc {
           generateArrowDown(position: pos, delta: Offset(0, simSize.hUnit));
       floor = generateFloor(
           position: pos,
-          delta: Offset(simSize.wUnit / 2, simSize.hUnit - simSize.hUnit / 7),
+          delta: Offset(simSize.wUnit / 2, simSize.hUnit - simSize.hUnit / 5),
           widthRatio: 0.25);
     }
     for (int i = 0; i < state.numbers.length; i++) {

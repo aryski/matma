@@ -23,7 +23,7 @@ class Arrow extends StatelessWidget {
             updatedPosition: state.position,
             child: AnimatedOpacity(
               opacity: state.opacity,
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               child: DefaultTweenAnimationBuilder(
                   initial: initialState.animProgress,
                   updated: state.animProgress,

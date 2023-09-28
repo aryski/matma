@@ -3,11 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
 import 'package:matma/steps_simulation/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_simulation/items/equator/presentation/equator_painter.dart';
-import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/steps_simulation/items/floor/%20cubit/floor_state.dart';
 
-import 'package:matma/steps_simulation/items/floor/presentation/floor_gesture_detector.dart';
-import 'package:matma/steps_simulation/items/floor/presentation/floor_painter.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 
 class Equator extends StatelessWidget {

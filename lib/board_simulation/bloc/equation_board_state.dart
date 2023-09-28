@@ -32,11 +32,13 @@ class EquationBoardState {
   List<int> genNum() {
     List<int> result = [];
     bool isMinus = false;
+    print(items);
     for (var cubit in items) {
       if (cubit is SignCubit && cubit.state.value == Signs.substraction) {
         isMinus = true;
       }
       if (cubit is NumberCubit) {
+        print(cubit.state.value);
         if (isMinus) {
           result.add(-1 * cubit.state.value);
         } else {
@@ -45,6 +47,7 @@ class EquationBoardState {
         isMinus = false;
       }
     }
+    print(result);
     return result;
   }
 

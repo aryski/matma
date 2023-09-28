@@ -8,7 +8,7 @@ import 'package:matma/steps_simulation/bloc/bloc_ext/scroll_handler.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_simulation/items/equator/cubit/equator_cubit.dart';
+import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
 
 part 'steps_simulation_event.dart';
 part 'steps_simulation_state.dart';
@@ -33,9 +33,10 @@ class StepsSimulationBloc
   final EquationBoardBloc board;
   final SimulationSize simSize;
   final List<UniqueKey> lockedIds = [];
+  final TaskSimulationCubit taskCubit;
 
   @override
-  StepsSimulationBloc(this.simSize, this.board)
+  StepsSimulationBloc(this.simSize, this.board, this.taskCubit)
       : super(StepsSimulationState(
             simSize: simSize, numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeItemsList());
@@ -52,7 +53,7 @@ class StepsSimulationBloc
     on<StepsSimulationEventPointerUp>((event, emit) async {
       bool handled = false;
       if (event.pressTime.inMilliseconds >
-          const Duration(milliseconds: 20).inMilliseconds) {
+          const Duration(milliseconds: 80).inMilliseconds) {
         var item = state.getItem(event.id);
         if (item != null) {
           if (item is ArrowCubit) {
@@ -64,7 +65,7 @@ class StepsSimulationBloc
             }
             if (elo != null) {
               if (elo < 7 && elo > -7) {
-                await handleArrowInsertion(event, emit, board);
+                await handleArrowInsertion(event, emit, board, taskCubit);
                 handled = true;
               }
             }
