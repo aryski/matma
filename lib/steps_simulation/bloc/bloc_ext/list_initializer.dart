@@ -43,27 +43,9 @@ extension Initializer on StepsSimulationBloc {
           ArrowCubit arrow = generateArrowDown(
               position: pos,
               delta: Offset(0, simSize.hUnit + simSize.hUnit / 5));
-
-          // if (init.last == number && i - 1 == number) {
-          //   // var xd = FloorCubit(
-          //   //   FloorState(
-          //   //     color: Colors.amberAccent,
-          //   //     defColor: Colors.amberAccent,
-          //   //     hovColor: darkenColor(Colors.amberAccent, 20),
-          //   //     id: UniqueKey(),
-          //   //     position: pos + Offset(simSize.wUnit / 2, 2 * simSize.hUnit),
-          //   //     size: Offset(simSize.wUnit * 1.25, simSize.hUnit / 5),
-          //   //     opacity: 1.0,
-          //   //     radius: simSize.wUnit / 15,
-          //   //   ),
-          //   // );
-          //   // items.add(xd);
-          //   //dodaj te dwie potencjalne strzałki
-          // } else {
           FloorCubit floor = generateFloor(
               position: pos,
               delta: Offset(simSize.wUnit / 2, 2 * simSize.hUnit));
-          // }
           if (i - 1 == number && init.last == number) {
             floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
           }

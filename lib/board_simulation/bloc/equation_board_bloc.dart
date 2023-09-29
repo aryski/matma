@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
