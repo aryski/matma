@@ -31,6 +31,7 @@ extension ScrollHandler on StepsSimulationBloc {
         ArrowCubit arrow;
         FloorCubit floor;
         if (dir == Direction.up) {
+          board.add(EquationBoardEventAddNumber(value: -1));
           arrow = generateArrowDown(
               position: item.state.position +
                   Offset(simSize.wUnit * 0.5,
@@ -40,6 +41,7 @@ extension ScrollHandler on StepsSimulationBloc {
                       Offset(simSize.wUnit * 1, simSize.hUnit + simSize.hUnit))
               as FloorCubit;
         } else {
+          board.add(EquationBoardEventAddNumber(value: 1));
           arrow = generateArrowUp(
               position: item.state.position +
                   Offset(simSize.wUnit * 0.5, 0)) as ArrowCubit;

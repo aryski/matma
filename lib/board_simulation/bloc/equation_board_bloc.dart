@@ -42,6 +42,37 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
         }
       }
     });
+    on<EquationBoardEventAddNumber>(
+      (event, emit) {
+        // var itemInd = state.itemIndex(event.ind);
+
+        var itemInd = state.itemIndex(state.numbers.length - 1);
+        if (itemInd != null) {
+          var cubit = state.items[itemInd];
+          state.items.insert(
+              itemInd + 1,
+              NumberCubit(
+                generateNumberState(
+                    event.value.abs(),
+                    Offset(cubit.state.position.dx + cubit.state.size.dx,
+                        cubit.state.position.dy)),
+              ));
+          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
+          state.items.insert(
+              itemInd + 1,
+              SignCubit(
+                generateSignState(
+                    event.value > 0 ? Signs.addition : Signs.substraction,
+                    Offset(cubit.state.position.dx + cubit.state.size.dx,
+                        cubit.state.position.dy)),
+              ));
+          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
+
+          emit(EquationBoardState(
+              items: state.items, extraItems: state.extraItems));
+        }
+      },
+    );
     on<EquationBoardEventSplitNumber>(
       (event, emit) {
         var itemInd = state.itemIndex(event.ind);

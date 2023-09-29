@@ -22,6 +22,12 @@ class EquationBoardEventIncreaseNumber extends EquationBoardEvent {
   EquationBoardEventIncreaseNumber({required this.ind});
 }
 
+class EquationBoardEventAddNumber extends EquationBoardEvent {
+  final int value;
+
+  EquationBoardEventAddNumber({required this.value});
+}
+
 class EquationBoardEventSplitNumber extends EquationBoardEvent {
   final int ind;
   final int leftValue;
