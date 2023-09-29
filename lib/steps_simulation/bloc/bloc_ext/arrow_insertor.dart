@@ -24,65 +24,97 @@ extension ArrowInsertor on StepsSimulationBloc {
       } else {
         state.moveAllSinceIncluded(item, Offset(0, -simSize.hUnit * 3 / 2));
       }
-      //here next click, przydaloby sie usunac te delayed TODO
+      // //here next click, przydaloby sie usunac te delayed TODO
       await Future.delayed(const Duration(milliseconds: 200));
       var inserted = _insertArrow(item, item.state.direction);
+      var step = state.getStep(item);
+      //replace whole step
+      if (step != null) {
+        StepsSimulationDefaultItem? newStep;
+        if (item.state.direction == Direction.up) {
+          newStep = StepsSimulationDefaultItem(
+              arrow: generateArrowUp(position: item.state.position),
+              floor: step.floor
+              // generateFloor(
+              //     position:
+              //         item.state.position + Offset(simSize.wUnit / 2, 0)),
+              );
+        } else if (item.state.direction == Direction.down) {
+          newStep = StepsSimulationDefaultItem(
+              arrow: generateArrowDown(
+                  position: item.state.position + Offset(0, simSize.hUnit)),
+              floor: step.floor
+              // generateFloor(
+              //     position: item.state.position +
+              //         Offset(simSize.wUnit / 2,
+              //             2 * simSize.hUnit - simSize.hUnit / 5)),
+              );
+        }
+
+        if (newStep != null) {
+          state.replaceStep(step, newStep);
+        }
+      }
+      // item.updateHeight(-simSize.hUnit);
+      // item.refreshHard;
+
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
       //animate scroll
-      if (inserted[0] is ArrowCubit) {
-        (inserted[0] as ArrowCubit).animate(1);
-      }
-
+      inserted.arrow.animate(1);
       var delta = simSize.wUnit;
-      if (inserted[1] is FloorCubit) {
-        (inserted[1] as FloorCubit).updateSize(Offset(delta, 0));
-        state.moveAllSince(inserted[1], Offset(delta, 0));
-      }
+      inserted.floor.updateSize(Offset(delta, 0));
+
+      state.moveAllSince(inserted.floor, Offset(delta, 0));
       taskCubit.inserted(item.state.direction);
     }
   }
 
-  List<SimulationItemCubit> _insertArrow(
+  StepsSimulationDefaultItem _insertArrow(
       SimulationItemCubit<SimulationItemState> item, Direction direction) {
     var currentLeft = item.state.position.dx;
     var currentTop = item.state.position.dy;
     var pos = Offset(currentLeft, currentTop);
-    late SimulationItemCubit arrow1;
-    late SimulationItemCubit arrow2;
-    late SimulationItemCubit floor;
+    late ArrowCubit arrow1;
+    // late SimulationItemCubit arrow2;
+    late FloorCubit floor;
     if (direction == Direction.up) {
       arrow1 = generateArrowUp(
           position: pos, delta: Offset(0, simSize.hUnit), animationProgress: 0);
-      arrow2 = generateArrowUp(position: pos, delta: Offset.zero);
+      // arrow2 = generateArrowUp(position: pos, delta: Offset.zero);
       floor = generateFloor(
           position: pos,
           delta: Offset(simSize.wUnit / 2, simSize.hUnit),
           widthRatio: 0.25);
     } else {
+      //wiec tak arrow 2 rozwiazac tak ze naprawic ta strzale co jest a nie replace walic xD
+
       arrow1 = generateArrowDown(
           position: pos, delta: Offset.zero, animationProgress: 0);
-      arrow2 =
-          generateArrowDown(position: pos, delta: Offset(0, simSize.hUnit));
+      // arrow2 =
+      //     generateArrowDown(position: pos, delta: Offset(0, simSize.hUnit));
       floor = generateFloor(
           position: pos,
           delta: Offset(simSize.wUnit / 2, simSize.hUnit - simSize.hUnit / 5),
           widthRatio: 0.25);
     }
+    var stepsDefault = StepsSimulationDefaultItem(arrow: arrow1, floor: floor);
+
     for (int i = 0; i < state.numbers.length; i++) {
       var number = state.numbers[i];
-      if (number.items.contains(item)) {
-        for (int j = 0; j < number.items.length; j++) {
-          if (number.items[j] == item) {
-            number.items.replaceRange(j, j + 1, [arrow1, floor, arrow2]);
 
-            board.add(EquationBoardEventIncreaseNumber(ind: i));
-            break;
-          }
+      for (int j = 0; j < number.steps.length; j++) {
+        if (number.steps[j].arrow == item) {
+          // if (number.steps[j].arrow.state.direction == Direction.down) {
+          //   item.updatePosition(Offset(0, simSize.hUnit));
+          // }
+          number.steps.insert(j, stepsDefault);
+          board.add(EquationBoardEventIncreaseNumber(ind: i));
+          break;
         }
       }
     }
 
-    return [arrow1, floor, arrow2];
+    return stepsDefault;
   }
 }

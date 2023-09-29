@@ -27,7 +27,7 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Matma.',
+      'Matma',
       style: TextStyle(
           color: Colors.white, fontWeight: FontWeight.bold, fontSize: 135),
     );
@@ -45,11 +45,39 @@ class PickMenu extends StatelessWidget {
         LevelIcon(
           active: true,
           level: Tutorial(),
+          title: 'Tutorial',
+          minature: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.fitness_center_outlined,
+                size: 150,
+              ),
+              Text(
+                'Tutorial',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
         ),
         SizedBox(width: 30),
         LevelIcon(
           active: false,
           level: Tutorial(),
+          title: 'Poziom 1',
+          minature: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.add_box_outlined,
+                size: 150,
+              ),
+              Text(
+                'Poziom 1',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
         ),
       ],
     );

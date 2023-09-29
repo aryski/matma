@@ -89,8 +89,9 @@ class StepsSimulation extends StatelessWidget {
                         builder: (context, state) {
                           List<SimulationItemCubit> items = [];
                           for (var number in state.numbers) {
-                            for (var item in number.items) {
-                              items.add(item);
+                            for (var item in number.steps) {
+                              items.add(item.arrow);
+                              items.add(item.floor);
                             }
                           }
                           for (var value in state.unorderedItems.values) {

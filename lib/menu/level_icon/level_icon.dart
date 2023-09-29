@@ -3,9 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/menu/level_icon/cubit/level_icon_cubit.dart';
 
 class LevelIcon extends StatelessWidget {
-  const LevelIcon({super.key, required this.active, required this.level});
+  const LevelIcon(
+      {super.key,
+      required this.active,
+      required this.level,
+      required this.title,
+      required this.minature});
   final bool active;
   final Widget level;
+  final String title;
+  final Widget minature;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +57,17 @@ class LevelIcon extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Container(
-                          //tutaj jakis canvasik z rysuneczkiem
-                          width: 200,
-                          height: 200,
-                          color: Colors.amberAccent,
-                        ),
+                            //tutaj jakis canvasik z rysuneczkiem
+                            width: 200,
+                            height: 200,
+                            color: Colors.amberAccent,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: FittedBox(
+                                child: minature,
+                                fit: BoxFit.contain,
+                              ),
+                            )),
                         active
                             ? const SizedBox.shrink()
                             : Container(

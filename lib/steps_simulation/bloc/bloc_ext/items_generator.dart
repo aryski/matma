@@ -28,7 +28,7 @@ Color darkenColor(Color color, int delta) {
 }
 
 extension ItemsGenerator on StepsSimulationBloc {
-  SimulationItemCubit generateArrowUp(
+  ArrowCubit generateArrowUp(
       {required Offset position,
       Offset delta = Offset.zero,
       double animationProgress = 1.0}) {
@@ -49,7 +49,7 @@ extension ItemsGenerator on StepsSimulationBloc {
     );
   }
 
-  SimulationItemCubit generateArrowDown(
+  ArrowCubit generateArrowDown(
       {required Offset position,
       Offset delta = Offset.zero,
       double animationProgress = 1.0}) {
@@ -70,7 +70,7 @@ extension ItemsGenerator on StepsSimulationBloc {
     );
   }
 
-  SimulationItemCubit generateFloor(
+  FloorCubit generateFloor(
       {required Offset position,
       Offset delta = Offset.zero,
       double widthRatio = 1.25}) {

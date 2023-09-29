@@ -1,18 +1,23 @@
 part of 'steps_simulation_bloc.dart';
 
+class StepsSimulationDefaultItem {
+  final ArrowCubit arrow;
+  final FloorCubit floor;
+
+  StepsSimulationDefaultItem({required this.arrow, required this.floor});
+}
+
 class StepsSimulationNumberState {
-  List<SimulationItemCubit> items;
-  StepsSimulationNumberState(this.items);
+  List<StepsSimulationDefaultItem> steps;
+  StepsSimulationNumberState(this.steps);
 
   int get number {
     int value = 0;
-    for (var item in items) {
-      if (item is ArrowCubit) {
-        if (item.state.direction == Direction.up) {
-          value++;
-        } else if (item.state.direction == Direction.down) {
-          value--;
-        }
+    for (var step in steps) {
+      if (step.arrow.state.direction == Direction.up) {
+        value++;
+      } else if (step.arrow.state.direction == Direction.down) {
+        value--;
       }
     }
     return value;
@@ -29,83 +34,43 @@ class StepsSimulationState {
       required this.numbers,
       required this.unorderedItems});
 
-  void removeItem(SimulationItemCubit item) {
+  void removeStep(StepsSimulationDefaultItem step) {
     for (var number in numbers) {
-      if (number.items.contains(item)) {
-        number.items.remove(item);
-        if (number.items.isEmpty) {
-          numbers.remove(number);
-        }
-        break;
-      }
+      number.steps.remove(step);
     }
   }
 
-  int? minimumLevelSince(SimulationItemCubit item) {
-    bool result = false;
-    int value = 0;
-    int minimum = 0;
-    for (var number in numbers) {
-      if (number.items.contains(item)) {
-        //tutaj podlicz do tego
-        for (int i = 0; i < number.items.length; i++) {
-          var cubit = number.items[i];
-          if (cubit is ArrowCubit) {
-            if (cubit.state.direction == Direction.up) {
-              value++;
-              if (value < minimum) {
-                minimum = value;
-              }
-            } else if (cubit.state.direction == Direction.down) {
-              value--;
-              if (value < minimum) {
-                minimum = value;
-              }
-            }
-          }
-          if (cubit == item) {
-            result = true;
-            minimum = value;
-          }
-        }
-      } else {
-        value += number.number;
-        if (value < minimum) {
-          minimum = value;
-        }
-      }
+  int? minmaxLevelSince(SimulationItemCubit item, bool max) {
+    var myStep = getStep(item);
+    if (myStep == null) {
+      return null;
     }
-    if (result) {
-      return minimum;
-    }
-    return null;
-  }
-
-  int? maxiumumLevelSince(SimulationItemCubit item) {
     bool result = false;
     int value = 0;
     int maximum = 0;
+    int minimum = 0;
     for (var number in numbers) {
-      if (number.items.contains(item)) {
-        //tutaj podlicz do tego
-        for (int i = 0; i < number.items.length; i++) {
-          var cubit = number.items[i];
-          if (cubit is ArrowCubit) {
-            if (cubit.state.direction == Direction.up) {
-              value++;
-              if (value > maximum) {
-                maximum = value;
-              }
-            } else if (cubit.state.direction == Direction.down) {
-              value--;
-              if (value > maximum) {
-                maximum = value;
-              }
+      if (number.steps.contains(myStep)) {
+        for (var step in number.steps) {
+          var dir = step.arrow.state.direction;
+          if (dir == Direction.up) {
+            value++;
+          } else if (dir == Direction.down) {
+            value--;
+          }
+          if (dir == Direction.up || dir == Direction.down) {
+            if (value > maximum) {
+              maximum = value;
+            }
+            if (value < minimum) {
+              minimum = value;
             }
           }
-          if (cubit == item) {
+
+          if (myStep == step) {
             result = true;
             maximum = value;
+            minimum = value;
           }
         }
       } else {
@@ -113,35 +78,104 @@ class StepsSimulationState {
         if (value > maximum) {
           maximum = value;
         }
+        if (value < minimum) {
+          minimum = value;
+        }
       }
     }
     if (result) {
-      return maximum;
-    }
-    return null;
-  }
-
-  SimulationItemCubit? leftItem(SimulationItemCubit item) {
-    SimulationItemCubit? lastItem;
-    for (int i = 0; i < numbers.length; i++) {
-      for (int j = 0; j < numbers[i].items.length; j++) {
-        if (numbers[i].items[j] == item) {
-          return lastItem;
-        }
-        lastItem = numbers[i].items[j];
+      if (max) {
+        print("MAX: $maximum");
+        return maximum;
+      } else {
+        print("MIN: $minimum");
+        return minimum;
       }
     }
     return null;
   }
 
-  SimulationItemCubit? rightItem(SimulationItemCubit item) {
+  void replaceStep(
+      StepsSimulationDefaultItem step, StepsSimulationDefaultItem replacement) {
+    for (var number in numbers) {
+      for (int i = 0; i < number.steps.length; i++) {
+        if (number.steps[i] == step) {
+          print("XDONE");
+          number.steps[i] = replacement;
+          return;
+        }
+      }
+    }
+  }
+
+  StepsSimulationDefaultItem? getStep(SimulationItemCubit item) {
+    for (var number in numbers) {
+      for (var step in number.steps) {
+        if (item == step.arrow || item == step.floor) {
+          return step;
+        }
+      }
+    }
+    return null;
+  }
+
+  int? minimumLevelSince(SimulationItemCubit item) {
+    return minmaxLevelSince(item, false);
+  }
+
+  int? maxiumumLevelSince(SimulationItemCubit item) {
+    return minmaxLevelSince(item, true);
+  }
+
+  // StepsSimulationDefaultItem? leftItem(SimulationItemCubit item) {
+  //   StepsSimulationDefaultItem? lastItem;
+  //   for (int i = 0; i < numbers.length; i++) {
+  //     for (int j = 0; j < numbers[i].steps.length; j++) {
+  //       if (numbers[i].steps[j] == item) {
+  //         return lastItem;
+  //       }
+  //       lastItem = numbers[i].steps[j];
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  // StepsSimulationDefaultItem? rightItem(SimulationItemCubit item) {
+  //   bool next = false;
+  //   for (int i = 0; i < numbers.length; i++) {
+  //     for (int j = 0; j < numbers[i].steps.length; j++) {
+  //       if (next) {
+  //         return numbers[i].steps[j];
+  //       }
+  //       if (numbers[i].steps[j] == item) {
+  //         next = true;
+  //       }
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  StepsSimulationDefaultItem? leftStep(StepsSimulationDefaultItem item) {
+    StepsSimulationDefaultItem? lastItem;
+    for (int i = 0; i < numbers.length; i++) {
+      for (int j = 0; j < numbers[i].steps.length; j++) {
+        if (numbers[i].steps[j] == item) {
+          return lastItem;
+        }
+        lastItem = numbers[i].steps[j];
+      }
+    }
+    return null;
+  }
+
+  StepsSimulationDefaultItem? rightStep(StepsSimulationDefaultItem item) {
     bool next = false;
     for (int i = 0; i < numbers.length; i++) {
-      for (int j = 0; j < numbers[i].items.length; j++) {
+      for (int j = 0; j < numbers[i].steps.length; j++) {
         if (next) {
-          return numbers[i].items[j];
+          return numbers[i].steps[j];
         }
-        if (numbers[i].items[j] == item) {
+        if (numbers[i].steps[j] == item) {
           next = true;
         }
       }
@@ -149,28 +183,31 @@ class StepsSimulationState {
     return null;
   }
 
-  void _moveAllSince(SimulationItemCubit item, Offset offset, int indOffset) {
-    bool move = false;
+  void _moveAllSince(SimulationItemCubit item, Offset offset, bool included) {
+    bool update = false;
     for (var number in numbers) {
-      if (move) {
-        for (var cubit in number.items) {
-          cubit.updatePosition(offset);
+      for (var step in number.steps) {
+        if (update) {
+          step.arrow.updatePosition(offset);
+          step.floor.updatePosition(offset);
         }
-      }
-      if (number.items.contains(item)) {
-        var ind = number.items.indexOf(item);
-        for (int i = ind + indOffset; i < number.items.length; i++) {
-          SimulationItemCubit cubit = number.items[i];
-          cubit.updatePosition(offset);
+
+        if (step.arrow == item || step.floor == item) {
+          if (step.arrow == item && included) {
+            step.arrow.updatePosition(offset);
+          }
+          if ((step.arrow == item && !included) || included) {
+            step.floor.updatePosition(offset);
+          }
+          update = true;
         }
-        move = true;
       }
     }
   }
 
-  int? getNumberIndex(SimulationItemCubit item) {
+  int? getNumberIndex(StepsSimulationDefaultItem item) {
     for (int i = 0; i < numbers.length; i++) {
-      if (numbers[i].items.contains(item)) {
+      if (numbers[i].steps.contains(item)) {
         return i;
       }
     }
@@ -178,11 +215,11 @@ class StepsSimulationState {
   }
 
   void moveAllSince(SimulationItemCubit item, Offset offset) {
-    _moveAllSince(item, offset, 1);
+    _moveAllSince(item, offset, false);
   }
 
   void moveAllSinceIncluded(SimulationItemCubit item, Offset offset) {
-    _moveAllSince(item, offset, 0);
+    _moveAllSince(item, offset, true);
   }
 
   StepsSimulationState copy() {
@@ -194,9 +231,11 @@ class StepsSimulationState {
 
   SimulationItemCubit? getItem(UniqueKey id) {
     for (var number in numbers) {
-      for (var item in number.items) {
-        if (item.state.id == id) {
-          return item;
+      for (var step in number.steps) {
+        if (step.arrow.state.id == id) {
+          return step.arrow;
+        } else if (step.floor.state.id == id) {
+          return step.floor;
         }
       }
     }

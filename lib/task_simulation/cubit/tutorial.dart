@@ -22,7 +22,8 @@ var _endScrollMergedTask = Task(instructions: [
 
 var _performSplitedTask = Task(instructions: [
   Instruction(
-      text: 'Udało Ci się połączyć liczbę!', time: const Duration(seconds: 3)),
+      text: 'Udało Ci się zredukować liczby!',
+      time: const Duration(seconds: 3)),
   Instruction(text: 'Gratki.', time: const Duration(seconds: 2)),
   Instruction(
       text: 'Znajdź szare między takim samym kolorem i scrolluj w górę.',

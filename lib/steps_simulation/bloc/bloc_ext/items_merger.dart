@@ -7,56 +7,54 @@ import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.d
 
 extension ItemsMerger on StepsSimulationBloc {
   bool isMergeCandidate(SimulationItemCubit? item, StepsSimulationState state) {
-    if (item != null) {
-      var left = state.leftItem(item);
-      var right = state.rightItem(item);
-      if (left is ArrowCubit && right is ArrowCubit) {
-        if (left.state.direction != right.state.direction) {
-          return true;
-        }
+    if (item is FloorCubit) {
+      var step = state.getStep(item);
+      if (step == null) return false;
+      var rightStep = state.rightStep(step);
+      if (rightStep == null) return false;
+      var left = step.arrow;
+      var right = rightStep.arrow;
+      if (left.state.direction != right.state.direction) {
+        return true;
       }
     }
     return false;
   }
 
   Future<bool> tryMerge(FloorCubit item) async {
-    var left = state.leftItem(item);
-    var right = state.rightItem(item);
-    if (left is ArrowCubit && right is ArrowCubit) {
-      if (left.state.direction != right.state.direction) {
-        //merge
-        left.updatePosition(Offset(0, simSize.hUnit));
-        right.updatePosition(Offset(0, simSize.hUnit));
-        item.updatePosition(Offset(0, simSize.hUnit));
-        left.setOpacity(0);
-        right.setOpacity(0);
-        item.setOpacity(0);
-        var inheritedWidth = 0.0;
-        var rightAfterRight = state.rightItem(right);
-        if (rightAfterRight is FloorCubit) {
-          inheritedWidth = rightAfterRight.state.size.dx - simSize.wUnit / 2;
-        }
-        var leftAfterLeft = state.leftItem(left);
-        if (leftAfterLeft is FloorCubit) {
-          leftAfterLeft.updateSize(Offset(inheritedWidth, 0));
-        }
-        await Future.delayed(const Duration(milliseconds: 200));
-        if (rightAfterRight is FloorCubit) {
-          state.removeItem(rightAfterRight);
-        }
+    var step = state.getStep(item);
+    if (step == null) return false;
+    var rightStep = state.rightStep(step);
+    if (rightStep == null) return false;
 
-        var indLeft = state.getNumberIndex(left);
-        var indRight = state.getNumberIndex(right);
-        if (indLeft != null && indRight != null) {
-          board.add(EquationBoardEventMergeNumbers(
-              indLeft: indLeft, indRight: indRight));
-        }
+    var left = step.arrow;
+    var right = rightStep.arrow;
 
-        state.removeItem(right);
-        state.removeItem(item);
-        state.removeItem(left);
+    if (left.state.direction != right.state.direction) {
+      //merge
+      left.updatePosition(Offset(0, simSize.hUnit));
+      right.updatePosition(Offset(0, simSize.hUnit));
+      item.updatePosition(Offset(0, simSize.hUnit));
+      left.setOpacity(0);
+      right.setOpacity(0);
+      item.setOpacity(0);
+      var inheritedWidth = 0.0;
+      inheritedWidth = rightStep.floor.state.size.dx - simSize.wUnit / 2;
+      var leftStep = state.leftStep(step);
+      if (leftStep != null) {
+        leftStep.floor.updateSize(Offset(inheritedWidth, 0));
       }
+      await Future.delayed(const Duration(milliseconds: 200));
+      var indLeft = state.getNumberIndex(step);
+      var indRight = state.getNumberIndex(rightStep);
+      if (indLeft != null && indRight != null) {
+        board.add(EquationBoardEventMergeNumbers(
+            indLeft: indLeft, indRight: indRight));
+      }
+      state.removeStep(step);
+      state.removeStep(rightStep);
     }
+
     return true;
   }
 }

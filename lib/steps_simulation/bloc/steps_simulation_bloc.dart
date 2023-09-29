@@ -8,6 +8,7 @@ import 'package:matma/steps_simulation/bloc/bloc_ext/scroll_handler.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
 
 part 'steps_simulation_event.dart';
@@ -63,6 +64,7 @@ class StepsSimulationBloc
               elo = state.minimumLevelSince(item);
             }
             if (elo != null) {
+              print("elo: $elo");
               if (elo < 7 && elo > -7) {
                 await handleArrowInsertion(event, emit, board, taskCubit);
                 handled = true;

@@ -31,4 +31,20 @@ class ArrowCubit extends SimulationItemCubit<ArrowState> {
         radius: state.radius,
         animProgress: i));
   }
+
+  void refreshHard() {
+    emit(
+      ArrowState(
+          defColor: state.defColor,
+          hovColor: state.hovColor,
+          id: UniqueKey(),
+          position: state.position,
+          size: state.size,
+          color: state.color,
+          opacity: state.opacity,
+          direction: state.direction,
+          radius: state.radius,
+          animProgress: state.animProgress),
+    );
+  }
 }
