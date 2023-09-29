@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:matma/board_simulation/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
@@ -145,16 +147,14 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
   }
 }
 
-const Color defaultGrey = Color.fromARGB(255, 161, 161, 161);
-
 extension ItemsGenerator on EquationBoardBloc {
   NumberState generateNumberState(int number, Offset position) {
     assert(number >= 0);
     return NumberState(
         value: number,
-        color: const Color.fromARGB(255, 255, 217, 0),
-        defColor: const Color.fromARGB(255, 255, 217, 0),
-        hovColor: const Color.fromARGB(255, 255, 217, 0),
+        color: defaultYellow,
+        defColor: defaultYellow,
+        hovColor: defaultYellow,
         id: UniqueKey(),
         position: position,
         size: number.abs() >= 10
@@ -186,9 +186,9 @@ extension ItemsGenerator on EquationBoardBloc {
   ) {
     return SignState(
       value: sign,
-      color: const Color.fromARGB(255, 255, 217, 0),
-      defColor: const Color.fromARGB(255, 255, 217, 0),
-      hovColor: const Color.fromARGB(255, 255, 217, 0),
+      color: defaultYellow,
+      defColor: defaultYellow,
+      hovColor: defaultYellow,
       id: UniqueKey(),
       position: position,
       size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),

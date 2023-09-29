@@ -9,4 +9,11 @@ class FloorCubit extends SimulationItemCubit<FloorState> {
     state.size += Offset(delta.dx, delta.dy);
     emit(state.copy());
   }
+
+  void updateColor(Color def, Color hov) {
+    state.hovColor = hov;
+    state.defColor = def;
+    state.color = def;
+    emit(state.copy());
+  }
 }

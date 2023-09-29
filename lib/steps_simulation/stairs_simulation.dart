@@ -24,6 +24,7 @@ class StepsSimulation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<UniqueKey> blockedIds = [];
     double unit = height / 18;
     double horizUnit = width / 66;
     var simSize =
@@ -43,8 +44,25 @@ class StepsSimulation extends StatelessWidget {
         height: height,
         child: Listener(
           onPointerSignal: (event) {
-            if (event is PointerScrollEvent) {
-              if (hoverKepper != null) {
+            var hover = hoverKepper;
+            if (event is PointerScrollEvent && hover != null) {
+              var item = bloc.state.getItem(hover);
+              if (item != null) {
+                print("LAST1");
+                if (bloc.state.isLastItem(item)) {
+                  if (!blockedIds.contains(hover)) {
+                    print("once");
+                    blockedIds.add(hover);
+                    bloc.add(StepsSimulationEventScroll(hover, 1));
+                    Future.delayed(
+                            const Duration(milliseconds: 800)) //garbage delay
+                        .whenComplete(() => blockedIds.remove(hover));
+                  }
+                }
+              }
+            }
+            if (!blockedIds.contains(hoverKepper)) {
+              if (event is PointerScrollEvent && hoverKepper != null) {
                 bloc.add(StepsSimulationEventScroll(
                     hoverKepper!, event.scrollDelta.dy));
               }

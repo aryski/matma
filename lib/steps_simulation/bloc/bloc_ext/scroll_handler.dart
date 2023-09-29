@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_simulation/bloc/bloc_ext/items_merger.dart';
@@ -18,59 +19,61 @@ extension ScrollHandler on StepsSimulationBloc {
       SimulationSize simSize,
       Emitter<StepsSimulationState> emit) async {
     var item = state.getItem(event.id);
+
     var minWidth = simSize.wUnit * 1.25;
     var defaultWidth = 1.25 * simSize.wUnit;
     bool isReducable = isMergeCandidate(item, state);
     var delta = -event.dy;
-    // if (item != null && state.rightItem(item) == null) {
-    //   // odpalaj strzalke przeciwna do left item
-    //   if (item is FloorCubit) {
-    //     var left = state.leftItem(item);
-    //     if (left is ArrowCubit) {
-    //       var dir = left.state.direction;
-    //       ArrowCubit arrow;
-    //       FloorCubit floor; //swap floor colors
-    //       //tutaj kluczem do tej animacji jest to ze no trzeba niestety position zupdatowac strzaleczce,
-    //       //czyli generujemy o wysokosc nizej
-    //       if (dir == Direction.up) {
-    //         arrow = generateArrowDown(
-    //             position: item.state.position +
-    //                 Offset(simSize.wUnit * 0.5, simSize.hUnit)) as ArrowCubit;
-    //         floor = generateFloor(
-    //             position: item.state.position +
-    //                 Offset(simSize.wUnit * 1, simSize.hUnit)) as FloorCubit;
-    //       } else {
-    //         arrow = generateArrowUp(
-    //             position: item.state.position +
-    //                 Offset(simSize.wUnit * 0.5, 0)) as ArrowCubit;
-    //         floor = generateFloor(
-    //             position: item.state.position +
-    //                 Offset(simSize.wUnit * 1, 0)) as FloorCubit;
-    //       }
-    //       //generate animation and arrow in opposite direction;
-    //       //walisz insert arrow i wyrasta z podziemi nie wiadomo co a potem wyrasta jej zolty kikut a ten aktualny zmienia swoj kolor xD
-    //       //zmiana koloru na koniec
-    //       state.numbers.add(StepsSimulationNumberState([arrow, floor]));
-    //       arrow.updatePosition(Offset(0, -simSize.hUnit));
-    //       floor.updatePosition(Offset(0, -simSize.hUnit));
-    //       emit(state.copy());
-    //       await Future.delayed(Duration(milliseconds: 20));
-    //       // arrow.updateHeight(1 / 2 * simSize.hUnit);
-    //       arrow.animate(1);
-    //     }
-    //   }
-    // } else {
-    if (isReducable) {
-      if (item is FloorCubit && item.state.opacity > 0) {
-        await handleMerge(item, delta, defaultWidth, state, emit);
+    if (item is FloorCubit && state.isLastItem(item)) {
+      var step = state.getStep(item);
+      if (step != null) {
+        var dir = step.arrow.state.direction;
+        ArrowCubit arrow;
+        FloorCubit floor;
+        if (dir == Direction.up) {
+          arrow = generateArrowDown(
+              position: item.state.position +
+                  Offset(simSize.wUnit * 0.5,
+                      simSize.hUnit + simSize.hUnit / 5)) as ArrowCubit;
+          floor = generateFloor(
+                  position: item.state.position +
+                      Offset(simSize.wUnit * 1, simSize.hUnit + simSize.hUnit))
+              as FloorCubit;
+        } else {
+          arrow = generateArrowUp(
+              position: item.state.position +
+                  Offset(simSize.wUnit * 0.5, 0)) as ArrowCubit;
+          floor = generateFloor(
+                  position: item.state.position + Offset(simSize.wUnit * 1, 0))
+              as FloorCubit;
+        }
+        //generate animation and arrow in opposite direction;
+        //walisz insert arrow i wyrasta z podziemi nie wiadomo co a potem wyrasta jej zolty kikut a ten aktualny zmienia swoj kolor xD
+        //zmiana koloru na koniec
+        state.numbers.add(StepsSimulationNumberState(
+            [StepsSimulationDefaultItem(arrow: arrow, floor: floor)]));
+
+        emit(state.copy());
+        await Future.delayed(Duration(milliseconds: 20));
+        arrow.updatePosition(Offset(0, -simSize.hUnit));
+        floor.updatePosition(Offset(0, -simSize.hUnit));
+        floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
+        item.updateColor(defaultGrey, darkenColor(defaultGrey, 20));
+        // arrow.updateHeight(1 / 2 * simSize.hUnit);
+        // arrow.animate(1);
       }
     } else {
-      if (item is FloorCubit && item.state.opacity > 0) {
-        //adjusting delta, so the width is at least endW
-        handleSplitJoin(item, delta, minWidth, simSize, state, emit);
+      if (isReducable) {
+        if (item is FloorCubit && item.state.opacity > 0) {
+          await handleMerge(item, delta, defaultWidth, state, emit);
+        }
+      } else {
+        if (item is FloorCubit && item.state.opacity > 0) {
+          //adjusting delta, so the width is at least endW
+          handleSplitJoin(item, delta, minWidth, simSize, state, emit);
+        }
       }
     }
-    // }
   }
 
   List<int> currentNumbers() {
@@ -92,12 +95,6 @@ extension ScrollHandler on StepsSimulationBloc {
 
     item.updateSize(Offset(delta, 0));
     if (item.state.size.dx > 1.25 * simSize.wUnit) {
-      //rozbijanie liczby
-      //czyli rozbijam liczbe na dwa tak naprawde xd
-      //wieksze niz limit
-      //TODO
-      //split if not splited //split na itemsie
-
       var myStep = state.getStep(item);
       if (myStep != null) {
         int? numberInd = state.getNumberIndex(myStep);

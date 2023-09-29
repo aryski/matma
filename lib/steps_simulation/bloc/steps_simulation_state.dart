@@ -37,6 +37,9 @@ class StepsSimulationState {
   void removeStep(StepsSimulationDefaultItem step) {
     for (var number in numbers) {
       number.steps.remove(step);
+      if (number.steps.isEmpty) {
+        numbers.remove(number);
+      }
     }
   }
 
@@ -212,6 +215,15 @@ class StepsSimulationState {
       }
     }
     return null;
+  }
+
+  bool isFirstStep(StepsSimulationDefaultItem step) {
+    return numbers.first.steps.first == step;
+  }
+
+  bool isLastItem(SimulationItemCubit item) {
+    //steps might be empty!!!!
+    return numbers.last.steps.last.floor == item;
   }
 
   void moveAllSince(SimulationItemCubit item, Offset offset) {
