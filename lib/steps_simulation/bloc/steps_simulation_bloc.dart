@@ -35,6 +35,7 @@ class StepsSimulationBloc
   final SimulationSize simSize;
   final List<UniqueKey> lockedIds = [];
   final TaskSimulationCubit taskCubit;
+  bool isInsertionAnimation = false;
 
   @override
   StepsSimulationBloc(this.simSize, this.board, this.taskCubit)
@@ -47,7 +48,10 @@ class StepsSimulationBloc
     });
 
     on<StepsSimulationEventPointerDown>((event, emit) async {
-      await handleClick(state, event, simSize, emit);
+      if (!isInsertionAnimation) {
+        print("xd");
+        await handleClick(state, event, simSize, emit);
+      }
     });
 
     on<StepsSimulationEventPointerUp>((event, emit) async {
@@ -64,9 +68,11 @@ class StepsSimulationBloc
               elo = state.minimumLevelSince(item);
             }
             if (elo != null) {
-              print("elo: $elo");
               if (elo < 7 && elo > -7) {
+                //arrowInsertion
+                isInsertionAnimation = true;
                 await handleArrowInsertion(event, emit, board, taskCubit);
+                isInsertionAnimation = false;
                 handled = true;
               }
             }

@@ -88,10 +88,8 @@ class StepsSimulationState {
     }
     if (result) {
       if (max) {
-        print("MAX: $maximum");
         return maximum;
       } else {
-        print("MIN: $minimum");
         return minimum;
       }
     }
@@ -103,7 +101,6 @@ class StepsSimulationState {
     for (var number in numbers) {
       for (int i = 0; i < number.steps.length; i++) {
         if (number.steps[i] == step) {
-          print("XDONE");
           number.steps[i] = replacement;
           return;
         }

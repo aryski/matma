@@ -6,13 +6,19 @@ class SimulationItemCubit<T extends SimulationItemState> extends Cubit<T> {
   SimulationItemCubit(super.initialState);
 
   void updatePosition(Offset delta) {
+    print(
+        "${state.position} ${state.position + delta} updating $this position");
     state.position += delta;
     emit(state.copy() as T);
   }
 
   void updatePositionDelayed(Offset delta, Duration delay) async {
+    print(
+        "${state.position} ${state.position + delta} updating start $this position");
     await Future.delayed(delay);
     state.position += delta;
+    print(
+        "${state.position} ${state.position + delta} updating end $this position");
 
     emit(state.copy() as T);
   }

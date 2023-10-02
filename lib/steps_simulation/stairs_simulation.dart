@@ -31,7 +31,7 @@ class StepsSimulation extends StatelessWidget {
     var simSize =
         SimulationSize(hUnit: unit, wUnit: horizUnit, hUnits: 15, wUnits: 66);
     var eqCubit = EquationBoardBloc(
-        init: EquationBoardState(), simSize: simSize, initNumbers: [2, -3]);
+        init: EquationBoardState(), simSize: simSize, initNumbers: [1]);
     var taskCubit = TaskSimulationCubit();
     var bloc = StepsSimulationBloc(simSize, eqCubit, taskCubit);
     return MultiBlocProvider(
@@ -49,10 +49,8 @@ class StepsSimulation extends StatelessWidget {
             if (event is PointerScrollEvent && hover != null) {
               var item = bloc.state.getItem(hover);
               if (item != null) {
-                print("LAST1");
                 if (bloc.state.isLastItem(item)) {
                   if (!blockedIds.contains(hover)) {
-                    print("once");
                     blockedIds.add(hover);
                     bloc.add(StepsSimulationEventScroll(hover, 1));
                     Future.delayed(

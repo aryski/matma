@@ -34,20 +34,17 @@ extension ScrollHandler on StepsSimulationBloc {
           board.add(EquationBoardEventAddNumber(value: -1));
           arrow = generateArrowDown(
               position: item.state.position +
-                  Offset(simSize.wUnit * 0.5,
-                      simSize.hUnit + simSize.hUnit / 5)) as ArrowCubit;
+                  Offset(
+                      simSize.wUnit * 0.5, simSize.hUnit + simSize.hUnit / 5));
           floor = generateFloor(
-                  position: item.state.position +
-                      Offset(simSize.wUnit * 1, simSize.hUnit + simSize.hUnit))
-              as FloorCubit;
+              position: item.state.position +
+                  Offset(simSize.wUnit * 1, simSize.hUnit + simSize.hUnit));
         } else {
           board.add(EquationBoardEventAddNumber(value: 1));
           arrow = generateArrowUp(
-              position: item.state.position +
-                  Offset(simSize.wUnit * 0.5, 0)) as ArrowCubit;
+              position: item.state.position + Offset(simSize.wUnit * 0.5, 0));
           floor = generateFloor(
-                  position: item.state.position + Offset(simSize.wUnit * 1, 0))
-              as FloorCubit;
+              position: item.state.position + Offset(simSize.wUnit * 1, 0));
         }
         //generate animation and arrow in opposite direction;
         //walisz insert arrow i wyrasta z podziemi nie wiadomo co a potem wyrasta jej zolty kikut a ten aktualny zmienia swoj kolor xD
@@ -128,8 +125,7 @@ extension ScrollHandler on StepsSimulationBloc {
         }
       }
     }
-    print(item.state.size.dx);
-    print(1.25 * simSize.wUnit);
+
     if (item.state.size.dx <= 1.25 * simSize.wUnit) {
       var step = state.getStep(item);
       if (step != null) {

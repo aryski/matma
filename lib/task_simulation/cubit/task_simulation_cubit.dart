@@ -25,7 +25,6 @@ class TaskSimulationCubit extends Cubit<String> {
   }
 
   void insertedOpposite() {
-    print("domne");
     recent.add(GameEvents.insertedOpposite);
     _nextTask();
   }

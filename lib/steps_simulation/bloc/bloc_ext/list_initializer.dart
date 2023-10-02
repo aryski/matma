@@ -30,10 +30,13 @@ extension Initializer on StepsSimulationBloc {
       if (number > 0) {
         for (int i = 0; i < number; i++) {
           var pos = Offset(currentLeft, currentTop);
-          items.add(StepsSimulationDefaultItem(
-              arrow: generateArrowUp(position: pos, delta: Offset.zero),
-              floor: generateFloor(
-                  position: pos, delta: Offset(simSize.wUnit / 2, 0))));
+          ArrowCubit arrow = generateArrowUp(position: pos, delta: Offset.zero);
+          FloorCubit floor =
+              generateFloor(position: pos, delta: Offset(simSize.wUnit / 2, 0));
+          if (i + 1 == number && init.last == number) {
+            floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
+          }
+          items.add(StepsSimulationDefaultItem(arrow: arrow, floor: floor));
           currentTop -= simSize.hUnit;
           currentLeft += simSize.wUnit;
         }
