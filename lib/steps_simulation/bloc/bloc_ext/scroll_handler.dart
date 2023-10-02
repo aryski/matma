@@ -54,7 +54,7 @@ extension ScrollHandler on StepsSimulationBloc {
         //zmiana koloru na koniec
         state.numbers.add(StepsSimulationNumberState(
             [StepsSimulationDefaultItem(arrow: arrow, floor: floor)]));
-
+        taskCubit.insertedOpposite();
         emit(state.copy());
         await Future.delayed(Duration(milliseconds: 20));
         arrow.updatePosition(Offset(0, -simSize.hUnit));

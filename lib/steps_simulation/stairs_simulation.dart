@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
 import 'package:matma/board_simulation/equation_board.dart';
@@ -71,7 +72,7 @@ class StepsSimulation extends StatelessWidget {
           child: Container(
             height: 18 * unit,
             width: 66 * horizUnit,
-            color: const Color.fromARGB(255, 23, 33, 50),
+            color: defaultBackground,
             child: Stack(
               children: [
                 const Align(
@@ -82,17 +83,6 @@ class StepsSimulation extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 4 * unit,
-                  ),
-                  child: const Center(child: Tutorial()),
-                ),
-                SizedBox(
-                  height: 18 * unit,
-                  width: 66 * horizUnit,
-                  child: EquationBoard(unit: unit),
                 ),
                 Column(
                   children: [
@@ -154,6 +144,17 @@ class StepsSimulation extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 4 * unit,
+                  ),
+                  child: const Center(child: Tutorial()),
+                ),
+                SizedBox(
+                  height: 18 * unit,
+                  width: 66 * horizUnit,
+                  child: EquationBoard(unit: unit),
                 ),
               ],
             ),

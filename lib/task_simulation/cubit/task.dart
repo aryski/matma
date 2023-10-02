@@ -34,4 +34,5 @@ enum GameEvents {
   merged,
   splited,
   scrolled,
+  insertedOpposite,
 }

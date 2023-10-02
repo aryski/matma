@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/main.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
@@ -8,7 +9,7 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 23, 33, 50),
+      backgroundColor: defaultBackground,
       body: Center(
           child: Column(children: [
         Spacer(),

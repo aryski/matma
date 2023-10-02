@@ -1,8 +1,8 @@
 import 'package:matma/task_simulation/cubit/task.dart';
 
-var _endScrollSplitedTask = Task(instructions: [
+var _endOppositeAddTask = Task(instructions: [
   Instruction(
-      text: 'Udało Ci się rozdzielić liczbę!',
+      text: 'Udało Ci się dodać przeciwną strzałkę!',
       time: const Duration(seconds: 3)),
   Instruction(text: 'Gratki.', time: const Duration(seconds: 2)),
   Instruction(text: 'Jesteś już gotowy.', time: const Duration(seconds: 2)),
@@ -10,15 +10,31 @@ var _endScrollSplitedTask = Task(instructions: [
   Instruction(text: '', time: Duration.zero),
 ], onEvents: []);
 
-var _endScrollMergedTask = Task(instructions: [
+var _endScrollSplitedTaskHandleOpposite = Task(instructions: [
+  Instruction(
+      text: 'Udało Ci się rozdzielić liczbę!',
+      time: const Duration(seconds: 3)),
+  Instruction(text: 'Gratki.', time: const Duration(seconds: 2)),
+  Instruction(
+      text: 'Jeszcze tylko ostatni quest.', time: const Duration(seconds: 2)),
+  Instruction(text: 'Scrolluj po żółtym.', time: const Duration(seconds: 10)),
+  Instruction(text: '', time: Duration.zero),
+], onEvents: [
+  OnEvent(requiredEvent: GameEvents.insertedOpposite, task: _endOppositeAddTask)
+]);
+
+var _endScrollMergedTaskHandleOpposite = Task(instructions: [
   Instruction(
       text: 'Udało Ci się zredukować liczby!',
       time: const Duration(seconds: 3)),
   Instruction(text: 'Gratki.', time: const Duration(seconds: 2)),
-  Instruction(text: 'Jesteś już gotowy.', time: const Duration(seconds: 2)),
-  Instruction(text: 'bambiku.', time: const Duration(seconds: 2)),
+  Instruction(
+      text: 'Jeszcze tylko ostatni quest.', time: const Duration(seconds: 2)),
+  Instruction(text: 'Scrolluj po żółtym.', time: const Duration(seconds: 10)),
   Instruction(text: '', time: Duration.zero),
-], onEvents: []);
+], onEvents: [
+  OnEvent(requiredEvent: GameEvents.insertedOpposite, task: _endOppositeAddTask)
+]);
 
 var _performSplitedTask = Task(instructions: [
   Instruction(
@@ -32,7 +48,9 @@ var _performSplitedTask = Task(instructions: [
       text: 'Strzałki muszą mieć takie same kolory.',
       time: const Duration(seconds: 7)),
 ], onEvents: [
-  OnEvent(requiredEvent: GameEvents.splited, task: _endScrollSplitedTask)
+  OnEvent(
+      requiredEvent: GameEvents.splited,
+      task: _endScrollSplitedTaskHandleOpposite)
 ]);
 var _performMergedTask = Task(instructions: [
   Instruction(
@@ -46,7 +64,9 @@ var _performMergedTask = Task(instructions: [
       text: 'Strzałki muszą mieć różne kolory.',
       time: const Duration(seconds: 7)),
 ], onEvents: [
-  OnEvent(requiredEvent: GameEvents.merged, task: _endScrollMergedTask)
+  OnEvent(
+      requiredEvent: GameEvents.merged,
+      task: _endScrollMergedTaskHandleOpposite)
 ]);
 
 var _playGreyTask = Task(
