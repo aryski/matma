@@ -11,7 +11,8 @@ extension ItemsGenerator on StepsSimulationBloc {
   ArrowCubit generateArrowUp(
       {required Offset position,
       Offset delta = Offset.zero,
-      double animationProgress = 1.0}) {
+      double animationProgress = 1.0,
+      Offset? size}) {
     position += delta;
     return ArrowCubit(
       ArrowState(
@@ -20,7 +21,7 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultGreen, 20),
         id: UniqueKey(),
         position: position,
-        size: Offset(simSize.wUnit, simSize.hUnit),
+        size: size ?? Offset(simSize.wUnit, simSize.hUnit),
         opacity: 1.0,
         direction: Direction.up,
         radius: simSize.wUnit / 15,
@@ -32,7 +33,8 @@ extension ItemsGenerator on StepsSimulationBloc {
   ArrowCubit generateArrowDown(
       {required Offset position,
       Offset delta = Offset.zero,
-      double animationProgress = 1.0}) {
+      double animationProgress = 1.0,
+      Offset? size}) {
     position += delta;
     return ArrowCubit(
       ArrowState(
@@ -41,7 +43,7 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultRed, 20),
         id: UniqueKey(),
         position: position,
-        size: Offset(simSize.wUnit, simSize.hUnit),
+        size: size ?? Offset(simSize.wUnit, simSize.hUnit),
         opacity: 1.0,
         direction: Direction.down,
         radius: simSize.wUnit / 15,
@@ -53,7 +55,8 @@ extension ItemsGenerator on StepsSimulationBloc {
   FloorCubit generateFloor(
       {required Offset position,
       Offset delta = Offset.zero,
-      double widthRatio = 1.25}) {
+      double widthRatio = 1.25,
+      Offset? size}) {
     position += delta;
     return FloorCubit(
       FloorState(
@@ -62,7 +65,7 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultGrey, 20),
         id: UniqueKey(),
         position: position,
-        size: Offset(simSize.wUnit * widthRatio, simSize.hUnit / 5),
+        size: size ?? Offset(simSize.wUnit * widthRatio, simSize.hUnit / 5),
         opacity: 1.0,
         radius: simSize.wUnit / 15,
       ),
@@ -72,7 +75,8 @@ extension ItemsGenerator on StepsSimulationBloc {
   FloorCubit generateYellowFloor(
       {required Offset position,
       Offset delta = Offset.zero,
-      double widthRatio = 1.25}) {
+      double widthRatio = 1.25,
+      Offset? size}) {
     position += delta;
     return FloorCubit(
       FloorState(
@@ -81,7 +85,7 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultYellow, 20),
         id: UniqueKey(),
         position: position,
-        size: Offset(simSize.wUnit * widthRatio, simSize.hUnit / 5),
+        size: size ?? Offset(simSize.wUnit * widthRatio, simSize.hUnit / 5),
         opacity: 1.0,
         radius: simSize.wUnit / 15,
       ),

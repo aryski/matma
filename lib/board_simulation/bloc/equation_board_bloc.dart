@@ -122,7 +122,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
         }
       }
     });
-    on<EquationBoardEventMergeNumbers>((event, emit) async {
+    on<EquationBoardEventNumbersReduction>((event, emit) async {
       var itemIndLeft = state.itemIndex(event.indLeft);
       var itemIndRight = state.itemIndex(event.indRight);
       print("merge: ${event.indLeft} ${event.indRight}");

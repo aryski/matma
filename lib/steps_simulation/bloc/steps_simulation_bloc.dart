@@ -41,7 +41,7 @@ class StepsSimulationBloc
   StepsSimulationBloc(this.simSize, this.board, this.taskCubit)
       : super(StepsSimulationState(
             simSize: simSize, numbers: [], unorderedItems: {})) {
-    state.numbers.addAll(initializeItemsList());
+    state.numbers.addAll(initializeSimulationItems());
 
     on<StepsSimulationEventScroll>((event, emit) async {
       await handleScroll(state, event, simSize, emit);

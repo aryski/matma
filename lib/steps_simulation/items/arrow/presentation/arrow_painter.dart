@@ -18,7 +18,12 @@ class ArrowPainter extends CustomPainter {
     var radius = state.radius;
     final width = state.size.dx;
     final height = state.size.dy;
-    final tHeight = 3 * sqrt(3) / 6 * width;
+    var xd = 3 * sqrt(3) / 6 * width;
+    if (height < xd) {
+      xd = height;
+    }
+    final tHeight = xd; // dodaj w zaleznosci od wysokosci
+
     // var progress = state.animProgress; TODO fix so you just display current state
     var progress = animationProgress;
     path.addPath(

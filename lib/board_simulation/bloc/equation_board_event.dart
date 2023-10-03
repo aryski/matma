@@ -8,11 +8,11 @@ sealed class EquationBoardEvent {}
 //   EquationBoardEventUpdate(this.updatedNumbers);
 // }
 
-class EquationBoardEventMergeNumbers extends EquationBoardEvent {
+class EquationBoardEventNumbersReduction extends EquationBoardEvent {
   final int indLeft;
   final int indRight;
 
-  EquationBoardEventMergeNumbers(
+  EquationBoardEventNumbersReduction(
       {required this.indLeft, required this.indRight});
 }
 

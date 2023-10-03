@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/steps_simulation/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
@@ -35,40 +36,26 @@ extension ArrowInsertor on StepsSimulationBloc {
         if (item.state.direction == Direction.up) {
           newStep = StepsSimulationDefaultItem(
               arrow: generateArrowUp(position: item.state.position),
-              floor: step.floor
-              // generateFloor(
-              //     position:
-              //         item.state.position + Offset(simSize.wUnit / 2, 0)),
-              );
+              floor: step.floor);
         } else if (item.state.direction == Direction.down) {
           newStep = StepsSimulationDefaultItem(
               arrow: generateArrowDown(
                   position: item.state.position + Offset(0, simSize.hUnit)),
-              floor: step.floor
-              // generateFloor(
-              //     position: item.state.position +
-              //         Offset(simSize.wUnit / 2,
-              //             2 * simSize.hUnit - simSize.hUnit / 5)),
-              );
+              floor: step.floor);
         }
 
         if (newStep != null) {
           state.replaceStep(step, newStep);
         }
       }
-      // item.updateHeight(-simSize.hUnit);
-      // item.refreshHard;
-
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
       //animate scroll
       inserted.arrow.animate(1);
       var delta = simSize.wUnit;
       inserted.floor.updateSize(Offset(delta, 0));
-      print("amigo");
       state.moveAllSince(inserted.floor, Offset(delta, 0));
       taskCubit.inserted(item.state.direction);
-      print("end: $event");
     }
   }
 
@@ -118,5 +105,59 @@ extension ArrowInsertor on StepsSimulationBloc {
     }
 
     return stepsDefault;
+  }
+
+  Future<bool> handleOppositeInsertion(
+      StepsSimulationState state,
+      SimulationItemCubit? item,
+      SimulationSize simSize,
+      Emitter<StepsSimulationState> emit) async {
+    if (item is! FloorCubit || !(state.isLastItem(item))) return false;
+    var step = state.getStep(item);
+    if (step == null) return false;
+    var dir = step.arrow.state.direction;
+    ArrowCubit arrow;
+    FloorCubit floor;
+    if (dir == Direction.up) {
+      board.add(EquationBoardEventAddNumber(value: -1));
+      arrow = generateArrowDown(
+          animationProgress: 0,
+          position: item.state.position +
+              Offset(simSize.wUnit * 0.5, 0 + simSize.hUnit / 5),
+          size: Offset(simSize.wUnit, 0));
+      floor = generateFloor(
+          position: item.state.position + Offset(simSize.wUnit * 1, 0),
+          size: Offset(0, simSize.hUnit / 5));
+    } else {
+      board.add(EquationBoardEventAddNumber(value: 1));
+      arrow = generateArrowUp(
+          animationProgress: 0.0,
+          position: item.state.position + Offset(simSize.wUnit * 0.5, 0),
+          size: Offset(simSize.wUnit, 0));
+      floor = generateFloor(
+          position: item.state.position + Offset(simSize.wUnit * 1, 0),
+          size: Offset(0, simSize.hUnit / 5));
+    }
+    state.numbers.add(StepsSimulationNumberState(
+        [StepsSimulationDefaultItem(arrow: arrow, floor: floor)]));
+    taskCubit.insertedOpposite();
+    emit(state.copy());
+    await Future.delayed(Duration(milliseconds: 20));
+    if (dir == Direction.up) {
+      floor.updatePosition(Offset(0, simSize.hUnit));
+    } else {
+      arrow.updatePosition(Offset(0, -simSize.hUnit));
+      floor.updatePosition(Offset(0, -simSize.hUnit));
+    }
+
+    floor.updateSize(Offset(1.25 * simSize.wUnit, 0));
+    arrow.animate(1.0);
+    arrow.updateHeight(simSize.hUnit);
+
+    floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
+    item.updateColor(defaultGrey, darkenColor(defaultGrey, 20));
+    return true;
+    // arrow.updateHeight(1 / 2 * simSize.hUnit);
+    // arrow.animate(1);
   }
 }

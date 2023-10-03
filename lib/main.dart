@@ -15,7 +15,7 @@ void main() {
     home: const Padding(
       padding: EdgeInsets.all(20.0),
       child: Scaffold(
-        body: Center(child: Menu()),
+        body: Center(child: Tutorial()), // Menu()),
       ),
     ),
   ));
