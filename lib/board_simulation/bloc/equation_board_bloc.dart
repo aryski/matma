@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
@@ -81,23 +82,34 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           if (cubit is NumberCubit) {
             cubit.updateValue(event.leftValue.abs());
           }
+          print("split!");
+          //generowanie pustego ziomeczka ktory sie wyswietla jako pusty
+          // a potem jego update????
+          //ciezko powiedziec TODOo
           state.items.insert(
               itemInd + 1,
-              NumberCubit(
-                generateNumberState(
-                    event.rightValue.abs(),
-                    Offset(cubit.state.position.dx + cubit.state.size.dx,
-                        cubit.state.position.dy)),
-              ));
+              generateAnimatedNumberCubit(
+                  event.rightValue.abs(),
+                  Offset(cubit.state.position.dx + cubit.state.size.dx,
+                      cubit.state.position.dy))
+              // NumberCubit(
+              //   generateNumberState(
+              //       event.rightValue.abs(),
+              //       Offset(cubit.state.position.dx + cubit.state.size.dx,
+              //           cubit.state.position.dy)),
+              // ),
+              );
           spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
           state.items.insert(
-              itemInd + 1,
-              SignCubit(
-                generateSignState(
-                    event.rightValue > 0 ? Signs.addition : Signs.substraction,
-                    Offset(cubit.state.position.dx + cubit.state.size.dx,
-                        cubit.state.position.dy)),
-              ));
+            itemInd + 1,
+            SignCubit(
+              generateSignState(
+                  event.rightValue > 0 ? Signs.addition : Signs.substraction,
+                  Offset(cubit.state.position.dx + cubit.state.size.dx,
+                      cubit.state.position.dy)),
+            ),
+          );
+
           spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
         }
 
@@ -225,5 +237,15 @@ extension ItemsGenerator on EquationBoardBloc {
       opacity: 1,
       radius: 5,
     );
+  }
+
+  NumberCubit generateAnimatedNumberCubit(int number, Offset position) {
+    var result = generateNumberState(number, position);
+    result.opacity = 0;
+    var result2 = NumberCubit(result);
+    Future.delayed(Duration(milliseconds: 20), () {
+      result2.setOpacity(1);
+    });
+    return result2;
   }
 }

@@ -5,6 +5,11 @@ import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.d
 class FloorCubit extends SimulationItemCubit<FloorState> {
   FloorCubit(super.initialState);
 
+  Future<void> updateSizeDelayed(Duration delay, Offset delta) async {
+    await Future.delayed(delay);
+    updateSize(delta);
+  }
+
   void updateSize(Offset delta) {
     state.size += Offset(delta.dx, delta.dy);
     emit(state.copy());

@@ -142,7 +142,7 @@ extension ArrowInsertor on StepsSimulationBloc {
         [StepsSimulationDefaultItem(arrow: arrow, floor: floor)]));
     taskCubit.insertedOpposite();
     emit(state.copy());
-    await Future.delayed(Duration(milliseconds: 20));
+    await Future.delayed(const Duration(milliseconds: 20));
     if (dir == Direction.up) {
       floor.updatePosition(Offset(0, simSize.hUnit));
     } else {
@@ -150,14 +150,13 @@ extension ArrowInsertor on StepsSimulationBloc {
       floor.updatePosition(Offset(0, -simSize.hUnit));
     }
 
-    floor.updateSize(Offset(1.25 * simSize.wUnit, 0));
+    floor.updateSizeDelayed(
+        const Duration(milliseconds: 200), Offset(1.25 * simSize.wUnit, 0));
     arrow.animate(1.0);
     arrow.updateHeight(simSize.hUnit);
 
     floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
     item.updateColor(defaultGrey, darkenColor(defaultGrey, 20));
     return true;
-    // arrow.updateHeight(1 / 2 * simSize.hUnit);
-    // arrow.animate(1);
   }
 }
