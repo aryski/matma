@@ -21,6 +21,12 @@ class SimulationItemCubit<T extends SimulationItemState> extends Cubit<T> {
     emit(state.copy() as T);
   }
 
+  Future<void> setOpacityDelayed(double opacity, Duration delay) async {
+    await Future.delayed(delay);
+    state.opacity = opacity;
+    emit(state.copy() as T);
+  }
+
   void hoverStart() {
     state.color = state.hovColor;
     emit(state.copy() as T);

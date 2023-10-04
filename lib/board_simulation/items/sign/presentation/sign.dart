@@ -19,28 +19,32 @@ class Sign extends StatelessWidget {
           return TweenAnimatedPosition(
             initialPosition: initialState.position,
             updatedPosition: state.position,
-            child: DefaultTweenAnimationBuilder(
-              initial: initialState.size,
-              updated: state.size,
-              builder: (context, size, child) {
-                var tweenState = state.copy()..size = size;
-                return SizedBox(
-                  width: tweenState.size.dx,
-                  height: tweenState.size.dy,
-                  child: Container(
-                    color: Colors.grey.withOpacity(0.0),
-                    child: Center(
-                      child: Text(
-                        tweenState.value == Signs.addition ? "+" : "-",
-                        style: TextStyle(
-                            color: state.color,
-                            fontWeight: FontWeight.bold,
-                            fontSize: tweenState.size.dx),
+            child: AnimatedOpacity(
+              opacity: state.opacity,
+              duration: const Duration(milliseconds: 200),
+              child: DefaultTweenAnimationBuilder(
+                initial: initialState.size,
+                updated: state.size,
+                builder: (context, size, child) {
+                  var tweenState = state.copy()..size = size;
+                  return SizedBox(
+                    width: tweenState.size.dx,
+                    height: tweenState.size.dy,
+                    child: Container(
+                      color: Colors.grey.withOpacity(0.0),
+                      child: Center(
+                        child: Text(
+                          tweenState.value == Signs.addition ? "+" : "-",
+                          style: TextStyle(
+                              color: state.color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tweenState.size.dx),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           );
         },

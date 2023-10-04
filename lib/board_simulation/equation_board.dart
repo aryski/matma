@@ -32,6 +32,10 @@ class EquationBoard extends StatelessWidget {
         ...state.extraItems.map((cubit) {
           if (cubit is ShadowNumberCubit) {
             return ShadowNumber(cubit: cubit, key: cubit.state.id);
+          } else if (cubit is NumberCubit) {
+            return Number(cubit: cubit, key: cubit.state.id);
+          } else if (cubit is SignCubit) {
+            return Sign(cubit: cubit, key: cubit.state.id);
           } else {
             return const SizedBox.shrink();
           }

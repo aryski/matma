@@ -45,6 +45,7 @@ extension UpdateHandler on EquationBoardBloc {
       var number = updatedNumbers[i];
       SignState? signState;
       if (number > 0 && i != 0) {
+        //TODO1
         signState = BoardItemsGenerator.generateSignState(
             Signs.addition, Offset(length, top), simSize);
       } else if (number < 0) {

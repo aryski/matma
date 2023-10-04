@@ -31,7 +31,9 @@ class StepsSimulation extends StatelessWidget {
     var simSize =
         SimulationSize(hUnit: unit, wUnit: horizUnit, hUnits: 15, wUnits: 66);
     var eqCubit = EquationBoardBloc(
-        init: EquationBoardState(), simSize: simSize, initNumbers: [-1]);
+        init: EquationBoardState(),
+        simSize: simSize,
+        initNumbers: [2, -3, 2, -1]);
     var taskCubit = TaskSimulationCubit();
     var bloc = StepsSimulationBloc(simSize, eqCubit, taskCubit);
     return MultiBlocProvider(

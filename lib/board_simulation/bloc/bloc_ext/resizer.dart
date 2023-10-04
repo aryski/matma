@@ -16,20 +16,6 @@ extension Resizer on EquationBoardBloc {
     }
   }
 
-  removeWithPositionUpdate(SimulationItemCubit item) {
-    int? ind;
-    for (int i = 0; i < state.items.length; i++) {
-      if (state.items[i] == item) {
-        ind = i;
-      }
-    }
-    if (ind != null) {
-      double delta = state.items[ind].state.size.dx;
-      spread(ind, -delta);
-      state.items.removeAt(ind);
-    }
-  }
-
   spread(int cubitsInd, double delta) {
     for (int j = 0; j <= cubitsInd; j++) {
       state.items[j].updatePosition(Offset(-delta / 2, 0));

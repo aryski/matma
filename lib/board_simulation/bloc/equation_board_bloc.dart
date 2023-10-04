@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:matma/board_simulation/bloc/bloc_ext/number_with_sign_insertor.dart';
 
 import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
+import 'package:matma/board_simulation/bloc/bloc_ext/remover.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
@@ -45,30 +47,9 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
     });
     on<EquationBoardEventAddNumber>(
       (event, emit) {
-        // var itemInd = state.itemIndex(event.ind);
-
         var itemInd = state.itemIndex(state.numbers.length - 1);
         if (itemInd != null) {
-          var cubit = state.items[itemInd];
-          state.items.insert(
-              itemInd + 1,
-              NumberCubit(
-                generateNumberState(
-                    event.value.abs(),
-                    Offset(cubit.state.position.dx + cubit.state.size.dx,
-                        cubit.state.position.dy)),
-              ));
-          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
-          state.items.insert(
-              itemInd + 1,
-              SignCubit(
-                generateSignState(
-                    event.value > 0 ? Signs.addition : Signs.substraction,
-                    Offset(cubit.state.position.dx + cubit.state.size.dx,
-                        cubit.state.position.dy)),
-              ));
-          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
-
+          insertNumberWithSignAfterInd(event.value, itemInd);
           emit(EquationBoardState(
               items: state.items, extraItems: state.extraItems));
         }
@@ -82,35 +63,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           if (cubit is NumberCubit) {
             cubit.updateValue(event.leftValue.abs());
           }
-          print("split!");
-          //generowanie pustego ziomeczka ktory sie wyswietla jako pusty
-          // a potem jego update????
-          //ciezko powiedziec TODOo
-          state.items.insert(
-              itemInd + 1,
-              generateAnimatedNumberCubit(
-                  event.rightValue.abs(),
-                  Offset(cubit.state.position.dx + cubit.state.size.dx,
-                      cubit.state.position.dy))
-              // NumberCubit(
-              //   generateNumberState(
-              //       event.rightValue.abs(),
-              //       Offset(cubit.state.position.dx + cubit.state.size.dx,
-              //           cubit.state.position.dy)),
-              // ),
-              );
-          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
-          state.items.insert(
-            itemInd + 1,
-            SignCubit(
-              generateSignState(
-                  event.rightValue > 0 ? Signs.addition : Signs.substraction,
-                  Offset(cubit.state.position.dx + cubit.state.size.dx,
-                      cubit.state.position.dy)),
-            ),
-          );
-
-          spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
+          insertNumberWithSignAfterInd(event.rightValue, itemInd);
         }
 
         emit(EquationBoardState(
@@ -190,7 +143,8 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
 }
 
 extension ItemsGenerator on EquationBoardBloc {
-  NumberState generateNumberState(int number, Offset position) {
+  NumberState generateNumberState(
+      {required int number, required Offset position, double? opacity}) {
     assert(number >= 0);
     return NumberState(
         value: number,
@@ -202,7 +156,7 @@ extension ItemsGenerator on EquationBoardBloc {
         size: number.abs() >= 10
             ? Offset(simSize.wUnit * 4, simSize.hUnit * 2)
             : Offset(simSize.wUnit * 2, simSize.hUnit * 2),
-        opacity: 1,
+        opacity: opacity ?? 1,
         radius: 5,
         textKey: UniqueKey());
   }
@@ -223,9 +177,7 @@ extension ItemsGenerator on EquationBoardBloc {
   }
 
   SignState generateSignState(
-    Signs sign,
-    Offset position,
-  ) {
+      {required Signs sign, required Offset position, double? opacity}) {
     return SignState(
       value: sign,
       color: defaultYellow,
@@ -234,18 +186,8 @@ extension ItemsGenerator on EquationBoardBloc {
       id: UniqueKey(),
       position: position,
       size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),
-      opacity: 1,
+      opacity: opacity ?? 1,
       radius: 5,
     );
-  }
-
-  NumberCubit generateAnimatedNumberCubit(int number, Offset position) {
-    var result = generateNumberState(number, position);
-    result.opacity = 0;
-    var result2 = NumberCubit(result);
-    Future.delayed(Duration(milliseconds: 20), () {
-      result2.setOpacity(1);
-    });
-    return result2;
   }
 }
