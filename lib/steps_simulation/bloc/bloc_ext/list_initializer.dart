@@ -14,12 +14,12 @@ extension Initializer on StepsSimulationBloc {
     var currentLeft = simSize.wUnit * 2;
     var id = UniqueKey();
     state.unorderedItems[id] = EquatorCubit(EquatorState(
-        defColor: const Color.fromARGB(255, 33, 45, 67),
-        hovColor: const Color.fromARGB(255, 33, 45, 67),
+        defColor: defaultEquator,
+        hovColor: defaultEquator,
         id: id,
         position: Offset(0, currentTop + simSize.hUnit),
         size: Offset(simSize.wUnit * (simSize.wUnits), simSize.hUnit / 5),
-        color: const Color.fromARGB(255, 33, 45, 67),
+        color: defaultEquator,
         opacity: 1,
         radius: simSize.wUnit / 15));
     return generateFloorsAndArrows(init, currentLeft, currentTop);

@@ -40,13 +40,15 @@ class PickMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LevelIcon(
-          active: true,
-          level: Tutorial(),
-          title: 'Tutorial',
+        LevelButton(
+          unlocked: true,
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Tutorial()));
+          },
           minature: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -62,10 +64,12 @@ class PickMenu extends StatelessWidget {
           ),
         ),
         SizedBox(width: 30),
-        LevelIcon(
-          active: false,
-          level: Tutorial(),
-          title: 'Poziom 1',
+        LevelButton(
+          unlocked: false,
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Tutorial()));
+          },
           minature: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

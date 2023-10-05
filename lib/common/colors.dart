@@ -11,6 +11,8 @@ final Color defaultRed = Color.alphaBlend(
     const Color.fromARGB(255, 249, 56, 101).withOpacity(0.9),
     defaultBackground);
 
+const Color defaultEquator = Color.fromARGB(255, 33, 45, 67);
+
 const Color defaultBackground = Color.fromARGB(255, 23, 33, 50);
 
 int _reduceNegative(int value) {

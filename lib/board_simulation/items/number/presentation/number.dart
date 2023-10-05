@@ -53,12 +53,23 @@ class Number extends StatelessWidget {
                                 duration: const Duration(milliseconds: 200),
                                 child: Center(
                                   key: state.textKey,
-                                  child: Text(
-                                    tweenState.value.abs().toString(),
-                                    style: TextStyle(
-                                        color: state.color,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: tweenState.size.dx),
+                                  child: Stack(
+                                    children: [
+                                      Text(
+                                        tweenState.value.abs().toString(),
+                                        style: TextStyle(
+                                            color: state.color,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: tweenState.size.dx),
+                                      ),
+                                      // Text(
+                                      //   tweenState.value.abs().toString(),
+                                      //   style: TextStyle(
+                                      //       color: Colors.white,
+                                      //       fontWeight: FontWeight.bold,
+                                      //       fontSize: tweenState.size.dx),
+                                      // ),
+                                    ],
                                   ),
                                 )),
                           ),

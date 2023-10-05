@@ -6,16 +6,21 @@ import 'package:matma/menu/menu.dart';
 import 'package:matma/steps_simulation/stairs_simulation.dart';
 
 void main() {
+  //TODO MAP
+  //TODO
   Bloc.transformer = sequential();
   runApp(MaterialApp(
     localizationsDelegates: GlobalMaterialLocalizations.delegates,
     supportedLocales: const [Locale('pl', 'PL')],
-    theme: ThemeData(useMaterial3: true, textTheme: Typography.dense2021),
+    theme: ThemeData(
+      useMaterial3: true,
+      textTheme: Typography.dense2021,
+    ),
     color: Colors.white,
     home: const Padding(
       padding: EdgeInsets.all(20.0),
       child: Scaffold(
-        body: Center(child: Menu()), // Menu()),
+        body: Center(child: Menu()),
       ),
     ),
   ));

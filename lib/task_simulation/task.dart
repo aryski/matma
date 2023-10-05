@@ -5,12 +5,16 @@ class OnEvent {
   OnEvent({required this.requiredEvent, required this.task});
 }
 
-class Instruction {
+abstract class Instruction {}
+
+class ContinuingInstruction extends Instruction {
   final String text;
   final Duration? time;
 
-  Instruction({required this.text, this.time});
+  ContinuingInstruction({required this.text, this.time});
 }
+
+class EndInstruction extends Instruction {}
 
 class Task {
   final List<Instruction> instructions;

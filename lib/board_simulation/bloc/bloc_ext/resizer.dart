@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/board_simulation/items/board/cubit/board_cubit.dart';
+import 'package:matma/board_simulation/items/board/presentation/board.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
@@ -14,6 +16,13 @@ extension Resizer on EquationBoardBloc {
     for (int j = cubitsInd + 1; j < state.items.length; j++) {
       state.items[j].updatePosition(Offset(delta / 2, 0));
     }
+    //update boardzie
+    for (var item in state.extraItems) {
+      if (item is BoardCubit) {
+        item.updateSize(Offset(delta, 0));
+        item.updatePosition(Offset(-delta / 2, 0));
+      }
+    }
   }
 
   spread(int cubitsInd, double delta) {
@@ -23,6 +32,13 @@ extension Resizer on EquationBoardBloc {
 
     for (int j = cubitsInd + 1; j < state.items.length; j++) {
       state.items[j].updatePosition(Offset(delta / 2, 0));
+    }
+    //update
+    for (var item in state.extraItems) {
+      if (item is BoardCubit) {
+        item.updateSize(Offset(delta, 0));
+        item.updatePosition(Offset(-delta / 2, 0));
+      }
     }
   }
 }

@@ -73,8 +73,8 @@ extension ArrowsReductor on StepsSimulationBloc {
       leftStep.floor.updateSize(Offset(inheritedWidth, 0));
     }
     if (state.isFirstStep(step)) {
-      state.moveAllSince(
-          rightStep.floor, Offset(-rightStep.floor.state.size.dx, 0));
+      state.moveAllSince(rightStep.floor,
+          Offset(-rightStep.floor.state.size.dx + 1 / 2 * simSize.wUnit, 0));
       rightStep.floor.updateSize(Offset(-rightStep.floor.state.size.dx, 0));
     }
 
@@ -88,6 +88,7 @@ extension ArrowsReductor on StepsSimulationBloc {
 
     state.removeStep(step);
     state.removeStep(rightStep);
+
     if (leftStep != null && state.isLastItem(leftStep.floor)) {
       leftStep.floor.updateSize(
           Offset(-leftStep.floor.state.size.dx + 1.25 * simSize.wUnit, 0));

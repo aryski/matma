@@ -6,6 +6,7 @@ import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
 import 'package:matma/board_simulation/equation_board.dart';
+import 'package:matma/common/level_summary.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
@@ -114,6 +115,9 @@ class StepsSimulation extends StatelessWidget {
                                     cubit: cubit,
                                     key: cubit.state.id,
                                   );
+                                } else if (cubit is FloorCubit) {
+                                  return Floor(
+                                      cubit: cubit, key: cubit.state.id);
                                 } else {
                                   return const SizedBox.shrink();
                                 }
@@ -145,16 +149,13 @@ class StepsSimulation extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 4 * unit,
-                  ),
-                  child: const Center(child: Tutorial()),
-                ),
                 SizedBox(
                   height: 18 * unit,
                   width: 66 * horizUnit,
                   child: EquationBoard(unit: unit),
+                ),
+                Tutorial(
+                  unit: unit,
                 ),
               ],
             ),

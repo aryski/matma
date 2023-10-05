@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/board_simulation/items/board/cubit/board_cubit.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
@@ -63,6 +65,16 @@ extension UpdateHandler on EquationBoardBloc {
       length += numberState.size.dx;
     }
     var allMargin = (widthSpace - length) / 2 - simSize.wUnit / 6.7;
+    var boardCubit = BoardCubit(BoardState(
+        defColor: defaultEquator,
+        hovColor: defaultEquator,
+        id: UniqueKey(),
+        position: Offset(allMargin - 25, top),
+        size: Offset(length + 50, simSize.hUnit * 2),
+        color: defaultEquator,
+        opacity: 1.0,
+        radius: 20.0));
+
     for (var state in states) {
       state.position += Offset(allMargin, 0);
       if (state is SignState) {
@@ -71,6 +83,7 @@ extension UpdateHandler on EquationBoardBloc {
         cubits.add(NumberCubit(state));
       }
     }
-    return EquationBoardState(items: cubits, extraItems: []);
+
+    return EquationBoardState(items: cubits, extraItems: [boardCubit]);
   }
 }

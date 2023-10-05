@@ -11,7 +11,7 @@ extension NumberWithSignInsertor on EquationBoardBloc {
     if (itemInd < state.items.length) {
       var cubit = state.items[itemInd];
       var numberState = generateNumberState(
-          number: value.abs(),
+          number: value,
           position: Offset(cubit.state.position.dx, cubit.state.position.dy),
           opacity: 0);
 

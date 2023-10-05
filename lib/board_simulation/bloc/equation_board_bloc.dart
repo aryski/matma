@@ -133,6 +133,11 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           updateValue(leftCubit, -1);
           updateValue(rightCubit, -1);
 
+          if (state.items.isNotEmpty &&
+              state.items.first is SignCubit &&
+              (state.items.first as SignCubit).state.value == Signs.addition) {
+            removeWithPositionUpdate(state.items.first);
+          }
           emit(EquationBoardState(
               items: state.items, extraItems: state.extraItems));
         }
@@ -145,10 +150,10 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
 extension ItemsGenerator on EquationBoardBloc {
   NumberState generateNumberState(
       {required int number, required Offset position, double? opacity}) {
-    assert(number >= 0);
+    // assert(number >= 0);
     return NumberState(
-        value: number,
-        color: defaultYellow,
+        value: number.abs(),
+        color: number > 0 ? defaultGreen : defaultRed,
         defColor: defaultYellow,
         hovColor: defaultYellow,
         id: UniqueKey(),
@@ -180,7 +185,7 @@ extension ItemsGenerator on EquationBoardBloc {
       {required Signs sign, required Offset position, double? opacity}) {
     return SignState(
       value: sign,
-      color: defaultYellow,
+      color: Colors.white,
       defColor: defaultYellow,
       hovColor: defaultYellow,
       id: UniqueKey(),

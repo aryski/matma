@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/menu/level_icon/cubit/level_icon_cubit.dart';
 
-class LevelIcon extends StatelessWidget {
-  const LevelIcon(
-      {super.key,
-      required this.active,
-      required this.level,
-      required this.title,
-      required this.minature});
-  final bool active;
-  final Widget level;
-  final String title;
+class LevelButton extends StatelessWidget {
+  const LevelButton(
+      {super.key, required this.unlocked, required this.minature, this.onTap});
+  final bool unlocked;
   final Widget minature;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +25,15 @@ class LevelIcon extends StatelessWidget {
             },
             child: GestureDetector(
               onTap: () {
-                if (active) {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => level));
+                if (unlocked && onTap != null) {
+                  onTap!();
                 }
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 clipBehavior: Clip.hardEdge,
                 child: Stack(alignment: Alignment.center, children: [
-                  state && active
+                  state && unlocked
                       ? Container(
                           //tutaj jakis canvasik z rysuneczkiem
                           width: 210,
@@ -68,7 +62,7 @@ class LevelIcon extends StatelessWidget {
                                 fit: BoxFit.contain,
                               ),
                             )),
-                        active
+                        unlocked
                             ? const SizedBox.shrink()
                             : Container(
                                 //tutaj jakis canvasik z rysuneczkiem

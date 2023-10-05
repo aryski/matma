@@ -10,7 +10,7 @@ extension BoardItemsGenerator on EquationBoardBloc {
       int number, Offset position, SimulationSize simSize) {
     return NumberState(
         value: number.abs(),
-        color: defaultYellow,
+        color: number > 0 ? defaultGreen : defaultRed,
         defColor: defaultYellow,
         hovColor: defaultYellow,
         id: UniqueKey(),
@@ -27,7 +27,7 @@ extension BoardItemsGenerator on EquationBoardBloc {
       Signs sign, Offset position, SimulationSize simSize) {
     return SignState(
         value: sign,
-        color: defaultYellow,
+        color: Colors.white,
         defColor: defaultYellow,
         hovColor: defaultYellow,
         id: UniqueKey(),

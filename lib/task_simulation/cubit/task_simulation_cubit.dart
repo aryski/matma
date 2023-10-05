@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/task_simulation/cubit/task.dart';
-import 'package:matma/task_simulation/cubit/tutorial.dart';
+import 'package:matma/task_simulation/cubit/task_simulation_state.dart';
+import 'package:matma/task_simulation/task.dart';
+import 'package:matma/task_simulation/tutorial.dart';
 
-class TaskSimulationCubit extends Cubit<String> {
-  TaskSimulationCubit() : super('Hejka.') {
+class TaskSimulationCubit extends Cubit<TaskSimulationState> {
+  TaskSimulationCubit() : super(TaskSimulationStateDisplay(text: 'Hejka.')) {
     planTask(firstTutorialTask);
   }
   List<GameEvents> recent = [];
@@ -57,13 +58,17 @@ class TaskSimulationCubit extends Cubit<String> {
   void planTask(Task t) async {
     var currentInd = ind;
     for (var instruction in t.instructions) {
-      if (currentInd == ind) {
-        emit(instruction.text);
-        if (instruction.time != null) {
-          await Future.delayed(instruction.time!);
+      if (instruction is ContinuingInstruction) {
+        if (currentInd == ind) {
+          emit(TaskSimulationStateDisplay(text: instruction.text));
+          if (instruction.time != null) {
+            await Future.delayed(instruction.time!);
+          }
+        } else {
+          break;
         }
-      } else {
-        break;
+      } else if (instruction is EndInstruction) {
+        emit(TaskSimulationStateEndLevel(text: 'Koniec zabawy'));
       }
     }
   }
