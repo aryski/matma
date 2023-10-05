@@ -31,8 +31,8 @@ extension NumberWithSignInsertor on EquationBoardBloc {
       SimulationItemCubit<SimulationItemState> cubit) {
     state.items.insert(itemInd + 1, insertedCubit);
     insertedCubit.updatePositionDelayed(
-        Offset(cubit.state.size.dx, 0), Duration(milliseconds: 20));
-    insertedCubit.setOpacityDelayed(1, Duration(milliseconds: 20));
+        Offset(cubit.state.size.dx, 0), const Duration(milliseconds: 20));
+    insertedCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
     spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
   }
 }

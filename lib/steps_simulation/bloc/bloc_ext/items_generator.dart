@@ -5,7 +5,6 @@ import 'package:matma/steps_simulation/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_simulation/items/floor/%20cubit/floor_state.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
 extension ItemsGenerator on StepsSimulationBloc {
   ArrowCubit generateArrowUp(

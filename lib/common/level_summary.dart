@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/colors.dart';
-import 'package:matma/main.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
 class LevelSummary extends StatelessWidget {
@@ -48,7 +47,7 @@ class LevelSummary extends StatelessWidget {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            minature: Column(
+                            minature: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
@@ -69,7 +68,7 @@ class LevelSummary extends StatelessWidget {
                           LevelButton(
                             unlocked: true,
                             onTap: () {},
-                            minature: Column(
+                            minature: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(

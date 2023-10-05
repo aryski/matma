@@ -58,8 +58,8 @@ class LevelButton extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: FittedBox(
-                                child: minature,
                                 fit: BoxFit.contain,
+                                child: minature,
                               ),
                             )),
                         unlocked

@@ -47,9 +47,9 @@ class PickMenu extends StatelessWidget {
           unlocked: true,
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Tutorial()));
+                context, MaterialPageRoute(builder: (context) => const Tutorial()));
           },
-          minature: Column(
+          minature: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
@@ -63,14 +63,14 @@ class PickMenu extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(width: 30),
+        const SizedBox(width: 30),
         LevelButton(
           unlocked: false,
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Tutorial()));
+                context, MaterialPageRoute(builder: (context) => const Tutorial()));
           },
-          minature: Column(
+          minature: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
