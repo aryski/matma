@@ -16,7 +16,7 @@ extension Remover on EquationBoardBloc {
       spread(ind, -delta);
       state.extraItems.add(item);
       item.updatePosition(Offset(-item.state.size.dx, 0));
-      item.setOpacity(0); //TODO
+      item.setOpacity(0);
       state.items.removeAt(ind);
     }
   }

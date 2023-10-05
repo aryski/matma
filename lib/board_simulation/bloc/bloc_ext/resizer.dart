@@ -14,7 +14,6 @@ extension Resizer on EquationBoardBloc {
     for (int j = cubitsInd + 1; j < state.items.length; j++) {
       state.items[j].updatePosition(Offset(delta / 2, 0));
     }
-    //update boardzie
     for (var item in state.extraItems) {
       if (item is BoardCubit) {
         item.updateSize(Offset(delta, 0));
@@ -27,11 +26,9 @@ extension Resizer on EquationBoardBloc {
     for (int j = 0; j <= cubitsInd; j++) {
       state.items[j].updatePosition(Offset(-delta / 2, 0));
     }
-
     for (int j = cubitsInd + 1; j < state.items.length; j++) {
       state.items[j].updatePosition(Offset(delta / 2, 0));
     }
-    //update
     for (var item in state.extraItems) {
       if (item is BoardCubit) {
         item.updateSize(Offset(delta, 0));

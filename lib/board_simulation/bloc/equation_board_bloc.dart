@@ -2,13 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/number_with_sign_insertor.dart';
 
-import 'package:matma/board_simulation/bloc/bloc_ext/update_handler.dart';
+import 'package:matma/board_simulation/bloc/bloc_ext/resetter.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/board_simulation/bloc/bloc_ext/remover.dart';
+import 'package:matma/board_simulation/bloc/bloc_ext/value_updater.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
-import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 
@@ -22,7 +21,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
       {required this.init,
       required this.simSize,
       required List<int> initNumbers})
-      : super(UpdateHandler.hardResetState(initNumbers, simSize)) {
+      : super(Resetter.hardResetState(initNumbers, simSize)) {
     on<EquationBoardEventJoinNumbers>((event, emit) {
       event.leftInd;
       event.rightInd;
@@ -76,7 +75,6 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
         var cubit = state.items[itemInd];
         if (cubit is NumberCubit) {
           cubit.updateValue(cubit.state.value + 1); //updated value
-          //resizing for bigger numbers
           if (cubit.state.value == 10) {
             resize(itemInd, simSize.wUnit * 2);
           }
@@ -90,43 +88,15 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
     on<EquationBoardEventNumbersReduction>((event, emit) async {
       var itemIndLeft = state.itemIndex(event.indLeft);
       var itemIndRight = state.itemIndex(event.indRight);
-      print("merge: ${event.indLeft} ${event.indRight}");
-      print("merge: $itemIndLeft $itemIndRight");
-
       if (itemIndLeft != null && itemIndRight != null) {
         var leftCubit = state.items[itemIndLeft];
         var rightCubit = state.items[itemIndRight];
         if (leftCubit is NumberCubit && rightCubit is NumberCubit) {
-          if (leftCubit.state.value == 10) {
-            resize(itemIndLeft, -simSize.wUnit * 2);
-          }
-          if (rightCubit.state.value == 10) {
-            resize(itemIndRight, -simSize.wUnit * 2);
-          }
-          leftCubit.updateValue(leftCubit.state.value - 1);
-          rightCubit.updateValue(rightCubit.state.value - 1);
-
           List<SimulationItemCubit> toRemove = [];
-          if (leftCubit.state.value == 0) {
-            //update pozycji
-            if (itemIndLeft - 1 >= 0 && itemIndLeft - 1 < state.items.length) {
-              var item = state.items[itemIndLeft - 1];
-              if (item is SignCubit) {
-                toRemove.add(item);
-              }
-            }
-            toRemove.add(leftCubit);
-          }
-          if (rightCubit.state.value == 0) {
-            if (itemIndRight - 1 >= 0 &&
-                itemIndRight - 1 < state.items.length) {
-              var item = state.items[itemIndRight - 1];
-              if (item is SignCubit) {
-                toRemove.add(item);
-              }
-            }
-            toRemove.add(rightCubit);
-          }
+          decreaseValue(leftCubit, itemIndLeft);
+          decreaseValue(rightCubit, itemIndRight);
+          toRemove.addAll(lookForZeros(leftCubit, itemIndLeft));
+          toRemove.addAll(lookForZeros(rightCubit, itemIndRight));
           for (var item in toRemove) {
             removeWithPositionUpdate(item);
           }
@@ -145,54 +115,25 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
       event.indRight;
     });
   }
-}
 
-extension ItemsGenerator on EquationBoardBloc {
-  NumberState generateNumberState(
-      {required int number, required Offset position, double? opacity}) {
-    // assert(number >= 0);
-    return NumberState(
-        value: number.abs(),
-        color: number > 0 ? defaultGreen : defaultRed,
-        defColor: defaultYellow,
-        hovColor: defaultYellow,
-        id: UniqueKey(),
-        position: position,
-        size: number.abs() >= 10
-            ? Offset(simSize.wUnit * 4, simSize.hUnit * 2)
-            : Offset(simSize.wUnit * 2, simSize.hUnit * 2),
-        opacity: opacity ?? 1,
-        radius: 5,
-        textKey: UniqueKey());
+  void decreaseValue(NumberCubit cubit, int itemInd) {
+    if (cubit.state.value == 10) {
+      resize(itemInd, -simSize.wUnit * 2);
+    }
+    cubit.updateValue(cubit.state.value - 1);
   }
 
-  ShadowNumberState generateShadowNumberState(
-      String value, Offset position, SimulationSize simSize) {
-    return ShadowNumberState(
-      value: value,
-      color: defaultGrey,
-      defColor: defaultGrey,
-      hovColor: defaultGrey,
-      id: UniqueKey(),
-      position: position,
-      size: Offset(simSize.wUnit * 2, simSize.hUnit * 2),
-      opacity: 1,
-      radius: 5,
-    );
-  }
-
-  SignState generateSignState(
-      {required Signs sign, required Offset position, double? opacity}) {
-    return SignState(
-      value: sign,
-      color: Colors.white,
-      defColor: defaultYellow,
-      hovColor: defaultYellow,
-      id: UniqueKey(),
-      position: position,
-      size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),
-      opacity: opacity ?? 1,
-      radius: 5,
-    );
+  List<SimulationItemCubit> lookForZeros(NumberCubit cubit, int itemInd) {
+    List<SimulationItemCubit> toRemove = [];
+    if (cubit.state.value == 0) {
+      if (itemInd - 1 >= 0 && itemInd - 1 < state.items.length) {
+        var item = state.items[itemInd - 1];
+        if (item is SignCubit) {
+          toRemove.add(item);
+        }
+      }
+      toRemove.add(cubit);
+    }
+    return toRemove;
   }
 }

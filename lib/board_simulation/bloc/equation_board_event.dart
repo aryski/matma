@@ -3,11 +3,6 @@ part of 'equation_board_bloc.dart';
 @immutable
 sealed class EquationBoardEvent {}
 
-// class EquationBoardEventUpdate extends EquationBoardEvent {
-//   List<int> updatedNumbers;
-//   EquationBoardEventUpdate(this.updatedNumbers);
-// }
-
 class EquationBoardEventNumbersReduction extends EquationBoardEvent {
   final int indLeft;
   final int indRight;
