@@ -28,8 +28,10 @@ class Sign extends StatelessWidget {
                 builder: (context, size, child) {
                   var tweenState = state.copy()..size = size;
                   return SizedBox(
-                    width: tweenState.size.dx,
-                    height: tweenState.size.dy,
+                    width:
+                        tweenState.size.dx * MediaQuery.of(context).size.width,
+                    height:
+                        tweenState.size.dy * MediaQuery.of(context).size.height,
                     child: Container(
                       color: Colors.grey.withOpacity(0.0),
                       child: Center(
@@ -38,7 +40,8 @@ class Sign extends StatelessWidget {
                           style: TextStyle(
                               color: state.color,
                               fontWeight: FontWeight.bold,
-                              fontSize: tweenState.size.dx),
+                              fontSize: tweenState.size.dx *
+                                  MediaQuery.of(context).size.width),
                         ),
                       ),
                     ),

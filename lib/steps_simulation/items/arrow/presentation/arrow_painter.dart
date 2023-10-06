@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
 
 class ArrowPainter extends CustomPainter {
-  final ArrowState state;
-  final Offset initialSize;
+  final double width;
+  final double height;
+  final double radius;
+  final Color color;
+  final Direction direction;
   final double animationProgress;
-  ArrowPainter(this.state, this.initialSize, this.animationProgress);
+  ArrowPainter(this.width, this.height, this.radius, this.color, this.direction,
+      this.animationProgress);
 
   Path path = Path();
   Path path2 = Path();
@@ -15,9 +19,6 @@ class ArrowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     path = Path();
-    var radius = state.radius;
-    final width = state.size.dx;
-    final height = state.size.dy;
     var xd = 3 * sqrt(3) / 6 * width;
     if (height < xd) {
       xd = height;
@@ -25,7 +26,9 @@ class ArrowPainter extends CustomPainter {
     final tHeight = xd; // dodaj w zaleznosci od wysokosci
 
     // var progress = state.animProgress; TODO fix so you just display current state
+
     var progress = animationProgress;
+    print(progress);
     path.addPath(
         generateTriangle(width, tHeight, radius, progress), Offset.zero);
 
@@ -35,11 +38,11 @@ class ArrowPainter extends CustomPainter {
         bottomLeft: Radius.circular(radius),
         bottomRight: Radius.circular(radius)));
     path = path.shift(Offset(0, -radius));
-    if (state.direction == Direction.down) {
+    if (direction == Direction.down) {
       path = path.transform((Matrix4.identity()..rotateX(pi)).storage);
       path = path.shift(Offset(0, height));
     }
-    canvas.drawPath(path, Paint()..color = state.color);
+    canvas.drawPath(path, Paint()..color = color);
   }
 
   @override

@@ -11,9 +11,9 @@ extension ScrollHandler on StepsSimulationBloc {
       SimulationSize simSize,
       Emitter<StepsSimulationState> emit) async {
     var item = state.getItem(event.id);
-    var minWidth = simSize.wUnit * 1.25;
-    var defaultWidth = 1.25 * simSize.wUnit;
-    var delta = -event.dy;
+    var minWidth = simSize.wRatio * 1.25;
+    var defaultWidth = 1.25 * simSize.wRatio;
+    var delta = -event.dy * simSize.wRatio / 50;
     bool result = await handleOppositeInsertion(state, item, simSize, emit);
     if (result) return;
     result = await handleReduction(item, delta, defaultWidth, state, emit);

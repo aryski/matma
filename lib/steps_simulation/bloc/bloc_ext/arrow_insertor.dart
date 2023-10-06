@@ -20,11 +20,11 @@ extension ArrowInsertor on StepsSimulationBloc {
     print("start: $event");
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
-      item.updateHeight(3 * simSize.hUnit / 2);
+      item.updateHeight(3 * simSize.hRatio / 2);
       if (item.state.direction == Direction.down) {
-        state.moveAllSince(item, Offset(0, 3 * simSize.hUnit / 2));
+        state.moveAllSince(item, Offset(0, 3 * simSize.hRatio / 2));
       } else {
-        state.moveAllSinceIncluded(item, Offset(0, -simSize.hUnit * 3 / 2));
+        state.moveAllSinceIncluded(item, Offset(0, -simSize.hRatio * 3 / 2));
       }
       // //here next click, przydaloby sie usunac te delayed TODO
       await Future.delayed(const Duration(milliseconds: 200));
@@ -40,7 +40,7 @@ extension ArrowInsertor on StepsSimulationBloc {
         } else if (item.state.direction == Direction.down) {
           newStep = StepsSimulationDefaultItem(
               arrow: generateArrowDown(
-                  position: item.state.position + Offset(0, simSize.hUnit)),
+                  position: item.state.position + Offset(0, simSize.hRatio)),
               floor: step.floor);
         }
 
@@ -52,7 +52,7 @@ extension ArrowInsertor on StepsSimulationBloc {
       await Future.delayed(const Duration(milliseconds: 20));
       //animate scroll
       inserted.arrow.animate(1);
-      var delta = simSize.wUnit;
+      var delta = simSize.wRatio;
       inserted.floor.updateSize(Offset(delta, 0));
       state.moveAllSince(inserted.floor, Offset(delta, 0));
       taskCubit.inserted(item.state.direction);
@@ -69,11 +69,13 @@ extension ArrowInsertor on StepsSimulationBloc {
     late FloorCubit floor;
     if (direction == Direction.up) {
       arrow1 = generateArrowUp(
-          position: pos, delta: Offset(0, simSize.hUnit), animationProgress: 0);
+          position: pos,
+          delta: Offset(0, simSize.hRatio),
+          animationProgress: 0);
       // arrow2 = generateArrowUp(position: pos, delta: Offset.zero);
       floor = generateFloor(
           position: pos,
-          delta: Offset(simSize.wUnit / 2, simSize.hUnit),
+          delta: Offset(simSize.wRatio / 2, simSize.hRatio),
           widthRatio: 0.25);
     } else {
       //wiec tak arrow 2 rozwiazac tak ze naprawic ta strzale co jest a nie replace walic xD
@@ -84,7 +86,8 @@ extension ArrowInsertor on StepsSimulationBloc {
       //     generateArrowDown(position: pos, delta: Offset(0, simSize.hUnit));
       floor = generateFloor(
           position: pos,
-          delta: Offset(simSize.wUnit / 2, simSize.hUnit - simSize.hUnit / 5),
+          delta:
+              Offset(simSize.wRatio / 2, simSize.hRatio - simSize.hRatio / 5),
           widthRatio: 0.25);
     }
     var stepsDefault = StepsSimulationDefaultItem(arrow: arrow1, floor: floor);
@@ -123,20 +126,20 @@ extension ArrowInsertor on StepsSimulationBloc {
       arrow = generateArrowDown(
           animationProgress: 0,
           position: item.state.position +
-              Offset(simSize.wUnit * 0.5, 0 + simSize.hUnit / 5),
-          size: Offset(simSize.wUnit, 0));
+              Offset(simSize.wRatio * 0.5, 0 + simSize.hRatio / 5),
+          size: Offset(simSize.wRatio, 0));
       floor = generateFloor(
-          position: item.state.position + Offset(simSize.wUnit * 1, 0),
-          size: Offset(0, simSize.hUnit / 5));
+          position: item.state.position + Offset(simSize.wRatio * 1, 0),
+          size: Offset(0, simSize.hRatio / 5));
     } else {
       board.add(EquationBoardEventAddNumber(value: 1));
       arrow = generateArrowUp(
           animationProgress: 0.0,
-          position: item.state.position + Offset(simSize.wUnit * 0.5, 0),
-          size: Offset(simSize.wUnit, 0));
+          position: item.state.position + Offset(simSize.wRatio * 0.5, 0),
+          size: Offset(simSize.wRatio, 0));
       floor = generateFloor(
-          position: item.state.position + Offset(simSize.wUnit * 1, 0),
-          size: Offset(0, simSize.hUnit / 5));
+          position: item.state.position + Offset(simSize.wRatio * 1, 0),
+          size: Offset(0, simSize.hRatio / 5));
     }
     state.numbers.add(StepsSimulationNumberState(
         [StepsSimulationDefaultItem(arrow: arrow, floor: floor)]));
@@ -144,16 +147,16 @@ extension ArrowInsertor on StepsSimulationBloc {
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 20));
     if (dir == Direction.up) {
-      floor.updatePosition(Offset(0, simSize.hUnit));
+      floor.updatePosition(Offset(0, simSize.hRatio));
     } else {
-      arrow.updatePosition(Offset(0, -simSize.hUnit));
-      floor.updatePosition(Offset(0, -simSize.hUnit));
+      arrow.updatePosition(Offset(0, -simSize.hRatio));
+      floor.updatePosition(Offset(0, -simSize.hRatio));
     }
 
     floor.updateSizeDelayed(
-        const Duration(milliseconds: 200), Offset(1.25 * simSize.wUnit, 0));
+        const Duration(milliseconds: 200), Offset(1.25 * simSize.wRatio, 0));
     arrow.animate(1.0);
-    arrow.updateHeight(simSize.hUnit);
+    arrow.updateHeight(simSize.hRatio);
 
     floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
     item.updateColor(defaultGrey, darkenColor(defaultGrey, 20));

@@ -30,8 +30,10 @@ class Number extends StatelessWidget {
                   return Row(
                     children: [
                       SizedBox(
-                        width: tweenState.size.dx,
-                        height: tweenState.size.dy,
+                        width: tweenState.size.dx *
+                            MediaQuery.of(context).size.width,
+                        height: tweenState.size.dy *
+                            MediaQuery.of(context).size.height,
                         child: Container(
                           color: const Color.fromARGB(255, 255, 201, 201)
                               .withOpacity(0.0),
@@ -60,7 +62,10 @@ class Number extends StatelessWidget {
                                         style: TextStyle(
                                             color: state.color,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: tweenState.size.dx),
+                                            fontSize: tweenState.size.dx *
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width),
                                       ),
                                       // Text(
                                       //   tweenState.value.abs().toString(),

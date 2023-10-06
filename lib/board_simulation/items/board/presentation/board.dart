@@ -31,8 +31,10 @@ class Board extends StatelessWidget {
                     borderRadius: BorderRadius.circular(state.radius),
                     child: Container(
                       color: state.color,
-                      width: tweenState.size.dx,
-                      height: tweenState.size.dy,
+                      width: tweenState.size.dx *
+                          MediaQuery.of(context).size.width,
+                      height: tweenState.size.dy *
+                          MediaQuery.of(context).size.height,
                     ),
                   );
                 },

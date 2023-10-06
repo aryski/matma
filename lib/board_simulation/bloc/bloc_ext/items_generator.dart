@@ -35,8 +35,8 @@ extension BoardItemsGenerator on EquationBoardBloc {
         id: UniqueKey(),
         position: position,
         size: number.abs() >= 10
-            ? Offset(simSize.wUnit * 4, simSize.hUnit * 2)
-            : Offset(simSize.wUnit * 2, simSize.hUnit * 2),
+            ? Offset(simSize.wRatio * 4, simSize.hRatio * 2)
+            : Offset(simSize.wRatio * 2, simSize.hRatio * 2),
         opacity: opacity ?? 1,
         radius: 5,
         textKey: UniqueKey());
@@ -54,7 +54,7 @@ extension BoardItemsGenerator on EquationBoardBloc {
       hovColor: defaultYellow,
       id: UniqueKey(),
       position: position,
-      size: Offset(simSize.wUnit * 1.5, simSize.hUnit * 2),
+      size: Offset(simSize.wRatio * 1.5, simSize.hRatio * 2),
       opacity: opacity ?? 1,
       radius: 5,
     );
@@ -69,7 +69,7 @@ extension BoardItemsGenerator on EquationBoardBloc {
       hovColor: defaultGrey,
       id: UniqueKey(),
       position: position,
-      size: Offset(simSize.wUnit * 2, simSize.hUnit * 2),
+      size: Offset(simSize.wRatio * 2, simSize.hRatio * 2),
       opacity: 1,
       radius: 5,
     );

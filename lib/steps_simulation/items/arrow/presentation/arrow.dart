@@ -35,10 +35,21 @@ class Arrow extends StatelessWidget {
                           var tweenState = state.copy()..size = size;
                           return ArrowGestureDetector(
                             child: CustomPaint(
-                              size:
-                                  Size(tweenState.size.dx, tweenState.size.dy),
-                              painter: ArrowPainter(tweenState,
-                                  initialState.size, animationProgress),
+                              size: Size(
+                                  tweenState.size.dx *
+                                      MediaQuery.of(context).size.width,
+                                  tweenState.size.dy *
+                                      MediaQuery.of(context).size.height),
+                              painter: ArrowPainter(
+                                  tweenState.size.dx *
+                                      MediaQuery.of(context).size.width,
+                                  tweenState.size.dy *
+                                      MediaQuery.of(context).size.height,
+                                  state.radius *
+                                      MediaQuery.of(context).size.width,
+                                  state.color,
+                                  state.direction,
+                                  animationProgress),
                             ),
                           );
                         });

@@ -15,7 +15,7 @@ extension ClickHandler on StepsSimulationBloc {
         event is StepsSimulationEventPointerUp) {
       var item = state.getItem(event.id);
       if (item is ArrowCubit) {
-        var delta = simSize.hUnit / 2;
+        var delta = simSize.hRatio / 2;
         if (event is StepsSimulationEventPointerDown) {
           delta = -delta;
         }

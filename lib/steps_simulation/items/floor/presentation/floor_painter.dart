@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation/items/floor/%20cubit/floor_state.dart';
 
 class FloorPainter extends CustomPainter {
-  final FloorState state;
+  final double width;
+  final double height;
+  final double radius;
+  final Color color;
 
-  FloorPainter(this.state);
+  FloorPainter(this.width, this.height, this.radius, this.color);
 
   Path path = Path();
 
   @override
   void paint(Canvas canvas, Size size) {
     var path = Path();
-    var radius = state.radius;
+
     path.addRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, state.size.dx, state.size.dy),
+        Rect.fromLTWH(0, 0, width, height),
         Radius.circular(radius),
       ),
     );
 
-    canvas.drawPath(path, Paint()..color = state.color);
+    canvas.drawPath(path, Paint()..color = color);
   }
 
   @override

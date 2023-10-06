@@ -8,20 +8,21 @@ import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 
 extension Initializer on StepsSimulationBloc {
   List<StepsSimulationNumberState> initializeSimulationItems() {
+    print("init");
     List<int> init = board.state.numbers;
     var currentTop =
-        (simSize.hUnits / 2).floor() * simSize.hUnit - simSize.hUnit;
-    var currentLeft = simSize.wUnit * 2;
+        (simSize.hUnits / 2).floor() * simSize.hRatio - simSize.hRatio;
+    var currentLeft = simSize.wRatio * 2;
     var id = UniqueKey();
     state.unorderedItems[id] = EquatorCubit(EquatorState(
         defColor: defaultEquator,
         hovColor: defaultEquator,
         id: id,
-        position: Offset(0, currentTop + simSize.hUnit),
-        size: Offset(simSize.wUnit * (simSize.wUnits), simSize.hUnit / 5),
+        position: Offset(0, currentTop + simSize.hRatio),
+        size: Offset(simSize.wRatio * (simSize.wUnits), simSize.hRatio / 5),
         color: defaultEquator,
         opacity: 1,
-        radius: simSize.wUnit / 15));
+        radius: 1 / 15 * simSize.wRatio));
     return generateFloorsAndArrows(init, currentLeft, currentTop);
   }
 
@@ -39,14 +40,14 @@ extension Initializer on StepsSimulationBloc {
           if (number > 0) {
             arrow = generateArrowUp(position: pos, delta: Offset.zero);
             floor = generateFloor(
-                position: pos, delta: Offset(simSize.wUnit / 2, 0));
+                position: pos, delta: Offset(simSize.wRatio / 2, 0));
           } else {
             arrow = generateArrowDown(
                 position: pos,
-                delta: Offset(0, simSize.hUnit + simSize.hUnit / 5));
+                delta: Offset(0, simSize.hRatio + simSize.hRatio / 5));
             floor = generateFloor(
                 position: pos,
-                delta: Offset(simSize.wUnit / 2, 2 * simSize.hUnit));
+                delta: Offset(simSize.wRatio / 2, 2 * simSize.hRatio));
           }
           if (i + 1 == number.abs() && init.last == number) {
             floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
@@ -54,13 +55,15 @@ extension Initializer on StepsSimulationBloc {
           items.add(StepsSimulationDefaultItem(arrow: arrow, floor: floor));
           //Position update
           if (number > 0) {
-            currentTop -= simSize.hUnit;
+            currentTop -= simSize.hRatio;
           } else {
-            currentTop += simSize.hUnit;
+            currentTop += simSize.hRatio;
           }
-          currentLeft += simSize.wUnit;
+          currentLeft += simSize.wRatio;
         }
       }
+      print("LEN");
+      print(items.length);
       result.add(StepsSimulationNumberState(items));
     }
     return result;

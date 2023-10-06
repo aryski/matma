@@ -28,8 +28,9 @@ class ShadowNumber extends StatelessWidget {
                 return Row(
                   children: [
                     SizedBox(
-                      width: state.size.dx,
-                      height: state.size.dy,
+                      width: state.size.dx * MediaQuery.of(context).size.width,
+                      height:
+                          state.size.dy * MediaQuery.of(context).size.height,
                       child: Opacity(
                         opacity:
                             opacity < 0.5 ? opacity * 2 : (1 - opacity) * 2,
@@ -42,7 +43,10 @@ class ShadowNumber extends StatelessWidget {
                               style: TextStyle(
                                   color: state.color,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: state.size.dx * 3 / 4),
+                                  fontSize: state.size.dx *
+                                      MediaQuery.of(context).size.width *
+                                      3 /
+                                      4),
                             ),
                           ),
                         ),

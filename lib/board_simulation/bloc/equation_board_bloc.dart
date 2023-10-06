@@ -76,7 +76,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
         if (cubit is NumberCubit) {
           cubit.updateValue(cubit.state.value + 1); //updated value
           if (cubit.state.value == 10) {
-            resize(itemInd, simSize.wUnit * 2);
+            resize(itemInd, simSize.wRatio * 2);
           }
           updateValue(cubit, 1);
 
@@ -118,7 +118,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
 
   void decreaseValue(NumberCubit cubit, int itemInd) {
     if (cubit.state.value == 10) {
-      resize(itemInd, -simSize.wUnit * 2);
+      resize(itemInd, -simSize.wRatio * 2);
     }
     cubit.updateValue(cubit.state.value - 1);
   }

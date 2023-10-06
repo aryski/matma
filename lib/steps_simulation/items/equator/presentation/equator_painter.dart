@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:matma/steps_simulation/items/equator/cubit/equator_cubit.dart';
 
 class EquatorPainter extends CustomPainter {
-  final EquatorState state;
+  final double width;
+  final double height;
+  final double radius;
+  final Color color;
 
-  EquatorPainter(this.state);
+  EquatorPainter(this.width, this.height, this.radius, this.color);
 
   Path path = Path();
 
   @override
   void paint(Canvas canvas, Size size) {
     var path = Path();
-    var radius = state.radius;
     for (int i = 0; i <= 79; i++) {
       if (i.isEven) {
         path.addRRect(
           RRect.fromRectAndRadius(
-            Rect.fromLTWH(
-                i * state.size.dx / 79, 0, state.size.dx / 79, state.size.dy),
+            Rect.fromLTWH(i * width / 79, 0, width / 79, height),
             Radius.circular(radius),
           ),
         );
       }
     }
 
-    canvas.drawPath(path, Paint()..color = state.color);
+    canvas.drawPath(path, Paint()..color = color);
   }
 
   @override

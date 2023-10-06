@@ -11,8 +11,8 @@ import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
 extension Resetter on EquationBoardBloc {
   static EquationBoardState hardResetState(
       List<int> updatedNumbers, SimulationSize simSize) {
-    var top = simSize.hUnit / 2;
-    var widthSpace = simSize.wUnit * simSize.wUnits;
+    var top = simSize.hRatio / 2;
+    var widthSpace = simSize.wRatio * simSize.wUnits;
 
     List<SimulationItemCubit> cubits = [];
 
@@ -20,7 +20,7 @@ extension Resetter on EquationBoardBloc {
     double totaldx = result.$1;
     List<SimulationItemState> states = result.$2;
 
-    var allMargin = (widthSpace - totaldx) / 2 - simSize.wUnit / 6.7;
+    var allMargin = (widthSpace - totaldx) / 2 - simSize.wRatio / 6.7;
 
     for (var state in states) {
       state.position += Offset(allMargin, 0);
@@ -30,9 +30,10 @@ extension Resetter on EquationBoardBloc {
         cubits.add(NumberCubit(state));
       }
     }
+    var x = 0.02;
     var boardCubit = BoardCubit(BoardItemsGenerator.generateBoardState(
-        position: Offset(allMargin - 25, top),
-        size: Offset(totaldx + 50, simSize.hUnit * 2)));
+        position: Offset(allMargin - x / 2, top), //TODOP
+        size: Offset(totaldx + x, simSize.hRatio * 2)));
 
     return EquationBoardState(items: cubits, extraItems: [boardCubit]);
   }

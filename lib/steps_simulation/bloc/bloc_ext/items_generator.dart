@@ -20,10 +20,10 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultGreen, 20),
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wUnit, simSize.hUnit),
+        size: size ?? Offset(simSize.wRatio, simSize.hRatio),
         opacity: 1.0,
         direction: Direction.up,
-        radius: simSize.wUnit / 15,
+        radius: 1 / 15 * simSize.wRatio,
         animProgress: animationProgress,
       ),
     );
@@ -42,10 +42,10 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultRed, 20),
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wUnit, simSize.hUnit),
+        size: size ?? Offset(simSize.wRatio, simSize.hRatio),
         opacity: 1.0,
         direction: Direction.down,
-        radius: simSize.wUnit / 15,
+        radius: 1 / 15 * simSize.wRatio,
         animProgress: animationProgress,
       ),
     );
@@ -64,9 +64,9 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultGrey, 20),
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wUnit * widthRatio, simSize.hUnit / 5),
+        size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),
         opacity: 1.0,
-        radius: simSize.wUnit / 15,
+        radius: 1 / 15 * simSize.wRatio,
       ),
     );
   }
@@ -84,9 +84,9 @@ extension ItemsGenerator on StepsSimulationBloc {
         hovColor: darkenColor(defaultYellow, 20),
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wUnit * widthRatio, simSize.hUnit / 5),
+        size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),
         opacity: 1.0,
-        radius: simSize.wUnit / 15,
+        radius: 1 / 15 * simSize.wRatio,
       ),
     );
   }

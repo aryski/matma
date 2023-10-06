@@ -27,8 +27,14 @@ class Equator extends StatelessWidget {
               builder: (context, size, child) {
                 var tweenState = state.copy()..size = size;
                 return CustomPaint(
-                  size: Size(tweenState.size.dx, tweenState.size.dy),
-                  painter: EquatorPainter(tweenState),
+                  size: Size(
+                      tweenState.size.dx * MediaQuery.of(context).size.width,
+                      tweenState.size.dy * MediaQuery.of(context).size.height),
+                  painter: EquatorPainter(
+                      tweenState.size.dx * MediaQuery.of(context).size.width,
+                      tweenState.size.dy * MediaQuery.of(context).size.height,
+                      state.radius * MediaQuery.of(context).size.width,
+                      state.color),
                 );
               },
             ),

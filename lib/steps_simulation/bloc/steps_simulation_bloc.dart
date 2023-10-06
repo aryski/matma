@@ -17,16 +17,13 @@ part 'steps_simulation_state.dart';
 UniqueKey? hoverKepper;
 
 class SimulationSize {
-  final double hUnit;
-  final double wUnit;
-  final int hUnits;
-  final int wUnits;
+  final double hRatio;
+  final double wRatio;
 
-  SimulationSize(
-      {required this.hUnit,
-      required this.wUnit,
-      required this.hUnits,
-      required this.wUnits});
+  double get hUnits => 1 / hRatio;
+  double get wUnits => 1 / wRatio;
+
+  const SimulationSize({required this.hRatio, required this.wRatio});
 }
 
 class StepsSimulationBloc
@@ -42,14 +39,27 @@ class StepsSimulationBloc
       : super(StepsSimulationState(
             simSize: simSize, numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeSimulationItems());
+    print("NUMBERS LEN: ${state.numbers.length}");
+    // for (var number in state.numbers) {
+    //   print(number.number);
+    // }
 
     on<StepsSimulationEventScroll>((event, emit) async {
+      print("BLOC: ${this.hashCode}");
+      print("NUMBERS LEN: ${state.numbers.length}");
+      // for (var number in state.numbers) {
+      //   print(number.number);
+      // }
       await handleScroll(state, event, simSize, emit);
     });
 
     on<StepsSimulationEventPointerDown>((event, emit) async {
+      print("BLOC: ${this.hashCode}");
+      print("NUMBERS LEN: ${state.numbers.length}");
+      // for (var number in state.numbers) {
+      //   print(number.number);
+      // }
       if (!isInsertionAnimation) {
-        print("xd");
         await handleClick(state, event, simSize, emit);
       }
     });

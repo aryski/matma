@@ -24,7 +24,7 @@ extension ValueUpdater on EquationBoardBloc {
               simSize));
       state.extraItems.add(shadowCubit);
       shadowCubit.updatePositionDelayed(
-          Offset(0, simSize.hUnit * 2), const Duration(milliseconds: 20));
+          Offset(0, simSize.hRatio * 2), const Duration(milliseconds: 20));
     }
   }
 }

@@ -21,7 +21,7 @@ extension NumberSplitJoiner on StepsSimulationBloc {
     }
 
     item.updateSize(Offset(delta, 0));
-    if (item.state.size.dx > 1.25 * simSize.wUnit) {
+    if (item.state.size.dx > 1.25 * simSize.wRatio) {
       var myStep = state.getStep(item);
       if (myStep != null) {
         int? numberInd = state.getNumberIndex(myStep);
@@ -54,7 +54,7 @@ extension NumberSplitJoiner on StepsSimulationBloc {
       }
     }
 
-    if (item.state.size.dx <= 1.25 * simSize.wUnit) {
+    if (item.state.size.dx <= 1.25 * simSize.wRatio) {
       var step = state.getStep(item);
       if (step != null) {
         int? numberInd = state.getNumberIndex(step);

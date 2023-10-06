@@ -21,7 +21,10 @@ class TweenAnimatedPosition extends StatelessWidget {
         initial: initialPosition,
         updated: updatedPosition,
         builder: (context, position, widget) {
-          return Positioned(left: position.dx, top: position.dy, child: child);
+          return Positioned(
+              left: position.dx * MediaQuery.of(context).size.width,
+              top: position.dy * MediaQuery.of(context).size.height,
+              child: child);
         });
   }
 }
