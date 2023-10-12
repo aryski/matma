@@ -39,25 +39,25 @@ class StepsSimulationBloc
       : super(StepsSimulationState(
             simSize: simSize, numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeSimulationItems());
-    print("NUMBERS LEN: ${state.numbers.length}");
+    //print("NUMBERS LEN: ${state.numbers.length}");
     // for (var number in state.numbers) {
-    //   print(number.number);
+    //   //print(number.number);
     // }
 
     on<StepsSimulationEventScroll>((event, emit) async {
-      print("BLOC: ${this.hashCode}");
-      print("NUMBERS LEN: ${state.numbers.length}");
+      //print("BLOC: ${this.hashCode}");
+      //print("NUMBERS LEN: ${state.numbers.length}");
       // for (var number in state.numbers) {
-      //   print(number.number);
+      //   //print(number.number);
       // }
       await handleScroll(state, event, simSize, emit);
     });
 
     on<StepsSimulationEventPointerDown>((event, emit) async {
-      print("BLOC: ${this.hashCode}");
-      print("NUMBERS LEN: ${state.numbers.length}");
+      //print("BLOC: ${this.hashCode}");
+      //print("NUMBERS LEN: ${state.numbers.length}");
       // for (var number in state.numbers) {
-      //   print(number.number);
+      //   //print(number.number);
       // }
       if (!isInsertionAnimation) {
         await handleClick(state, event, simSize, emit);

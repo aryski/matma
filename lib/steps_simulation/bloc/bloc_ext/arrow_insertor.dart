@@ -17,7 +17,7 @@ extension ArrowInsertor on StepsSimulationBloc {
       Emitter<StepsSimulationState> emit,
       EquationBoardBloc board,
       TaskSimulationCubit taskCubit) async {
-    print("start: $event");
+    //print("start: $event");
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       item.updateHeight(3 * simSize.hRatio / 2);

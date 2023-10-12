@@ -8,7 +8,7 @@ import 'package:matma/steps_simulation/items/floor/%20cubit/floor_cubit.dart';
 
 extension Initializer on StepsSimulationBloc {
   List<StepsSimulationNumberState> initializeSimulationItems() {
-    print("init");
+    //print("init");
     List<int> init = board.state.numbers;
     var currentTop =
         (simSize.hUnits / 2).floor() * simSize.hRatio - simSize.hRatio;
@@ -62,8 +62,8 @@ extension Initializer on StepsSimulationBloc {
           currentLeft += simSize.wRatio;
         }
       }
-      print("LEN");
-      print(items.length);
+      //print("LEN");
+      //print(items.length);
       result.add(StepsSimulationNumberState(items));
     }
     return result;

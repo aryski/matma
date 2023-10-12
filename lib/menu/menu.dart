@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/colors.dart';
-import 'package:matma/main.dart';
+import 'package:matma/levels/levels/level1.dart';
+import 'package:matma/levels/levels/tutorial.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
 class Menu extends StatelessWidget {
@@ -47,7 +48,11 @@ class PickMenu extends StatelessWidget {
           unlocked: true,
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const Tutorial()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const Tutorial(
+                          key: Key('Tutorial'),
+                        )));
           },
           minature: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -65,10 +70,10 @@ class PickMenu extends StatelessWidget {
         ),
         const SizedBox(width: 30),
         LevelButton(
-          unlocked: false,
+          unlocked: true,
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const Tutorial()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Level1()));
           },
           minature: const Column(
             mainAxisAlignment: MainAxisAlignment.center,

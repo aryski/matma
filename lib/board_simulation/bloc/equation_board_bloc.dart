@@ -10,6 +10,7 @@ import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
+import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
 
 part 'equation_board_event.dart';
 part 'equation_board_state.dart';
@@ -17,8 +18,10 @@ part 'equation_board_state.dart';
 class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
   final EquationBoardState init;
   final SimulationSize simSize;
+  final TaskSimulationCubit taskCubit;
   EquationBoardBloc(
-      {required this.init,
+      {required this.taskCubit,
+      required this.init,
       required this.simSize,
       required List<int> initNumbers})
       : super(Resetter.hardResetState(initNumbers, simSize)) {
@@ -114,6 +117,12 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
       }
       event.indRight;
     });
+  }
+
+  @override
+  void onChange(Change<EquationBoardState> change) {
+    super.onChange(change);
+    taskCubit.equationValue(change.nextState.numbers);
   }
 
   void decreaseValue(NumberCubit cubit, int itemInd) {

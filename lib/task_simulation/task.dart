@@ -1,5 +1,7 @@
+import 'package:matma/task_simulation/game_events/game_events.dart';
+
 class OnEvent {
-  final GameEvents requiredEvent;
+  final GameEvent requiredEvent;
   final Task task;
 
   OnEvent({required this.requiredEvent, required this.task});
@@ -7,36 +9,31 @@ class OnEvent {
 
 abstract class Instruction {}
 
-class ContinuingInstruction extends Instruction {
+class NextMsg extends Instruction {
   final String text;
-  final Duration? time;
+  final double seconds;
 
-  ContinuingInstruction({required this.text, this.time});
+  NextMsg({required this.text, this.seconds = 0});
+
+  Duration get time => Duration(milliseconds: (seconds * 1000).toInt());
 }
 
-class EndInstruction extends Instruction {}
+class EndMsg extends Instruction {}
 
 class Task {
   final List<Instruction> instructions;
   final List<OnEvent> onEvents;
 
-  OnEvent? isDone(List<GameEvents> recentEvents) {
+  OnEvent? isDone(List<GameEvent> recentEvents) {
     for (var onEvent in onEvents) {
-      if (recentEvents.contains(onEvent.requiredEvent)) {
-        return onEvent;
+      for (var event in recentEvents) {
+        if (event.isEqual(onEvent.requiredEvent)) {
+          return onEvent;
+        }
       }
     }
     return null;
   }
 
   Task({required this.instructions, required this.onEvents});
-}
-
-enum GameEvents {
-  insertedUp,
-  insertedDown,
-  merged,
-  splited,
-  scrolled,
-  insertedOpposite,
 }

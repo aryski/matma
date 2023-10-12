@@ -1,15 +1,24 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_simulation/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/task_simulation/cubit/task_simulation_state.dart';
+import 'package:matma/task_simulation/game_events/game_events.dart';
 import 'package:matma/task_simulation/task.dart';
-import 'package:matma/task_simulation/tutorial.dart';
+import 'package:matma/levels/levels/tutorial.dart';
 
 class TaskSimulationCubit extends Cubit<TaskSimulationState> {
-  TaskSimulationCubit() : super(TaskSimulationStateDisplay(text: 'Hejka.')) {
-    planTask(firstTutorialTask);
+  final LevelCubit parent;
+  TaskSimulationCubit(this.firstTask, this.parent)
+      : currentTask = firstTask,
+        super(TaskSimulationStateDisplay(text: 'Hejka.')) {
+    // final Task firstTask;
+    planTask(firstTask);
   }
-  List<GameEvents> recent = [];
-  Task currentTask = firstTutorialTask;
+
+  final Task firstTask;
+  List<GameEvent> recent = [];
+  Task currentTask;
   // Task currentTask;
   int ind = 0;
 
@@ -17,31 +26,36 @@ class TaskSimulationCubit extends Cubit<TaskSimulationState> {
     //TODO
     //insertion occured
     if (direction == Direction.up) {
-      recent.add(GameEvents.insertedUp);
+      recent.add(GameEventInsertedUp());
       _nextTask();
     } else if (direction == Direction.down) {
-      recent.add(GameEvents.insertedDown);
+      recent.add(GameEventInsertedDown());
       _nextTask();
     }
   }
 
   void insertedOpposite() {
-    recent.add(GameEvents.insertedOpposite);
+    recent.add(GameEventInsertedOpposite());
+    _nextTask();
+  }
+
+  void equationValue(List<int> numbers) {
+    recent.add(GameEventEquationValue(numbers: numbers));
     _nextTask();
   }
 
   void merged() {
-    recent.add(GameEvents.merged);
+    recent.add(GameEventMerged());
     _nextTask();
   }
 
   void splited() {
-    recent.add(GameEvents.splited);
+    recent.add(GameEventSplited());
     _nextTask();
   }
 
   void scrolled() {
-    recent.add(GameEvents.scrolled);
+    recent.add(GameEventScrolled());
     _nextTask();
   }
 
@@ -58,16 +72,17 @@ class TaskSimulationCubit extends Cubit<TaskSimulationState> {
   void planTask(Task t) async {
     var currentInd = ind;
     for (var instruction in t.instructions) {
-      if (instruction is ContinuingInstruction) {
+      if (instruction is NextMsg) {
         if (currentInd == ind) {
           emit(TaskSimulationStateDisplay(text: instruction.text));
-          if (instruction.time != null) {
-            await Future.delayed(instruction.time!);
+          if (instruction.time != Duration.zero) {
+            await Future.delayed(instruction.time);
           }
         } else {
           break;
         }
-      } else if (instruction is EndInstruction) {
+      } else if (instruction is EndMsg) {
+        parent.nextGame();
         emit(TaskSimulationStateEndLevel(text: 'Koniec zabawy'));
       }
     }

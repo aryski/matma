@@ -28,7 +28,7 @@ class ArrowPainter extends CustomPainter {
     // var progress = state.animProgress; TODO fix so you just display current state
 
     var progress = animationProgress;
-    print(progress);
+    //print(progress);
     path.addPath(
         generateTriangle(width, tHeight, radius, progress), Offset.zero);
 

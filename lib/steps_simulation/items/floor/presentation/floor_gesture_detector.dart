@@ -13,8 +13,8 @@ class FloorGestureDetector extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (event) {
-        print("ADDING HOVER KEEPER ID");
-        print("$id");
+        //print("ADDING HOVER KEEPER ID");
+        //print("$id");
         hoverKepper = id;
         context.read<FloorCubit>().hoverStart();
       },
