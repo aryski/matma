@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
-import 'package:matma/board_simulation/equation_board.dart';
+import 'package:matma/equation/equation.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
@@ -30,9 +30,9 @@ class StepsGame extends StatelessWidget {
     var simSize = SimulationSize(hRatio: unitRatio, wRatio: horizUnitRatio);
     final taskCubit = TaskSimulationCubit(
         data.firstTask, BlocProvider.of<LevelCubit>(context));
-    final eqCubit = EquationBoardBloc(
+    final eqCubit = EquationBloc(
         taskCubit: taskCubit,
-        init: EquationBoardState(),
+        init: EquationState(),
         simSize: simSize,
         initNumbers: data.initNumbers);
     final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, data.allowedOps);
@@ -43,7 +43,7 @@ class StepsGame extends StatelessWidget {
         child: MultiBlocProvider(
           providers: [
             BlocProvider<StepsGameBloc>(create: (context) => bloc),
-            BlocProvider<EquationBoardBloc>(create: (context) => eqCubit),
+            BlocProvider<EquationBloc>(create: (context) => eqCubit),
             BlocProvider<TaskSimulationCubit>(create: (context) => taskCubit)
           ],
           child: StepsSimulatorContent(
@@ -168,11 +168,11 @@ class _StepsSimulatorContent extends StatelessWidget {
                   initNumbers: data.shadedSteps!)
               : const SizedBox.shrink(),
           RawStepsGame(unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),
-          data.withEquationBoard
+          data.withEquation
               ? SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: EquationBoard(unit: unitRatio),
+                  child: Equation(unit: unitRatio),
                 )
               : const SizedBox.shrink(),
           TaskSimulator(
@@ -224,9 +224,9 @@ class RawStepsGameExample extends StatelessWidget {
     final taskCubit = TaskSimulationCubit(Task(instructions: [], onEvents: []),
         BlocProvider.of<LevelCubit>(context));
 
-    final eqCubit = EquationBoardBloc(
+    final eqCubit = EquationBloc(
         taskCubit: taskCubit,
-        init: EquationBoardState(),
+        init: EquationState(),
         simSize: simSize,
         initNumbers: initNumbers);
 
@@ -234,7 +234,7 @@ class RawStepsGameExample extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<StepsGameBloc>(create: (context) => bloc),
-        BlocProvider<EquationBoardBloc>(create: (context) => eqCubit),
+        BlocProvider<EquationBloc>(create: (context) => eqCubit),
       ],
       child: Stack(children: [
         RawStepsGame(unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),

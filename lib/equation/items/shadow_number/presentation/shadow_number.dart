@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
+import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
 

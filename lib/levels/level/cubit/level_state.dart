@@ -30,7 +30,7 @@ class StepsGameData extends GameData {
   final List<StepsGameOps> allowedOps;
   final Task firstTask;
   final List<int> initNumbers;
-  final bool withEquationBoard;
+  final bool withEquation;
   final List<int>? shadedSteps;
   final bool withHillReduction;
   final bool withValleyReduction;
@@ -39,7 +39,7 @@ class StepsGameData extends GameData {
       {required this.allowedOps,
       required this.firstTask,
       required this.initNumbers,
-      this.withEquationBoard = true,
+      this.withEquation = true,
       this.shadedSteps,
       this.withHillReduction = false,
       this.withValleyReduction = false});

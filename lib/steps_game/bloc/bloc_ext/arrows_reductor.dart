@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:flutter/material.dart';
@@ -93,8 +93,8 @@ extension ArrowsReductor on StepsGameBloc {
     var indLeft = state.getNumberIndex(step);
     var indRight = state.getNumberIndex(rightStep);
     if (indLeft != null && indRight != null) {
-      board.add(EquationBoardEventNumbersReduction(
-          indLeft: indLeft, indRight: indRight));
+      board.add(
+          EquationEventNumbersReduction(indLeft: indLeft, indRight: indRight));
     }
 
     state.removeStep(step);

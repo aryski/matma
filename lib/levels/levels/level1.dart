@@ -17,13 +17,13 @@ class Level1 extends StatelessWidget {
               initNumbers: [1],
               shadedSteps: [3],
               firstTask: _taskA1,
-              withEquationBoard: false),
+              withEquation: false),
           StepsGameData(
               allowedOps: [StepsGameOps.addArrowDown],
               initNumbers: [-1],
               shadedSteps: [-3],
               firstTask: _taskB1,
-              withEquationBoard: false),
+              withEquation: false),
           StepsGameData(
               allowedOps: [
                 StepsGameOps.addArrowDown,
@@ -41,7 +41,7 @@ class Level1 extends StatelessWidget {
                 -1
               ],
               firstTask: _taskC1,
-              withEquationBoard: false),
+              withEquation: false),
         ],
       ),
     );

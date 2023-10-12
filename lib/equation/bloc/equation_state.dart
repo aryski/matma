@@ -1,10 +1,10 @@
-part of 'equation_board_bloc.dart';
+part of 'equation_bloc.dart';
 
-class EquationBoardState {
+class EquationState {
   final List<SimulationItemCubit> items;
   final List<SimulationItemCubit> extraItems;
 
-  EquationBoardState({this.items = const [], this.extraItems = const []});
+  EquationState({this.items = const [], this.extraItems = const []});
 
   List<int> get numbers => genNum();
 

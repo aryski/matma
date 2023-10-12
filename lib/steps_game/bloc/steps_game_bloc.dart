@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/arrow_insertor.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/click_handler.dart';
@@ -29,7 +29,7 @@ class SimulationSize {
 
 class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   final List<StepsGameOps> allowedOps;
-  final EquationBoardBloc board;
+  final EquationBloc board;
   final SimulationSize simSize;
   final List<UniqueKey> lockedIds = [];
   final TaskSimulationCubit taskCubit;

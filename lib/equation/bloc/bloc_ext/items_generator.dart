@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
-import 'package:matma/board_simulation/items/board/cubit/board_cubit.dart';
-import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
-import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
-import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/equation/items/board/cubit/board_cubit.dart';
+import 'package:matma/equation/items/number/cubit/number_cubit.dart';
+import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
+import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
-extension BoardItemsGenerator on EquationBoardBloc {
+extension BoardItemsGenerator on EquationBloc {
   static BoardState generateBoardState(
       {required Offset position, required Offset size}) {
     return BoardState(

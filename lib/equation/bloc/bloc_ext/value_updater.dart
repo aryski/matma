@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
-import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
-import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
-import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/equation/bloc/bloc_ext/items_generator.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/equation/items/number/cubit/number_cubit.dart';
+import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
+import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 
-extension ValueUpdater on EquationBoardBloc {
+extension ValueUpdater on EquationBloc {
   Future<void> updateValue(NumberCubit number, int delta) async {
     if (state.items.contains(number)) {
       var sign = state.getNumberSign(number);

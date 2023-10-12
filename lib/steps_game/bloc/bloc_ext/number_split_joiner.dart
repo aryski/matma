@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
@@ -43,7 +43,7 @@ extension NumberSplitJoiner on StepsGameBloc {
             state.numbers[numberInd].steps.clear();
             state.numbers[numberInd].steps.addAll(left);
             state.numbers.insert(numberInd + 1, StepsGameNumberState(right));
-            board.add(EquationBoardEventSplitNumber(
+            board.add(EquationEventSplitNumber(
                 ind: numberInd,
                 leftValue: state.numbers[numberInd].number,
                 rightValue: state.numbers[numberInd + 1].number));
@@ -65,7 +65,7 @@ extension NumberSplitJoiner on StepsGameBloc {
             var nextNumber = state.numbers[nextInd];
             if (number.number * nextNumber.number > 0) {
               //same sign trzeba zmergowac TODO bledy czasem
-              board.add(EquationBoardEventJoinNumbers(
+              board.add(EquationEventJoinNumbers(
                   leftInd: numberInd, rightInd: nextInd));
               number.steps.addAll(nextNumber.steps);
               state.numbers.remove(nextNumber);

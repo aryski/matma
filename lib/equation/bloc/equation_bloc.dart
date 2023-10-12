@@ -1,32 +1,32 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/number_with_sign_insertor.dart';
+import 'package:matma/equation/bloc/bloc_ext/number_with_sign_insertor.dart';
 
-import 'package:matma/board_simulation/bloc/bloc_ext/resetter.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/remover.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/value_updater.dart';
-import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
-import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/equation/bloc/bloc_ext/resetter.dart';
+import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
+import 'package:matma/equation/bloc/bloc_ext/remover.dart';
+import 'package:matma/equation/bloc/bloc_ext/value_updater.dart';
+import 'package:matma/equation/items/number/cubit/number_cubit.dart';
+import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
 
-part 'equation_board_event.dart';
-part 'equation_board_state.dart';
+part 'equation_event.dart';
+part 'equation_state.dart';
 
-class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
-  final EquationBoardState init;
+class EquationBloc extends Bloc<EquationEvent, EquationState> {
+  final EquationState init;
   final SimulationSize simSize;
   final TaskSimulationCubit taskCubit;
-  EquationBoardBloc(
+  EquationBloc(
       {required this.taskCubit,
       required this.init,
       required this.simSize,
       required List<int> initNumbers})
       : super(Resetter.hardResetState(initNumbers, simSize)) {
-    on<EquationBoardEventJoinNumbers>((event, emit) {
+    on<EquationEventJoinNumbers>((event, emit) {
       event.leftInd;
       event.rightInd;
       var leftItemInd = state.itemIndex(event.leftInd);
@@ -43,22 +43,20 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           }
           removeWithPositionUpdate(rightItem);
 
-          emit(EquationBoardState(
-              items: state.items, extraItems: state.extraItems));
+          emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       }
     });
-    on<EquationBoardEventAddNumber>(
+    on<EquationEventAddNumber>(
       (event, emit) {
         var itemInd = state.itemIndex(state.numbers.length - 1);
         if (itemInd != null) {
           insertNumberWithSignAfterInd(event.value, itemInd);
-          emit(EquationBoardState(
-              items: state.items, extraItems: state.extraItems));
+          emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       },
     );
-    on<EquationBoardEventSplitNumber>(
+    on<EquationEventSplitNumber>(
       (event, emit) {
         var itemInd = state.itemIndex(event.ind);
         if (itemInd != null) {
@@ -69,11 +67,10 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           insertNumberWithSignAfterInd(event.rightValue, itemInd);
         }
 
-        emit(EquationBoardState(
-            items: state.items, extraItems: state.extraItems));
+        emit(EquationState(items: state.items, extraItems: state.extraItems));
       },
     );
-    on<EquationBoardEventIncreaseNumber>((event, emit) async {
+    on<EquationEventIncreaseNumber>((event, emit) async {
       var itemInd = state.itemIndex(event.ind);
       if (itemInd != null) {
         var cubit = state.items[itemInd];
@@ -84,12 +81,11 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
           }
           updateValue(cubit, 1);
 
-          emit(EquationBoardState(
-              items: state.items, extraItems: state.extraItems));
+          emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       }
     });
-    on<EquationBoardEventNumbersReduction>((event, emit) async {
+    on<EquationEventNumbersReduction>((event, emit) async {
       var itemIndLeft = state.itemIndex(event.indLeft);
       var itemIndRight = state.itemIndex(event.indRight);
       if (itemIndLeft != null && itemIndRight != null) {
@@ -112,8 +108,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
               (state.items.first as SignCubit).state.value == Signs.addition) {
             removeWithPositionUpdate(state.items.first);
           }
-          emit(EquationBoardState(
-              items: state.items, extraItems: state.extraItems));
+          emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       }
       event.indRight;
@@ -121,7 +116,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
   }
 
   @override
-  void onChange(Change<EquationBoardState> change) {
+  void onChange(Change<EquationState> change) {
     super.onChange(change);
     taskCubit.equationValue(change.nextState.numbers);
   }

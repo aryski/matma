@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
-import 'package:matma/board_simulation/items/board/cubit/board_cubit.dart';
-import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
-import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/equation/bloc/bloc_ext/items_generator.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/equation/items/board/cubit/board_cubit.dart';
+import 'package:matma/equation/items/number/cubit/number_cubit.dart';
+import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
-extension Resetter on EquationBoardBloc {
-  static EquationBoardState hardResetState(
+extension Resetter on EquationBloc {
+  static EquationState hardResetState(
       List<int> updatedNumbers, SimulationSize simSize) {
     var top = simSize.hRatio / 2;
     var widthSpace = simSize.wRatio * simSize.wUnits;
@@ -35,7 +35,7 @@ extension Resetter on EquationBoardBloc {
         position: Offset(allMargin - x / 2, top),
         size: Offset(totaldx + x, simSize.hRatio * 2)));
 
-    return EquationBoardState(items: cubits, extraItems: [boardCubit]);
+    return EquationState(items: cubits, extraItems: [boardCubit]);
   }
 
   static (double, List<SimulationItemState>) _numbersToItemsStates(

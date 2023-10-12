@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
 

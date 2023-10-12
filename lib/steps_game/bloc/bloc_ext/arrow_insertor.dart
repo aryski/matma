@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
@@ -16,7 +16,7 @@ extension ArrowInsertor on StepsGameBloc {
   Future<void> handleArrowInsertion(
       StepsGameEventPointerUp event,
       Emitter<StepsGameState> emit,
-      EquationBoardBloc board,
+      EquationBloc board,
       TaskSimulationCubit taskCubit) async {
     //print("start: $event");
     var item = state.getItem(event.id);
@@ -93,7 +93,7 @@ extension ArrowInsertor on StepsGameBloc {
       for (int j = 0; j < number.steps.length; j++) {
         if (number.steps[j].arrow == item) {
           number.steps.insert(j, stepsDefault);
-          board.add(EquationBoardEventIncreaseNumber(ind: i));
+          board.add(EquationEventIncreaseNumber(ind: i));
           break;
         }
       }
@@ -114,7 +114,7 @@ extension ArrowInsertor on StepsGameBloc {
     ArrowCubit arrow;
     FloorCubit floor;
     if (dir == Direction.up) {
-      board.add(EquationBoardEventAddNumber(value: -1));
+      board.add(EquationEventAddNumber(value: -1));
       arrow = generateArrowDown(
           animationProgress: 0,
           position: item.state.position +
@@ -124,7 +124,7 @@ extension ArrowInsertor on StepsGameBloc {
           position: item.state.position + Offset(simSize.wRatio * 1, 0),
           size: Offset(0, simSize.hRatio / 5));
     } else {
-      board.add(EquationBoardEventAddNumber(value: 1));
+      board.add(EquationEventAddNumber(value: 1));
       arrow = generateArrowUp(
           animationProgress: 0.0,
           position: item.state.position + Offset(simSize.wRatio * 0.5, 0),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:matma/board_simulation/bloc/bloc_ext/resizer.dart';
-import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
+import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 
-extension Remover on EquationBoardBloc {
+extension Remover on EquationBloc {
   removeWithPositionUpdate(SimulationItemCubit item) {
     int? ind;
     for (int i = 0; i < state.items.length; i++) {
