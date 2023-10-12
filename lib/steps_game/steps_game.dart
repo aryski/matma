@@ -7,7 +7,6 @@ import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.d
 
 import 'package:matma/board_simulation/equation_board.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/levels/levels/tutorial.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
