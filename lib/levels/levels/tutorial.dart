@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
-import 'package:matma/steps_simulation/steps_simulation.dart';
 import 'package:matma/task_simulation/game_events/game_events.dart';
 import 'package:matma/task_simulation/task.dart';
 

@@ -5,7 +5,7 @@ import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/colors.dart';
-import 'package:matma/steps_simulation/bloc/steps_simulation_bloc.dart';
+import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension BoardItemsGenerator on EquationBoardBloc {
   static BoardState generateBoardState(

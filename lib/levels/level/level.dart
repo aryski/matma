@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/level_summary.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/steps_simulation/steps_simulation.dart';
+import 'package:matma/steps_game/steps_simulation.dart';
 
 /* Use                
   BlocProvider.of<LevelCubit>(context).nextGame();
@@ -30,7 +30,7 @@ class Level extends StatelessWidget {
                     if (state is LevelGameState) {
                       var gameData = state.gameData;
                       if (gameData is StepsGameData) {
-                        return StepsSimulation(key: state.key, data: gameData);
+                        return StepsGame(key: state.key, data: gameData);
                       }
                     }
                     return const SizedBox.shrink();
