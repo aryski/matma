@@ -10,7 +10,7 @@ import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.d
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/quests/cubit/task_simulation_cubit.dart';
+import 'package:matma/quests/cubit/quests_cubit.dart';
 
 part 'steps_game_event.dart';
 part 'steps_game_state.dart';

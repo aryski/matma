@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/quests/cubit/task_simulation_state.dart';
+import 'package:matma/quests/cubit/quests_state.dart';
 import 'package:matma/quests/game_events/game_events.dart';
 import 'package:matma/quests/task.dart';
 import 'package:matma/levels/levels/tutorial.dart';

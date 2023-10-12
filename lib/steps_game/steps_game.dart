@@ -15,7 +15,7 @@ import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor.dart';
-import 'package:matma/quests/cubit/task_simulation_cubit.dart';
+import 'package:matma/quests/cubit/quests_cubit.dart';
 import 'package:matma/quests/task.dart';
 import 'package:matma/quests/task_simulator.dart';
 

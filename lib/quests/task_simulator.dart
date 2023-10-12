@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/level_summary.dart';
-import 'package:matma/quests/cubit/task_simulation_cubit.dart';
-import 'package:matma/quests/cubit/task_simulation_state.dart';
+import 'package:matma/quests/cubit/quests_cubit.dart';
+import 'package:matma/quests/cubit/quests_state.dart';
 
 class TaskSimulator extends StatelessWidget {
   const TaskSimulator({super.key, required this.unit});
