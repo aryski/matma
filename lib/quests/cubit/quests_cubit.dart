@@ -5,7 +5,6 @@ import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/quests/cubit/quests_state.dart';
 import 'package:matma/quests/game_events/game_events.dart';
 import 'package:matma/quests/task.dart';
-import 'package:matma/levels/levels/tutorial.dart';
 
 class QuestsCubit extends Cubit<QuestsState> {
   final LevelCubit parent;

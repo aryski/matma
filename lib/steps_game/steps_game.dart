@@ -190,9 +190,9 @@ class _StepsSimulatorContent extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: IconButton(
-                icon: Icon(Icons.refresh_rounded),
+                icon: const Icon(Icons.refresh_rounded),
                 onPressed: () {
                   BlocProvider.of<LevelCubit>(context).refreshGame();
                 },
