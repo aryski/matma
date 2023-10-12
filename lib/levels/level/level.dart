@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/level_summary.dart';
@@ -24,18 +26,16 @@ class Level extends StatelessWidget {
             },
             builder: (context, state) {
               return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: Builder(
-                  builder: (context) {
-                    if (state is LevelGameState) {
-                      var gameData = state.gameData;
-                      if (gameData is StepsGameData) {
-                        return StepsGame(key: state.key, data: gameData);
-                      }
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
+                switchInCurve: Curves.ease,
+                switchOutCurve: Curves.ease,
+                duration: const Duration(milliseconds: 500),
+                child: state is LevelGameState
+                    ? ((state.gameData is StepsGameData)
+                        ? StepsGame(
+                            key: state.key,
+                            data: state.gameData as StepsGameData)
+                        : const SizedBox.shrink())
+                    : const SizedBox.shrink(),
               );
             },
           ),
