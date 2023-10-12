@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
+import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/arrow_insertor.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/click_handler.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/list_initializer.dart';
@@ -27,6 +28,7 @@ class SimulationSize {
 }
 
 class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
+  final List<StepsGameOps> allowedOps;
   final EquationBoardBloc board;
   final SimulationSize simSize;
   final List<UniqueKey> lockedIds = [];
@@ -34,30 +36,16 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   bool isInsertionAnimation = false;
 
   @override
-  StepsGameBloc(this.simSize, this.board, this.taskCubit)
+  StepsGameBloc(this.simSize, this.board, this.taskCubit, this.allowedOps)
       : super(
             StepsGameState(simSize: simSize, numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeSimulationItems());
-    //print("NUMBERS LEN: ${state.numbers.length}");
-    // for (var number in state.numbers) {
-    //   //print(number.number);
-    // }
 
     on<StepsGameEventScroll>((event, emit) async {
-      //print("BLOC: ${this.hashCode}");
-      //print("NUMBERS LEN: ${state.numbers.length}");
-      // for (var number in state.numbers) {
-      //   //print(number.number);
-      // }
       await handleScroll(state, event, simSize, emit);
     });
 
     on<StepsGameEventPointerDown>((event, emit) async {
-      //print("BLOC: ${this.hashCode}");
-      //print("NUMBERS LEN: ${state.numbers.length}");
-      // for (var number in state.numbers) {
-      //   //print(number.number);
-      // }
       if (!isInsertionAnimation) {
         await handleClick(state, event, simSize, emit);
       }
@@ -65,15 +53,18 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
 
     on<StepsGameEventPointerUp>((event, emit) async {
       bool handled = false;
+
       if (event.pressTime.inMilliseconds >
           const Duration(milliseconds: 80).inMilliseconds) {
         var item = state.getItem(event.id);
         if (item != null) {
           if (item is ArrowCubit) {
             int? elo;
-            if (item.state.direction == Direction.up) {
+            if (item.state.direction == Direction.up &&
+                allowedOps.contains(StepsGameOps.addArrowUp)) {
               elo = state.maxiumumLevelSince(item);
-            } else if (item.state.direction == Direction.down) {
+            } else if (item.state.direction == Direction.down &&
+                allowedOps.contains(StepsGameOps.addArrowDown)) {
               elo = state.minimumLevelSince(item);
             }
             if (elo != null) {

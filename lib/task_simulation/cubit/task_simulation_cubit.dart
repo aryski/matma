@@ -12,19 +12,15 @@ class TaskSimulationCubit extends Cubit<TaskSimulationState> {
   TaskSimulationCubit(this.firstTask, this.parent)
       : currentTask = firstTask,
         super(TaskSimulationStateDisplay(text: 'Hejka.')) {
-    // final Task firstTask;
     planTask(firstTask);
   }
 
   final Task firstTask;
   List<GameEvent> recent = [];
   Task currentTask;
-  // Task currentTask;
   int ind = 0;
 
   void inserted(Direction direction) {
-    //TODO
-    //insertion occured
     if (direction == Direction.up) {
       recent.add(GameEventInsertedUp());
       _nextTask();

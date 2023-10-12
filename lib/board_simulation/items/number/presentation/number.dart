@@ -67,13 +67,6 @@ class Number extends StatelessWidget {
                                                     .size
                                                     .width),
                                       ),
-                                      // Text(
-                                      //   tweenState.value.abs().toString(),
-                                      //   style: TextStyle(
-                                      //       color: Colors.white,
-                                      //       fontWeight: FontWeight.bold,
-                                      //       fontSize: tweenState.size.dx),
-                                      // ),
                                     ],
                                   ),
                                 )),

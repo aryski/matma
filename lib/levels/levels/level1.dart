@@ -13,18 +13,33 @@ class Level1 extends StatelessWidget {
         name: 'Level1',
         gamesData: [
           StepsGameData(
+              allowedOps: [StepsGameOps.addArrowUp],
               initNumbers: [1],
               shadedSteps: [3],
               firstTask: _taskA1,
               withEquationBoard: false),
           StepsGameData(
+              allowedOps: [StepsGameOps.addArrowDown],
               initNumbers: [-1],
               shadedSteps: [-3],
               firstTask: _taskB1,
               withEquationBoard: false),
           StepsGameData(
-              initNumbers: [1],
-              shadedSteps: [3, -2, 4, -1],
+              allowedOps: [
+                StepsGameOps.addArrowDown,
+                StepsGameOps.addArrowUp,
+                StepsGameOps.addOppositeArrow
+              ],
+              //TODO co z tego  jak mozna sie zaklinowac na poziomie? chyba najlepiej dodac przycisk restart
+              initNumbers: [
+                1
+              ],
+              shadedSteps: [
+                3,
+                -2,
+                4,
+                -1
+              ],
               firstTask: _taskC1,
               withEquationBoard: false),
         ],

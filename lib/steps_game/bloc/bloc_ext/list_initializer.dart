@@ -8,7 +8,6 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
 extension Initializer on StepsGameBloc {
   List<StepsGameNumberState> initializeSimulationItems() {
-    //print("init");
     List<int> init = board.state.numbers;
     var currentTop =
         (simSize.hUnits / 2).floor() * simSize.hRatio - simSize.hRatio;
@@ -53,7 +52,6 @@ extension Initializer on StepsGameBloc {
             floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
           }
           items.add(StepsGameDefaultItem(arrow: arrow, floor: floor));
-          //Position update
           if (number > 0) {
             currentTop -= simSize.hRatio;
           } else {
@@ -62,8 +60,6 @@ extension Initializer on StepsGameBloc {
           currentLeft += simSize.wRatio;
         }
       }
-      //print("LEN");
-      //print(items.length);
       result.add(StepsGameNumberState(items));
     }
     return result;

@@ -35,7 +35,7 @@ class StepsGame extends StatelessWidget {
         init: EquationBoardState(),
         simSize: simSize,
         initNumbers: data.initNumbers);
-    final bloc = StepsGameBloc(simSize, eqCubit, taskCubit);
+    final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, data.allowedOps);
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.white),
       child: ConstrainedBox(
@@ -147,21 +147,12 @@ class _StepsSimulatorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 18 * unitRatio,
       width: 66 * horizUnitRatio,
       // color: defaultBackground,
       child: Stack(
         children: [
-          const Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: BackButton(
-                color: Colors.white,
-              ),
-            ),
-          ),
           Opacity(
             opacity: 1.0,
             child: Container(
@@ -186,6 +177,28 @@ class _StepsSimulatorContent extends StatelessWidget {
               : const SizedBox.shrink(),
           TaskSimulator(
             unit: unitRatio,
+          ),
+          const Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: BackButton(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: IconButton(
+                icon: Icon(Icons.refresh_rounded),
+                onPressed: () {
+                  BlocProvider.of<LevelCubit>(context).refreshGame();
+                },
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
@@ -217,7 +230,7 @@ class RawStepsGameExample extends StatelessWidget {
         simSize: simSize,
         initNumbers: initNumbers);
 
-    final bloc = StepsGameBloc(simSize, eqCubit, taskCubit);
+    final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, []);
     return MultiBlocProvider(
       providers: [
         BlocProvider<StepsGameBloc>(create: (context) => bloc),

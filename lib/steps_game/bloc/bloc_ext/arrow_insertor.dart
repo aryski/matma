@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/board_simulation/bloc/equation_board_bloc.dart';
 import 'package:matma/common/colors.dart';
+import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
@@ -65,25 +66,19 @@ extension ArrowInsertor on StepsGameBloc {
     var currentTop = item.state.position.dy;
     var pos = Offset(currentLeft, currentTop);
     late ArrowCubit arrow1;
-    // late SimulationItemCubit arrow2;
     late FloorCubit floor;
     if (direction == Direction.up) {
       arrow1 = generateArrowUp(
           position: pos,
           delta: Offset(0, simSize.hRatio),
           animationProgress: 0);
-      // arrow2 = generateArrowUp(position: pos, delta: Offset.zero);
       floor = generateFloor(
           position: pos,
           delta: Offset(simSize.wRatio / 2, simSize.hRatio),
           widthRatio: 0.25);
     } else {
-      //wiec tak arrow 2 rozwiazac tak ze naprawic ta strzale co jest a nie replace walic xD
-
       arrow1 = generateArrowDown(
           position: pos, delta: Offset.zero, animationProgress: 0);
-      // arrow2 =
-      //     generateArrowDown(position: pos, delta: Offset(0, simSize.hUnit));
       floor = generateFloor(
           position: pos,
           delta:
@@ -97,9 +92,6 @@ extension ArrowInsertor on StepsGameBloc {
 
       for (int j = 0; j < number.steps.length; j++) {
         if (number.steps[j].arrow == item) {
-          // if (number.steps[j].arrow.state.direction == Direction.down) {
-          //   item.updatePosition(Offset(0, simSize.hUnit));
-          // }
           number.steps.insert(j, stepsDefault);
           board.add(EquationBoardEventIncreaseNumber(ind: i));
           break;

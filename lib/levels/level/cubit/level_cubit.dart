@@ -34,4 +34,18 @@ class LevelCubit extends Cubit<LevelState> {
       emit(LevelGameEndState(currentState));
     }
   }
+
+  void refreshGame() {
+    var currentState = state;
+    var gamesData = levelData.gamesData;
+    if (currentState is LevelGameState) {
+      for (int i = 0; i < gamesData.length; i++) {
+        if (gamesData[i] == currentState.gameData && i < gamesData.length) {
+          emit(LevelGameState(UniqueKey(),
+              startTime: DateTime.now(), gameData: gamesData[i]));
+          return;
+        }
+      }
+    }
+  }
 }

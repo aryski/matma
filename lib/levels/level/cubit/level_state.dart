@@ -22,12 +22,12 @@ enum StepsGameOps {
   addArrowDown,
   addArrowUp,
   reduceArrows,
-  splitArrows,
+  splitJoinArrows,
   addOppositeArrow,
 }
 
 class StepsGameData extends GameData {
-  // final List<intStepsDispla> allowedOperations;
+  final List<StepsGameOps> allowedOps;
   final Task firstTask;
   final List<int> initNumbers;
   final bool withEquationBoard;
@@ -36,16 +36,11 @@ class StepsGameData extends GameData {
   final bool withValleyReduction;
 
   StepsGameData(
-      {required this.firstTask,
+      {required this.allowedOps,
+      required this.firstTask,
       required this.initNumbers,
       this.withEquationBoard = true,
       this.shadedSteps,
       this.withHillReduction = false,
       this.withValleyReduction = false});
 }
-
-// class StepsGameData extends GameData {
-//   final StepsDisplayGameData displayGameData;
-
-//   StepsGameData({required this.displayGameData});
-// }

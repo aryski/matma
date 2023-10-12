@@ -9,6 +9,7 @@ import 'package:matma/board_simulation/bloc/bloc_ext/value_updater.dart';
 import 'package:matma/board_simulation/items/number/cubit/number_cubit.dart';
 import 'package:matma/board_simulation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
 
@@ -77,7 +78,7 @@ class EquationBoardBloc extends Bloc<EquationBoardEvent, EquationBoardState> {
       if (itemInd != null) {
         var cubit = state.items[itemInd];
         if (cubit is NumberCubit) {
-          cubit.updateValue(cubit.state.value + 1); //updated value
+          cubit.updateValue(cubit.state.value + 1);
           if (cubit.state.value == 10) {
             resize(itemInd, simSize.wRatio * 2);
           }

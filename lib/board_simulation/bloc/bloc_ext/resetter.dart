@@ -32,7 +32,7 @@ extension Resetter on EquationBoardBloc {
     }
     var x = 0.02;
     var boardCubit = BoardCubit(BoardItemsGenerator.generateBoardState(
-        position: Offset(allMargin - x / 2, top), //TODOP
+        position: Offset(allMargin - x / 2, top),
         size: Offset(totaldx + x, simSize.hRatio * 2)));
 
     return EquationBoardState(items: cubits, extraItems: [boardCubit]);

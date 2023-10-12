@@ -26,7 +26,6 @@ extension BoardItemsGenerator on EquationBoardBloc {
       required Offset position,
       double? opacity,
       required SimulationSize simSize}) {
-    // assert(number >= 0);
     return NumberState(
         value: number.abs(),
         color: number > 0 ? defaultGreen : defaultRed,

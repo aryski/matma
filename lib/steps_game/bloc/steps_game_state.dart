@@ -127,34 +127,6 @@ class StepsGameState {
     return minmaxLevelSince(item, true);
   }
 
-  // StepsGameDefaultItem? leftItem(SimulationItemCubit item) {
-  //   StepsGameDefaultItem? lastItem;
-  //   for (int i = 0; i < numbers.length; i++) {
-  //     for (int j = 0; j < numbers[i].steps.length; j++) {
-  //       if (numbers[i].steps[j] == item) {
-  //         return lastItem;
-  //       }
-  //       lastItem = numbers[i].steps[j];
-  //     }
-  //   }
-  //   return null;
-  // }
-
-  // StepsGameDefaultItem? rightItem(SimulationItemCubit item) {
-  //   bool next = false;
-  //   for (int i = 0; i < numbers.length; i++) {
-  //     for (int j = 0; j < numbers[i].steps.length; j++) {
-  //       if (next) {
-  //         return numbers[i].steps[j];
-  //       }
-  //       if (numbers[i].steps[j] == item) {
-  //         next = true;
-  //       }
-  //     }
-  //   }
-  //   return null;
-  // }
-
   StepsGameDefaultItem? leftStep(StepsGameDefaultItem item) {
     StepsGameDefaultItem? lastItem;
     for (int i = 0; i < numbers.length; i++) {

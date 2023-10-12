@@ -11,7 +11,10 @@ class Tutorial extends StatelessWidget {
   Widget build(BuildContext context) {
     return Level(
       data: LevelData(name: 'Tutorial', gamesData: [
-        StepsGameData(initNumbers: [3, -2], firstTask: _task1),
+        StepsGameData(
+            initNumbers: [3, -2],
+            firstTask: _task1,
+            allowedOps: StepsGameOps.values),
       ]),
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/level_summary.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/steps_game/steps_simulation.dart';
+import 'package:matma/steps_game/steps_game.dart';
 
 /* Use                
   BlocProvider.of<LevelCubit>(context).nextGame();
