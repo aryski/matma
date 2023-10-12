@@ -11,7 +11,7 @@ import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
+import 'package:matma/quests/cubit/task_simulation_cubit.dart';
 
 part 'equation_event.dart';
 part 'equation_state.dart';
@@ -19,7 +19,7 @@ part 'equation_state.dart';
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final EquationState init;
   final SimulationSize simSize;
-  final TaskSimulationCubit taskCubit;
+  final QuestsCubit taskCubit;
   EquationBloc(
       {required this.taskCubit,
       required this.init,

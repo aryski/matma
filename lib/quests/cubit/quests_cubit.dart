@@ -2,16 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/task_simulation/cubit/task_simulation_state.dart';
-import 'package:matma/task_simulation/game_events/game_events.dart';
-import 'package:matma/task_simulation/task.dart';
+import 'package:matma/quests/cubit/task_simulation_state.dart';
+import 'package:matma/quests/game_events/game_events.dart';
+import 'package:matma/quests/task.dart';
 import 'package:matma/levels/levels/tutorial.dart';
 
-class TaskSimulationCubit extends Cubit<TaskSimulationState> {
+class QuestsCubit extends Cubit<QuestsState> {
   final LevelCubit parent;
-  TaskSimulationCubit(this.firstTask, this.parent)
+  QuestsCubit(this.firstTask, this.parent)
       : currentTask = firstTask,
-        super(TaskSimulationStateDisplay(text: 'Hejka.')) {
+        super(QuestsStateDisplay(text: 'Hejka.')) {
     planTask(firstTask);
   }
 
@@ -70,7 +70,7 @@ class TaskSimulationCubit extends Cubit<TaskSimulationState> {
     for (var instruction in t.instructions) {
       if (instruction is NextMsg) {
         if (currentInd == ind) {
-          emit(TaskSimulationStateDisplay(text: instruction.text));
+          emit(QuestsStateDisplay(text: instruction.text));
           if (instruction.time != Duration.zero) {
             await Future.delayed(instruction.time);
           }
@@ -79,7 +79,7 @@ class TaskSimulationCubit extends Cubit<TaskSimulationState> {
         }
       } else if (instruction is EndMsg) {
         parent.nextGame();
-        emit(TaskSimulationStateEndLevel(text: 'Koniec zabawy'));
+        emit(QuestsStateEndLevel(text: 'Koniec zabawy'));
       }
     }
   }

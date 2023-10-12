@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/level_summary.dart';
-import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
-import 'package:matma/task_simulation/cubit/task_simulation_state.dart';
+import 'package:matma/quests/cubit/task_simulation_cubit.dart';
+import 'package:matma/quests/cubit/task_simulation_state.dart';
 
 class TaskSimulator extends StatelessWidget {
   const TaskSimulator({super.key, required this.unit});
@@ -11,13 +11,12 @@ class TaskSimulator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TaskSimulationCubit, TaskSimulationState>(
-        builder: (context, state) {
+    return BlocBuilder<QuestsCubit, QuestsState>(builder: (context, state) {
       return AnimatedSwitcher(
           duration: const Duration(
             milliseconds: 200,
           ),
-          child: state is TaskSimulationStateDisplay
+          child: state is QuestsStateDisplay
               ? Padding(
                   padding: EdgeInsets.only(
                       bottom: 10 * unit * MediaQuery.of(context).size.height),

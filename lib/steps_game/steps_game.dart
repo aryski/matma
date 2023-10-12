@@ -15,9 +15,9 @@ import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor.dart';
-import 'package:matma/task_simulation/cubit/task_simulation_cubit.dart';
-import 'package:matma/task_simulation/task.dart';
-import 'package:matma/task_simulation/task_simulator.dart';
+import 'package:matma/quests/cubit/task_simulation_cubit.dart';
+import 'package:matma/quests/task.dart';
+import 'package:matma/quests/task_simulator.dart';
 
 class StepsGame extends StatelessWidget {
   const StepsGame({super.key, required this.data});
@@ -28,8 +28,8 @@ class StepsGame extends StatelessWidget {
     double unitRatio = 1 / 18;
     double horizUnitRatio = 1 / 66;
     var simSize = SimulationSize(hRatio: unitRatio, wRatio: horizUnitRatio);
-    final taskCubit = TaskSimulationCubit(
-        data.firstTask, BlocProvider.of<LevelCubit>(context));
+    final taskCubit =
+        QuestsCubit(data.firstTask, BlocProvider.of<LevelCubit>(context));
     final eqCubit = EquationBloc(
         taskCubit: taskCubit,
         init: EquationState(),
@@ -44,7 +44,7 @@ class StepsGame extends StatelessWidget {
           providers: [
             BlocProvider<StepsGameBloc>(create: (context) => bloc),
             BlocProvider<EquationBloc>(create: (context) => eqCubit),
-            BlocProvider<TaskSimulationCubit>(create: (context) => taskCubit)
+            BlocProvider<QuestsCubit>(create: (context) => taskCubit)
           ],
           child: StepsSimulatorContent(
             bloc: bloc,
@@ -221,7 +221,7 @@ class RawStepsGameExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskCubit = TaskSimulationCubit(Task(instructions: [], onEvents: []),
+    final taskCubit = QuestsCubit(Task(instructions: [], onEvents: []),
         BlocProvider.of<LevelCubit>(context));
 
     final eqCubit = EquationBloc(
