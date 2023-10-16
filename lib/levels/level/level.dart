@@ -45,25 +45,19 @@ class Level extends StatelessWidget {
             },
             builder: (context, state) {
               return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: Builder(
-                  builder: (context) {
-                    if (state is LevelGameEndState) {
-                      return Stack(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            color: Colors.black.withOpacity(0.3),
-                          ),
-                          const LevelSummary(),
-                        ],
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
-              );
+                  duration: const Duration(milliseconds: 200),
+                  child: (state is LevelGameEndState)
+                      ? Stack(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                              color: Colors.black.withOpacity(0.3),
+                            ),
+                            const LevelSummary(),
+                          ],
+                        )
+                      : const SizedBox.shrink());
             },
           )
         ],
