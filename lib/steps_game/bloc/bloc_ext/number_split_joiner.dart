@@ -64,7 +64,6 @@ extension NumberSplitJoiner on StepsGameBloc {
             var number = state.numbers[numberInd];
             var nextNumber = state.numbers[nextInd];
             if (number.number * nextNumber.number > 0) {
-              //same sign trzeba zmergowac TODO bledy czasem
               board.add(EquationEventJoinNumbers(
                   leftInd: numberInd, rightInd: nextInd));
               number.steps.addAll(nextNumber.steps);

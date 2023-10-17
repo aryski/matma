@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/level_summary.dart';
@@ -11,8 +9,9 @@ import 'package:matma/steps_game/steps_game.dart';
   when game is finished
 */
 class Level extends StatelessWidget {
-  const Level({super.key, required this.data});
+  const Level({super.key, required this.data, this.next});
   final LevelData data;
+  final Widget? next;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,7 @@ class Level extends StatelessWidget {
                               height: MediaQuery.of(context).size.height,
                               color: Colors.black.withOpacity(0.3),
                             ),
-                            const LevelSummary(),
+                            LevelSummary(next: next),
                           ],
                         )
                       : const SizedBox.shrink());

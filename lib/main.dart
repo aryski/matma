@@ -29,22 +29,6 @@ void main() {
   //i jeżeli dłużej to dać ifa, który decyduje też w zależności od eventu,
   //ale też w zależności od czasu do jakiego kolejnego taska trzeba przejść.
 
-  //Zadanie 1
-  //Od strzałki do dopasowania do kształtu z ciemnego rysunku, liczby dodatnie
-  //Od strzałki do dopasowania do kształtu z ciemnego rysunku, liczby dodatnie i ujemne
-  //Od strzałki do dopasowania do kształtu z ciemnego rysunku, liczby dodatnie i ujemne i długie
-
-  //Zadanie 2
-  //Od rysunku do strzałki i pokazanie, że wynik to zawsze fragment ostatnich strzałek spod/nad linii
-  //Wprowadzenie równania
-  //(moze tutaj najpierw pojawi się równanie, a rysunek będzie po paru sekundach, żeby zwrócić uwagę odbiorcy na równanie)
-  //Obliczenie tego samego co w a) ale z równaniem
-
-  //Zadanie 3
-  //Od strzałki do dopasowania do równania, liczby dodatnie
-  //Od strzałki do dopasowania do równania, liczby dodatnie i ujemne
-  //Od strzałki do dopasowania do równania, liczby dodatnie i ujemne i długie
-
   //Zadanie 4
   //Coś w stylu przekształcenie jednego równania w inne daną ilością ruchów?
 

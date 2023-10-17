@@ -22,6 +22,7 @@ import 'package:matma/quests/task_simulator.dart';
 class StepsGame extends StatelessWidget {
   const StepsGame({super.key, required this.data});
   final StepsGameData data;
+  // targetValues: numbers, pass here
   @override
   Widget build(BuildContext context) {
     List<UniqueKey> blockedIds = [];
@@ -31,10 +32,10 @@ class StepsGame extends StatelessWidget {
     final taskCubit =
         QuestsCubit(data.firstTask, BlocProvider.of<LevelCubit>(context));
     final eqCubit = EquationBloc(
-        taskCubit: taskCubit,
         init: EquationState(),
         simSize: simSize,
-        initNumbers: data.initNumbers);
+        initNumbers: data.initNumbers,
+        targetValues: [5 /*TODO*/]);
     final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, data.allowedOps);
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.white),
@@ -47,6 +48,7 @@ class StepsGame extends StatelessWidget {
             BlocProvider<QuestsCubit>(create: (context) => taskCubit)
           ],
           child: StepsSimulatorContent(
+            simSize: simSize,
             bloc: bloc,
             blockedIds: blockedIds,
             unitRatio: unitRatio,
@@ -67,11 +69,13 @@ class StepsSimulatorContent extends StatelessWidget {
     required this.unitRatio,
     required this.horizUnitRatio,
     required this.data,
+    required this.simSize,
   });
   final StepsGameData data;
   final StepsGameBloc bloc;
   final List<UniqueKey> blockedIds;
   final double unitRatio;
+  final SimulationSize simSize;
   final double horizUnitRatio;
 
   @override
@@ -83,7 +87,11 @@ class StepsSimulatorContent extends StatelessWidget {
       unitRatio: unitRatio,
       horizUnitRatio: horizUnitRatio,
       child: _StepsSimulatorContent(
-          data: data, unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),
+        data: data,
+        unitRatio: unitRatio,
+        horizUnitRatio: horizUnitRatio,
+        simSize: simSize,
+      ),
     );
   }
 }
@@ -134,16 +142,49 @@ class _ScrollListener extends StatelessWidget {
   }
 }
 
+// class _FixedEquation extends StatelessWidget {
+//   const _FixedEquation(
+//       {super.key,
+//       required this.simSize,
+//       required this.unit,
+//       required this.numbers});
+//   final SimulationSize simSize;
+//   final double unit;
+//   final List<int> numbers;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     print("Target $numbers");
+//     //TODO new bloc is being generated in this case
+//     return Stack(
+//       key: Key("fixedequati3onlevelidk"),
+//       children: [
+//         BlocProvider<EquationBloc>(
+//           key: Key("fixedequationlevelidk"),
+//           create: (context) => EquationBloc(
+//               targetValues: numbers,
+//               init: EquationState(),
+//               simSize: simSize,
+//               initNumbers: numbers),
+//           child: Equation(unit: unit),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
 class _StepsSimulatorContent extends StatelessWidget {
   const _StepsSimulatorContent({
     super.key,
     required this.unitRatio,
     required this.horizUnitRatio,
     required this.data,
+    required this.simSize,
   });
   final StepsGameData data;
   final double unitRatio;
   final double horizUnitRatio;
+  final SimulationSize simSize;
 
   @override
   Widget build(BuildContext context) {
@@ -159,22 +200,21 @@ class _StepsSimulatorContent extends StatelessWidget {
               color: defaultBackground,
             ),
           ),
-          data.shadedSteps != null
-              ? RawStepsGameExample(
-                  unitRatio: unitRatio,
-                  horizUnitRatio: horizUnitRatio,
-                  simSize:
-                      SimulationSize(hRatio: unitRatio, wRatio: horizUnitRatio),
-                  initNumbers: data.shadedSteps!)
-              : const SizedBox.shrink(),
+          if (data.shadedSteps != null)
+            ShadedRawStepsGame(
+                unitRatio: unitRatio,
+                horizUnitRatio: horizUnitRatio,
+                simSize:
+                    SimulationSize(hRatio: unitRatio, wRatio: horizUnitRatio),
+                initNumbers: data.shadedSteps!),
           RawStepsGame(unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),
-          data.withEquation
-              ? SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Equation(unit: unitRatio),
-                )
-              : const SizedBox.shrink(),
+          if (data.withEquation) Equation(unit: unitRatio),
+          // if (data.withFixedEquation != null)
+          //   _FixedEquation(
+          //     simSize: simSize,
+          //     unit: unitRatio,
+          //     numbers: data.withFixedEquation!,
+          //   ),
           TaskSimulator(
             unit: unitRatio,
           ),
@@ -206,8 +246,8 @@ class _StepsSimulatorContent extends StatelessWidget {
   }
 }
 
-class RawStepsGameExample extends StatelessWidget {
-  const RawStepsGameExample(
+class ShadedRawStepsGame extends StatelessWidget {
+  const ShadedRawStepsGame(
       //todo add shadow? maybe by merging drawpaths??? idk
       {super.key,
       required this.unitRatio,
@@ -225,10 +265,7 @@ class RawStepsGameExample extends StatelessWidget {
         BlocProvider.of<LevelCubit>(context));
 
     final eqCubit = EquationBloc(
-        taskCubit: taskCubit,
-        init: EquationState(),
-        simSize: simSize,
-        initNumbers: initNumbers);
+        init: EquationState(), simSize: simSize, initNumbers: initNumbers);
 
     final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, []);
     return MultiBlocProvider(

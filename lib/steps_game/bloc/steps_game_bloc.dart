@@ -84,4 +84,9 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
       }
     });
   }
+  @override
+  void onChange(Change<StepsGameState> change) {
+    taskCubit.equationValue(state.numbers.map((e) => e.number).toList());
+    super.onChange(change);
+  }
 }

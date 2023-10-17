@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/colors.dart';
+import 'package:matma/levels/levels/level2.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
 class LevelSummary extends StatelessWidget {
-  const LevelSummary({super.key});
+  const LevelSummary({super.key, required this.next});
+  final Widget? next;
 
   @override
   Widget build(BuildContext context) {
@@ -64,27 +66,34 @@ class LevelSummary extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const Spacer(),
-                          LevelButton(
-                            unlocked: true,
-                            onTap: () {},
-                            minature: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.keyboard_double_arrow_right_rounded,
-                                  size: 150,
-                                ),
-                                Text(
-                                  'Następny',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
+                          if (next != null) ...[
+                            const Spacer(),
+                            LevelButton(
+                              unlocked: true,
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => next!));
+                              },
+                              minature: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.keyboard_double_arrow_right_rounded,
+                                    size: 150,
+                                  ),
+                                  Text(
+                                    'Następny',
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
+                          ],
                           const Spacer(),
                           const Spacer(),
                         ],

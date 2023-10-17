@@ -19,16 +19,10 @@ class ArrowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     path = Path();
-    var xd = 3 * sqrt(3) / 6 * width;
-    if (height < xd) {
-      xd = height;
-    }
-    final tHeight = xd; // dodaj w zaleznosci od wysokosci
-
-    // var progress = state.animProgress; TODO fix so you just display current state
-
+    var equilateralHeight = 3 * sqrt(3) / 6 * width;
+    final tHeight = height < equilateralHeight ? height : equilateralHeight;
     var progress = animationProgress;
-    //print(progress);
+
     path.addPath(
         generateTriangle(width, tHeight, radius, progress), Offset.zero);
 

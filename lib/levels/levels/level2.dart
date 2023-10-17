@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
-import 'package:matma/levels/levels/level2.dart';
 import 'package:matma/quests/game_events/game_events.dart';
 import 'package:matma/quests/task.dart';
 
-//Zadanie 1
-//Od strzałki do dopasowania do kształtu z ciemnego rysunku, liczby dodatnie
-//Od strzałki do dopasowania do kształtu z ciemnego rysunku, liczby dodatnie i ujemne
-//Od strzałki do dopasowania do kształtu z ciemnego rysunku, liczby dodatnie i ujemne i długie
+//Zadanie 2
+//Od rysunku do strzałki i pokazanie, że wynik to zawsze fragment ostatnich strzałek spod/nad linii
+//Wprowadzenie równania
+//(moze tutaj najpierw pojawi się równanie, a rysunek będzie po paru sekundach, żeby zwrócić uwagę odbiorcy na równanie)
+//Obliczenie tego samego co w a) ale z równaniem
 
-class Level1 extends StatelessWidget {
-  const Level1({super.key});
+class Level2 extends StatelessWidget {
+  const Level2({super.key});
   @override
   Widget build(BuildContext context) {
     return Level(
-      next: const Level2(),
       data: LevelData(
-        name: 'Level1',
+        name: 'Level2',
         gamesData: [
           StepsGameData(
               allowedOps: [StepsGameOps.addArrowUp],
               initNumbers: [1],
               shadedSteps: [3],
               firstTask: _taskA1,
-              withEquation: false),
+              withEquation: true),
           StepsGameData(
               allowedOps: [StepsGameOps.addArrowDown],
               initNumbers: [-1],
               shadedSteps: [-3],
               firstTask: _taskB1,
-              withEquation: false),
+              withEquation: true),
           StepsGameData(allowedOps: [
             StepsGameOps.addArrowDown,
             StepsGameOps.addArrowUp,
@@ -42,17 +41,21 @@ class Level1 extends StatelessWidget {
             -2,
             4,
             -1
-          ], firstTask: _taskC1, withEquation: false),
+          ], firstTask: _taskC1, withEquation: true),
         ],
       ),
     );
   }
 }
 
+//TODO przydałoby się móc oprócz wiadomości polecenia dodać wiadomośc notatkę,
+//typu, że np zauważ dodatkowo coś oznacza coś itd xdddd, albo zawsze na koncu
+//damy takie jak ta linia w tle?
+
 var _taskA1 = Task(
   instructions: [
-    NextMsg(text: 'Hejka.', seconds: 3),
-    NextMsg(text: 'Dojdź do obrazka w tle.', seconds: 7),
+    NextMsg(text: 'Widzisz cyfrę na górze?', seconds: 3),
+    NextMsg(text: 'Dojdź do obrazka w tle i ją obserwuj.', seconds: 7),
     NextMsg(text: 'Trzy zielone strzałki obok siebie.')
   ],
   onEvents: [
@@ -61,8 +64,7 @@ var _taskA1 = Task(
 );
 
 var _taskA2 = Task(instructions: [
-  NextMsg(text: 'Udało Ci się!', seconds: 2),
-  NextMsg(text: 'Spróbujmy czegoś innego.', seconds: 2),
+  NextMsg(text: 'Git.', seconds: 1.5),
   EndMsg(),
 ], onEvents: []);
 
@@ -77,15 +79,13 @@ var _taskB1 = Task(
 );
 
 var _taskB2 = Task(instructions: [
-  NextMsg(text: 'Najs.', seconds: 2),
-  NextMsg(text: 'Kolejny przykład.', seconds: 2),
+  NextMsg(text: 'Najs.', seconds: 1.5),
   EndMsg(),
 ], onEvents: []);
 
 var _taskC1 = Task(
   instructions: [
-    NextMsg(text: 'Znowu dojdź do obrazka w tle.', seconds: 7),
-    NextMsg(text: 'Uźyj złotych końcówek do dodania przeciwnych strzałek.')
+    NextMsg(text: 'Znowu to samo, obserwuj górę'),
   ],
   onEvents: [
     OnEvent(

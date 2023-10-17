@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/levels/levels/level1.dart';
+import 'package:matma/levels/levels/level2.dart';
+import 'package:matma/levels/levels/level3.dart';
 import 'package:matma/levels/levels/tutorial.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
@@ -84,6 +86,48 @@ class PickMenu extends StatelessWidget {
               ),
               Text(
                 'Poziom 1',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(width: 30),
+        LevelButton(
+          unlocked: true,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Level2()));
+          },
+          minature: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.wind_power_rounded,
+                size: 150,
+              ),
+              Text(
+                'Poziom 2',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(width: 30),
+        LevelButton(
+          unlocked: true,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Level3()));
+          },
+          minature: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.rocket_rounded,
+                size: 150,
+              ),
+              Text(
+                'Poziom 3',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               )
             ],

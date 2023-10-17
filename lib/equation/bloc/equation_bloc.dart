@@ -16,14 +16,19 @@ part 'equation_event.dart';
 part 'equation_state.dart';
 
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
+  //TODO modify so it supports targetValues
+  //add to display settings second color in case someone wants to use the support colors?
+  //but ideally support colors are enums and decided in presentation;
+
   final EquationState init;
   final SimulationSize simSize;
-  final QuestsCubit taskCubit;
+  final List<int>? targetValues;
+  // final QuestsCubit taskCubit;
   EquationBloc(
-      {required this.taskCubit,
-      required this.init,
+      {required this.init,
       required this.simSize,
-      required List<int> initNumbers})
+      required List<int> initNumbers,
+      this.targetValues})
       : super(Resetter.hardResetState(initNumbers, simSize)) {
     on<EquationEventJoinNumbers>((event, emit) {
       event.leftInd;
@@ -41,7 +46,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
             removeWithPositionUpdate(rightSignItem);
           }
           removeWithPositionUpdate(rightItem);
-
+          adjust();
           emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       }
@@ -51,6 +56,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
         var itemInd = state.itemIndex(state.numbers.length - 1);
         if (itemInd != null) {
           insertNumberWithSignAfterInd(event.value, itemInd);
+          adjust();
           emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       },
@@ -65,7 +71,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
           }
           insertNumberWithSignAfterInd(event.rightValue, itemInd);
         }
-
+        adjust();
         emit(EquationState(items: state.items, extraItems: state.extraItems));
       },
     );
@@ -79,7 +85,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
             resize(itemInd, simSize.wRatio * 2);
           }
           updateValue(cubit, 1);
-
+          adjust();
           emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       }
@@ -107,17 +113,44 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
               (state.items.first as SignCubit).state.value == Signs.addition) {
             removeWithPositionUpdate(state.items.first);
           }
+          adjust();
           emit(EquationState(items: state.items, extraItems: state.extraItems));
         }
       }
-      event.indRight;
     });
   }
 
-  @override
-  void onChange(Change<EquationState> change) {
-    super.onChange(change);
-    taskCubit.equationValue(change.nextState.numbers);
+  void adjust() {
+    // print("present ${this.hashCode} with $target");
+    // print(target);
+    // if (target != null) {
+    //   print("target");
+    //   int j = 0;
+    //   var lastCubit;
+    //   for (int i = 0; i < state.items.length; i++) {
+    //     var cubit = state.items[i];
+    //     if (cubit is NumberCubit) {
+    //       print("XDD");
+    //       cubit.state.color = Colors.indigoAccent;
+    //     }
+    //   }
+    //   for (int i = 0; i < state.items.length && j < target!.length; i++) {
+    //     var cubit = state.items[i];
+    //     if (cubit is NumberCubit) {
+    //       var value = cubit.state.value;
+    //       if (lastCubit is SignCubit &&
+    //           lastCubit.state.value == Signs.substraction) {
+    //         value *= -1;
+    //       }
+    //       if (value == target![j]) {
+    //         print("indigo");
+    //         cubit.state.color = cubit.state.defColor;
+    //       }
+    //       j++;
+    //     }
+    //     lastCubit = cubit;
+    //   }
+    // }
   }
 
   void decreaseValue(NumberCubit cubit, int itemInd) {

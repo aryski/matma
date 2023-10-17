@@ -31,6 +31,7 @@ class StepsGameData extends GameData {
   final Task firstTask;
   final List<int> initNumbers;
   final bool withEquation;
+  final List<int>? withFixedEquation;
   final List<int>? shadedSteps;
   final bool withHillReduction;
   final bool withValleyReduction;
@@ -42,5 +43,6 @@ class StepsGameData extends GameData {
       this.withEquation = true,
       this.shadedSteps,
       this.withHillReduction = false,
-      this.withValleyReduction = false});
+      this.withValleyReduction = false,
+      this.withFixedEquation});
 }

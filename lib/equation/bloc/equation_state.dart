@@ -1,7 +1,8 @@
 part of 'equation_bloc.dart';
 
 class EquationState {
-  final List<SimulationItemCubit> items;
+  final List<SimulationItemCubit>
+      items; //TODO PRZEPISAC NA ZNAK PRZED CYFRĄ I TAK JAK W STEPS GAME I TYLE
   final List<SimulationItemCubit> extraItems;
 
   EquationState({this.items = const [], this.extraItems = const []});
