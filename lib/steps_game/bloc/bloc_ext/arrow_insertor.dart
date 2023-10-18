@@ -6,8 +6,8 @@ import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/quests/cubit/quests_cubit.dart';
 
@@ -60,7 +60,7 @@ extension ArrowInsertor on StepsGameBloc {
   }
 
   StepsGameDefaultItem _insertArrow(
-      SimulationItemCubit<SimulationItemState> item, Direction direction) {
+      GameItemCubit<GameItemState> item, Direction direction) {
     var currentLeft = item.state.position.dx;
     var currentTop = item.state.position.dy;
     var pos = Offset(currentLeft, currentTop);
@@ -103,7 +103,7 @@ extension ArrowInsertor on StepsGameBloc {
 
   Future<bool> handleOppositeInsertion(
       StepsGameState state,
-      SimulationItemCubit? item,
+      GameItemCubit? item,
       SimulationSize simSize,
       Emitter<StepsGameState> emit) async {
     if (item is! FloorCubit || !(state.isLastItem(item))) return false;

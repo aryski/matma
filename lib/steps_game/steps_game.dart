@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/common/colors.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 
 import 'package:matma/equation/equation.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
@@ -308,7 +308,7 @@ class RawStepsGame extends StatelessWidget {
           width: 65 * horizUnitRatio * MediaQuery.of(context).size.width,
           child: BlocBuilder<StepsGameBloc, StepsGameState>(
             builder: (context, state) {
-              List<SimulationItemCubit> items = [];
+              List<GameItemCubit> items = [];
               for (var number in state.numbers) {
                 for (var item in number.steps) {
                   items.add(item.arrow);

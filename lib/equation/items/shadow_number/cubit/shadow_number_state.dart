@@ -1,6 +1,6 @@
 part of 'shadow_number_cubit.dart';
 
-class ShadowNumberState extends SimulationItemState {
+class ShadowNumberState extends GameItemState {
   String value;
   ShadowNumberState({
     required this.value,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 
-class ArrowCubit extends SimulationItemCubit<ArrowState> {
+class ArrowCubit extends GameItemCubit<ArrowState> {
   ArrowCubit(super.initialState);
 
   void slideIn() {}

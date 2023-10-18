@@ -40,7 +40,7 @@ class Level3 extends StatelessWidget {
             -2,
             4,
             -1
-          ], firstTask: _taskC1),
+          ], firstTask: _taskC1, withEquation: true),
         ],
       ),
     );

@@ -4,8 +4,8 @@ import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension Resetter on EquationBloc {
@@ -18,7 +18,7 @@ extension Resetter on EquationBloc {
 
     var result = _numbersToItemsStates(updatedNumbers, top, simSize);
     double totaldx = result.$1;
-    List<SimulationItemState> states = result.$2;
+    List<GameItemState> states = result.$2;
 
     var allMargin = (widthSpace - totaldx) / 2 - simSize.wRatio / 6.7;
     SignCubit? lastSignCubit;
@@ -40,9 +40,9 @@ extension Resetter on EquationBloc {
     return EquationState(items: items, extraItems: [boardCubit]);
   }
 
-  static (double, List<SimulationItemState>) _numbersToItemsStates(
+  static (double, List<GameItemState>) _numbersToItemsStates(
       List<int> updatedNumbers, double top, SimulationSize simSize) {
-    List<SimulationItemState> states = []; //TODO
+    List<GameItemState> states = []; //TODO
     double totaldx = 0;
     for (int i = 0; i < updatedNumbers.length; i++) {
       var number = updatedNumbers[i];

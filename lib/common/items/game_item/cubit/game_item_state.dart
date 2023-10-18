@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class SimulationItemState {
+abstract class GameItemState {
   UniqueKey id;
   Offset position;
   Offset size;
@@ -10,7 +10,7 @@ abstract class SimulationItemState {
   double opacity;
   double radius;
 
-  SimulationItemState(
+  GameItemState(
       {required this.defColor,
       required this.hovColor,
       required this.id,
@@ -20,5 +20,5 @@ abstract class SimulationItemState {
       required this.opacity,
       required this.radius});
 
-  SimulationItemState copy();
+  GameItemState copy();
 }

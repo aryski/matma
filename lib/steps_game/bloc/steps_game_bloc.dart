@@ -6,7 +6,7 @@ import 'package:matma/steps_game/bloc/bloc_ext/arrow_insertor.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/click_handler.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/list_initializer.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/scroll_handler.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';

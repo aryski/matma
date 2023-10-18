@@ -15,7 +15,7 @@ class EquationDefaultItem {
 
 class EquationState {
   final List<EquationDefaultItem> items;
-  final List<SimulationItemCubit> extraItems;
+  final List<GameItemCubit> extraItems;
 
   EquationState({this.items = const [], this.extraItems = const []});
 

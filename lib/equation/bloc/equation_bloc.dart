@@ -9,7 +9,7 @@ import 'package:matma/equation/bloc/bloc_ext/reducer.dart';
 import 'package:matma/equation/bloc/bloc_ext/value_updater.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 part 'equation_event.dart';

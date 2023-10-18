@@ -50,14 +50,14 @@ extension Resizer on EquationBloc {
         state.items[j].number.updatePosition(Offset(-delta / 2, 0));
         var sign = state.items[j].sign;
         if (sign != null) {
-          state.items[j].sign!.updatePosition(Offset(-delta / 2, 0));
+          sign.updatePosition(Offset(-delta / 2, 0));
         }
       }
       for (int j = itemsInd + 1; j < state.items.length; j++) {
         state.items[j].number.updatePosition(Offset(delta / 2, 0));
         var sign = state.items[j].sign;
         if (sign != null) {
-          state.items[j].sign!.updatePosition(Offset(delta / 2, 0));
+          sign.updatePosition(Offset(delta / 2, 0));
         }
       }
       for (var item in state.extraItems) {

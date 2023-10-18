@@ -4,8 +4,8 @@ import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 
 extension NumberWithSignInsertor on EquationBloc {
   void insertNumberWithSignAfterItem(

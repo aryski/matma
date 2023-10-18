@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
 import 'package:matma/equation/items/board/presentation/board.dart';
@@ -21,7 +21,7 @@ class Equation extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       child:
           BlocBuilder<EquationBloc, EquationState>(builder: (context, state) {
-        List<SimulationItemCubit> items = [];
+        List<GameItemCubit> items = [];
         for (var item in state.items) {
           items.add(item.number);
           if (item.sign != null) {

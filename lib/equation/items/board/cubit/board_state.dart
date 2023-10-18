@@ -1,6 +1,6 @@
 part of 'board_cubit.dart';
 
-class BoardState extends SimulationItemState {
+class BoardState extends GameItemState {
   BoardState(
       {required super.defColor,
       required super.hovColor,

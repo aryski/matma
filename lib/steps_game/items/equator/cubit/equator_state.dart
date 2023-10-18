@@ -1,6 +1,6 @@
 part of 'equator_cubit.dart';
 
-class EquatorState extends SimulationItemState {
+class EquatorState extends GameItemState {
   EquatorState(
       {required super.defColor,
       required super.hovColor,

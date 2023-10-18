@@ -4,13 +4,13 @@ import 'package:matma/common/colors.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 
 DateTime _globalTime = DateTime.now();
 
 extension ArrowsReductor on StepsGameBloc {
   Future<bool> handleReduction(
-      SimulationItemCubit? item,
+      GameItemCubit? item,
       double delta,
       double defaultWidth,
       StepsGameState state,
@@ -50,7 +50,7 @@ extension ArrowsReductor on StepsGameBloc {
     return true;
   }
 
-  bool areNeighborsOpposite(SimulationItemCubit? item, StepsGameState state) {
+  bool areNeighborsOpposite(GameItemCubit? item, StepsGameState state) {
     if (item is FloorCubit) {
       var step = state.getStep(item);
       if (step == null) return false;

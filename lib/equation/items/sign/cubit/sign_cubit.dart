@@ -1,8 +1,8 @@
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 
 part 'sign_state.dart';
 
-class SignCubit extends SimulationItemCubit<SignState> {
+class SignCubit extends GameItemCubit<SignState> {
   SignCubit(super.initialState);
 }

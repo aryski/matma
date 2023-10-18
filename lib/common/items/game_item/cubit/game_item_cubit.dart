@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 
-class SimulationItemCubit<T extends SimulationItemState> extends Cubit<T> {
-  SimulationItemCubit(super.initialState);
+class GameItemCubit<T extends GameItemState> extends Cubit<T> {
+  GameItemCubit(super.initialState);
 
   void updatePosition(Offset delta) {
     state.position += delta;

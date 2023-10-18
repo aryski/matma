@@ -1,8 +1,8 @@
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 
 enum Direction { up, down }
 
-class ArrowState extends SimulationItemState {
+class ArrowState extends GameItemState {
   final Direction direction;
   final double animProgress;
   ArrowState(

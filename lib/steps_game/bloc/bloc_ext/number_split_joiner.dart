@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
 extension NumberSplitJoiner on StepsGameBloc {
   bool handleSplitJoin(
-      SimulationItemCubit? item,
+      GameItemCubit? item,
       double delta,
       double minWidth,
       SimulationSize simSize,

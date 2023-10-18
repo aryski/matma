@@ -27,7 +27,7 @@ class StepsGameNumberState {
 class StepsGameState {
   final SimulationSize simSize;
   final List<StepsGameNumberState> numbers;
-  Map<UniqueKey, SimulationItemCubit> unorderedItems;
+  Map<UniqueKey, GameItemCubit> unorderedItems;
 
   StepsGameState(
       {required this.simSize,
@@ -43,7 +43,7 @@ class StepsGameState {
     }
   }
 
-  int? minmaxLevelSince(SimulationItemCubit item, bool max) {
+  int? minmaxLevelSince(GameItemCubit item, bool max) {
     var myStep = getStep(item);
     if (myStep == null) {
       return null;
@@ -108,7 +108,7 @@ class StepsGameState {
     }
   }
 
-  StepsGameDefaultItem? getStep(SimulationItemCubit item) {
+  StepsGameDefaultItem? getStep(GameItemCubit item) {
     for (var number in numbers) {
       for (var step in number.steps) {
         if (item == step.arrow || item == step.floor) {
@@ -119,11 +119,11 @@ class StepsGameState {
     return null;
   }
 
-  int? minimumLevelSince(SimulationItemCubit item) {
+  int? minimumLevelSince(GameItemCubit item) {
     return minmaxLevelSince(item, false);
   }
 
-  int? maxiumumLevelSince(SimulationItemCubit item) {
+  int? maxiumumLevelSince(GameItemCubit item) {
     return minmaxLevelSince(item, true);
   }
 
@@ -155,7 +155,7 @@ class StepsGameState {
     return null;
   }
 
-  void _moveAllSince(SimulationItemCubit item, Offset offset, bool included) {
+  void _moveAllSince(GameItemCubit item, Offset offset, bool included) {
     bool update = false;
     for (var number in numbers) {
       for (var step in number.steps) {
@@ -190,16 +190,16 @@ class StepsGameState {
     return numbers.first.steps.first == step;
   }
 
-  bool isLastItem(SimulationItemCubit item) {
+  bool isLastItem(GameItemCubit item) {
     //steps might be empty!!!!
     return numbers.last.steps.last.floor == item;
   }
 
-  void moveAllSince(SimulationItemCubit item, Offset offset) {
+  void moveAllSince(GameItemCubit item, Offset offset) {
     _moveAllSince(item, offset, false);
   }
 
-  void moveAllSinceIncluded(SimulationItemCubit item, Offset offset) {
+  void moveAllSinceIncluded(GameItemCubit item, Offset offset) {
     _moveAllSince(item, offset, true);
   }
 
@@ -210,7 +210,7 @@ class StepsGameState {
         unorderedItems: {...unorderedItems});
   }
 
-  SimulationItemCubit? getItem(UniqueKey id) {
+  GameItemCubit? getItem(UniqueKey id) {
     for (var number in numbers) {
       for (var step in number.steps) {
         if (step.arrow.state.id == id) {

@@ -2,7 +2,7 @@ part of 'sign_cubit.dart';
 
 enum Signs { addition, substraction }
 
-class SignState extends SimulationItemState {
+class SignState extends GameItemState {
   Signs value;
   SignState(
       {required this.value,

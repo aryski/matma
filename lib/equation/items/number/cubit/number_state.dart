@@ -1,6 +1,6 @@
 part of 'number_cubit.dart';
 
-class NumberState extends SimulationItemState {
+class NumberState extends GameItemState {
   final UniqueKey textKey;
   int value;
   NumberState(
