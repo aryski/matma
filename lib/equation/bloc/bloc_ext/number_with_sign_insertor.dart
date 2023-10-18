@@ -8,34 +8,63 @@ import 'package:matma/common/items/simulation_item/cubit/simulation_item_cubit.d
 import 'package:matma/common/items/simulation_item/cubit/simulation_item_state.dart';
 
 extension NumberWithSignInsertor on EquationBloc {
-  void insertNumberWithSignAfterInd(int value, int itemInd) {
-    if (itemInd < state.items.length) {
-      var cubit = state.items[itemInd];
-      var numberState = BoardItemsGenerator.generateNumberState(
-          number: value,
-          position: Offset(cubit.state.position.dx, cubit.state.position.dy),
-          opacity: 0,
-          simSize: simSize);
+  void insertNumberWithSignAfterItem(
+      int value, EquationDefaultItem previousItem) {
+    for (int i = 0; i < state.items.length; i++) {
+      var item = state.items[i];
+      if (item == previousItem) {
+        var numberState = BoardItemsGenerator.generateNumberState(
+            number: value,
+            position: Offset(previousItem.position.dx + simSize.wRatio * 1.5,
+                previousItem.position.dy),
+            opacity: 0,
+            simSize: simSize);
+        var numberCubit = NumberCubit(numberState);
 
-      var numberCubit = NumberCubit(numberState);
-      _performInsertion(itemInd, numberCubit, cubit);
-
-      var signState = BoardItemsGenerator.generateSignState(
-          sign: value > 0 ? Signs.addition : Signs.substraction,
-          position: Offset(cubit.state.position.dx, cubit.state.position.dy),
-          opacity: 0,
-          simSize: simSize);
-      var signCubit = SignCubit(signState);
-      _performInsertion(itemInd, signCubit, cubit);
+        var signState = BoardItemsGenerator.generateSignState(
+            sign: value > 0 ? Signs.addition : Signs.substraction,
+            position:
+                Offset(previousItem.position.dx, previousItem.position.dy),
+            opacity: 0,
+            simSize: simSize);
+        var signCubit = SignCubit(signState);
+        var myItem = EquationDefaultItem(sign: signCubit, number: numberCubit);
+        state.items.insert(i + 1, myItem);
+        numberCubit.updatePositionDelayed(
+            Offset(previousItem.width, 0), const Duration(milliseconds: 20));
+        signCubit.updatePositionDelayed(
+            Offset(previousItem.width, 0), const Duration(milliseconds: 20));
+        numberCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
+        signCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
+        spread(myItem, myItem.width);
+        break;
+      }
     }
   }
 
-  void _performInsertion(int itemInd, SimulationItemCubit insertedCubit,
-      SimulationItemCubit<SimulationItemState> cubit) {
-    state.items.insert(itemInd + 1, insertedCubit);
-    insertedCubit.updatePositionDelayed(
-        Offset(cubit.state.size.dx, 0), const Duration(milliseconds: 20));
-    insertedCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
-    spread(itemInd + 1, state.items[itemInd + 1].state.size.dx);
+  void insertNumberWithoutSignAfterItem(
+      int value, EquationDefaultItem previousItem) {
+    for (int i = 0; i < state.items.length; i++) {
+      var item = state.items[i];
+      if (item == previousItem) {
+        var numberState = BoardItemsGenerator.generateNumberState(
+            number: value,
+            position:
+                Offset(previousItem.position.dx, previousItem.position.dy),
+            opacity: 0,
+            simSize: simSize);
+        var numberCubit = NumberCubit(numberState);
+
+        var myItem = EquationDefaultItem(sign: null, number: numberCubit);
+        state.items.insert(i + 1, myItem);
+        numberCubit.updatePositionDelayed(
+            Offset(previousItem.width, 0), const Duration(milliseconds: 20));
+
+        numberCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
+
+        spread(myItem, myItem.width);
+        break;
+      }
+    }
   }
 }

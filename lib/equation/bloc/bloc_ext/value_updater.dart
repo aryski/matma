@@ -6,21 +6,18 @@ import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dar
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 
 extension ValueUpdater on EquationBloc {
-  Future<void> updateValue(NumberCubit number, int delta) async {
-    if (state.items.contains(number)) {
-      var sign = state.getNumberSign(number);
-      if (delta > 0) {
-        if (sign == Signs.addition) {
-          sign = Signs.substraction;
-        } else if (sign == Signs.substraction) {
+  Future<void> updateValue(EquationDefaultItem item, int delta) async {
+    if (state.items.contains(item)) {
+      var sign = Signs.substraction;
+      if (item.sign != null) {
+        if (item.sign!.state.value == Signs.substraction) {
           sign = Signs.addition;
         }
       }
-
       var shadowCubit = ShadowNumberCubit(
           BoardItemsGenerator.generateShadowNumberState(
               sign == Signs.addition ? "-1" : "+1",
-              number.state.position,
+              item.number.state.position,
               simSize));
       state.extraItems.add(shadowCubit);
       shadowCubit.updatePositionDelayed(

@@ -14,20 +14,22 @@ extension Resetter on EquationBloc {
     var top = simSize.hRatio / 2;
     var widthSpace = simSize.wRatio * simSize.wUnits;
 
-    List<SimulationItemCubit> cubits = [];
+    List<EquationDefaultItem> items = [];
 
     var result = _numbersToItemsStates(updatedNumbers, top, simSize);
     double totaldx = result.$1;
     List<SimulationItemState> states = result.$2;
 
     var allMargin = (widthSpace - totaldx) / 2 - simSize.wRatio / 6.7;
-
+    SignCubit? lastSignCubit;
     for (var state in states) {
       state.position += Offset(allMargin, 0);
       if (state is SignState) {
-        cubits.add(SignCubit(state));
+        lastSignCubit = SignCubit(state);
       } else if (state is NumberState) {
-        cubits.add(NumberCubit(state));
+        items.add(EquationDefaultItem(
+            sign: lastSignCubit, number: NumberCubit(state)));
+        lastSignCubit = null;
       }
     }
     var x = 0.02;
@@ -35,12 +37,12 @@ extension Resetter on EquationBloc {
         position: Offset(allMargin - x / 2, top),
         size: Offset(totaldx + x, simSize.hRatio * 2)));
 
-    return EquationState(items: cubits, extraItems: [boardCubit]);
+    return EquationState(items: items, extraItems: [boardCubit]);
   }
 
   static (double, List<SimulationItemState>) _numbersToItemsStates(
       List<int> updatedNumbers, double top, SimulationSize simSize) {
-    List<SimulationItemState> states = [];
+    List<SimulationItemState> states = []; //TODO
     double totaldx = 0;
     for (int i = 0; i < updatedNumbers.length; i++) {
       var number = updatedNumbers[i];

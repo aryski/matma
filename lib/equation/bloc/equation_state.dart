@@ -1,8 +1,20 @@
 part of 'equation_bloc.dart';
 
+class EquationDefaultItem {
+  final SignCubit? sign;
+  final NumberCubit number;
+
+  EquationDefaultItem({required this.sign, required this.number});
+
+  double get width =>
+      number.state.size.dx + ((sign != null) ? sign!.state.size.dx : 0);
+
+  Offset get position =>
+      ((sign != null) ? sign!.state.position : number.state.position);
+}
+
 class EquationState {
-  final List<SimulationItemCubit>
-      items; //TODO PRZEPISAC NA ZNAK PRZED CYFRĄ I TAK JAK W STEPS GAME I TYLE
+  final List<EquationDefaultItem> items;
   final List<SimulationItemCubit> extraItems;
 
   EquationState({this.items = const [], this.extraItems = const []});
@@ -10,21 +22,13 @@ class EquationState {
   List<int> get numbers => genNum();
 
   Signs getNumberSign(NumberCubit number) {
-    bool foundNumber = false;
-
-    for (int i = items.length - 1; i >= 0; i--) {
-      if (foundNumber) {
-        var cubit = items[i];
-        if (cubit is SignCubit) {
-          if (cubit.state.value == Signs.substraction) {
-            return Signs.substraction;
-          } else {
-            return Signs.addition;
-          }
+    for (var item in items) {
+      if (item.number == number) {
+        if (item.sign != null) {
+          return item.sign!.state.value;
+        } else {
+          return Signs.addition;
         }
-      }
-      if (items[i] == number) {
-        foundNumber = true;
       }
     }
     return Signs.addition;
@@ -32,36 +36,23 @@ class EquationState {
 
   List<int> genNum() {
     List<int> result = [];
-    bool isMinus = false;
-
-    for (var cubit in items) {
-      if (cubit is SignCubit && cubit.state.value == Signs.substraction) {
-        isMinus = true;
-      }
-      if (cubit is NumberCubit) {
-        if (isMinus) {
-          result.add(-1 * cubit.state.value);
-        } else {
-          result.add(cubit.state.value);
-        }
-        isMinus = false;
+    for (var item in items) {
+      var sign = item.sign;
+      var number = item.number;
+      if (sign != null && sign.state.value == Signs.substraction) {
+        result.add(-1 * number.state.value);
+      } else {
+        result.add(number.state.value);
       }
     }
-
     return result;
   }
 
   int? itemIndex(int numberIndex) {
-    var result = 0;
-
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] is NumberCubit) {
-        if (result == numberIndex) {
-          return i;
-        }
-        result += 1;
-      }
+    if (numberIndex < items.length) {
+      return numberIndex;
+    } else {
+      return null;
     }
-    return null;
   }
 }
