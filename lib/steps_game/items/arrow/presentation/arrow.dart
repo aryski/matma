@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
-import 'package:matma/common/items/animations/tween_animated_position.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
+import 'package:matma/common/items/game_item/default_game_item_animations.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/arrow/presentation/arrow_controls.dart';
@@ -20,49 +20,34 @@ class Arrow extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<ArrowCubit, ArrowState>(
         builder: (context, state) {
-          return TweenAnimatedPosition(
-            initialPosition: initialState.position,
-            updatedPosition: state.position,
-            child: AnimatedOpacity(
-              opacity: state.opacity,
-              duration: const Duration(milliseconds: 200),
-              child: DefaultTweenAnimationBuilder(
-                  initial: initialState.animProgress,
-                  updated: state.animProgress,
-                  builder: (context, animationProgress, child) {
-                    return DefaultTweenAnimationBuilder(
-                        initial: initialState.size,
-                        updated: state.size,
-                        builder: (context, size, child) {
-                          var tweenState = state.copy()..size = size;
-                          return ArrowGestureDetector(
-                            child: CustomPaint(
-                              size: Size(
-                                  tweenState.size.dx *
-                                      MediaQuery.of(context).size.width,
-                                  tweenState.size.dy *
-                                      MediaQuery.of(context).size.height),
-                              painter: ArrowPainter(
-                                  tweenState.size.dx *
-                                      MediaQuery.of(context).size.width,
-                                  tweenState.size.dy *
-                                      MediaQuery.of(context).size.height,
-                                  state.radius *
-                                      MediaQuery.of(context).size.width,
-                                  state.direction == Direction.up
-                                      ? (state.color == GameItemColor.hover
-                                          ? darkenColor(defaultGreen, 20)
-                                          : defaultGreen)
-                                      : (state.color == GameItemColor.hover
-                                          ? darkenColor(defaultRed, 20)
-                                          : defaultRed),
-                                  state.direction,
-                                  animationProgress),
-                            ),
-                          );
-                        });
-                  }),
-            ),
+          return DefaultGameItemAnimations(
+            initialState: initialState,
+            state: state,
+            child: DefaultTweenAnimationBuilder(
+                initial: initialState.animProgress,
+                updated: state.animProgress,
+                builder: (context, animationProgress, child) {
+                  return ArrowGestureDetector(
+                    child: LayoutBuilder(builder: (context, constrains) {
+                      return CustomPaint(
+                        size: Size(constrains.maxWidth, constrains.maxHeight),
+                        painter: ArrowPainter(
+                            constrains.maxWidth,
+                            constrains.maxHeight,
+                            state.radius * MediaQuery.of(context).size.width,
+                            state.direction == Direction.up
+                                ? (state.color == GameItemColor.hover
+                                    ? darkenColor(defaultGreen, 20)
+                                    : defaultGreen)
+                                : (state.color == GameItemColor.hover
+                                    ? darkenColor(defaultRed, 20)
+                                    : defaultRed),
+                            state.direction,
+                            animationProgress),
+                      );
+                    }),
+                  );
+                }),
           );
         },
       ),

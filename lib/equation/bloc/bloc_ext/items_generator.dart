@@ -22,7 +22,6 @@ extension BoardItemsGenerator on EquationBloc {
       required Offset position,
       double? opacity,
       required SimulationSize simSize}) {
-    print("wratio : ${simSize.wRatio}");
     return NumberState(
         value: number.abs(),
         sign: ((number > 0) ? Signs.addition : Signs.substraction),
