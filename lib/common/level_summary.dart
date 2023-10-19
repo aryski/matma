@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/colors.dart';
-import 'package:matma/levels/levels/level2.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
 class LevelSummary extends StatelessWidget {

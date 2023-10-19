@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 
 extension Remover on EquationBloc {
   removeEquationDefaultItemWithPositionUpdate(EquationDefaultItem myItem) {

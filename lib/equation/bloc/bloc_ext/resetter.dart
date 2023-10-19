@@ -4,7 +4,6 @@ import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 

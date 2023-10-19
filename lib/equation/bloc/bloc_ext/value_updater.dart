@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matma/equation/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 

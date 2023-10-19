@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
-import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 
 extension Resizer on EquationBloc {
   resize(EquationDefaultItem myItem, double delta) {
