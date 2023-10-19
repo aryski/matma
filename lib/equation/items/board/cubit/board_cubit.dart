@@ -9,8 +9,6 @@ class BoardCubit extends GameItemCubit<BoardState> {
 
   void updateSize(Offset offset) {
     emit(BoardState(
-      defColor: state.defColor,
-      hovColor: state.hovColor,
       id: state.id,
       position: state.position,
       size: state.size + offset,

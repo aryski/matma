@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
+import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 
 class Number extends StatelessWidget {
   const Number({super.key, required this.cubit});
@@ -60,7 +62,10 @@ class Number extends StatelessWidget {
                                       Text(
                                         tweenState.value.abs().toString(),
                                         style: TextStyle(
-                                            color: state.color,
+                                            color:
+                                                (state.sign == Signs.addition)
+                                                    ? defaultGreen
+                                                    : defaultRed,
                                             fontWeight: FontWeight.bold,
                                             fontSize: tweenState.size.dx *
                                                 MediaQuery.of(context)

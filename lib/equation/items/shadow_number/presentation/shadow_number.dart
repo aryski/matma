@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
@@ -41,7 +42,7 @@ class ShadowNumber extends StatelessWidget {
                             child: Text(
                               state.value,
                               style: TextStyle(
-                                  color: state.color,
+                                  color: defaultGrey,
                                   fontWeight: FontWeight.bold,
                                   fontSize: state.size.dx *
                                       MediaQuery.of(context).size.width *

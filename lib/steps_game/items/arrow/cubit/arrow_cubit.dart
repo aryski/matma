@@ -20,8 +20,6 @@ class ArrowCubit extends GameItemCubit<ArrowState> {
 
   void animate(double i) {
     emit(ArrowState(
-        defColor: state.defColor,
-        hovColor: state.hovColor,
         id: state.id,
         position: state.position,
         size: state.size,

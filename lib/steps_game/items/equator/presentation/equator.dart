@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator_painter.dart';
@@ -34,7 +35,7 @@ class Equator extends StatelessWidget {
                       tweenState.size.dx * MediaQuery.of(context).size.width,
                       tweenState.size.dy * MediaQuery.of(context).size.height,
                       state.radius * MediaQuery.of(context).size.width,
-                      state.color),
+                      defaultEquator),
                 );
               },
             ),

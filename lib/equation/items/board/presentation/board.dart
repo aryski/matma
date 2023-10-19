@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/common/colors.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
@@ -30,7 +32,7 @@ class Board extends StatelessWidget {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(state.radius),
                     child: Container(
-                      color: state.color,
+                      color: defaultEquator,
                       width: tweenState.size.dx *
                           MediaQuery.of(context).size.width,
                       height: tweenState.size.dy *

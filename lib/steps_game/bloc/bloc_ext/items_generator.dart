@@ -15,9 +15,6 @@ extension ItemsGenerator on StepsGameBloc {
     position += delta;
     return ArrowCubit(
       ArrowState(
-        color: defaultGreen,
-        defColor: defaultGreen,
-        hovColor: darkenColor(defaultGreen, 20),
         id: UniqueKey(),
         position: position,
         size: size ?? Offset(simSize.wRatio, simSize.hRatio),
@@ -37,9 +34,6 @@ extension ItemsGenerator on StepsGameBloc {
     position += delta;
     return ArrowCubit(
       ArrowState(
-        color: defaultRed,
-        defColor: defaultRed,
-        hovColor: darkenColor(defaultRed, 20),
         id: UniqueKey(),
         position: position,
         size: size ?? Offset(simSize.wRatio, simSize.hRatio),
@@ -59,9 +53,6 @@ extension ItemsGenerator on StepsGameBloc {
     position += delta;
     return FloorCubit(
       FloorState(
-        color: defaultGrey,
-        defColor: defaultGrey,
-        hovColor: darkenColor(defaultGrey, 20),
         id: UniqueKey(),
         position: position,
         size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),
@@ -79,9 +70,6 @@ extension ItemsGenerator on StepsGameBloc {
     position += delta;
     return FloorCubit(
       FloorState(
-        color: defaultYellow,
-        defColor: defaultYellow,
-        hovColor: darkenColor(defaultYellow, 20),
         id: UniqueKey(),
         position: position,
         size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),

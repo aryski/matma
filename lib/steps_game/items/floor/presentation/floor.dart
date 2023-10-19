@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
 
@@ -39,7 +41,13 @@ class Floor extends StatelessWidget {
                         tweenState.size.dx * MediaQuery.of(context).size.width,
                         tweenState.size.dy * MediaQuery.of(context).size.height,
                         state.radius * MediaQuery.of(context).size.width,
-                        state.color),
+                        state.isLast
+                            ? (state.color == GameItemColor.hover
+                                ? darkenColor(defaultYellow, 20)
+                                : defaultYellow)
+                            : (state.color == GameItemColor.hover
+                                ? darkenColor(defaultGrey, 20)
+                                : defaultGrey)),
                   ),
                 );
               },

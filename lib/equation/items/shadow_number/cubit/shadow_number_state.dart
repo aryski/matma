@@ -4,12 +4,10 @@ class ShadowNumberState extends GameItemState {
   String value;
   ShadowNumberState({
     required this.value,
-    required super.defColor,
-    required super.hovColor,
     required super.id,
     required super.position,
     required super.size,
-    required super.color,
+    super.color,
     required super.opacity,
     required super.radius,
   });
@@ -18,8 +16,6 @@ class ShadowNumberState extends GameItemState {
   ShadowNumberState copy() {
     return ShadowNumberState(
       value: value,
-      defColor: defColor,
-      hovColor: hovColor,
       id: id,
       position: position,
       size: size,

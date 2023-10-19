@@ -11,12 +11,9 @@ extension BoardItemsGenerator on EquationBloc {
   static BoardState generateBoardState(
       {required Offset position, required Offset size}) {
     return BoardState(
-        defColor: defaultEquator,
-        hovColor: defaultEquator,
         id: UniqueKey(),
         position: position,
         size: size,
-        color: defaultEquator,
         opacity: 1.0,
         radius: 20.0);
   }
@@ -29,9 +26,7 @@ extension BoardItemsGenerator on EquationBloc {
     print("wratio : ${simSize.wRatio}");
     return NumberState(
         value: number.abs(),
-        color: number > 0 ? defaultGreen : defaultRed,
-        defColor: defaultYellow,
-        hovColor: defaultYellow,
+        sign: ((number > 0) ? Signs.addition : Signs.substraction),
         id: UniqueKey(),
         position: position,
         size: number.abs() >= 10
@@ -49,9 +44,6 @@ extension BoardItemsGenerator on EquationBloc {
       required SimulationSize simSize}) {
     return SignState(
       value: sign,
-      color: Colors.white,
-      defColor: defaultYellow,
-      hovColor: defaultYellow,
       id: UniqueKey(),
       position: position,
       size: Offset(simSize.wRatio * 1.5, simSize.hRatio * 2),
@@ -64,9 +56,6 @@ extension BoardItemsGenerator on EquationBloc {
       String value, Offset position, SimulationSize simSize) {
     return ShadowNumberState(
       value: value,
-      color: defaultGrey,
-      defColor: defaultGrey,
-      hovColor: defaultGrey,
       id: UniqueKey(),
       position: position,
       size: Offset(simSize.wRatio * 2, simSize.hRatio * 2),

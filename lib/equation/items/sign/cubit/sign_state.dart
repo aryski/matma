@@ -6,12 +6,10 @@ class SignState extends GameItemState {
   Signs value;
   SignState(
       {required this.value,
-      required super.defColor,
-      required super.hovColor,
       required super.id,
       required super.position,
       required super.size,
-      required super.color,
+      super.color,
       required super.opacity,
       required super.radius});
 
@@ -19,8 +17,6 @@ class SignState extends GameItemState {
   SignState copy() {
     return SignState(
       value: value,
-      defColor: defColor,
-      hovColor: hovColor,
       id: id,
       position: position,
       size: size,

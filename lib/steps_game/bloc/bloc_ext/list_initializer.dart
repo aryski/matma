@@ -14,12 +14,9 @@ extension Initializer on StepsGameBloc {
     var currentLeft = simSize.wRatio * 2;
     var id = UniqueKey();
     state.unorderedItems[id] = EquatorCubit(EquatorState(
-        defColor: defaultEquator,
-        hovColor: defaultEquator,
         id: id,
         position: Offset(0, currentTop + simSize.hRatio),
         size: Offset(simSize.wRatio * (simSize.wUnits), simSize.hRatio / 5),
-        color: defaultEquator,
         opacity: 1,
         radius: 1 / 15 * simSize.wRatio));
     return generateFloorsAndArrows(init, currentLeft, currentTop);
@@ -49,7 +46,7 @@ extension Initializer on StepsGameBloc {
                 delta: Offset(simSize.wRatio / 2, 2 * simSize.hRatio));
           }
           if (i + 1 == number.abs() && init.last == number) {
-            floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
+            floor.setLast();
           }
           items.add(StepsGameDefaultItem(arrow: arrow, floor: floor));
           if (number > 0) {

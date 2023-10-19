@@ -103,7 +103,7 @@ extension ArrowsReductor on StepsGameBloc {
     if (leftStep != null && state.isLastItem(leftStep.floor)) {
       leftStep.floor.updateSize(
           Offset(-leftStep.floor.state.size.dx + 1.25 * simSize.wRatio, 0));
-      leftStep.floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
+      leftStep.floor.setLast();
     }
   }
 }

@@ -149,8 +149,8 @@ extension ArrowInsertor on StepsGameBloc {
     arrow.animate(1.0);
     arrow.updateHeight(simSize.hRatio);
 
-    floor.updateColor(defaultYellow, darkenColor(defaultYellow, 20));
-    item.updateColor(defaultGrey, darkenColor(defaultGrey, 20));
+    floor.setLast();
+    item.setNotLast();
     return true;
   }
 }

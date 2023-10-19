@@ -2,15 +2,15 @@ part of 'number_cubit.dart';
 
 class NumberState extends GameItemState {
   final UniqueKey textKey;
+  final Signs sign;
   int value;
   NumberState(
-      {required this.value,
-      required super.defColor,
-      required super.hovColor,
+      {required this.sign,
+      required this.value,
       required super.id,
       required super.position,
       required super.size,
-      required super.color,
+      super.color,
       required super.opacity,
       required super.radius,
       required this.textKey})
@@ -19,9 +19,8 @@ class NumberState extends GameItemState {
   @override
   NumberState copy() {
     return NumberState(
+      sign: sign,
       value: value,
-      defColor: defColor,
-      hovColor: hovColor,
       id: id,
       position: position,
       size: size,
