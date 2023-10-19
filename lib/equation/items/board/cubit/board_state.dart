@@ -6,8 +6,7 @@ class BoardState extends GameItemState {
       required super.position,
       required super.size,
       required super.opacity,
-      required super.radius,
-      super.color});
+      required super.radius});
 
   @override
   BoardState copy() {
@@ -15,7 +14,6 @@ class BoardState extends GameItemState {
       id: id,
       position: position,
       size: size,
-      color: color,
       opacity: opacity,
       radius: radius,
     );

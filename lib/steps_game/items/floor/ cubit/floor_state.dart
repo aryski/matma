@@ -7,7 +7,7 @@ class FloorState extends GameItemState {
       required super.id,
       required super.position,
       required super.size,
-      super.color,
+      super.isHovered,
       required super.opacity,
       required super.radius});
 
@@ -18,7 +18,7 @@ class FloorState extends GameItemState {
       id: id,
       position: position,
       size: size,
-      color: color,
+      isHovered: isHovered,
       opacity: opacity,
       radius: radius,
     );

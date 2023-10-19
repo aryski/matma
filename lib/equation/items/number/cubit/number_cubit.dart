@@ -16,7 +16,6 @@ class NumberCubit extends GameItemCubit<NumberState> {
         id: state.id,
         position: state.position,
         size: state.size,
-        color: state.color,
         opacity: state.opacity,
         radius: state.radius,
         textKey: UniqueKey()));
@@ -29,7 +28,6 @@ class NumberCubit extends GameItemCubit<NumberState> {
         id: state.id,
         position: state.position,
         size: state.size + offset,
-        color: state.color,
         opacity: state.opacity,
         radius: state.radius,
         textKey: state.textKey));

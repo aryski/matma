@@ -12,7 +12,6 @@ class BoardCubit extends GameItemCubit<BoardState> {
       id: state.id,
       position: state.position,
       size: state.size + offset,
-      color: state.color,
       opacity: state.opacity,
       radius: state.radius,
     ));

@@ -10,7 +10,6 @@ class NumberState extends GameItemState {
       required super.id,
       required super.position,
       required super.size,
-      super.color,
       required super.opacity,
       required super.radius,
       required this.textKey})
@@ -24,7 +23,6 @@ class NumberState extends GameItemState {
       id: id,
       position: position,
       size: size,
-      color: color,
       opacity: opacity,
       radius: radius,
       textKey: textKey,

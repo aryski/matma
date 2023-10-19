@@ -28,15 +28,15 @@ class GameItemCubit<T extends GameItemState> extends Cubit<T> {
   }
 
   void hoverStart() {
-    if (state.color == GameItemColor.def) {
-      state.color = GameItemColor.hover;
+    if (!state.isHovered) {
+      state.isHovered = true;
     }
     emit(state.copy() as T);
   }
 
   void hoverEnd() {
-    if (state.color == GameItemColor.hover) {
-      state.color = GameItemColor.def;
+    if (state.isHovered) {
+      state.isHovered = false;
     }
     emit(state.copy() as T);
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-enum GameItemColor { def, hover, inactive }
-
 abstract class GameItemState {
   UniqueKey id;
   Offset position;
   Offset size;
-  GameItemColor color;
+  bool isHovered;
   double opacity;
   double radius;
 
@@ -14,7 +12,7 @@ abstract class GameItemState {
       {required this.id,
       required this.position,
       required this.size,
-      this.color = GameItemColor.def,
+      this.isHovered = false,
       required this.opacity,
       required this.radius});
 

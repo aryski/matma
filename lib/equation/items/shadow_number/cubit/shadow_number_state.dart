@@ -7,7 +7,6 @@ class ShadowNumberState extends GameItemState {
     required super.id,
     required super.position,
     required super.size,
-    super.color,
     required super.opacity,
     required super.radius,
   });
@@ -19,7 +18,6 @@ class ShadowNumberState extends GameItemState {
       id: id,
       position: position,
       size: size,
-      color: color,
       opacity: opacity,
       radius: radius,
     );

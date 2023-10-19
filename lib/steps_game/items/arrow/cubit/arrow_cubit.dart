@@ -23,7 +23,7 @@ class ArrowCubit extends GameItemCubit<ArrowState> {
         id: state.id,
         position: state.position,
         size: state.size,
-        color: state.color,
+        isHovered: state.isHovered,
         opacity: state.opacity,
         direction: state.direction,
         radius: state.radius,
