@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matma/equation/bloc/bloc_ext/remover.dart';
 import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
-import 'package:matma/equation/bloc/bloc_ext/value_updater.dart';
+import 'package:matma/equation/bloc/bloc_ext/shadow_numbers_generator.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 
@@ -15,8 +15,8 @@ extension Reducer on EquationBloc {
     if (rightItem.number.state.value == 0) {
       removeEquationDefaultItemWithPositionUpdate(rightItem);
     }
-    updateValue(leftItem, -1);
-    updateValue(rightItem, -1);
+    generateShadowNumbers(leftItem, -1);
+    generateShadowNumbers(rightItem, -1);
 
     if (state.items.isNotEmpty &&
         state.items.first.sign != null &&

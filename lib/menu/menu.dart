@@ -49,12 +49,8 @@ class PickMenu extends StatelessWidget {
         LevelButton(
           unlocked: true,
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const Tutorial(
-                          key: Key('Tutorial'),
-                        )));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Tutorial()));
           },
           minature: const Column(
             mainAxisAlignment: MainAxisAlignment.center,

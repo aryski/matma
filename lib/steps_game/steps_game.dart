@@ -35,7 +35,7 @@ class StepsGame extends StatelessWidget {
         init: EquationState(),
         simSize: simSize,
         initNumbers: data.initNumbers,
-        targetValues: [5 /*TODO*/]);
+        targetValues: data.withFixedEquation);
     final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, data.allowedOps);
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.white),
@@ -142,37 +142,6 @@ class _ScrollListener extends StatelessWidget {
   }
 }
 
-// class _FixedEquation extends StatelessWidget {
-//   const _FixedEquation(
-//       {super.key,
-//       required this.simSize,
-//       required this.unit,
-//       required this.numbers});
-//   final SimulationSize simSize;
-//   final double unit;
-//   final List<int> numbers;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     print("Target $numbers");
-//     //TODO new bloc is being generated in this case
-//     return Stack(
-//       key: Key("fixedequati3onlevelidk"),
-//       children: [
-//         BlocProvider<EquationBloc>(
-//           key: Key("fixedequationlevelidk"),
-//           create: (context) => EquationBloc(
-//               targetValues: numbers,
-//               init: EquationState(),
-//               simSize: simSize,
-//               initNumbers: numbers),
-//           child: Equation(unit: unit),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class _StepsSimulatorContent extends StatelessWidget {
   const _StepsSimulatorContent({
     super.key,
@@ -209,12 +178,6 @@ class _StepsSimulatorContent extends StatelessWidget {
                 initNumbers: data.shadedSteps!),
           RawStepsGame(unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),
           if (data.withEquation) Equation(unit: unitRatio),
-          // if (data.withFixedEquation != null)
-          //   _FixedEquation(
-          //     simSize: simSize,
-          //     unit: unitRatio,
-          //     numbers: data.withFixedEquation!,
-          //   ),
           TaskSimulator(
             unit: unitRatio,
           ),

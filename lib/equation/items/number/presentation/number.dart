@@ -52,9 +52,13 @@ class Number extends StatelessWidget {
                                   Text(
                                     state.value.abs().toString(),
                                     style: TextStyle(
-                                        color: (state.sign == Signs.addition)
-                                            ? defaultGreen
-                                            : defaultRed,
+                                        color: state.withDarkenedColor
+                                            ? ((state.sign == Signs.addition)
+                                                ? defaultBackground
+                                                : defaultBackground)
+                                            : ((state.sign == Signs.addition)
+                                                ? defaultGreen
+                                                : defaultRed),
                                         fontWeight: FontWeight.bold,
                                         fontSize: state.size.dx *
                                             MediaQuery.of(context).size.width),

@@ -6,7 +6,7 @@ import 'package:matma/equation/bloc/bloc_ext/resetter.dart';
 import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
 import 'package:matma/equation/bloc/bloc_ext/remover.dart';
 import 'package:matma/equation/bloc/bloc_ext/reducer.dart';
-import 'package:matma/equation/bloc/bloc_ext/value_updater.dart';
+import 'package:matma/equation/bloc/bloc_ext/shadow_numbers_generator.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
@@ -18,13 +18,13 @@ part 'equation_state.dart';
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final EquationState init;
   final SimulationSize simSize;
-  final List<int>? targetValues;
+  final List<int>? targetValues; //TODO jak to sprytnie wpasować??!?!?!?!?
   EquationBloc(
       {required this.init,
       required this.simSize,
       required List<int> initNumbers,
       this.targetValues})
-      : super(Resetter.hardResetState(initNumbers, simSize)) {
+      : super(Resetter.hardResetState(initNumbers, simSize, targetValues)) {
     on<EquationEventIncreaseNumber>((event, emit) async {
       var itemInd = state.itemIndex(event.ind);
       if (itemInd != null) {
@@ -33,8 +33,13 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
         if (item.number.state.value == 10) {
           resize(item, simSize.wRatio * 2);
         }
-        updateValue(item, 1);
-        emit(EquationState(items: state.items, extraItems: state.extraItems));
+        generateShadowNumbers(item, 1);
+        updateFixedItemsColors(state);
+        emit(EquationState(
+            items: state.items,
+            extraItems: state.extraItems,
+            fixedItems: state.fixedItems,
+            fixedExtraItems: state.fixedExtraItems));
       }
     });
     on<EquationEventJoinNumbers>((event, emit) {
@@ -46,14 +51,24 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
         leftItem.number.updateValue(
             leftItem.number.state.value + rightItem.number.state.value);
         removeEquationDefaultItemWithPositionUpdate(rightItem);
-        emit(EquationState(items: state.items, extraItems: state.extraItems));
+        updateFixedItemsColors(state);
+        emit(EquationState(
+            items: state.items,
+            extraItems: state.extraItems,
+            fixedItems: state.fixedItems,
+            fixedExtraItems: state.fixedExtraItems));
       }
     });
     on<EquationEventAddNumber>(
       (event, emit) {
         if (state.items.isNotEmpty) {
           insertNumberWithSignAfterItem(event.value, state.items.last);
-          emit(EquationState(items: state.items, extraItems: state.extraItems));
+          updateFixedItemsColors(state);
+          emit(EquationState(
+              items: state.items,
+              extraItems: state.extraItems,
+              fixedItems: state.fixedItems,
+              fixedExtraItems: state.fixedExtraItems));
         }
       },
     );
@@ -65,7 +80,12 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
           item.number.updateValue(event.leftValue.abs());
           insertNumberWithSignAfterItem(event.rightValue, item);
         }
-        emit(EquationState(items: state.items, extraItems: state.extraItems));
+        updateFixedItemsColors(state);
+        emit(EquationState(
+            items: state.items,
+            extraItems: state.extraItems,
+            fixedItems: state.fixedItems,
+            fixedExtraItems: state.fixedExtraItems));
       },
     );
     on<EquationEventNumbersReduction>((event, emit) async {
@@ -75,8 +95,12 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
         var leftItem = state.items[itemIndLeft];
         var rightItem = state.items[itemIndRight];
         reduce(leftItem, rightItem);
-
-        emit(EquationState(items: state.items, extraItems: state.extraItems));
+        updateFixedItemsColors(state);
+        emit(EquationState(
+            items: state.items,
+            extraItems: state.extraItems,
+            fixedItems: state.fixedItems,
+            fixedExtraItems: state.fixedExtraItems));
       }
     });
   }
@@ -87,5 +111,22 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
       resize(myItem, -simSize.wRatio * 2);
     }
     number.updateValue(number.state.value - 1);
+  }
+
+  void updateFixedItemsColors(EquationState state) {
+    for (int i = 0;
+        i < state.fixedItems.length && i < state.items.length;
+        i++) {
+      var fixedNumberState = state.fixedItems[i].number.state;
+      var numberState = state.items[i].number.state;
+
+      if (fixedNumberState.value == numberState.value &&
+          fixedNumberState.withDarkenedColor == true) {
+        state.fixedItems[i].number.updateWithDarkenedColor(false);
+      } else if (fixedNumberState.value != numberState.value &&
+          fixedNumberState.withDarkenedColor == false) {
+        state.fixedItems[i].number.updateWithDarkenedColor(true);
+      }
+    }
   }
 }

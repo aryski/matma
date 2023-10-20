@@ -16,8 +16,14 @@ class EquationDefaultItem {
 class EquationState {
   final List<EquationDefaultItem> items;
   final List<GameItemCubit> extraItems;
+  final List<EquationDefaultItem> fixedItems;
+  final List<GameItemCubit> fixedExtraItems;
 
-  EquationState({this.items = const [], this.extraItems = const []});
+  EquationState(
+      {this.items = const [],
+      this.extraItems = const [],
+      this.fixedItems = const [],
+      this.fixedExtraItems = const []});
 
   List<int> get numbers => genNum();
 

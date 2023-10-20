@@ -22,41 +22,69 @@ class Equation extends StatelessWidget {
       child:
           BlocBuilder<EquationBloc, EquationState>(builder: (context, state) {
         List<GameItemCubit> items = [];
-        for (var item in state.items) {
-          items.add(item.number);
-          if (item.sign != null) {
-            items.add(item.sign!);
+
+        if (state.fixedItems.isEmpty) {
+          for (var item in state.items) {
+            items.add(item.number);
+            if (item.sign != null) {
+              items.add(item.sign!);
+            }
           }
+          return Stack(children: [
+            ...state.extraItems.map((cubit) {
+              if (cubit is BoardCubit) {
+                return Board(cubit: cubit);
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+            ...items.map((cubit) {
+              if (cubit is NumberCubit) {
+                return Number(cubit: cubit, key: cubit.state.id);
+              } else if (cubit is SignCubit) {
+                return Sign(cubit: cubit, key: cubit.state.id);
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+            ...state.extraItems.map((cubit) {
+              if (cubit is ShadowNumberCubit) {
+                return ShadowNumber(cubit: cubit, key: cubit.state.id);
+              } else if (cubit is NumberCubit) {
+                return Number(cubit: cubit, key: cubit.state.id);
+              } else if (cubit is SignCubit) {
+                return Sign(cubit: cubit, key: cubit.state.id);
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+          ]);
+        } else {
+          for (var item in state.fixedItems) {
+            items.add(item.number);
+            if (item.sign != null) {
+              items.add(item.sign!);
+            }
+          }
+          return Stack(children: [
+            ...state.fixedExtraItems.map((cubit) {
+              if (cubit is BoardCubit) {
+                return Board(cubit: cubit);
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+            ...items.map((cubit) {
+              if (cubit is NumberCubit) {
+                return Number(cubit: cubit, key: cubit.state.id);
+              } else if (cubit is SignCubit) {
+                return Sign(cubit: cubit, key: cubit.state.id);
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+          ]);
         }
-        return Stack(children: [
-          ...state.extraItems.map((cubit) {
-            if (cubit is BoardCubit) {
-              return Board(cubit: cubit);
-            } else {
-              return const SizedBox.shrink();
-            }
-          }),
-          ...items.map((cubit) {
-            if (cubit is NumberCubit) {
-              return Number(cubit: cubit, key: cubit.state.id);
-            } else if (cubit is SignCubit) {
-              return Sign(cubit: cubit, key: cubit.state.id);
-            } else {
-              return const SizedBox.shrink();
-            }
-          }),
-          ...state.extraItems.map((cubit) {
-            if (cubit is ShadowNumberCubit) {
-              return ShadowNumber(cubit: cubit, key: cubit.state.id);
-            } else if (cubit is NumberCubit) {
-              return Number(cubit: cubit, key: cubit.state.id);
-            } else if (cubit is SignCubit) {
-              return Sign(cubit: cubit, key: cubit.state.id);
-            } else {
-              return const SizedBox.shrink();
-            }
-          }),
-        ]);
       }),
     );
   }

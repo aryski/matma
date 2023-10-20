@@ -15,7 +15,6 @@ extension Remover on EquationBloc {
         }
         myItem.number.updatePosition(Offset(-myItem.number.state.size.dx, 0));
         myItem.sign?.updatePosition(Offset(-myItem.number.state.size.dx, 0));
-        if (item.sign != null) {}
         myItem.number.setOpacity(0);
         myItem.sign?.setOpacity(0);
         state.items.remove(myItem);

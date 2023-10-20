@@ -4,8 +4,9 @@ import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 
-extension ValueUpdater on EquationBloc {
-  Future<void> updateValue(EquationDefaultItem item, int delta) async {
+extension ShadowNumbersGenerator on EquationBloc {
+  Future<void> generateShadowNumbers(
+      EquationDefaultItem item, int delta) async {
     if (state.items.contains(item)) {
       var sign = Signs.substraction;
       if (item.sign != null) {

@@ -7,10 +7,27 @@ part 'number_state.dart';
 
 class NumberCubit extends GameItemCubit<NumberState> {
   NumberCubit(super.initialState);
+  void updateWithDarkenedColor(bool withDarkenedColor) {
+    emit(
+      NumberState(
+        withDarkenedColor: withDarkenedColor,
+        sign: state.sign,
+        value: state.value,
+        id: state.id,
+        position: state.position,
+        size: state.size,
+        opacity: state.opacity,
+        radius: state.radius,
+        textKey: UniqueKey(),
+      ),
+    );
+  }
 
   updateValue(int value) {
     assert(value >= 0);
-    emit(NumberState(
+    emit(
+      NumberState(
+        withDarkenedColor: state.withDarkenedColor,
         sign: state.sign,
         value: value,
         id: state.id,
@@ -18,11 +35,15 @@ class NumberCubit extends GameItemCubit<NumberState> {
         size: state.size,
         opacity: state.opacity,
         radius: state.radius,
-        textKey: UniqueKey()));
+        textKey: UniqueKey(),
+      ),
+    );
   }
 
   void updateSize(Offset offset) {
-    emit(NumberState(
+    emit(
+      NumberState(
+        withDarkenedColor: state.withDarkenedColor,
         sign: state.sign,
         value: state.value,
         id: state.id,
@@ -30,6 +51,8 @@ class NumberCubit extends GameItemCubit<NumberState> {
         size: state.size + offset,
         opacity: state.opacity,
         radius: state.radius,
-        textKey: state.textKey));
+        textKey: state.textKey,
+      ),
+    );
   }
 }

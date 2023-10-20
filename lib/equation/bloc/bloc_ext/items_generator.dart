@@ -21,18 +21,22 @@ extension BoardItemsGenerator on EquationBloc {
       {required int number,
       required Offset position,
       double? opacity,
-      required SimulationSize simSize}) {
+      required SimulationSize simSize,
+      bool? isInactive,
+      bool withDarkenedColor = false}) {
     return NumberState(
-        value: number.abs(),
-        sign: ((number > 0) ? Signs.addition : Signs.substraction),
-        id: UniqueKey(),
-        position: position,
-        size: number.abs() >= 10
-            ? Offset(simSize.wRatio * 4, simSize.hRatio * 2)
-            : Offset(simSize.wRatio * 2, simSize.hRatio * 2),
-        opacity: opacity ?? 1,
-        radius: 5,
-        textKey: UniqueKey());
+      withDarkenedColor: withDarkenedColor,
+      value: number.abs(),
+      sign: ((number > 0) ? Signs.addition : Signs.substraction),
+      id: UniqueKey(),
+      position: position,
+      size: number.abs() >= 10
+          ? Offset(simSize.wRatio * 4, simSize.hRatio * 2)
+          : Offset(simSize.wRatio * 2, simSize.hRatio * 2),
+      opacity: opacity ?? 1,
+      radius: 5,
+      textKey: UniqueKey(),
+    );
   }
 
   static SignState generateSignState(
