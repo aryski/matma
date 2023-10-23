@@ -48,6 +48,7 @@ extension NumberSplitJoiner on StepsGameBloc {
                 ind: numberInd,
                 leftValue: state.numbers[numberInd].number,
                 rightValue: state.numbers[numberInd + 1].number));
+            item.setLast();
             taskCubit.splited();
           }
         }
@@ -68,6 +69,7 @@ extension NumberSplitJoiner on StepsGameBloc {
               if (number.number * nextNumber.number > 0) {
                 board.add(EquationEventJoinNumbers(
                     leftInd: numberInd, rightInd: nextInd));
+                item.setNotLast();
                 number.steps.addAll(nextNumber.steps);
                 state.numbers.remove(nextNumber);
               }

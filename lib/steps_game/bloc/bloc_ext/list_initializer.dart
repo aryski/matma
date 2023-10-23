@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
+import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
@@ -48,6 +49,7 @@ extension Initializer on StepsGameBloc {
         if (number > 0) {
           arrow = generateArrowUp(position: pos, delta: Offset.zero);
           floor = generateFloor(
+              direction: Direction.up,
               widthRatio: floorLengthRatio,
               position: pos,
               delta: Offset(simSize.wRatio / 2, 0));
@@ -56,6 +58,7 @@ extension Initializer on StepsGameBloc {
               position: pos,
               delta: Offset(0, simSize.hRatio + simSize.hRatio / 5));
           floor = generateFloor(
+              direction: Direction.down,
               widthRatio: floorLengthRatio,
               position: pos,
               delta: Offset(
@@ -63,7 +66,10 @@ extension Initializer on StepsGameBloc {
                 2 * simSize.hRatio,
               ));
         }
-        if (i + 1 == number.abs() && j + 1 == init.length) {
+        if (i + 1 == number.abs()) {
+          if (j + 1 == init.length) {
+            floor.setLastLast();
+          }
           floor.setLast();
         }
         items.add(StepsGameDefaultItem(arrow: arrow, floor: floor));

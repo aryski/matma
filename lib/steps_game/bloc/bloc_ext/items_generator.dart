@@ -48,10 +48,12 @@ extension ItemsGenerator on StepsGameBloc {
       {required Offset position,
       Offset delta = Offset.zero,
       double widthRatio = 1.25,
-      Offset? size}) {
+      Offset? size,
+      required Direction direction}) {
     position += delta;
     return FloorCubit(
       FloorState(
+        direction: direction,
         id: UniqueKey(),
         position: position,
         size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),
@@ -65,10 +67,12 @@ extension ItemsGenerator on StepsGameBloc {
       {required Offset position,
       Offset delta = Offset.zero,
       double widthRatio = 1.25,
-      Offset? size}) {
+      Offset? size,
+      required Direction direction}) {
     position += delta;
     return FloorCubit(
       FloorState(
+        direction: direction,
         id: UniqueKey(),
         position: position,
         size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),

@@ -70,6 +70,7 @@ extension ArrowInsertor on StepsGameBloc {
           delta: Offset(0, simSize.hRatio),
           animationProgress: 0);
       floor = generateFloor(
+          direction: Direction.up,
           position: pos,
           delta: Offset(simSize.wRatio / 2, simSize.hRatio),
           widthRatio: 0.25);
@@ -77,6 +78,7 @@ extension ArrowInsertor on StepsGameBloc {
       arrow1 = generateArrowDown(
           position: pos, delta: Offset.zero, animationProgress: 0);
       floor = generateFloor(
+          direction: Direction.down,
           position: pos,
           delta:
               Offset(simSize.wRatio / 2, simSize.hRatio - simSize.hRatio / 5),
@@ -118,6 +120,7 @@ extension ArrowInsertor on StepsGameBloc {
               Offset(simSize.wRatio * 0.5, 0 + simSize.hRatio / 5),
           size: Offset(simSize.wRatio, 0));
       floor = generateFloor(
+          direction: Direction.down,
           position: item.state.position + Offset(simSize.wRatio * 1, 0),
           size: Offset(0, simSize.hRatio / 5));
     } else {
@@ -127,12 +130,14 @@ extension ArrowInsertor on StepsGameBloc {
           position: item.state.position + Offset(simSize.wRatio * 0.5, 0),
           size: Offset(simSize.wRatio, 0));
       floor = generateFloor(
+          direction: Direction.up,
           position: item.state.position + Offset(simSize.wRatio * 1, 0),
           size: Offset(0, simSize.hRatio / 5));
     }
     state.numbers.add(StepsGameNumberState(
         [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
     taskCubit.insertedOpposite();
+    item.setLast();
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 20));
     if (dir == Direction.up) {
@@ -147,8 +152,8 @@ extension ArrowInsertor on StepsGameBloc {
     arrow.animate(1.0);
     arrow.updateHeight(simSize.hRatio);
 
-    floor.setLast();
-    item.setNotLast();
+    floor.setLastLast();
+    item.setNotLastLast();
     return true;
   }
 }

@@ -98,11 +98,13 @@ extension ArrowsReductor on StepsGameBloc {
 
     state.removeStep(step);
     state.removeStep(rightStep);
-
+    if (leftStep != null) {
+      leftStep.floor.setLast();
+    }
     if (leftStep != null && state.isLastItem(leftStep.floor)) {
       leftStep.floor.updateSize(
           Offset(-leftStep.floor.state.size.dx + 1.25 * simSize.wRatio, 0));
-      leftStep.floor.setLast();
+      leftStep.floor.setLastLast();
     }
   }
 }

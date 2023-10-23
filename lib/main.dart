@@ -17,12 +17,6 @@ void main() {
   //i jeżeli dłużej to dać ifa, który decyduje też w zależności od eventu,
   //ale też w zależności od czasu do jakiego kolejnego taska trzeba przejść.
 
-  //Zadanie 4
-  //Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
-
-  //Zadanie 5
-  //Łączenie 1 + 1 w 2, -1, -1, -1 w -3, 1+1+1 -1-1-1 w 3-3
-
   //Zadanie 6 Złote góry
   //jak rozbijesz 4-7 na 4-4-3 to pojawi się animacja z w ksztalcie 4-4 gdzie wystarczy dotknąć a góra się zredukuje
   //czyli nauka rozbijania na podobne liczby.
