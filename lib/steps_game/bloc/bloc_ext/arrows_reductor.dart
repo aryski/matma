@@ -79,14 +79,15 @@ extension ArrowsReductor on StepsGameBloc {
     var inheritedWidth = 0.0;
     inheritedWidth = rightStep.floor.state.size.dx - simSize.wRatio / 2;
     var leftStep = state.leftStep(step);
-    if (leftStep != null) {
+    if (leftStep != null && !state.isLastItem(rightStep.floor)) {
       leftStep.floor.updateSize(Offset(inheritedWidth, 0));
     }
     if (state.isFirstStep(step)) {
       state.moveAllSince(rightStep.floor,
           Offset(-rightStep.floor.state.size.dx + 1 / 2 * simSize.wRatio, 0));
-      rightStep.floor.updateSize(Offset(-rightStep.floor.state.size.dx, 0));
     }
+    rightStep.floor.updateSize(Offset(-rightStep.floor.state.size.dx, 0));
+    rightStep.floor.setOpacity(0);
 
     await Future.delayed(const Duration(milliseconds: 200));
     var indLeft = state.getNumberIndex(step);

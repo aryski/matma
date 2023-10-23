@@ -36,9 +36,13 @@ class StepsGameState {
 
   void removeStep(StepsGameDefaultItem step) {
     for (var number in numbers) {
-      number.steps.remove(step);
-      if (number.steps.isEmpty) {
-        numbers.remove(number);
+      if (number.steps.contains(step)) {
+        print("contains ${step.floor.state.id}");
+        // unorderedItems[step.floor.state.id] = step.floor;
+        number.steps.remove(step);
+        if (number.steps.isEmpty) {
+          numbers.remove(number);
+        }
       }
     }
   }
