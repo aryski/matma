@@ -14,6 +14,7 @@ extension NumberSplitJoiner on StepsGameBloc {
       StepsGameState state,
       Emitter<StepsGameState> emit) {
     if (item is! FloorCubit || item.state.opacity <= 0) return false;
+
     // adjusting delta, so the width is at least endW
     var currentWidth = item.state.size.dx;
     if (currentWidth + delta < minWidth) {
@@ -57,17 +58,19 @@ extension NumberSplitJoiner on StepsGameBloc {
       var step = state.getStep(item);
       if (step != null) {
         int? numberInd = state.getNumberIndex(step);
-
-        if (numberInd != null) {
-          int? nextInd = numberInd + 1;
-          if (nextInd < state.numbers.length) {
-            var number = state.numbers[numberInd];
-            var nextNumber = state.numbers[nextInd];
-            if (number.number * nextNumber.number > 0) {
-              board.add(EquationEventJoinNumbers(
-                  leftInd: numberInd, rightInd: nextInd));
-              number.steps.addAll(nextNumber.steps);
-              state.numbers.remove(nextNumber);
+        if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
+          //only neighbors
+          if (state.numbers[numberInd].steps.last.floor == item) {
+            int? nextInd = numberInd + 1;
+            if (nextInd < state.numbers.length) {
+              var number = state.numbers[numberInd];
+              var nextNumber = state.numbers[nextInd];
+              if (number.number * nextNumber.number > 0) {
+                board.add(EquationEventJoinNumbers(
+                    leftInd: numberInd, rightInd: nextInd));
+                number.steps.addAll(nextNumber.steps);
+                state.numbers.remove(nextNumber);
+              }
             }
           }
         }

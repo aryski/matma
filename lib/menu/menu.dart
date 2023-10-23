@@ -3,6 +3,8 @@ import 'package:matma/common/colors.dart';
 import 'package:matma/levels/levels/level1.dart';
 import 'package:matma/levels/levels/level2.dart';
 import 'package:matma/levels/levels/level3.dart';
+import 'package:matma/levels/levels/level4.dart';
+import 'package:matma/levels/levels/level5.dart';
 import 'package:matma/levels/levels/tutorial.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
@@ -124,6 +126,48 @@ class PickMenu extends StatelessWidget {
               ),
               Text(
                 'Poziom 3',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(width: 30),
+        LevelButton(
+          unlocked: true,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Level4()));
+          },
+          minature: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.handyman_rounded,
+                size: 150,
+              ),
+              Text(
+                'Poziom 4',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(width: 30),
+        LevelButton(
+          unlocked: true,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Level5()));
+          },
+          minature: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.control_point_duplicate_outlined,
+                size: 150,
+              ),
+              Text(
+                'Poziom 5',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               )
             ],

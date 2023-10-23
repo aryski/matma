@@ -4,12 +4,9 @@ import 'package:matma/levels/level/level.dart';
 import 'package:matma/quests/game_events/game_events.dart';
 import 'package:matma/quests/task.dart';
 
-//Zadanie 2
-//Od rysunku do strzałki i pokazanie, że wynik to zawsze fragment ostatnich strzałek spod/nad linii
-//Wprowadzenie równania
-//(moze tutaj najpierw pojawi się równanie, a rysunek będzie po paru sekundach, żeby zwrócić uwagę odbiorcy na równanie)
-//Obliczenie tego samego co w a) ale z równaniem
-
+// Level 2
+// Matching steps to shaded fixed steps, with above equation.
+// TODO maybe better "in" animation of the equation.
 class Level2 extends StatelessWidget {
   const Level2({super.key});
   @override
@@ -48,15 +45,12 @@ class Level2 extends StatelessWidget {
   }
 }
 
-//TODO przydałoby się móc oprócz wiadomości polecenia dodać wiadomośc notatkę,
-//typu, że np zauważ dodatkowo coś oznacza coś itd xdddd, albo zawsze na koncu
-//damy takie jak ta linia w tle?
-
 var _taskA1 = Task(
   instructions: [
-    NextMsg(text: 'Widzisz cyfrę na górze?', seconds: 3),
-    NextMsg(text: 'Dojdź do obrazka w tle i ją obserwuj.', seconds: 7),
-    NextMsg(text: 'Trzy zielone strzałki obok siebie.')
+    NextMsg(text: 'Widzisz cyfrę?', seconds: 1.5),
+    NextMsg(text: 'Obserwuj cyfrę!', seconds: 1.5),
+    NextMsg(text: 'Zrób obrazek jak w tle.', seconds: 7),
+    NextMsg(text: 'Trzy zielone obok siebie.')
   ],
   onEvents: [
     OnEvent(requiredEvent: GameEventEquationValue(numbers: [3]), task: _taskA2)
@@ -70,8 +64,8 @@ var _taskA2 = Task(instructions: [
 
 var _taskB1 = Task(
   instructions: [
-    NextMsg(text: 'Znowu dojdź do obrazka w tle.', seconds: 7),
-    NextMsg(text: 'Trzy zielone strzałki obok siebie.')
+    NextMsg(text: 'Znowu zrób obrazek jak w tle.', seconds: 7),
+    NextMsg(text: 'Trzy zielone obok siebie.')
   ],
   onEvents: [
     OnEvent(requiredEvent: GameEventEquationValue(numbers: [-3]), task: _taskB2)

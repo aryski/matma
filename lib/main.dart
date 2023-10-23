@@ -6,19 +6,7 @@ import 'package:matma/menu/menu.dart';
 
 void main() {
   //zredukowac powtarzalny kod
-  //w szczegolnosci presentaton layery z powtarzalnymi animatorami.
-  //myślenie jakie mogą być poziomy
-  //myślenie jak zbierać z nich dane xDDD - to karkołomne zadanie
-  //więc najlepiej wymyśleć kilka poziomów
-  //i na ich podstawie dobrać jakich będziemy używać narzędzi
-  //poziomy typu od rownania do obrazka
-  //czyli dojdz do równania, robiac idealnie tak zeby sie pokrywaly symbole
-
-  //Generowanie kolejnych poziomów w zaleznosci od tego jak SZYBKO ktoś kapuje!
-  //Każdy poziom będzie się wydłużał dopóki ktoś nie będzie odpowiednio szybko kapował o co biega
   //NEW EVENTS
-  //NEW EVENT Dopasowanie po rysunku to porównania tabelek xD i tyle :D i to sie przyda w 1 i 3 zadaniu
-  //NEW EVENT Arrows Reducted to only one direction arrows. Only one number left
   //NEW EVENT Zliczanie ile eventsow do dojscia do tabelki
   //New Event Golden Mountain or Sea pressed
 
@@ -30,13 +18,24 @@ void main() {
   //ale też w zależności od czasu do jakiego kolejnego taska trzeba przejść.
 
   //Zadanie 4
-  //Coś w stylu przekształcenie jednego równania w inne daną ilością ruchów?
+  //Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
 
-  //Zadanie 5 Złote góry
+  //Zadanie 5
+  //Łączenie 1 + 1 w 2, -1, -1, -1 w -3, 1+1+1 -1-1-1 w 3-3
+
+  //Zadanie 6 Złote góry
   //jak rozbijesz 4-7 na 4-4-3 to pojawi się animacja z w ksztalcie 4-4 gdzie wystarczy dotknąć a góra się zredukuje
   //czyli nauka rozbijania na podobne liczby.
 
-  //Zadanie 6 Morskie doły analogicznie jak 5 zadanie.
+  //Zadanie 7 Morskie doły analogicznie jak 5 zadanie.
+
+  //Najpierw skończe poziomy a potem wykombinuje jak bardzo rozwlekać poziomy w zależności od tego jak SZYBKO ktoś rozumie.
+  //Tak, aby każdy poziom się wydłużał dopóki ktoś nie będzie odpowiednio szybko kapował o co biega.
+
+  //Sposób komunikacji, te komunikaty które lecą, żeby było widać poprzednie, ale jednocześnie żeby to było spoko xD
+  //TODO przydałoby się móc oprócz wiadomości polecenia dodać wiadomośc notatkę,
+  //typu, że np zauwaZż dodatkowo coś oznacza coś itd xdddd, albo zawsze na koncu
+  //damy takie jak ta linia w tle?
 
   Bloc.transformer = sequential();
   runApp(MaterialApp(
