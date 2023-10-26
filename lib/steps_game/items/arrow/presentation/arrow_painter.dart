@@ -58,24 +58,24 @@ Path generateTriangle(
   var yd = 3 / 2 * radius * progress;
   var rectOffsetVertical = radius * (1 - progress);
   if (progress > 0) {
-    radius = radius * 1 / progress;
+    radius = radius / progress;
   } else {
     radius = 10000;
   }
 
   Path path = Path();
-  path.moveTo(width * 1 / 2, tHeight);
-  path.lineTo(width * 1 - xd1 - rectOffset, 1 * tHeight);
+  path.moveTo(width / 2, tHeight);
+  path.lineTo(width - xd1 - rectOffset, 1 * tHeight);
   path.arcToPoint(Offset(width - xd2 - rectOffset, tHeight - yd),
       radius: Radius.circular(radius), clockwise: false);
-  path.lineTo(width * 1 / 2 + xd2 + rectOffset, 0 + yd + rectOffsetVertical);
+  path.lineTo(width / 2 + xd2 + rectOffset, 0 + yd + rectOffsetVertical);
   path.arcToPoint(
-      Offset(width * 1 / 2 - xd2 - rectOffset, 0 + yd + rectOffsetVertical),
+      Offset(width / 2 - xd2 - rectOffset, 0 + yd + rectOffsetVertical),
       clockwise: false,
       radius: Radius.circular(radius));
   path.lineTo(0 + xd2 + rectOffset, tHeight - yd);
   path.arcToPoint(Offset(0 + xd1 + rectOffset, tHeight),
       clockwise: false, radius: Radius.circular(radius));
-  path.lineTo(width * 1 / 2, tHeight);
+  path.lineTo(width / 2, tHeight);
   return path;
 }

@@ -16,10 +16,10 @@ extension ItemsGenerator on StepsGameBloc {
       ArrowState(
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(gs.wUnit, gs.hUnit),
+        size: size ?? Offset(gs.arrowW, gs.arrowH),
         opacity: 1.0,
         direction: Direction.up,
-        radius: 1 / 15 * gs.wUnit,
+        radius: gs.radius,
         animProgress: animationProgress,
       ),
     );
@@ -38,7 +38,7 @@ extension ItemsGenerator on StepsGameBloc {
         size: size ?? Offset(gs.wUnit, gs.hUnit),
         opacity: 1.0,
         direction: Direction.down,
-        radius: 1 / 15 * gs.wUnit,
+        radius: gs.radius,
         animProgress: animationProgress,
       ),
     );
@@ -46,38 +46,17 @@ extension ItemsGenerator on StepsGameBloc {
 
   FloorCubit generateFloor(
       {required Offset position,
-      Offset delta = Offset.zero,
       double widthRatio = 1.25,
       Offset? size,
       required Direction direction}) {
-    position += delta;
     return FloorCubit(
       FloorState(
         direction: direction,
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(gs.wUnit * widthRatio, gs.hUnit / 5),
+        size: size ?? Offset(gs.wUnit * widthRatio, gs.floorH),
         opacity: 1.0,
-        radius: 1 / 15 * gs.wUnit,
-      ),
-    );
-  }
-
-  FloorCubit generateYellowFloor(
-      {required Offset position,
-      Offset delta = Offset.zero,
-      double widthRatio = 1.25,
-      Offset? size,
-      required Direction direction}) {
-    position += delta;
-    return FloorCubit(
-      FloorState(
-        direction: direction,
-        id: UniqueKey(),
-        position: position,
-        size: size ?? Offset(gs.wUnit * widthRatio, gs.hUnit / 5),
-        opacity: 1.0,
-        radius: 1 / 15 * gs.wUnit,
+        radius: gs.radius,
       ),
     );
   }

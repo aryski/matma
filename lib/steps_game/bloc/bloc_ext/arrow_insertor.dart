@@ -68,18 +68,14 @@ extension ArrowInsertor on StepsGameBloc {
       arrow1 = generateArrowUp(
           position: pos, delta: Offset(0, gs.hUnit), animationProgress: 0);
       floor = generateFloor(
-          direction: Direction.up,
-          position: pos,
-          delta: Offset(gs.wUnit / 2, gs.hUnit),
-          widthRatio: 0.25);
+          direction: Direction.up, position: pos, widthRatio: 0.25);
+      floor.updatePosition(Offset(gs.wUnit / 2, gs.hUnit));
     } else {
       arrow1 = generateArrowDown(
           position: pos, delta: Offset.zero, animationProgress: 0);
       floor = generateFloor(
-          direction: Direction.down,
-          position: pos,
-          delta: Offset(gs.wUnit / 2, gs.hUnit - gs.hUnit / 5),
-          widthRatio: 0.25);
+          direction: Direction.down, position: pos, widthRatio: 0.25);
+      floor.updatePosition(Offset(gs.wUnit / 2, gs.hUnit - gs.floorH));
     }
     var stepsDefault = StepsGameDefaultItem(arrow: arrow1, floor: floor);
 
@@ -110,13 +106,12 @@ extension ArrowInsertor on StepsGameBloc {
       board.add(EquationEventAddNumber(value: -1));
       arrow = generateArrowDown(
           animationProgress: 0,
-          position:
-              item.state.position + Offset(gs.wUnit * 0.5, 0 + gs.hUnit / 5),
+          position: item.state.position + Offset(gs.wUnit * 0.5, 0 + gs.floorH),
           size: Offset(gs.wUnit, 0));
       floor = generateFloor(
           direction: Direction.down,
-          position: item.state.position + Offset(gs.wUnit * 1, 0),
-          size: Offset(0, gs.hUnit / 5));
+          position: item.state.position + Offset(gs.wUnit, 0),
+          size: Offset(0, gs.floorH));
     } else {
       board.add(EquationEventAddNumber(value: 1));
       arrow = generateArrowUp(
@@ -125,8 +120,8 @@ extension ArrowInsertor on StepsGameBloc {
           size: Offset(gs.wUnit, 0));
       floor = generateFloor(
           direction: Direction.up,
-          position: item.state.position + Offset(gs.wUnit * 1, 0),
-          size: Offset(0, gs.hUnit / 5));
+          position: item.state.position + Offset(gs.wUnit, 0),
+          size: Offset(0, gs.floorH));
     }
     state.numbers.add(StepsGameNumberState(
         [StepsGameDefaultItem(arrow: arrow, floor: floor)]));

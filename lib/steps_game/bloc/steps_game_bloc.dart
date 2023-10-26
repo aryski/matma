@@ -24,6 +24,16 @@ class GameSize {
   double get hUnit => 1 / hUnits;
   double get wUnit => 1 / wUnits;
 
+  double get arrowH => hUnit;
+  double get arrowW => wUnit;
+
+  double get radius => 1 / 15 * wUnit;
+
+  double get floorH => arrowH / 5;
+
+  // double get arrowH => hUnit;
+  // double get arrowW => wUnit;
+
   const GameSize({required this.hUnits, required this.wUnits});
 }
 

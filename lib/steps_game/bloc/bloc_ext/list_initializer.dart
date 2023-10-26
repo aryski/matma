@@ -15,9 +15,9 @@ extension Initializer on StepsGameBloc {
     state.unorderedItems[id] = EquatorCubit(EquatorState(
         id: id,
         position: Offset(0, currentTop + gs.hUnit),
-        size: Offset(gs.wUnit * (gs.wUnits), gs.hUnit / 5),
+        size: Offset(gs.wUnit * (gs.wUnits), gs.floorH),
         opacity: 1,
-        radius: 1 / 15 * gs.wUnit));
+        radius: gs.radius));
     return generateFloorsAndArrows(init, currentLeft, currentTop);
   }
 
@@ -48,21 +48,25 @@ extension Initializer on StepsGameBloc {
         if (number > 0) {
           arrow = generateArrowUp(position: pos, delta: Offset.zero);
           floor = generateFloor(
-              direction: Direction.up,
-              widthRatio: floorLengthRatio,
-              position: pos,
-              delta: Offset(gs.wUnit / 2, 0));
+            direction: Direction.up,
+            widthRatio: floorLengthRatio,
+            position: pos,
+          );
+          floor.updatePosition(Offset(gs.wUnit / 2, 0));
         } else {
           arrow = generateArrowDown(
-              position: pos, delta: Offset(0, gs.hUnit + gs.hUnit / 5));
+              position: pos, delta: Offset(0, gs.hUnit + gs.floorH));
           floor = generateFloor(
-              direction: Direction.down,
-              widthRatio: floorLengthRatio,
-              position: pos,
-              delta: Offset(
-                gs.wUnit / 2,
-                2 * gs.hUnit,
-              ));
+            direction: Direction.down,
+            widthRatio: floorLengthRatio,
+            position: pos,
+          );
+          floor.updatePosition(
+            Offset(
+              gs.wUnit / 2,
+              2 * gs.hUnit,
+            ),
+          );
         }
         if (i + 1 == number.abs()) {
           if (j + 1 == init.length) {
