@@ -26,8 +26,6 @@ class StepsGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<UniqueKey> blockedIds = [];
-    double unitRatio = 1 / 18;
-    double horizUnitRatio = 1 / 66;
     var gs = const GameSize(hUnits: 18, wUnits: 66);
     final taskCubit =
         QuestsCubit(data.firstTask, BlocProvider.of<LevelCubit>(context));
@@ -51,8 +49,6 @@ class StepsGame extends StatelessWidget {
             gs: gs,
             bloc: bloc,
             blockedIds: blockedIds,
-            unitRatio: unitRatio,
-            horizUnitRatio: horizUnitRatio,
             data: data,
           ),
         ),
@@ -66,17 +62,13 @@ class StepsSimulatorContent extends StatelessWidget {
     super.key,
     required this.bloc,
     required this.blockedIds,
-    required this.unitRatio,
-    required this.horizUnitRatio,
     required this.data,
     required this.gs,
   });
   final StepsGameData data;
   final StepsGameBloc bloc;
   final List<UniqueKey> blockedIds;
-  final double unitRatio;
   final GameSize gs;
-  final double horizUnitRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -84,12 +76,8 @@ class StepsSimulatorContent extends StatelessWidget {
       data: data,
       bloc: bloc,
       blockedIds: blockedIds,
-      unitRatio: unitRatio,
-      horizUnitRatio: horizUnitRatio,
       child: _StepsSimulatorContent(
         data: data,
-        unitRatio: unitRatio,
-        horizUnitRatio: horizUnitRatio,
         gs: gs,
       ),
     );
@@ -100,16 +88,12 @@ class _ScrollListener extends StatelessWidget {
   const _ScrollListener({
     required this.bloc,
     required this.blockedIds,
-    required this.unitRatio,
-    required this.horizUnitRatio,
     required this.child,
     required this.data,
   });
   final StepsGameData data;
   final StepsGameBloc bloc;
   final List<UniqueKey> blockedIds;
-  final double unitRatio;
-  final double horizUnitRatio;
   final Widget child;
 
   @override
@@ -144,22 +128,17 @@ class _ScrollListener extends StatelessWidget {
 
 class _StepsSimulatorContent extends StatelessWidget {
   const _StepsSimulatorContent({
-    super.key,
-    required this.unitRatio,
-    required this.horizUnitRatio,
     required this.data,
     required this.gs,
   });
   final StepsGameData data;
-  final double unitRatio;
-  final double horizUnitRatio;
   final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 18 * unitRatio,
-      width: 66 * horizUnitRatio,
+      height: 18 * gs.hUnit,
+      width: 66 * gs.wUnit,
       // color: defaultBackground,
       child: Stack(
         children: [
@@ -170,16 +149,10 @@ class _StepsSimulatorContent extends StatelessWidget {
             ),
           ),
           if (data.shadedSteps != null)
-            ShadedRawStepsGame(
-                unitRatio: unitRatio,
-                horizUnitRatio: horizUnitRatio,
-                gs: gs,
-                initNumbers: data.shadedSteps!),
-          RawStepsGame(unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),
-          if (data.withEquation) Equation(unit: unitRatio),
-          TaskSimulator(
-            unit: unitRatio,
-          ),
+            ShadedRawStepsGame(gs: gs, initNumbers: data.shadedSteps!),
+          RawStepsGame(gs: gs),
+          if (data.withEquation) Equation(unit: gs.hUnit),
+          TaskSimulator(unit: gs.hUnit),
           const Align(
             alignment: Alignment.topLeft,
             child: Padding(
@@ -210,15 +183,8 @@ class _StepsSimulatorContent extends StatelessWidget {
 
 class ShadedRawStepsGame extends StatelessWidget {
   const ShadedRawStepsGame(
-      //todo add shadow? maybe by merging drawpaths??? idk
-      {super.key,
-      required this.unitRatio,
-      required this.horizUnitRatio,
-      required this.gs,
-      required this.initNumbers});
+      {super.key, required this.gs, required this.initNumbers});
   final List<int> initNumbers;
-  final double unitRatio;
-  final double horizUnitRatio;
   final GameSize gs;
 
   @override
@@ -236,12 +202,10 @@ class ShadedRawStepsGame extends StatelessWidget {
         BlocProvider<EquationBloc>(create: (context) => eqCubit),
       ],
       child: Stack(children: [
-        RawStepsGame(unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),
+        RawStepsGame(gs: gs),
         Opacity(
           opacity: 0.75,
-          child: Container(
-            color: defaultBackground,
-          ),
+          child: Container(color: defaultBackground),
         ),
       ]),
     );
@@ -251,23 +215,21 @@ class ShadedRawStepsGame extends StatelessWidget {
 class RawStepsGame extends StatelessWidget {
   const RawStepsGame({
     super.key,
-    required this.unitRatio,
-    required this.horizUnitRatio,
+    required this.gs,
   });
 
-  final double unitRatio;
-  final double horizUnitRatio;
+  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
-          height: 1 * unitRatio * MediaQuery.of(context).size.height,
+          height: 1 * gs.hUnit * MediaQuery.of(context).size.height,
         ),
         SizedBox(
-          height: 17 * unitRatio * MediaQuery.of(context).size.height,
-          width: 65 * horizUnitRatio * MediaQuery.of(context).size.width,
+          height: 17 * gs.hUnit * MediaQuery.of(context).size.height,
+          width: 65 * gs.wUnit * MediaQuery.of(context).size.width,
           child: BlocBuilder<StepsGameBloc, StepsGameState>(
             builder: (context, state) {
               List<GameItemCubit> items = [];
