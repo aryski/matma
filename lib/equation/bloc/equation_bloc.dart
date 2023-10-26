@@ -17,21 +17,21 @@ part 'equation_state.dart';
 
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final EquationState init;
-  final SimulationSize simSize;
+  final GameSize gs;
   final List<int>? targetValues; //TODO jak to sprytnie wpasować??!?!?!?!?
   EquationBloc(
       {required this.init,
-      required this.simSize,
+      required this.gs,
       required List<int> initNumbers,
       this.targetValues})
-      : super(Resetter.hardResetState(initNumbers, simSize, targetValues)) {
+      : super(Resetter.hardResetState(initNumbers, gs, targetValues)) {
     on<EquationEventIncreaseNumber>((event, emit) async {
       var itemInd = state.itemIndex(event.ind);
       if (itemInd != null) {
         var item = state.items[itemInd];
         item.number.updateValue(item.number.state.value + 1);
         if (item.number.state.value == 10) {
-          resize(item, simSize.wRatio * 2);
+          resize(item, gs.wUnit * 2);
         }
         generateShadowNumbers(item, 1);
         updateFixedItemsColors(state);
@@ -108,7 +108,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
   void decreaseValue(EquationDefaultItem myItem) {
     var number = myItem.number;
     if (number.state.value == 10) {
-      resize(myItem, -simSize.wRatio * 2);
+      resize(myItem, -gs.wUnit * 2);
     }
     number.updateValue(number.state.value - 1);
   }

@@ -26,8 +26,8 @@ extension Reducer on EquationBloc {
       state.items.replaceRange(0, 1,
           [EquationDefaultItem(sign: null, number: state.items.first.number)]);
 
-      spread(state.items.first, -1.5 * simSize.wRatio);
-      state.items.first.number.updatePosition(Offset(-1.5 * simSize.wRatio, 0));
+      spread(state.items.first, -1.5 * gs.wUnit);
+      state.items.first.number.updatePosition(Offset(-1.5 * gs.wUnit, 0));
     }
   }
 }

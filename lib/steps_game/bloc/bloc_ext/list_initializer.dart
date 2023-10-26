@@ -9,16 +9,15 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 extension Initializer on StepsGameBloc {
   List<StepsGameNumberState> initializeSimulationItems() {
     List<int> init = board.state.numbers;
-    var currentTop =
-        (simSize.hUnits / 2).floor() * simSize.hRatio - simSize.hRatio;
-    var currentLeft = simSize.wRatio * 2;
+    var currentTop = (gs.hUnits / 2).floor() * gs.hUnit - gs.hUnit;
+    var currentLeft = gs.wUnit * 2;
     var id = UniqueKey();
     state.unorderedItems[id] = EquatorCubit(EquatorState(
         id: id,
-        position: Offset(0, currentTop + simSize.hRatio),
-        size: Offset(simSize.wRatio * (simSize.wUnits), simSize.hRatio / 5),
+        position: Offset(0, currentTop + gs.hUnit),
+        size: Offset(gs.wUnit * (gs.wUnits), gs.hUnit / 5),
         opacity: 1,
-        radius: 1 / 15 * simSize.wRatio));
+        radius: 1 / 15 * gs.wUnit));
     return generateFloorsAndArrows(init, currentLeft, currentTop);
   }
 
@@ -52,18 +51,17 @@ extension Initializer on StepsGameBloc {
               direction: Direction.up,
               widthRatio: floorLengthRatio,
               position: pos,
-              delta: Offset(simSize.wRatio / 2, 0));
+              delta: Offset(gs.wUnit / 2, 0));
         } else {
           arrow = generateArrowDown(
-              position: pos,
-              delta: Offset(0, simSize.hRatio + simSize.hRatio / 5));
+              position: pos, delta: Offset(0, gs.hUnit + gs.hUnit / 5));
           floor = generateFloor(
               direction: Direction.down,
               widthRatio: floorLengthRatio,
               position: pos,
               delta: Offset(
-                simSize.wRatio / 2,
-                2 * simSize.hRatio,
+                gs.wUnit / 2,
+                2 * gs.hUnit,
               ));
         }
         if (i + 1 == number.abs()) {
@@ -74,12 +72,11 @@ extension Initializer on StepsGameBloc {
         }
         items.add(StepsGameDefaultItem(arrow: arrow, floor: floor));
         if (number > 0) {
-          currentTop -= simSize.hRatio;
+          currentTop -= gs.hUnit;
         } else {
-          currentTop += simSize.hRatio;
+          currentTop += gs.hUnit;
         }
-        currentLeft +=
-            (floorLengthRatio == 2.25) ? simSize.wRatio * 2 : simSize.wRatio;
+        currentLeft += (floorLengthRatio == 2.25) ? gs.wUnit * 2 : gs.wUnit;
       }
 
       result.add(StepsGameNumberState(items));

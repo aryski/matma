@@ -21,7 +21,7 @@ extension BoardItemsGenerator on EquationBloc {
       {required int number,
       required Offset position,
       double? opacity,
-      required SimulationSize simSize,
+      required GameSize gs,
       bool? isInactive,
       bool withDarkenedColor = false}) {
     return NumberState(
@@ -31,8 +31,8 @@ extension BoardItemsGenerator on EquationBloc {
       id: UniqueKey(),
       position: position,
       size: number.abs() >= 10
-          ? Offset(simSize.wRatio * 4, simSize.hRatio * 2)
-          : Offset(simSize.wRatio * 2, simSize.hRatio * 2),
+          ? Offset(gs.wUnit * 4, gs.hUnit * 2)
+          : Offset(gs.wUnit * 2, gs.hUnit * 2),
       opacity: opacity ?? 1,
       radius: 5,
       textKey: UniqueKey(),
@@ -43,24 +43,24 @@ extension BoardItemsGenerator on EquationBloc {
       {required Signs sign,
       required Offset position,
       double? opacity,
-      required SimulationSize simSize}) {
+      required GameSize gs}) {
     return SignState(
       value: sign,
       id: UniqueKey(),
       position: position,
-      size: Offset(simSize.wRatio * 1.5, simSize.hRatio * 2),
+      size: Offset(gs.wUnit * 1.5, gs.hUnit * 2),
       opacity: opacity ?? 1,
       radius: 5,
     );
   }
 
   static ShadowNumberState generateShadowNumberState(
-      String value, Offset position, SimulationSize simSize) {
+      String value, Offset position, GameSize gs) {
     return ShadowNumberState(
       value: value,
       id: UniqueKey(),
       position: position,
-      size: Offset(simSize.wRatio * 2, simSize.hRatio * 2),
+      size: Offset(gs.wUnit * 2, gs.hUnit * 2),
       opacity: 1,
       radius: 5,
     );

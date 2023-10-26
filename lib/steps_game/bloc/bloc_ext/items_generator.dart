@@ -16,10 +16,10 @@ extension ItemsGenerator on StepsGameBloc {
       ArrowState(
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wRatio, simSize.hRatio),
+        size: size ?? Offset(gs.wUnit, gs.hUnit),
         opacity: 1.0,
         direction: Direction.up,
-        radius: 1 / 15 * simSize.wRatio,
+        radius: 1 / 15 * gs.wUnit,
         animProgress: animationProgress,
       ),
     );
@@ -35,10 +35,10 @@ extension ItemsGenerator on StepsGameBloc {
       ArrowState(
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wRatio, simSize.hRatio),
+        size: size ?? Offset(gs.wUnit, gs.hUnit),
         opacity: 1.0,
         direction: Direction.down,
-        radius: 1 / 15 * simSize.wRatio,
+        radius: 1 / 15 * gs.wUnit,
         animProgress: animationProgress,
       ),
     );
@@ -56,9 +56,9 @@ extension ItemsGenerator on StepsGameBloc {
         direction: direction,
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),
+        size: size ?? Offset(gs.wUnit * widthRatio, gs.hUnit / 5),
         opacity: 1.0,
-        radius: 1 / 15 * simSize.wRatio,
+        radius: 1 / 15 * gs.wUnit,
       ),
     );
   }
@@ -75,9 +75,9 @@ extension ItemsGenerator on StepsGameBloc {
         direction: direction,
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(simSize.wRatio * widthRatio, simSize.hRatio / 5),
+        size: size ?? Offset(gs.wUnit * widthRatio, gs.hUnit / 5),
         opacity: 1.0,
-        radius: 1 / 15 * simSize.wRatio,
+        radius: 1 / 15 * gs.wUnit,
       ),
     );
   }

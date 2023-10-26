@@ -14,7 +14,7 @@ class Tutorial extends StatelessWidget {
       next: const Level1(),
       data: LevelData(name: 'Tutorial', gamesData: [
         StepsGameData(
-            initNumbers: [3, -2],
+            initNumbers: [1, 2, -2],
             firstTask: _task1,
             allowedOps: StepsGameOps.values),
       ]),

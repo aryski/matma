@@ -17,37 +17,36 @@ part 'steps_game_state.dart';
 
 UniqueKey? hoverKepper;
 
-class SimulationSize {
-  final double hRatio;
-  final double wRatio;
+class GameSize {
+  final double hUnits;
+  final double wUnits;
 
-  double get hUnits => 1 / hRatio;
-  double get wUnits => 1 / wRatio;
+  double get hUnit => 1 / hUnits;
+  double get wUnit => 1 / wUnits;
 
-  const SimulationSize({required this.hRatio, required this.wRatio});
+  const GameSize({required this.hUnits, required this.wUnits});
 }
 
 class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   final List<StepsGameOps> allowedOps;
   final EquationBloc board;
-  final SimulationSize simSize;
+  final GameSize gs;
   final List<UniqueKey> lockedIds = [];
   final QuestsCubit taskCubit;
   bool isInsertionAnimation = false;
 
   @override
-  StepsGameBloc(this.simSize, this.board, this.taskCubit, this.allowedOps)
-      : super(
-            StepsGameState(simSize: simSize, numbers: [], unorderedItems: {})) {
+  StepsGameBloc(this.gs, this.board, this.taskCubit, this.allowedOps)
+      : super(StepsGameState(gs: gs, numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeSimulationItems());
 
     on<StepsGameEventScroll>((event, emit) async {
-      await handleScroll(state, event, simSize, emit);
+      await handleScroll(state, event, gs, emit);
     });
 
     on<StepsGameEventPointerDown>((event, emit) async {
       if (!isInsertionAnimation) {
-        await handleClick(state, event, simSize, emit);
+        await handleClick(state, event, gs, emit);
       }
     });
 
@@ -80,7 +79,7 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
         }
       }
       if (!handled) {
-        await handleClick(state, event, simSize, emit);
+        await handleClick(state, event, gs, emit);
       }
     });
   }

@@ -8,14 +8,14 @@ extension ClickHandler on StepsGameBloc {
   Future<void> handleClick(
     StepsGameState state,
     dynamic event,
-    SimulationSize simSize,
+    GameSize gs,
     Emitter<StepsGameState> emit,
   ) async {
     if (event is StepsGameEventPointerDown ||
         event is StepsGameEventPointerUp) {
       var item = state.getItem(event.id);
       if (item is ArrowCubit) {
-        var delta = simSize.hRatio / 2;
+        var delta = gs.hUnit / 2;
         if (event is StepsGameEventPointerDown) {
           delta = -delta;
         }

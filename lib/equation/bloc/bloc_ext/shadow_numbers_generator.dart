@@ -18,10 +18,10 @@ extension ShadowNumbersGenerator on EquationBloc {
           BoardItemsGenerator.generateShadowNumberState(
               sign == Signs.addition ? "-1" : "+1",
               item.number.state.position,
-              simSize));
+              gs));
       state.extraItems.add(shadowCubit);
       shadowCubit.updatePositionDelayed(
-          Offset(0, simSize.hRatio * 2), const Duration(milliseconds: 20));
+          Offset(0, gs.hUnit * 2), const Duration(milliseconds: 20));
     }
   }
 }

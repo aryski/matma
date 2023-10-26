@@ -69,22 +69,22 @@ extension ArrowsReductor on StepsGameBloc {
     var mid = step.arrow;
     var right = rightStep.arrow;
 
-    mid.updatePosition(Offset(0, simSize.hRatio));
-    right.updatePosition(Offset(0, simSize.hRatio));
-    floor.updatePosition(Offset(0, simSize.hRatio));
+    mid.updatePosition(Offset(0, gs.hUnit));
+    right.updatePosition(Offset(0, gs.hUnit));
+    floor.updatePosition(Offset(0, gs.hUnit));
     mid.setOpacity(0);
     right.setOpacity(0);
     floor.setOpacity(0);
 
     var inheritedWidth = 0.0;
-    inheritedWidth = rightStep.floor.state.size.dx - simSize.wRatio / 2;
+    inheritedWidth = rightStep.floor.state.size.dx - gs.wUnit / 2;
     var leftStep = state.leftStep(step);
     if (leftStep != null && !state.isLastItem(rightStep.floor)) {
       leftStep.floor.updateSize(Offset(inheritedWidth, 0));
     }
     if (state.isFirstStep(step)) {
       state.moveAllSince(rightStep.floor,
-          Offset(-rightStep.floor.state.size.dx + 1 / 2 * simSize.wRatio, 0));
+          Offset(-rightStep.floor.state.size.dx + 1 / 2 * gs.wUnit, 0));
     }
     rightStep.floor.updateSize(Offset(-rightStep.floor.state.size.dx, 0));
     rightStep.floor.setOpacity(0);
@@ -104,7 +104,7 @@ extension ArrowsReductor on StepsGameBloc {
     }
     if (leftStep != null && state.isLastItem(leftStep.floor)) {
       leftStep.floor.updateSize(
-          Offset(-leftStep.floor.state.size.dx + 1.25 * simSize.wRatio, 0));
+          Offset(-leftStep.floor.state.size.dx + 1.25 * gs.wUnit, 0));
       leftStep.floor.setLastLast();
     }
   }

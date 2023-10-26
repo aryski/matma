@@ -28,15 +28,15 @@ class StepsGame extends StatelessWidget {
     List<UniqueKey> blockedIds = [];
     double unitRatio = 1 / 18;
     double horizUnitRatio = 1 / 66;
-    var simSize = SimulationSize(hRatio: unitRatio, wRatio: horizUnitRatio);
+    var gs = const GameSize(hUnits: 18, wUnits: 66);
     final taskCubit =
         QuestsCubit(data.firstTask, BlocProvider.of<LevelCubit>(context));
     final eqCubit = EquationBloc(
         init: EquationState(),
-        simSize: simSize,
+        gs: gs,
         initNumbers: data.initNumbers,
         targetValues: data.withFixedEquation);
-    final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, data.allowedOps);
+    final bloc = StepsGameBloc(gs, eqCubit, taskCubit, data.allowedOps);
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.white),
       child: ConstrainedBox(
@@ -48,7 +48,7 @@ class StepsGame extends StatelessWidget {
             BlocProvider<QuestsCubit>(create: (context) => taskCubit)
           ],
           child: StepsSimulatorContent(
-            simSize: simSize,
+            gs: gs,
             bloc: bloc,
             blockedIds: blockedIds,
             unitRatio: unitRatio,
@@ -69,13 +69,13 @@ class StepsSimulatorContent extends StatelessWidget {
     required this.unitRatio,
     required this.horizUnitRatio,
     required this.data,
-    required this.simSize,
+    required this.gs,
   });
   final StepsGameData data;
   final StepsGameBloc bloc;
   final List<UniqueKey> blockedIds;
   final double unitRatio;
-  final SimulationSize simSize;
+  final GameSize gs;
   final double horizUnitRatio;
 
   @override
@@ -90,7 +90,7 @@ class StepsSimulatorContent extends StatelessWidget {
         data: data,
         unitRatio: unitRatio,
         horizUnitRatio: horizUnitRatio,
-        simSize: simSize,
+        gs: gs,
       ),
     );
   }
@@ -148,12 +148,12 @@ class _StepsSimulatorContent extends StatelessWidget {
     required this.unitRatio,
     required this.horizUnitRatio,
     required this.data,
-    required this.simSize,
+    required this.gs,
   });
   final StepsGameData data;
   final double unitRatio;
   final double horizUnitRatio;
-  final SimulationSize simSize;
+  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -173,8 +173,7 @@ class _StepsSimulatorContent extends StatelessWidget {
             ShadedRawStepsGame(
                 unitRatio: unitRatio,
                 horizUnitRatio: horizUnitRatio,
-                simSize:
-                    SimulationSize(hRatio: unitRatio, wRatio: horizUnitRatio),
+                gs: gs,
                 initNumbers: data.shadedSteps!),
           RawStepsGame(unitRatio: unitRatio, horizUnitRatio: horizUnitRatio),
           if (data.withEquation) Equation(unit: unitRatio),
@@ -215,22 +214,22 @@ class ShadedRawStepsGame extends StatelessWidget {
       {super.key,
       required this.unitRatio,
       required this.horizUnitRatio,
-      required this.simSize,
+      required this.gs,
       required this.initNumbers});
   final List<int> initNumbers;
   final double unitRatio;
   final double horizUnitRatio;
-  final SimulationSize simSize;
+  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
     final taskCubit = QuestsCubit(Task(instructions: [], onEvents: []),
         BlocProvider.of<LevelCubit>(context));
 
-    final eqCubit = EquationBloc(
-        init: EquationState(), simSize: simSize, initNumbers: initNumbers);
+    final eqCubit =
+        EquationBloc(init: EquationState(), gs: gs, initNumbers: initNumbers);
 
-    final bloc = StepsGameBloc(simSize, eqCubit, taskCubit, []);
+    final bloc = StepsGameBloc(gs, eqCubit, taskCubit, []);
     return MultiBlocProvider(
       providers: [
         BlocProvider<StepsGameBloc>(create: (context) => bloc),

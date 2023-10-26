@@ -7,14 +7,14 @@ import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ScrollHandler on StepsGameBloc {
   Future<void> handleScroll(StepsGameState state, StepsGameEventScroll event,
-      SimulationSize simSize, Emitter<StepsGameState> emit) async {
+      GameSize gs, Emitter<StepsGameState> emit) async {
     var item = state.getItem(event.id);
-    var minWidth = simSize.wRatio * 1.25;
-    var defaultWidth = 1.25 * simSize.wRatio;
-    var delta = -event.dy * simSize.wRatio / 50;
+    var minWidth = gs.wUnit * 1.25;
+    var defaultWidth = 1.25 * gs.wUnit;
+    var delta = -event.dy * gs.wUnit / 50;
     bool result = false;
     if (allowedOps.contains(StepsGameOps.addOppositeArrow)) {
-      result = await handleOppositeInsertion(state, item, simSize, emit);
+      result = await handleOppositeInsertion(state, item, gs, emit);
       if (result) return;
     }
     if (allowedOps.contains(StepsGameOps.reduceArrows)) {
@@ -22,7 +22,7 @@ extension ScrollHandler on StepsGameBloc {
       if (result) return;
     }
     if (allowedOps.contains(StepsGameOps.splitJoinArrows)) {
-      result = handleSplitJoin(item, delta, minWidth, simSize, state, emit);
+      result = handleSplitJoin(item, delta, minWidth, gs, state, emit);
     }
   }
 

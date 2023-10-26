@@ -13,10 +13,10 @@ extension NumberWithSignInsertor on EquationBloc {
       if (item == previousItem) {
         var numberState = BoardItemsGenerator.generateNumberState(
             number: value,
-            position: Offset(previousItem.position.dx + simSize.wRatio * 1.5,
+            position: Offset(previousItem.position.dx + gs.wUnit * 1.5,
                 previousItem.position.dy),
             opacity: 0,
-            simSize: simSize);
+            gs: gs);
         var numberCubit = NumberCubit(numberState);
 
         var signState = BoardItemsGenerator.generateSignState(
@@ -24,7 +24,7 @@ extension NumberWithSignInsertor on EquationBloc {
             position:
                 Offset(previousItem.position.dx, previousItem.position.dy),
             opacity: 0,
-            simSize: simSize);
+            gs: gs);
         var signCubit = SignCubit(signState);
         var myItem = EquationDefaultItem(sign: signCubit, number: numberCubit);
         state.items.insert(i + 1, myItem);
@@ -50,7 +50,7 @@ extension NumberWithSignInsertor on EquationBloc {
             position:
                 Offset(previousItem.position.dx, previousItem.position.dy),
             opacity: 0,
-            simSize: simSize);
+            gs: gs);
         var numberCubit = NumberCubit(numberState);
 
         var myItem = EquationDefaultItem(sign: null, number: numberCubit);

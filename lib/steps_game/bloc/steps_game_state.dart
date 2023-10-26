@@ -25,14 +25,12 @@ class StepsGameNumberState {
 }
 
 class StepsGameState {
-  final SimulationSize simSize;
+  final GameSize gs;
   final List<StepsGameNumberState> numbers;
   Map<UniqueKey, GameItemCubit> unorderedItems;
 
   StepsGameState(
-      {required this.simSize,
-      required this.numbers,
-      required this.unorderedItems});
+      {required this.gs, required this.numbers, required this.unorderedItems});
 
   void removeStep(StepsGameDefaultItem step) {
     for (var number in numbers) {
@@ -209,9 +207,7 @@ class StepsGameState {
 
   StepsGameState copy() {
     return StepsGameState(
-        simSize: simSize,
-        numbers: [...numbers],
-        unorderedItems: {...unorderedItems});
+        gs: gs, numbers: [...numbers], unorderedItems: {...unorderedItems});
   }
 
   GameItemCubit? getItem(UniqueKey id) {

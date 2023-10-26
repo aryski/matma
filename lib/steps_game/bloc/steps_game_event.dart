@@ -23,3 +23,5 @@ class StepsGameEventPointerUp extends StepsGameEvent {
 
   StepsGameEventPointerUp({required this.id, required this.pressTime});
 }
+
+class StepsGameEventPop extends StepsGameEvent {}
