@@ -25,6 +25,8 @@ class GameSize {
   double get wUnit => 1 / wUnits;
 
   double get arrowH => hUnit;
+  double get arrowClickedHgt => arrowH / 2;
+  double get arrowReleasedHgt => arrowH * 2;
   double get arrowW => wUnit;
 
   double get radius => 1 / 15 * wUnit;

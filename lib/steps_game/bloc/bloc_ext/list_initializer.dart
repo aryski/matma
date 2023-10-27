@@ -46,7 +46,8 @@ extension Initializer on StepsGameBloc {
           floorLengthRatio = 2.25;
         }
         if (number > 0) {
-          arrow = generateArrowUp(position: pos, delta: Offset.zero);
+          arrow = generateArrow(
+              position: pos, delta: Offset.zero, direction: Direction.up);
           floor = generateFloor(
             direction: Direction.up,
             widthRatio: floorLengthRatio,
@@ -54,8 +55,10 @@ extension Initializer on StepsGameBloc {
           );
           floor.updatePosition(Offset(gs.wUnit / 2, 0));
         } else {
-          arrow = generateArrowDown(
-              position: pos, delta: Offset(0, gs.hUnit + gs.floorH));
+          arrow = generateArrow(
+              position: pos,
+              delta: Offset(0, gs.hUnit + gs.floorH),
+              direction: Direction.down);
           floor = generateFloor(
             direction: Direction.down,
             widthRatio: floorLengthRatio,

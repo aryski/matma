@@ -6,7 +6,28 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
 
 extension ItemsGenerator on StepsGameBloc {
-  ArrowCubit generateArrowUp(
+  ArrowCubit generateArrow(
+      {required Offset position,
+      Offset delta = Offset.zero,
+      double animationProgress = 1.0,
+      Offset? size,
+      required Direction direction}) {
+    if (direction == Direction.up) {
+      return __generateArrowUp(
+          position: position,
+          delta: delta,
+          animationProgress: animationProgress,
+          size: size);
+    } else {
+      return __generateArrowDown(
+          position: position,
+          delta: delta,
+          animationProgress: animationProgress,
+          size: size);
+    }
+  }
+
+  ArrowCubit __generateArrowUp(
       {required Offset position,
       Offset delta = Offset.zero,
       double animationProgress = 1.0,
@@ -25,7 +46,7 @@ extension ItemsGenerator on StepsGameBloc {
     );
   }
 
-  ArrowCubit generateArrowDown(
+  ArrowCubit __generateArrowDown(
       {required Offset position,
       Offset delta = Offset.zero,
       double animationProgress = 1.0,

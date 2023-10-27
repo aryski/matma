@@ -20,7 +20,7 @@ extension NumberSplitJoiner on StepsGameBloc {
     if (item.state.size.dx > 1.25 * gs.wUnit) {
       var myStep = state.getStep(item);
       if (myStep != null) {
-        int? numberInd = state.getNumberIndex(myStep);
+        int? numberInd = state.getNumberIndexFromItem(item);
         if (numberInd != null) {
           var number = state.numbers[numberInd];
           //todo split number at
@@ -51,23 +51,20 @@ extension NumberSplitJoiner on StepsGameBloc {
     }
 
     if (item.state.size.dx <= 1.25 * gs.wUnit) {
-      var step = state.getStep(item);
-      if (step != null) {
-        int? numberInd = state.getNumberIndex(step);
-        if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
-          //only neighbors
-          if (state.numbers[numberInd].steps.last.floor == item) {
-            int? nextInd = numberInd + 1;
-            if (nextInd < state.numbers.length) {
-              var number = state.numbers[numberInd];
-              var nextNumber = state.numbers[nextInd];
-              if (number.number * nextNumber.number > 0) {
-                board.add(EquationEventJoinNumbers(
-                    leftInd: numberInd, rightInd: nextInd));
-                item.setNotLast();
-                number.steps.addAll(nextNumber.steps);
-                state.numbers.remove(nextNumber);
-              }
+      int? numberInd = state.getNumberIndexFromItem(item);
+      if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
+        //only neighbors
+        if (state.numbers[numberInd].steps.last.floor == item) {
+          int? nextInd = numberInd + 1;
+          if (nextInd < state.numbers.length) {
+            var number = state.numbers[numberInd];
+            var nextNumber = state.numbers[nextInd];
+            if (number.number * nextNumber.number > 0) {
+              board.add(EquationEventJoinNumbers(
+                  leftInd: numberInd, rightInd: nextInd));
+              item.setNotLast();
+              number.steps.addAll(nextNumber.steps);
+              state.numbers.remove(nextNumber);
             }
           }
         }

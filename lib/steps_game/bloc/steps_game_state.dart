@@ -110,6 +110,17 @@ class StepsGameState {
     }
   }
 
+  void insertStepAt(StepsGameDefaultItem step, StepsGameDefaultItem inserted) {
+    for (var number in numbers) {
+      for (int i = 0; i < number.steps.length; i++) {
+        if (number.steps[i] == step) {
+          number.steps.insert(i, inserted);
+          return;
+        }
+      }
+    }
+  }
+
   StepsGameDefaultItem? getStep(GameItemCubit item) {
     for (var number in numbers) {
       for (var step in number.steps) {
@@ -179,9 +190,22 @@ class StepsGameState {
     }
   }
 
-  int? getNumberIndex(StepsGameDefaultItem item) {
+  int? getNumberIndexFromStep(StepsGameDefaultItem item) {
     for (int i = 0; i < numbers.length; i++) {
       if (numbers[i].steps.contains(item)) {
+        return i;
+      }
+    }
+    return null;
+  }
+
+  int? getNumberIndexFromItem(GameItemCubit item) {
+    for (int i = 0; i < numbers.length; i++) {
+      if (numbers[i]
+          .steps
+          .where((element) => element.arrow == item || element.floor == item)
+          .toList()
+          .isNotEmpty) {
         return i;
       }
     }

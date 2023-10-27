@@ -18,131 +18,70 @@ extension ArrowInsertor on StepsGameBloc {
       QuestsCubit taskCubit) async {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
-      item.updateHeight(3 * gs.hUnit / 2);
-      if (item.state.direction == Direction.down) {
-        state.moveAllSince(item, Offset(0, 3 * gs.hUnit / 2));
-      } else {
-        state.moveAllSinceIncluded(item, Offset(0, -gs.hUnit * 3 / 2));
-      }
-      // //here next click, przydaloby sie usunac te delayed TODO
+      bool isUp = (item.state.direction == Direction.up);
+      _animateVerticalExpension(item);
       await Future.delayed(const Duration(milliseconds: 200));
-      var inserted = _insertArrow(item, item.state.direction);
-      var step = state.getStep(item);
-      //replace whole step
-      if (step != null) {
-        StepsGameDefaultItem? newStep;
-        if (item.state.direction == Direction.up) {
-          newStep = StepsGameDefaultItem(
-              arrow: generateArrowUp(position: item.state.position),
-              floor: step.floor);
-        } else if (item.state.direction == Direction.down) {
-          newStep = StepsGameDefaultItem(
-              arrow: generateArrowDown(
-                  position: item.state.position + Offset(0, gs.hUnit)),
-              floor: step.floor);
-        }
-
-        if (newStep != null) {
-          state.replaceStep(step, newStep);
-        }
-      }
+      var newStep = _insertStep(item, isUp);
+      _replaceStep(state.getStep(item), isUp);
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
-      //animate scroll
-      inserted.arrow.animate(1);
-      var delta = gs.wUnit;
-      inserted.floor.updateSize(Offset(delta, 0));
-      state.moveAllSince(inserted.floor, Offset(delta, 0));
+      _animateNewStep(newStep);
       taskCubit.inserted(item.state.direction);
     }
   }
 
-  StepsGameDefaultItem _insertArrow(
-      GameItemCubit<GameItemState> item, Direction direction) {
-    var currentLeft = item.state.position.dx;
-    var currentTop = item.state.position.dy;
-    var pos = Offset(currentLeft, currentTop);
-    late ArrowCubit arrow1;
-    late FloorCubit floor;
-    if (direction == Direction.up) {
-      arrow1 = generateArrowUp(
-          position: pos, delta: Offset(0, gs.hUnit), animationProgress: 0);
-      floor = generateFloor(
-          direction: Direction.up, position: pos, widthRatio: 0.25);
-      floor.updatePosition(Offset(gs.wUnit / 2, gs.hUnit));
-    } else {
-      arrow1 = generateArrowDown(
-          position: pos, delta: Offset.zero, animationProgress: 0);
-      floor = generateFloor(
-          direction: Direction.down, position: pos, widthRatio: 0.25);
-      floor.updatePosition(Offset(gs.wUnit / 2, gs.hUnit - gs.floorH));
+  StepsGameDefaultItem _insertStep(
+      GameItemCubit<GameItemState> item, bool isUp) {
+    var pos = Offset(item.state.position.dx, item.state.position.dy);
+    ArrowCubit arrow = generateArrow(
+        position: pos,
+        delta: Offset(0, isUp ? gs.hUnit : 0),
+        animationProgress: 0,
+        direction: isUp ? Direction.up : Direction.down);
+    FloorCubit floor = generateFloor(
+        direction: isUp ? Direction.up : Direction.down,
+        position: pos,
+        widthRatio: 0.25);
+    floor.updatePosition(
+        Offset(gs.wUnit / 2, isUp ? gs.hUnit : (gs.hUnit - gs.floorH)));
+
+    var stepsDefault = StepsGameDefaultItem(arrow: arrow, floor: floor);
+    int? ind = state.getNumberIndexFromItem(item);
+    var step = state.getStep(item);
+    if (ind != null && step != null) {
+      state.insertStepAt(step, stepsDefault);
+      board.add(EquationEventIncreaseNumber(ind: ind));
     }
-    var stepsDefault = StepsGameDefaultItem(arrow: arrow1, floor: floor);
-
-    for (int i = 0; i < state.numbers.length; i++) {
-      var number = state.numbers[i];
-
-      for (int j = 0; j < number.steps.length; j++) {
-        if (number.steps[j].arrow == item) {
-          number.steps.insert(j, stepsDefault);
-          board.add(EquationEventIncreaseNumber(ind: i));
-          break;
-        }
-      }
-    }
-
     return stepsDefault;
   }
 
-  Future<bool> handleOppositeInsertion(StepsGameState state,
-      GameItemCubit? item, GameSize gs, Emitter<StepsGameState> emit) async {
-    if (item is! FloorCubit || !(state.isLastItem(item))) return false;
-    var step = state.getStep(item);
-    if (step == null) return false;
-    var dir = step.arrow.state.direction;
-    ArrowCubit arrow;
-    FloorCubit floor;
-    if (dir == Direction.up) {
-      board.add(EquationEventAddNumber(value: -1));
-      arrow = generateArrowDown(
-          animationProgress: 0,
-          position: item.state.position + Offset(gs.wUnit * 0.5, 0 + gs.floorH),
-          size: Offset(gs.wUnit, 0));
-      floor = generateFloor(
-          direction: Direction.down,
-          position: item.state.position + Offset(gs.wUnit, 0),
-          size: Offset(0, gs.floorH));
+  void _animateVerticalExpension(ArrowCubit item) {
+    var arrowHgtDelta = gs.arrowReleasedHgt - gs.arrowClickedHgt;
+    item.updateHeight(arrowHgtDelta);
+    if (item.state.direction == Direction.down) {
+      state.moveAllSince(item, Offset(0, arrowHgtDelta));
     } else {
-      board.add(EquationEventAddNumber(value: 1));
-      arrow = generateArrowUp(
-          animationProgress: 0.0,
-          position: item.state.position + Offset(gs.wUnit * 0.5, 0),
-          size: Offset(gs.wUnit, 0));
-      floor = generateFloor(
-          direction: Direction.up,
-          position: item.state.position + Offset(gs.wUnit, 0),
-          size: Offset(0, gs.floorH));
+      state.moveAllSinceIncluded(item, Offset(0, -arrowHgtDelta));
     }
-    state.numbers.add(StepsGameNumberState(
-        [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
-    taskCubit.insertedOpposite();
-    item.setLast();
-    emit(state.copy());
-    await Future.delayed(const Duration(milliseconds: 20));
-    if (dir == Direction.up) {
-      floor.updatePosition(Offset(0, gs.hUnit));
-    } else {
-      arrow.updatePosition(Offset(0, -gs.hUnit));
-      floor.updatePosition(Offset(0, -gs.hUnit));
+  }
+
+  void _replaceStep(StepsGameDefaultItem? step, bool isUp) {
+    if (step != null) {
+      StepsGameDefaultItem? newStep;
+      newStep = StepsGameDefaultItem(
+          arrow: generateArrow(
+              position:
+                  step.arrow.state.position + Offset(0, isUp ? 0 : gs.hUnit),
+              direction: isUp ? Direction.up : Direction.down),
+          floor: step.floor);
+      state.replaceStep(step, newStep);
     }
+  }
 
-    floor.updateSizeDelayed(
-        const Duration(milliseconds: 200), Offset(1.25 * gs.wUnit, 0));
-    arrow.animate(1.0);
-    arrow.updateHeight(gs.hUnit);
-
-    floor.setLastLast();
-    item.setNotLastLast();
-    return true;
+  void _animateNewStep(StepsGameDefaultItem newStep) {
+    newStep.arrow.animate(1);
+    var delta = gs.wUnit;
+    newStep.floor.updateSize(Offset(delta, 0));
+    state.moveAllSince(newStep.floor, Offset(delta, 0));
   }
 }
