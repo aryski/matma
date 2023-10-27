@@ -15,7 +15,7 @@ extension ClickHandler on StepsGameBloc {
         event is StepsGameEventPointerUp) {
       var item = state.getItem(event.id);
       if (item is ArrowCubit) {
-        var delta = gs.hUnit / 2;
+        var delta = gs.arrowH - gs.arrowClickedHgt;
         if (event is StepsGameEventPointerDown) {
           delta = -delta;
         }

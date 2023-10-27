@@ -8,12 +8,8 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 DateTime _globalTime = DateTime.now();
 
 extension ArrowsReductor on StepsGameBloc {
-  Future<bool> handleReduction(
-      GameItemCubit? item,
-      double delta,
-      double defaultWidth,
-      StepsGameState state,
-      Emitter<StepsGameState> emit) async {
+  Future<bool> handleReduction(GameItemCubit? item, double delta,
+      StepsGameState state, Emitter<StepsGameState> emit) async {
     if (!areNeighborsOpposite(item, state) ||
         item is! FloorCubit ||
         item.state.opacity <= 0) {
@@ -21,23 +17,23 @@ extension ArrowsReductor on StepsGameBloc {
     }
 
     if (DateTime.now().difference(_globalTime).inMilliseconds < 300) {
-      //neutralizing when scroll wants to resize to defaultWidth and do reduction at the same time
+      //neutralizing when scroll wants to resize to gs.floorW and do reduction at the same time
       _globalTime == DateTime.now();
       delta = 0;
     }
 
     var currentWidth = item.state.size.dx;
-    if (currentWidth == defaultWidth && currentWidth + delta < defaultWidth) {
+    if (currentWidth == gs.floorW && currentWidth + delta < gs.floorW) {
       delta = -currentWidth; //zerujemy dlugosc
-    } else if (currentWidth + delta < defaultWidth) {
+    } else if (currentWidth + delta < gs.floorW) {
       _globalTime = DateTime.now();
-      //neutralizing when scroll wants to resize to defaultWidth and do reduction at the same time
-      delta = defaultWidth - currentWidth;
+      //neutralizing when scroll wants to resize to gs.floorW and do reduction at the same time
+      delta = gs.floorW - currentWidth;
     }
 
     item.updateSize(Offset(delta, 0));
     state.moveAllSince(item, Offset(delta, 0));
-    if (currentWidth == defaultWidth && currentWidth + delta < defaultWidth) {
+    if (currentWidth == gs.floorW && currentWidth + delta < gs.floorW) {
       var step = state.getStep(item);
       if (step == null) return false;
       var rightStep = state.rightStep(step);
@@ -100,12 +96,12 @@ extension ArrowsReductor on StepsGameBloc {
     state.removeStep(step);
     state.removeStep(rightStep);
     if (leftStep != null) {
-      leftStep.floor.setLast();
+      leftStep.floor.setLastInNumber();
     }
     if (leftStep != null && state.isLastItem(leftStep.floor)) {
       leftStep.floor.updateSize(
           Offset(-leftStep.floor.state.size.dx + 1.25 * gs.wUnit, 0));
-      leftStep.floor.setLastLast();
+      leftStep.floor.setLastInGame();
     }
   }
 }

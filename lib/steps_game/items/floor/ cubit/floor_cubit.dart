@@ -10,23 +10,23 @@ class FloorCubit extends GameItemCubit<FloorState> {
     updateSize(delta);
   }
 
-  void setLast() {
-    state.isLast = true;
+  void setLastInNumber() {
+    state.isLastInNumber = true;
     emit(state.copy()); //todo add copy with
   }
 
-  void setNotLast() {
-    state.isLast = false;
+  void setNotLastInNumber() {
+    state.isLastInNumber = false;
     emit(state.copy());
   }
 
-  void setLastLast() {
-    state.isLastLast = true;
+  void setLastInGame() {
+    state.isLastInGame = true;
     emit(state.copy()); //todo add copy with
   }
 
-  void setNotLastLast() {
-    state.isLastLast = false;
+  void setNotLastInGame() {
+    state.isLastInGame = false;
     emit(state.copy()); //todo add copy with
   }
 

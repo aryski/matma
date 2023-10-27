@@ -8,9 +8,13 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
 extension Initializer on StepsGameBloc {
   List<StepsGameNumberState> initializeSimulationItems() {
-    List<int> init = board.state.numbers;
-    var currentTop = (gs.hUnits / 2).floor() * gs.hUnit - gs.hUnit;
-    var currentLeft = gs.wUnit * 2;
+    var initialTop = (gs.hUnits / 2).floor() * gs.hUnit - gs.hUnit;
+    var initialLeft = gs.wUnit * 2;
+    _generateEquator(initialTop);
+    return _generateSteps(board.state.numbers, initialLeft, initialTop);
+  }
+
+  void _generateEquator(double currentTop) {
     var id = UniqueKey();
     state.unorderedItems[id] = EquatorCubit(EquatorState(
         id: id,
@@ -18,76 +22,71 @@ extension Initializer on StepsGameBloc {
         size: Offset(gs.wUnit * (gs.wUnits), gs.floorH),
         opacity: 1,
         radius: gs.radius));
-    return generateFloorsAndArrows(init, currentLeft, currentTop);
   }
 
-  List<StepsGameNumberState> generateFloorsAndArrows(
+  List<StepsGameNumberState> _generateSteps(
       List<int> init, double currentLeft, double currentTop) {
     init.removeWhere((element) => element == 0);
     List<StepsGameNumberState> result = [];
     for (int j = 0; j < init.length; j++) {
       int number = init[j];
-
-      final List<StepsGameDefaultItem> items = [];
-      bool nextNumberSameSign = false;
-      if (j + 1 < init.length) {
-        int nextNumber = init[j + 1];
-        if (nextNumber * number > 0) {
-          nextNumberSameSign = true;
-        }
-      }
-      for (int i = 0; i < number.abs(); i++) {
-        //Step insertion
+      int stepsCount = number.abs();
+      final List<StepsGameDefaultItem> steps = [];
+      bool nextNumberSameSign = isNextNumberSameSign(j, init, number);
+      for (int i = 0; i < stepsCount; i++) {
         var pos = Offset(currentLeft, currentTop);
-        ArrowCubit arrow;
-        FloorCubit floor;
-        double floorLengthRatio = 1.25;
-        if (nextNumberSameSign && i + 1 == number.abs()) {
-          floorLengthRatio = 2.25;
+        double floorWidth = gs.floorW;
+        if (nextNumberSameSign && i + 1 == stepsCount) {
+          floorWidth = gs.floorWExt;
         }
-        if (number > 0) {
-          arrow = generateArrow(
-              position: pos, delta: Offset.zero, direction: Direction.up);
-          floor = generateFloor(
-            direction: Direction.up,
-            widthRatio: floorLengthRatio,
-            position: pos,
-          );
-          floor.updatePosition(Offset(gs.wUnit / 2, 0));
-        } else {
-          arrow = generateArrow(
-              position: pos,
-              delta: Offset(0, gs.hUnit + gs.floorH),
-              direction: Direction.down);
-          floor = generateFloor(
-            direction: Direction.down,
-            widthRatio: floorLengthRatio,
-            position: pos,
-          );
-          floor.updatePosition(
-            Offset(
-              gs.wUnit / 2,
-              2 * gs.hUnit,
-            ),
-          );
-        }
-        if (i + 1 == number.abs()) {
-          if (j + 1 == init.length) {
-            floor.setLastLast();
-          }
-          floor.setLast();
-        }
-        items.add(StepsGameDefaultItem(arrow: arrow, floor: floor));
-        if (number > 0) {
-          currentTop -= gs.hUnit;
-        } else {
-          currentTop += gs.hUnit;
-        }
-        currentLeft += (floorLengthRatio == 2.25) ? gs.wUnit * 2 : gs.wUnit;
-      }
+        var isPositive = number > 0;
+        var step = generateStep(pos, isPositive, floorWidth);
+        _updateLastness(
+            isLastInNumber: i + 1 == stepsCount,
+            isLastInGame: j + 1 == init.length,
+            floor: step.floor);
+        steps.add(step);
 
-      result.add(StepsGameNumberState(items));
+        currentTop += isPositive ? -gs.hUnit : gs.hUnit;
+        currentLeft += (floorWidth == gs.floorWExt) ? gs.wUnit * 2 : gs.wUnit;
+      }
+      result.add(StepsGameNumberState(steps));
     }
     return result;
   }
+
+  StepsGameDefaultItem generateStep(Offset pos, bool isPos, double floorWidth) {
+    ArrowCubit arrow = generateArrow(
+        position: pos,
+        delta: Offset(0, isPos ? 0 : (gs.hUnit + gs.floorH)),
+        direction: isPos ? Direction.up : Direction.down);
+    FloorCubit floor = generateFloor(
+      direction: isPos ? Direction.up : Direction.down,
+      widthSize: floorWidth,
+      position: pos += Offset(gs.wUnit / 2, isPos ? 0 : 2 * gs.hUnit),
+    );
+    return StepsGameDefaultItem(arrow: arrow, floor: floor);
+  }
+}
+
+void _updateLastness(
+    {required bool isLastInNumber,
+    required bool isLastInGame,
+    required FloorCubit floor}) {
+  if (isLastInNumber) {
+    if (isLastInGame) {
+      floor.setLastInGame();
+    }
+    floor.setLastInNumber();
+  }
+}
+
+bool isNextNumberSameSign(int j, List<int> init, int number) {
+  if (j + 1 < init.length) {
+    int nextNumber = init[j + 1];
+    if (nextNumber * number > 0) {
+      return true;
+    }
+  }
+  return false;
 }

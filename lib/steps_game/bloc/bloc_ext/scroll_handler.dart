@@ -9,8 +9,6 @@ extension ScrollHandler on StepsGameBloc {
   Future<void> handleScroll(StepsGameState state, StepsGameEventScroll event,
       GameSize gs, Emitter<StepsGameState> emit) async {
     var item = state.getItem(event.id);
-    var minWidth = gs.wUnit * 1.25;
-    var defaultWidth = 1.25 * gs.wUnit;
     var delta = -event.dy * gs.wUnit / 50;
     bool result = false;
     if (allowedOps.contains(StepsGameOps.addOppositeArrow)) {
@@ -18,11 +16,11 @@ extension ScrollHandler on StepsGameBloc {
       if (result) return;
     }
     if (allowedOps.contains(StepsGameOps.reduceArrows)) {
-      result = await handleReduction(item, delta, defaultWidth, state, emit);
+      result = await handleReduction(item, delta, state, emit);
       if (result) return;
     }
     if (allowedOps.contains(StepsGameOps.splitJoinArrows)) {
-      result = handleSplitJoin(item, delta, minWidth, gs, state, emit);
+      result = handleSplitJoin(item, delta, gs, state, emit);
     }
   }
 

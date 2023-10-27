@@ -11,9 +11,9 @@ import 'package:matma/steps_game/items/floor/presentation/floor_gesture_detector
 import 'package:matma/steps_game/items/floor/presentation/floor_painter.dart';
 
 Color _colorGen(FloorState state) {
-  if (state.isLastLast) {
+  if (state.isLastInGame) {
     return defaultYellow;
-  } else if (state.isLast) {
+  } else if (state.isLastInNumber) {
     return defaultGrey;
   } else if (state.direction == Direction.up) {
     return darkenColor(defaultGreen, 60);

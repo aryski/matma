@@ -12,26 +12,6 @@ extension ItemsGenerator on StepsGameBloc {
       double animationProgress = 1.0,
       Offset? size,
       required Direction direction}) {
-    if (direction == Direction.up) {
-      return __generateArrowUp(
-          position: position,
-          delta: delta,
-          animationProgress: animationProgress,
-          size: size);
-    } else {
-      return __generateArrowDown(
-          position: position,
-          delta: delta,
-          animationProgress: animationProgress,
-          size: size);
-    }
-  }
-
-  ArrowCubit __generateArrowUp(
-      {required Offset position,
-      Offset delta = Offset.zero,
-      double animationProgress = 1.0,
-      Offset? size}) {
     position += delta;
     return ArrowCubit(
       ArrowState(
@@ -39,26 +19,7 @@ extension ItemsGenerator on StepsGameBloc {
         position: position,
         size: size ?? Offset(gs.arrowW, gs.arrowH),
         opacity: 1.0,
-        direction: Direction.up,
-        radius: gs.radius,
-        animProgress: animationProgress,
-      ),
-    );
-  }
-
-  ArrowCubit __generateArrowDown(
-      {required Offset position,
-      Offset delta = Offset.zero,
-      double animationProgress = 1.0,
-      Offset? size}) {
-    position += delta;
-    return ArrowCubit(
-      ArrowState(
-        id: UniqueKey(),
-        position: position,
-        size: size ?? Offset(gs.wUnit, gs.hUnit),
-        opacity: 1.0,
-        direction: Direction.down,
+        direction: direction,
         radius: gs.radius,
         animProgress: animationProgress,
       ),
@@ -67,15 +28,16 @@ extension ItemsGenerator on StepsGameBloc {
 
   FloorCubit generateFloor(
       {required Offset position,
-      double widthRatio = 1.25,
+      double? widthSize,
       Offset? size,
       required Direction direction}) {
+    widthSize ??= gs.floorW;
     return FloorCubit(
       FloorState(
         direction: direction,
         id: UniqueKey(),
         position: position,
-        size: size ?? Offset(gs.wUnit * widthRatio, gs.floorH),
+        size: size ?? Offset(widthSize, gs.floorH),
         opacity: 1.0,
         radius: gs.radius,
       ),

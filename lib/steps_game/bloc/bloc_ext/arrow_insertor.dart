@@ -41,7 +41,7 @@ extension ArrowInsertor on StepsGameBloc {
     FloorCubit floor = generateFloor(
         direction: isUp ? Direction.up : Direction.down,
         position: pos,
-        widthRatio: 0.25);
+        widthSize: gs.floorWMini);
     floor.updatePosition(
         Offset(gs.wUnit / 2, isUp ? gs.hUnit : (gs.hUnit - gs.floorH)));
 

@@ -3,11 +3,11 @@ import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 
 class FloorState extends GameItemState {
   final Direction direction;
-  bool isLast;
-  bool isLastLast;
+  bool isLastInNumber;
+  bool isLastInGame;
   FloorState(
-      {this.isLast = false,
-      this.isLastLast = false,
+      {this.isLastInNumber = false,
+      this.isLastInGame = false,
       required super.id,
       required super.position,
       required super.size,
@@ -19,8 +19,8 @@ class FloorState extends GameItemState {
   @override
   FloorState copy() {
     return FloorState(
-      isLastLast: isLastLast,
-      isLast: isLast,
+      isLastInGame: isLastInGame,
+      isLastInNumber: isLastInNumber,
       id: id,
       position: position,
       size: size,

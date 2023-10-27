@@ -32,6 +32,9 @@ class GameSize {
   double get radius => 1 / 15 * wUnit;
 
   double get floorH => arrowH / 5;
+  double get floorWMini => wUnit * 0.25;
+  double get floorW => wUnit * 1.25;
+  double get floorWExt => wUnit + floorW;
 
   // double get arrowH => hUnit;
   // double get arrowW => wUnit;

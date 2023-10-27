@@ -6,51 +6,31 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
 extension NumberSplitJoiner on StepsGameBloc {
-  bool handleSplitJoin(GameItemCubit? item, double delta, double minWidth,
-      GameSize gs, StepsGameState state, Emitter<StepsGameState> emit) {
+  bool handleSplitJoin(GameItemCubit? item, double delta, GameSize gs,
+      StepsGameState state, Emitter<StepsGameState> emit) {
     if (item is! FloorCubit || item.state.opacity <= 0) return false;
-
-    // adjusting delta, so the width is at least endW
-    var currentWidth = item.state.size.dx;
-    if (currentWidth + delta < minWidth) {
-      delta = minWidth - currentWidth;
-    }
-
+    delta = _guardDeltaSize(
+        currentW: item.state.size.dx, delta: delta, minW: gs.floorW);
     item.updateSize(Offset(delta, 0));
-    if (item.state.size.dx > 1.25 * gs.wUnit) {
+    var newW = item.state.size.dx;
+    if (newW > gs.floorW) {
       var myStep = state.getStep(item);
-      if (myStep != null) {
-        int? numberInd = state.getNumberIndexFromItem(item);
-        if (numberInd != null) {
-          var number = state.numbers[numberInd];
-          //todo split number at
-          if (number.steps.last != myStep) {
-            List<StepsGameDefaultItem> left = [];
-            List<StepsGameDefaultItem> right = [];
-            List<StepsGameDefaultItem> current = left;
-            bool changed = false;
-            for (var step in number.steps) {
-              current.add(step);
-              if (!changed && step == myStep) {
-                current = right;
-                changed = true;
-              }
-            }
-            state.numbers[numberInd].steps.clear();
-            state.numbers[numberInd].steps.addAll(left);
-            state.numbers.insert(numberInd + 1, StepsGameNumberState(right));
-            board.add(EquationEventSplitNumber(
-                ind: numberInd,
-                leftValue: state.numbers[numberInd].number,
-                rightValue: state.numbers[numberInd + 1].number));
-            item.setLast();
-            taskCubit.splited();
-          }
-        }
+      int? numberInd = state.getNumberIndexFromItem(item);
+      if (myStep != null &&
+          numberInd != null &&
+          state.numbers[numberInd].steps.last != myStep) {
+        _splitNumber(
+            numberInd: numberInd, splitStep: myStep, numbers: state.numbers);
+        board.add(EquationEventSplitNumber(
+            ind: numberInd,
+            leftValue: state.numbers[numberInd].number,
+            rightValue: state.numbers[numberInd + 1].number));
+        item.setLastInNumber();
+        taskCubit.splited();
       }
     }
 
-    if (item.state.size.dx <= 1.25 * gs.wUnit) {
+    if (item.state.size.dx <= gs.floorW) {
       int? numberInd = state.getNumberIndexFromItem(item);
       if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
         //only neighbors
@@ -62,7 +42,7 @@ extension NumberSplitJoiner on StepsGameBloc {
             if (number.number * nextNumber.number > 0) {
               board.add(EquationEventJoinNumbers(
                   leftInd: numberInd, rightInd: nextInd));
-              item.setNotLast();
+              item.setNotLastInNumber();
               number.steps.addAll(nextNumber.steps);
               state.numbers.remove(nextNumber);
             }
@@ -77,4 +57,33 @@ extension NumberSplitJoiner on StepsGameBloc {
     emit(state.copy());
     return true;
   }
+}
+
+void _splitNumber(
+    {required int numberInd,
+    required StepsGameDefaultItem splitStep,
+    required List<StepsGameNumberState> numbers}) {
+  List<StepsGameDefaultItem> left = [];
+  List<StepsGameDefaultItem> right = [];
+  List<StepsGameDefaultItem> current = left;
+  bool changed = false;
+  var number = numbers[numberInd];
+  for (var step in number.steps) {
+    current.add(step);
+    if (!changed && step == splitStep) {
+      current = right;
+      changed = true;
+    }
+  }
+  numbers[numberInd].steps.clear();
+  numbers[numberInd].steps.addAll(left);
+  numbers.insert(numberInd + 1, StepsGameNumberState(right));
+}
+
+double _guardDeltaSize(
+    {required double currentW, required double delta, required double minW}) {
+  if (currentW + delta < minW) {
+    delta = minW - currentW;
+  }
+  return delta;
 }
