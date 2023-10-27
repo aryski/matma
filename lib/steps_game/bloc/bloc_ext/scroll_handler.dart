@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/arrow_insertor.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/arrows_reductor.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/number_split_joiner.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/opposite_arrow_insertor.dart';
