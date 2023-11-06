@@ -16,5 +16,11 @@ abstract class GameItemState {
       required this.opacity,
       required this.radius});
 
-  GameItemState copy();
+  GameItemState copyWith(
+      {UniqueKey? id,
+      Offset? position,
+      Offset? size,
+      bool? isHovered,
+      double? opacity,
+      double? radius});
 }

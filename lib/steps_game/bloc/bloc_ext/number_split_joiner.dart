@@ -6,9 +6,8 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
 extension NumberSplitJoiner on StepsGameBloc {
-  bool handleSplitJoin(GameItemCubit? item, double delta, GameSize gs,
+  bool handleSplitJoin(FloorCubit item, double delta, GameSize gs,
       StepsGameState state, Emitter<StepsGameState> emit) {
-    if (item is! FloorCubit || item.state.opacity <= 0) return false;
     delta = _guardDeltaSize(
         currentW: item.state.size.dx, delta: delta, minW: gs.floorW);
     item.updateSize(Offset(delta, 0));
@@ -53,7 +52,7 @@ extension NumberSplitJoiner on StepsGameBloc {
     if (delta != 0) {
       taskCubit.scrolled();
     }
-    state.moveAllSince(item, Offset(delta, 0));
+    state.updatePositionSince(item, Offset(delta, 0));
     emit(state.copy());
     return true;
   }

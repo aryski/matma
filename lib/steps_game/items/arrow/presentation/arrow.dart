@@ -14,7 +14,7 @@ class Arrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final initialState = cubit.state.copy();
+    final initialState = cubit.state.copyWith();
     return BlocProvider<ArrowCubit>(
       create: (context) => cubit,
       child: BlocBuilder<ArrowCubit, ArrowState>(

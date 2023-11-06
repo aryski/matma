@@ -5,14 +5,13 @@ import 'package:matma/common/items/game_item/default_game_item_animations.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator_painter.dart';
 
-
 class Equator extends StatelessWidget {
   const Equator({super.key, required this.cubit});
   final EquatorCubit cubit;
 
   @override
   Widget build(BuildContext context) {
-    EquatorState initialState = cubit.state.copy();
+    EquatorState initialState = cubit.state.copyWith();
 
     return BlocProvider<EquatorCubit>(
       create: (context) => cubit,

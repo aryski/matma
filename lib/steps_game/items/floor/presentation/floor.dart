@@ -30,7 +30,7 @@ class Floor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FloorState initialState = cubit.state.copy();
+    FloorState initialState = cubit.state.copyWith();
 
     return BlocProvider<FloorCubit>(
       create: (context) => cubit,

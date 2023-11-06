@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 
 enum Direction { up, down }
@@ -16,15 +17,21 @@ class ArrowState extends GameItemState {
       required this.animProgress});
 
   @override
-  ArrowState copy() {
+  ArrowState copyWith(
+      {UniqueKey? id,
+      Offset? position,
+      Offset? size,
+      bool? isHovered,
+      double? opacity,
+      double? radius,
+      double? animProgress}) {
     return ArrowState(
-        id: id,
-        position: position,
-        size: size,
-        isHovered: isHovered,
-        opacity: opacity,
+        id: id ?? this.id,
+        position: position ?? this.position,
+        size: size ?? this.size,
+        opacity: opacity ?? this.opacity,
+        radius: radius ?? this.radius,
         direction: direction,
-        radius: radius,
-        animProgress: animProgress);
+        animProgress: animProgress ?? this.animProgress);
   }
 }

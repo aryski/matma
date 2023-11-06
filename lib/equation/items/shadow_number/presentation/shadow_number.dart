@@ -11,7 +11,7 @@ class ShadowNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShadowNumberState initialState = cubit.state.copy();
+    ShadowNumberState initialState = cubit.state.copyWith();
 
     return BlocProvider<ShadowNumberCubit>(
       create: (context) => cubit,

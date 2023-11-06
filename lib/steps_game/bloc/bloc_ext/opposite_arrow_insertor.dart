@@ -9,9 +9,8 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
 extension OppositeArrowInsertor on StepsGameBloc {
-  Future<bool> handleOppositeInsertion(StepsGameState state,
-      GameItemCubit? item, GameSize gs, Emitter<StepsGameState> emit) async {
-    if (item is! FloorCubit || !(state.isLastItem(item))) return false;
+  Future<bool> handleOppositeInsertion(StepsGameState state, FloorCubit item,
+      GameSize gs, Emitter<StepsGameState> emit) async {
     var step = state.getStep(item);
     if (step == null) return false;
     var dir = step.arrow.state.direction;
@@ -49,6 +48,7 @@ extension OppositeArrowInsertor on StepsGameBloc {
 
     floor.setLastInGame();
     item.setNotLastInGame();
+    await Future.delayed(const Duration(milliseconds: 200));
     return true;
   }
 }

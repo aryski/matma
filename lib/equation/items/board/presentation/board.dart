@@ -10,7 +10,7 @@ class Board extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BoardState initialState = cubit.state.copy();
+    BoardState initialState = cubit.state.copyWith();
 
     return BlocProvider<BoardCubit>(
       create: (context) => cubit,

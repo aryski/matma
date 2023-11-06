@@ -9,7 +9,7 @@ class Sign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SignState initialState = cubit.state.copy();
+    SignState initialState = cubit.state.copyWith();
 
     return BlocProvider<SignCubit>(
       create: (context) => cubit,

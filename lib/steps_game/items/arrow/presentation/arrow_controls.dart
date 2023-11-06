@@ -11,18 +11,12 @@ class ArrowGestureDetector extends StatelessWidget {
   Widget build(BuildContext context) {
     var bloc = context.read<StepsGameBloc>();
     var id = context.read<ArrowCubit>().state.id;
-    DateTime downClick = DateTime.now();
 
     return Listener(
-      onPointerDown: (event) {
-        downClick = DateTime.now();
-        bloc.add(StepsGameEventPointerDown(id: id));
-      },
-      onPointerUp: (event) {
-        Duration pressTime = DateTime.now().difference(downClick);
-        downClick = DateTime.now();
-        bloc.add(StepsGameEventPointerUp(id: id, pressTime: pressTime));
-      },
+      onPointerDown: (event) =>
+          bloc.add(StepsGameEventClickDown(id: id, time: DateTime.timestamp())),
+      onPointerUp: (event) =>
+          bloc.add(StepsGameEventClickUp(id: id, time: DateTime.timestamp())),
       behavior: HitTestBehavior.deferToChild,
       child: MouseRegion(
         hitTestBehavior: HitTestBehavior.deferToChild,

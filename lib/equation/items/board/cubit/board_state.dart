@@ -9,13 +9,18 @@ class BoardState extends GameItemState {
       required super.radius});
 
   @override
-  BoardState copy() {
+  BoardState copyWith(
+      {UniqueKey? id,
+      Offset? position,
+      Offset? size,
+      bool? isHovered,
+      double? opacity,
+      double? radius}) {
     return BoardState(
-      id: id,
-      position: position,
-      size: size,
-      opacity: opacity,
-      radius: radius,
-    );
+        id: id ?? this.id,
+        position: position ?? this.position,
+        size: size ?? this.size,
+        opacity: opacity ?? this.opacity,
+        radius: radius ?? this.radius);
   }
 }

@@ -12,14 +12,19 @@ class ShadowNumberState extends GameItemState {
   });
 
   @override
-  ShadowNumberState copy() {
+  ShadowNumberState copyWith(
+      {UniqueKey? id,
+      Offset? position,
+      Offset? size,
+      bool? isHovered,
+      double? opacity,
+      double? radius}) {
     return ShadowNumberState(
-      value: value,
-      id: id,
-      position: position,
-      size: size,
-      opacity: opacity,
-      radius: radius,
-    );
+        id: id ?? this.id,
+        position: position ?? this.position,
+        size: size ?? this.size,
+        opacity: opacity ?? this.opacity,
+        radius: radius ?? this.radius,
+        value: value);
   }
 }

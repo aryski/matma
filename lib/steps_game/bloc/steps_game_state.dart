@@ -1,6 +1,7 @@
 part of 'steps_game_bloc.dart';
 
 class StepsGameDefaultItem {
+  //TODO tutaj porządek trzeba zrobić xd
   final ArrowCubit arrow;
   final FloorCubit floor;
 
@@ -35,8 +36,6 @@ class StepsGameState {
   void removeStep(StepsGameDefaultItem step) {
     for (var number in numbers) {
       if (number.steps.contains(step)) {
-        print("contains ${step.floor.state.id}");
-        // unorderedItems[step.floor.state.id] = step.floor;
         number.steps.remove(step);
         if (number.steps.isEmpty) {
           numbers.remove(number);
@@ -168,28 +167,6 @@ class StepsGameState {
     return null;
   }
 
-  void _moveAllSince(GameItemCubit item, Offset offset, bool included) {
-    bool update = false;
-    for (var number in numbers) {
-      for (var step in number.steps) {
-        if (update) {
-          step.arrow.updatePosition(offset);
-          step.floor.updatePosition(offset);
-        }
-
-        if (step.arrow == item || step.floor == item) {
-          if (step.arrow == item && included) {
-            step.arrow.updatePosition(offset);
-          }
-          if ((step.arrow == item && !included) || included) {
-            step.floor.updatePosition(offset);
-          }
-          update = true;
-        }
-      }
-    }
-  }
-
   int? getNumberIndexFromStep(StepsGameDefaultItem item) {
     for (int i = 0; i < numbers.length; i++) {
       if (numbers[i].steps.contains(item)) {
@@ -221,12 +198,32 @@ class StepsGameState {
     return numbers.last.steps.last.floor == item;
   }
 
-  void moveAllSince(GameItemCubit item, Offset offset) {
-    _moveAllSince(item, offset, false);
+  void updatePositionSince(GameItemCubit item, Offset offset) {
+    bool update = false;
+    for (var number in numbers) {
+      for (var step in number.steps) {
+        if (update) {
+          step.arrow.updatePosition(offset);
+          step.floor.updatePosition(offset);
+        }
+
+        if (step.arrow == item || step.floor == item) {
+          if ((step.arrow == item)) {
+            step.floor.updatePosition(offset);
+          }
+          update = true;
+        }
+      }
+    }
   }
 
-  void moveAllSinceIncluded(GameItemCubit item, Offset offset) {
-    _moveAllSince(item, offset, true);
+  void updateStepHgt({required ArrowCubit item, required double delta}) {
+    item.updateHeight(delta);
+    if (item.state.direction == Direction.up) {
+      delta = -delta;
+      item.updatePosition(Offset(0, delta));
+    }
+    updatePositionSince(item, Offset(0, delta));
   }
 
   StepsGameState copy() {

@@ -18,7 +18,7 @@ part 'equation_state.dart';
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final EquationState init;
   final GameSize gs;
-  final List<int>? targetValues; //TODO jak to sprytnie wpasować??!?!?!?!?
+  final List<int>? targetValues;
   EquationBloc(
       {required this.init,
       required this.gs,
@@ -119,13 +119,10 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
         i++) {
       var fixedNumberState = state.fixedItems[i].number.state;
       var numberState = state.items[i].number.state;
-
-      if (fixedNumberState.value == numberState.value &&
-          fixedNumberState.withDarkenedColor == true) {
-        state.fixedItems[i].number.updateWithDarkenedColor(false);
-      } else if (fixedNumberState.value != numberState.value &&
-          fixedNumberState.withDarkenedColor == false) {
-        state.fixedItems[i].number.updateWithDarkenedColor(true);
+      if (fixedNumberState.value != numberState.value &&
+          fixedNumberState.sign == numberState.sign) {
+        state.fixedItems[i].number.updateWithDarkenedColor(
+            fixedNumberState.withDarkenedColor ? false : true);
       }
     }
   }

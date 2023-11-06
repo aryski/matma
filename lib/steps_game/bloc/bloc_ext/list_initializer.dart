@@ -57,8 +57,7 @@ extension Initializer on StepsGameBloc {
 
   StepsGameDefaultItem generateStep(Offset pos, bool isPos, double floorWidth) {
     ArrowCubit arrow = generateArrow(
-        position: pos,
-        delta: Offset(0, isPos ? 0 : (gs.hUnit + gs.floorH)),
+        position: pos + Offset(0, isPos ? 0 : (gs.hUnit + gs.floorH)),
         direction: isPos ? Direction.up : Direction.down);
     FloorCubit floor = generateFloor(
       direction: isPos ? Direction.up : Direction.down,

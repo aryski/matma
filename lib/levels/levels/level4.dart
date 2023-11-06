@@ -65,9 +65,9 @@ var _taskA1 = Task(
   instructions: [
     NextMsg(text: 'Zrobimy coś dziwnego', seconds: 1.5),
     NextMsg(text: 'Zamień 2 w 1+1', seconds: 1.5),
-    NextMsg(text: 'Scrolluj szare', seconds: 5),
+    NextMsg(text: 'Scrolluj ciemnozielone', seconds: 5),
     NextMsg(text: 'Ma powstać 1 + 1.', seconds: 5),
-    NextMsg(text: 'Scrolluj szare'),
+    NextMsg(text: 'Scrolluj ciemnozielone'),
   ],
   onEvents: [
     OnEvent(
@@ -84,9 +84,9 @@ var _taskB1 = Task(
   instructions: [
     NextMsg(text: 'Znowu rozbijemy liczbę.', seconds: 3),
     NextMsg(text: 'Zamień -3 w -1 -1 -1.', seconds: 3),
-    NextMsg(text: 'Scrolluj szare', seconds: 5),
+    NextMsg(text: 'Scrolluj ciemnoczerwone', seconds: 5),
     NextMsg(text: 'Ma powstać -1 - 1 - 1.', seconds: 5),
-    NextMsg(text: 'Scrolluj szare'),
+    NextMsg(text: 'Scrolluj ciemnoczerwone'),
   ],
   onEvents: [
     OnEvent(

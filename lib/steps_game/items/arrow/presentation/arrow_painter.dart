@@ -54,7 +54,7 @@ Path generateTriangle(
     double width, double tHeight, double radius, double progress) {
   var rectOffset = 1 / 4 * width * (1 - progress);
   var xd1 = sqrt(3) * radius * progress;
-  var xd2 = sqrt(3) / 2 * radius * progress;
+  var xd2 = xd1 / 2;
   var yd = 3 / 2 * radius * progress;
   var rectOffsetVertical = radius * (1 - progress);
   if (progress > 0) {

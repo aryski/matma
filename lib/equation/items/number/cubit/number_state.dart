@@ -31,4 +31,24 @@ class NumberState extends GameItemState {
       textKey: textKey,
     );
   }
+
+  @override
+  NumberState copyWith(
+      {UniqueKey? id,
+      Offset? position,
+      Offset? size,
+      bool? isHovered,
+      double? opacity,
+      double? radius}) {
+    return NumberState(
+        id: id ?? this.id,
+        position: position ?? this.position,
+        size: size ?? this.size,
+        opacity: opacity ?? this.opacity,
+        radius: radius ?? this.radius,
+        withDarkenedColor: withDarkenedColor,
+        sign: sign,
+        value: value,
+        textKey: textKey);
+  }
 }

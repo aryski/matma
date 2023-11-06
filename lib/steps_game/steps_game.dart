@@ -100,26 +100,8 @@ class _ScrollListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return Listener(
         onPointerSignal: (event) {
-          var hover = hoverKepper;
-          if (event is PointerScrollEvent && hover != null) {
-            var item = bloc.state.getItem(hover);
-            if (item != null) {
-              if (bloc.state.isLastItem(item)) {
-                if (!blockedIds.contains(hover)) {
-                  blockedIds.add(hover);
-                  bloc.add(StepsGameEventScroll(hover, 1));
-                  Future.delayed(
-                          const Duration(milliseconds: 800)) //garbage delay
-                      .whenComplete(() => blockedIds.remove(hover));
-                }
-              }
-            }
-          }
-          if (!blockedIds.contains(hoverKepper)) {
-            if (event is PointerScrollEvent && hoverKepper != null) {
-              bloc.add(
-                  StepsGameEventScroll(hoverKepper!, event.scrollDelta.dy));
-            }
+          if (event is PointerScrollEvent && hoverKepper != null) {
+            bloc.add(StepsGameEventScroll(hoverKepper!, event.scrollDelta.dy));
           }
         },
         child: child);

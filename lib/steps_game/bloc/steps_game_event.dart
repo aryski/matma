@@ -9,19 +9,19 @@ class StepsGameEventScroll extends StepsGameEvent {
   StepsGameEventScroll(this.id, this.dy);
 }
 
-class StepsGameEventPointerDown extends StepsGameEvent {
+abstract class StepsGameEventClick extends StepsGameEvent {
   final UniqueKey id;
+  final DateTime time;
 
-  StepsGameEventPointerDown({
-    required this.id,
-  });
+  StepsGameEventClick({required this.id, required this.time});
 }
 
-class StepsGameEventPointerUp extends StepsGameEvent {
-  final UniqueKey id;
-  final Duration pressTime;
+class StepsGameEventClickUp extends StepsGameEventClick {
+  StepsGameEventClickUp({required super.id, required super.time});
+}
 
-  StepsGameEventPointerUp({required this.id, required this.pressTime});
+class StepsGameEventClickDown extends StepsGameEventClick {
+  StepsGameEventClickDown({required super.id, required super.time});
 }
 
 class StepsGameEventPop extends StepsGameEvent {}

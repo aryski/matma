@@ -6,38 +6,28 @@ class GameItemCubit<T extends GameItemState> extends Cubit<T> {
   GameItemCubit(super.initialState);
 
   void updatePosition(Offset delta) {
-    state.position += delta;
-    emit(state.copy() as T);
+    emit(state.copyWith(position: state.position + delta) as T);
   }
 
   void updatePositionDelayed(Offset delta, Duration delay) async {
     await Future.delayed(delay);
-    state.position += delta;
-    emit(state.copy() as T);
+    emit(state.copyWith(position: state.position + delta) as T);
   }
 
   void setOpacity(double opacity) {
-    state.opacity = opacity;
-    emit(state.copy() as T);
+    emit(state.copyWith(opacity: opacity) as T);
   }
 
   Future<void> setOpacityDelayed(double opacity, Duration delay) async {
     await Future.delayed(delay);
-    state.opacity = opacity;
-    emit(state.copy() as T);
+    emit(state.copyWith(opacity: opacity) as T);
   }
 
   void hoverStart() {
-    if (!state.isHovered) {
-      state.isHovered = true;
-    }
-    emit(state.copy() as T);
+    emit(state.copyWith(isHovered: true) as T);
   }
 
   void hoverEnd() {
-    if (state.isHovered) {
-      state.isHovered = false;
-    }
-    emit(state.copy() as T);
+    emit(state.copyWith(isHovered: false) as T);
   }
 }

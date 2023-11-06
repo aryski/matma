@@ -8,11 +8,9 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
 extension ItemsGenerator on StepsGameBloc {
   ArrowCubit generateArrow(
       {required Offset position,
-      Offset delta = Offset.zero,
       double animationProgress = 1.0,
       Offset? size,
       required Direction direction}) {
-    position += delta;
     return ArrowCubit(
       ArrowState(
         id: UniqueKey(),

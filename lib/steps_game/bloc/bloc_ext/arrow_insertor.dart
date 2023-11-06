@@ -12,14 +12,15 @@ import 'package:matma/quests/cubit/quests_cubit.dart';
 
 extension ArrowInsertor on StepsGameBloc {
   Future<void> handleArrowInsertion(
-      StepsGameEventPointerUp event,
+      StepsGameEventClickUp event,
       Emitter<StepsGameState> emit,
       EquationBloc board,
       QuestsCubit taskCubit) async {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       bool isUp = (item.state.direction == Direction.up);
-      _animateVerticalExpension(item);
+      state.updateStepHgt(
+          item: item, delta: gs.arrowReleasedHgt - gs.arrowClickedHgt);
       await Future.delayed(const Duration(milliseconds: 200));
       var newStep = _insertStep(item, isUp);
       _replaceStep(state.getStep(item), isUp);
@@ -34,8 +35,7 @@ extension ArrowInsertor on StepsGameBloc {
       GameItemCubit<GameItemState> item, bool isUp) {
     var pos = Offset(item.state.position.dx, item.state.position.dy);
     ArrowCubit arrow = generateArrow(
-        position: pos,
-        delta: Offset(0, isUp ? gs.hUnit : 0),
+        position: pos + Offset(0, isUp ? gs.hUnit : 0),
         animationProgress: 0,
         direction: isUp ? Direction.up : Direction.down);
     FloorCubit floor = generateFloor(
@@ -55,16 +55,6 @@ extension ArrowInsertor on StepsGameBloc {
     return stepsDefault;
   }
 
-  void _animateVerticalExpension(ArrowCubit item) {
-    var arrowHgtDelta = gs.arrowReleasedHgt - gs.arrowClickedHgt;
-    item.updateHeight(arrowHgtDelta);
-    if (item.state.direction == Direction.down) {
-      state.moveAllSince(item, Offset(0, arrowHgtDelta));
-    } else {
-      state.moveAllSinceIncluded(item, Offset(0, -arrowHgtDelta));
-    }
-  }
-
   void _replaceStep(StepsGameDefaultItem? step, bool isUp) {
     if (step != null) {
       StepsGameDefaultItem? newStep;
@@ -82,6 +72,6 @@ extension ArrowInsertor on StepsGameBloc {
     newStep.arrow.animate(1);
     var delta = gs.wUnit;
     newStep.floor.updateSize(Offset(delta, 0));
-    state.moveAllSince(newStep.floor, Offset(delta, 0));
+    state.updatePositionSince(newStep.floor, Offset(delta, 0));
   }
 }
