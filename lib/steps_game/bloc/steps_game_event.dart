@@ -24,4 +24,7 @@ class StepsGameEventClickDown extends StepsGameEventClick {
   StepsGameEventClickDown({required super.id, required super.time});
 }
 
-class StepsGameEventPop extends StepsGameEvent {}
+class StepsGameEventPopFilling extends StepsGameEvent {
+  final UniqueKey id;
+  StepsGameEventPopFilling({required this.id});
+}

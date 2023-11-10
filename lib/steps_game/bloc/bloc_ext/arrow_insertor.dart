@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
@@ -28,6 +29,8 @@ extension ArrowInsertor on StepsGameBloc {
       await Future.delayed(const Duration(milliseconds: 20));
       _animateNewStep(newStep);
       taskCubit.inserted(item.state.direction);
+      generateFillings();
+      emit(state.copy());
     }
   }
 

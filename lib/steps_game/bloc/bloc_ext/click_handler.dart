@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/arrow_insertor.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
@@ -53,6 +54,9 @@ extension ClickHandler on StepsGameBloc {
         var delta = gs.arrowH - gs.arrowClickedHgt;
         if (event is StepsGameEventClickDown) {
           delta = -delta;
+          onArrowClickDown(item, delta);
+        } else {
+          onArrowClickUp(item, delta);
         }
         state.updateStepHgt(item: item, delta: delta);
         await Future.delayed(const Duration(milliseconds: 200));

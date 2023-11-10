@@ -1,7 +1,6 @@
 part of 'steps_game_bloc.dart';
 
 class StepsGameDefaultItem {
-  //TODO tutaj porządek trzeba zrobić xd
   final ArrowCubit arrow;
   final FloorCubit floor;
 
@@ -10,7 +9,19 @@ class StepsGameDefaultItem {
 
 class StepsGameNumberState {
   List<StepsGameDefaultItem> steps;
-  StepsGameNumberState(this.steps);
+  FillingCubit? filling;
+  //get top width
+
+  //
+
+  //FillingCubit TODO add FIllingCubit here
+  //we add FillingCubit that's "technically" placed after the floor
+  //actually all we need from the following StepsGameDefItem is that,
+  //the next NumberState has opposite number
+  //fade right, fade left, for now add it with fade out and fade in
+  //i tylko potrzebuję liczbę oraz długość ostatniego floora xd zeby to namalować w sumie xd
+
+  StepsGameNumberState({required this.steps, this.filling});
 
   int get number {
     int value = 0;
@@ -22,6 +33,14 @@ class StepsGameNumberState {
       }
     }
     return value;
+  }
+
+  void setFilling(FillingCubit filling) {
+    this.filling = filling;
+  }
+
+  void clearFilling() {
+    this.filling = null;
   }
 }
 
@@ -198,6 +217,13 @@ class StepsGameState {
     return numbers.last.steps.last.floor == item;
   }
 
+  void ifFillingUpdateWdt(GameItemCubit item, double delta) {
+    var ind = getNumberIndexFromItem(item);
+    if (ind != null && numbers[ind].steps.last.floor == item) {
+      numbers[ind].filling?.updateSize(Offset(delta, 0));
+    }
+  }
+
   void updatePositionSince(GameItemCubit item, Offset offset) {
     bool update = false;
     for (var number in numbers) {
@@ -213,6 +239,9 @@ class StepsGameState {
           }
           update = true;
         }
+      }
+      if (update && number.filling != null) {
+        number.filling?.updatePosition(offset);
       }
     }
   }

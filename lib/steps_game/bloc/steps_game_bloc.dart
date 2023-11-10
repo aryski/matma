@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/click_handler.dart';
@@ -9,6 +10,7 @@ import 'package:matma/steps_game/bloc/bloc_ext/scroll_handler.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
+import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/quests/cubit/quests_cubit.dart';
 import 'package:stream_transform/stream_transform.dart';
@@ -51,6 +53,7 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   StepsGameBloc(this.gs, this.board, this.taskCubit, this.allowedOps)
       : super(StepsGameState(gs: gs, numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeSimulationItems());
+    generateFillings();
 
     on<StepsGameEventScroll>((event, emit) async {
       await handleScroll(state, event, gs, emit);

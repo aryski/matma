@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
@@ -10,11 +11,6 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 extension ArrowsReductor on StepsGameBloc {
   Future<void> handleReduction(FloorCubit item, double delta,
       StepsGameState state, Emitter<StepsGameState> emit) async {
-    var currentWidth = item.state.size.dx;
-    delta = -currentWidth;
-    item.updateSize(Offset(delta, 0));
-    state.updatePositionSince(item, Offset(delta, 0));
-    currentWidth = item.state.size.dx;
     var step = state.getStep(item);
     if (step == null) return;
     var rightStep = state.rightStep(step);
@@ -22,6 +18,7 @@ extension ArrowsReductor on StepsGameBloc {
     animateStepFold(item, step.arrow, rightStep.arrow);
     await performReduction(item, step, rightStep);
     taskCubit.merged();
+    // beforeEmit();
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 200));
   }
@@ -37,7 +34,13 @@ extension ArrowsReductor on StepsGameBloc {
     arrows.forEach((e) => e.updateHeight(-gs.arrowH));
     arrows.forEach((e) => e.animate(0));
     all.forEach((e) => e.setOpacity(0));
-    floor.updateSize(Offset(-floor.state.size.dx, 0));
+    var delta = -floor.state.size.dx;
+    floor.updateSize(Offset(delta + gs.wUnit / 4, 0));
+    updateFillingWidth(state, floor, delta + gs.wUnit / 4);
+    updateFillingHeight(state, floor, -gs.arrowH);
+    fillingDecrease(floor);
+
+    state.updatePositionSince(floor, Offset(delta + gs.wUnit / 4, 0));
   }
 
   Future<void> performReduction(FloorCubit floor, StepsGameDefaultItem step,
@@ -54,7 +57,8 @@ extension ArrowsReductor on StepsGameBloc {
   void _animateFloorsMerge(StepsGameDefaultItem rightStep,
       StepsGameDefaultItem? leftStep, StepsGameDefaultItem step) {
     var inheritedWidth = 0.0;
-    inheritedWidth = rightStep.floor.state.size.dx - gs.wUnit / 2;
+    inheritedWidth =
+        rightStep.floor.state.size.dx - gs.wUnit / 2 + gs.wUnit / 4;
 
     if (leftStep != null && !state.isLastItem(rightStep.floor)) {
       leftStep.floor.updateSize(Offset(inheritedWidth, 0));

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/arrows_reductor.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/number_split_joiner.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/opposite_arrow_insertor.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
@@ -32,6 +33,7 @@ extension ScrollHandler on StepsGameBloc {
       delta = guardDeltaSize(
           currentW: item.state.size.dx, delta: delta, minW: gs.floorW);
       item.updateSize(Offset(delta, 0));
+      updateFillingWidth(state, item, delta);
       state.updatePositionSince(item, Offset(delta, 0));
     }
   }

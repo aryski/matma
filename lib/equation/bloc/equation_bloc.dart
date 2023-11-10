@@ -119,10 +119,13 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
         i++) {
       var fixedNumberState = state.fixedItems[i].number.state;
       var numberState = state.items[i].number.state;
-      if (fixedNumberState.value != numberState.value &&
+      if (fixedNumberState.value == numberState.value &&
           fixedNumberState.sign == numberState.sign) {
-        state.fixedItems[i].number.updateWithDarkenedColor(
-            fixedNumberState.withDarkenedColor ? false : true);
+        if (state.fixedItems[i].number.state.withDarkenedColor) {
+          state.fixedItems[i].number.updateWithDarkenedColor(false);
+        }
+      } else if (!state.fixedItems[i].number.state.withDarkenedColor) {
+        state.fixedItems[i].number.updateWithDarkenedColor(true);
       }
     }
   }

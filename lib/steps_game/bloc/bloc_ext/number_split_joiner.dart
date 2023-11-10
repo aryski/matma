@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 
 extension NumberSplitJoiner on StepsGameBloc {
@@ -26,6 +27,17 @@ extension NumberSplitJoiner on StepsGameBloc {
             rightValue: state.numbers[numberInd + 1].number));
         item.setLastInNumber();
         taskCubit.splited();
+        if (item.state.direction == Direction.down) {
+          var ind = state.getNumberIndexFromItem(item);
+          if (ind != null) {
+            eloElo2(ind, false);
+          }
+        } else if (item.state.direction == Direction.up) {
+          var ind = state.getNumberIndexFromItem(item);
+          if (ind != null) {
+            eloElo2(ind, false);
+          }
+        }
       }
     }
 
@@ -53,7 +65,15 @@ extension NumberSplitJoiner on StepsGameBloc {
       taskCubit.scrolled();
     }
     state.updatePositionSince(item, Offset(delta, 0));
+    generateFillings();
+    // beforeEmit();
     emit(state.copy());
+    var id = state.getNumberIndexFromItem(item);
+    if (id != null && state.numbers[id].steps.last.floor != item) {
+      state.numbers[id].filling
+          ?.updatePositionDelayed(Offset(delta, 0), Duration(milliseconds: 20));
+    }
+
     return true;
   }
 }
@@ -76,7 +96,7 @@ void _splitNumber(
   }
   numbers[numberInd].steps.clear();
   numbers[numberInd].steps.addAll(left);
-  numbers.insert(numberInd + 1, StepsGameNumberState(right));
+  numbers.insert(numberInd + 1, StepsGameNumberState(steps: right));
 }
 
 double _guardDeltaSize(

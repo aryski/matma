@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
@@ -29,9 +30,12 @@ extension OppositeArrowInsertor on StepsGameBloc {
         position: item.state.position + Offset(gs.wUnit, 0),
         size: Offset(0, gs.floorH));
     state.numbers.add(StepsGameNumberState(
-        [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
+        steps: [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
     taskCubit.insertedOpposite();
     item.setLastInNumber();
+    // beforeEmit();
+    // emit(state.copy());
+    generateFillings();
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 20));
     if (dir == Direction.up) {

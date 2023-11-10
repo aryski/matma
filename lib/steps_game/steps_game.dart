@@ -13,6 +13,8 @@ import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/presentation/arrow.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator.dart';
+import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
+import 'package:matma/steps_game/items/filling/presentation/filling.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor.dart';
 import 'package:matma/quests/cubit/quests_cubit.dart';
@@ -216,6 +218,9 @@ class RawStepsGame extends StatelessWidget {
             builder: (context, state) {
               List<GameItemCubit> items = [];
               for (var number in state.numbers) {
+                if (number.filling != null) {
+                  items.add(number.filling!);
+                }
                 for (var item in number.steps) {
                   items.add(item.arrow);
                   items.add(item.floor);
@@ -235,6 +240,19 @@ class RawStepsGame extends StatelessWidget {
                       );
                     } else if (cubit is FloorCubit) {
                       return Floor(cubit: cubit, key: cubit.state.id);
+                    }
+                    // else if (cubit is FillingCubit) {
+                    //   return Filling(cubit: cubit, key: cubit.state.id);
+                    // }
+                    else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
+                ...items.map(
+                  (cubit) {
+                    if (cubit is FillingCubit) {
+                      return Filling(cubit: cubit, key: cubit.state.id);
                     } else {
                       return const SizedBox.shrink();
                     }

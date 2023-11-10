@@ -50,7 +50,7 @@ extension Initializer on StepsGameBloc {
         currentTop += isPositive ? -gs.hUnit : gs.hUnit;
         currentLeft += (floorWidth == gs.floorWExt) ? gs.wUnit * 2 : gs.wUnit;
       }
-      result.add(StepsGameNumberState(steps));
+      result.add(StepsGameNumberState(steps: steps));
     }
     return result;
   }
