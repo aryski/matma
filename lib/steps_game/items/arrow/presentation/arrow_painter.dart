@@ -14,7 +14,6 @@ class ArrowPainter extends CustomPainter {
       this.animationProgress);
 
   Path path = Path();
-  Path path2 = Path();
 
   @override
   void paint(Canvas canvas, Size size) {

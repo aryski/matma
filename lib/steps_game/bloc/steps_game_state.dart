@@ -38,10 +38,6 @@ class StepsGameNumberState {
   void setFilling(FillingCubit filling) {
     this.filling = filling;
   }
-
-  void clearFilling() {
-    this.filling = null;
-  }
 }
 
 class StepsGameState {
@@ -208,51 +204,78 @@ class StepsGameState {
     return null;
   }
 
+  StepsGameNumberState? getNumberFromItem(GameItemCubit item) {
+    for (int i = 0; i < numbers.length; i++) {
+      if (numbers[i]
+              .steps
+              .where(
+                  (element) => element.arrow == item || element.floor == item)
+              .toList()
+              .isNotEmpty ||
+          numbers[i].filling != null && numbers[i].filling == item) {
+        return numbers[i];
+      }
+    }
+    return null;
+  }
+
   bool isFirstStep(StepsGameDefaultItem step) {
     return numbers.first.steps.first == step;
   }
 
   bool isLastItem(GameItemCubit item) {
-    //steps might be empty!!!!
     return numbers.last.steps.last.floor == item;
   }
 
-  void ifFillingUpdateWdt(GameItemCubit item, double delta) {
-    var ind = getNumberIndexFromItem(item);
-    if (ind != null && numbers[ind].steps.last.floor == item) {
-      numbers[ind].filling?.updateSize(Offset(delta, 0));
-    }
-  }
+  // void ifFillingUpdateWdt(GameItemCubit item, double delta) {
+  //   var ind = getNumberIndexFromItem(item);
+  //   if (ind != null && numbers[ind].steps.last.floor == item) {
+  //     numbers[ind].filling?.updateSize(Offset(delta, 0));
+  //   }
+  // }
 
-  void updatePositionSince(GameItemCubit item, Offset offset) {
+  void updatePositionSince(
+      {required GameItemCubit item,
+      required Offset offset,
+      bool fillingIncluded = true,
+      required int milliseconds}) {
     bool update = false;
     for (var number in numbers) {
+      if (!fillingIncluded) {
+        if (update && number.filling != null) {
+          number.filling?.updatePosition(offset, milliseconds: milliseconds);
+        }
+      }
       for (var step in number.steps) {
         if (update) {
-          step.arrow.updatePosition(offset);
-          step.floor.updatePosition(offset);
+          step.arrow.updatePosition(offset, milliseconds: milliseconds);
+          step.floor.updatePosition(offset, milliseconds: milliseconds);
         }
 
         if (step.arrow == item || step.floor == item) {
           if ((step.arrow == item)) {
-            step.floor.updatePosition(offset);
+            step.floor.updatePosition(offset, milliseconds: milliseconds);
           }
           update = true;
         }
       }
-      if (update && number.filling != null) {
-        number.filling?.updatePosition(offset);
+      if (fillingIncluded && update && number.filling != null) {
+        number.filling?.updatePosition(offset, milliseconds: milliseconds);
       }
     }
   }
 
-  void updateStepHgt({required ArrowCubit item, required double delta}) {
-    item.updateHeight(delta);
+  void updateStepHgt(
+      {required ArrowCubit item,
+      required double delta,
+      required int milliseconds}) {
+    item.updateHeight(delta, milliseconds);
     if (item.state.direction == Direction.up) {
       delta = -delta;
-      item.updatePosition(Offset(0, delta));
+      item.updatePosition(Offset(0, delta), milliseconds: milliseconds);
     }
-    updatePositionSince(item, Offset(0, delta));
+    updatePositionSince(
+        item: item, offset: Offset(0, delta), milliseconds: milliseconds);
   }
 
   StepsGameState copy() {
@@ -268,6 +291,9 @@ class StepsGameState {
         } else if (step.floor.state.id == id) {
           return step.floor;
         }
+      }
+      if (number.filling != null && number.filling!.state.id == id) {
+        return number.filling;
       }
     }
     return null;

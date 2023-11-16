@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
@@ -11,9 +12,9 @@ extension BoardItemsGenerator on EquationBloc {
       {required Offset position, required Offset size}) {
     return BoardState(
         id: UniqueKey(),
-        position: position,
-        size: size,
-        opacity: 1.0,
+        position: AnimatedProp.zero(value: position),
+        size: AnimatedProp.zero(value: size),
+        opacity: AnimatedProp.zero(value: 1.0),
         radius: 20.0);
   }
 
@@ -29,11 +30,13 @@ extension BoardItemsGenerator on EquationBloc {
       value: number.abs(),
       sign: ((number > 0) ? Signs.addition : Signs.substraction),
       id: UniqueKey(),
-      position: position,
-      size: number.abs() >= 10
-          ? Offset(gs.wUnit * 4, gs.hUnit * 2)
-          : Offset(gs.wUnit * 2, gs.hUnit * 2),
-      opacity: opacity ?? 1,
+      position: AnimatedProp.zero(value: position),
+      size: AnimatedProp.zero(
+        value: number.abs() >= 10
+            ? Offset(gs.wUnit * 4, gs.hUnit * 2)
+            : Offset(gs.wUnit * 2, gs.hUnit * 2),
+      ),
+      opacity: AnimatedProp.zero(value: opacity ?? 1.0),
       radius: 5,
       textKey: UniqueKey(),
     );
@@ -47,9 +50,11 @@ extension BoardItemsGenerator on EquationBloc {
     return SignState(
       value: sign,
       id: UniqueKey(),
-      position: position,
-      size: Offset(gs.wUnit * 1.5, gs.hUnit * 2),
-      opacity: opacity ?? 1,
+      position: AnimatedProp.zero(value: position),
+      size: AnimatedProp.zero(
+        value: Offset(gs.wUnit * 1.5, gs.hUnit * 2),
+      ),
+      opacity: AnimatedProp.zero(value: opacity ?? 1),
       radius: 5,
     );
   }
@@ -59,9 +64,11 @@ extension BoardItemsGenerator on EquationBloc {
     return ShadowNumberState(
       value: value,
       id: UniqueKey(),
-      position: position,
-      size: Offset(gs.wUnit * 2, gs.hUnit * 2),
-      opacity: 1,
+      position: AnimatedProp.zero(value: position),
+      size: AnimatedProp.zero(
+        value: Offset(gs.wUnit * 2, gs.hUnit * 2),
+      ),
+      opacity: AnimatedProp.zero(value: 1),
       radius: 5,
     );
   }

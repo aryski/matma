@@ -7,10 +7,12 @@ class EquationDefaultItem {
   EquationDefaultItem({required this.sign, required this.number});
 
   double get width =>
-      number.state.size.dx + ((sign != null) ? sign!.state.size.dx : 0);
+      number.state.size.value.dx +
+      ((sign != null) ? sign!.state.size.value.dx : 0);
 
-  Offset get position =>
-      ((sign != null) ? sign!.state.position : number.state.position);
+  Offset get position => ((sign != null)
+      ? sign!.state.position.value
+      : number.state.position.value);
 }
 
 class EquationState {

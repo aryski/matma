@@ -11,10 +11,10 @@ class BoardState extends GameItemState {
   @override
   BoardState copyWith(
       {UniqueKey? id,
-      Offset? position,
-      Offset? size,
+      AnimatedProp<Offset>? position,
+      AnimatedProp<Offset>? size,
       bool? isHovered,
-      double? opacity,
+      AnimatedProp<double>? opacity,
       double? radius}) {
     return BoardState(
         id: id ?? this.id,

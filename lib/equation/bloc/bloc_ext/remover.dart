@@ -13,8 +13,10 @@ extension Remover on EquationBloc {
         if (item.sign != null) {
           state.extraItems.add(item.sign!);
         }
-        myItem.number.updatePosition(Offset(-myItem.number.state.size.dx, 0));
-        myItem.sign?.updatePosition(Offset(-myItem.number.state.size.dx, 0));
+        myItem.number
+            .updatePosition(Offset(-myItem.number.state.size.value.dx, 0));
+        myItem.sign
+            ?.updatePosition(Offset(-myItem.number.state.size.value.dx, 0));
         myItem.number.setOpacity(0);
         myItem.sign?.setOpacity(0);
         state.items.remove(myItem);

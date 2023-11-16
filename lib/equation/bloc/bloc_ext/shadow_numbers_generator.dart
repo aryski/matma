@@ -17,7 +17,7 @@ extension ShadowNumbersGenerator on EquationBloc {
       var shadowCubit = ShadowNumberCubit(
           BoardItemsGenerator.generateShadowNumberState(
               sign == Signs.addition ? "-1" : "+1",
-              item.number.state.position,
+              item.number.state.position.value,
               gs));
       state.extraItems.add(shadowCubit);
       shadowCubit.updatePositionDelayed(

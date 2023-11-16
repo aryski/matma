@@ -60,7 +60,7 @@ class Number extends StatelessWidget {
                                                 ? defaultGreen
                                                 : defaultRed),
                                         fontWeight: FontWeight.bold,
-                                        fontSize: state.size.dx *
+                                        fontSize: state.size.value.dx *
                                             MediaQuery.of(context).size.width),
                                   ),
                                 ],

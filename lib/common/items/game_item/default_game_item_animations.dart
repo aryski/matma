@@ -16,14 +16,16 @@ class DefaultGameItemAnimations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimatedPosition(
-      initialPosition: initialState.position,
-      updatedPosition: state.position,
+      initialPosition: initialState.position.value,
+      updatedPosition: state.position.value,
+      duration: Duration(milliseconds: state.position.duration),
       child: AnimatedOpacity(
-        opacity: state.opacity,
-        duration: const Duration(milliseconds: 200),
+        opacity: state.opacity.value,
+        duration: Duration(milliseconds: state.opacity.duration),
         child: TweenAnimatedSize(
-            initialSize: initialState.size,
-            updatedSize: state.size,
+            initialSize: initialState.size.value,
+            updatedSize: state.size.value,
+            duration: Duration(milliseconds: state.size.duration),
             child: child),
       ),
     );

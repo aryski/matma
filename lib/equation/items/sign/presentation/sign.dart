@@ -30,7 +30,7 @@ class Sign extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: state.size.dx *
+                          fontSize: state.size.value.dx *
                               MediaQuery.of(context).size.width),
                     ),
                   ),

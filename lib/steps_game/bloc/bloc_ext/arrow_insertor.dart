@@ -21,13 +21,15 @@ extension ArrowInsertor on StepsGameBloc {
     if (item is ArrowCubit) {
       bool isUp = (item.state.direction == Direction.up);
       state.updateStepHgt(
-          item: item, delta: gs.arrowReleasedHgt - gs.arrowClickedHgt);
+          item: item,
+          delta: gs.arrowReleasedHgt - gs.arrowClickedHgt,
+          milliseconds: 200);
       await Future.delayed(const Duration(milliseconds: 200));
       var newStep = _insertStep(item, isUp);
       _replaceStep(state.getStep(item), isUp);
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
-      _animateNewStep(newStep);
+      _animateNewStep(newStep, 200);
       taskCubit.inserted(item.state.direction);
       generateFillings();
       emit(state.copy());
@@ -36,7 +38,8 @@ extension ArrowInsertor on StepsGameBloc {
 
   StepsGameDefaultItem _insertStep(
       GameItemCubit<GameItemState> item, bool isUp) {
-    var pos = Offset(item.state.position.dx, item.state.position.dy);
+    var pos =
+        Offset(item.state.position.value.dx, item.state.position.value.dy);
     ArrowCubit arrow = generateArrow(
         position: pos + Offset(0, isUp ? gs.hUnit : 0),
         animationProgress: 0,
@@ -63,18 +66,21 @@ extension ArrowInsertor on StepsGameBloc {
       StepsGameDefaultItem? newStep;
       newStep = StepsGameDefaultItem(
           arrow: generateArrow(
-              position:
-                  step.arrow.state.position + Offset(0, isUp ? 0 : gs.hUnit),
+              position: step.arrow.state.position.value +
+                  Offset(0, isUp ? 0 : gs.hUnit),
               direction: isUp ? Direction.up : Direction.down),
           floor: step.floor);
       state.replaceStep(step, newStep);
     }
   }
 
-  void _animateNewStep(StepsGameDefaultItem newStep) {
+  void _animateNewStep(StepsGameDefaultItem newStep, int milliseconds) {
     newStep.arrow.animate(1);
     var delta = gs.wUnit;
-    newStep.floor.updateSize(Offset(delta, 0));
-    state.updatePositionSince(newStep.floor, Offset(delta, 0));
+    newStep.floor.updateSize(Offset(delta, 0), milliseconds);
+    state.updatePositionSince(
+        item: newStep.floor,
+        offset: Offset(delta, 0),
+        milliseconds: milliseconds);
   }
 }

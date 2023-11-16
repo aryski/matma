@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
@@ -18,9 +19,10 @@ extension Initializer on StepsGameBloc {
     var id = UniqueKey();
     state.unorderedItems[id] = EquatorCubit(EquatorState(
         id: id,
-        position: Offset(0, currentTop + gs.hUnit),
-        size: Offset(gs.wUnit * (gs.wUnits), gs.floorH),
-        opacity: 1,
+        position: AnimatedProp.zero(value: Offset(0, currentTop + gs.hUnit)),
+        size:
+            AnimatedProp.zero(value: Offset(gs.wUnit * (gs.wUnits), gs.floorH)),
+        opacity: AnimatedProp.zero(value: 1),
         radius: gs.radius));
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 
@@ -40,7 +41,8 @@ class NumberCubit extends GameItemCubit<NumberState> {
     );
   }
 
-  void updateSize(Offset offset) {
+  void updateSize(Offset offset, int milliseconds) {
+    print("Size update4: $offset");
     emit(
       NumberState(
         withDarkenedColor: state.withDarkenedColor,
@@ -48,7 +50,8 @@ class NumberCubit extends GameItemCubit<NumberState> {
         value: state.value,
         id: state.id,
         position: state.position,
-        size: state.size + offset,
+        size: AnimatedProp(
+            duration: milliseconds, value: state.size.value + offset),
         opacity: state.opacity,
         radius: state.radius,
         textKey: state.textKey,

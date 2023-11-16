@@ -19,7 +19,7 @@ extension Resizer on EquationBloc {
           sign.updatePosition(Offset(-delta / 2, 0));
         }
       }
-      state.items[itemsInd].number.updateSize(Offset(delta, 0));
+      state.items[itemsInd].number.updateSize(Offset(delta, 0), 200);
       for (int j = itemsInd + 1; j < state.items.length; j++) {
         state.items[j].number.updatePosition(Offset(delta / 2, 0));
         var sign = state.items[j].sign;
@@ -29,7 +29,7 @@ extension Resizer on EquationBloc {
       }
       for (var item in state.extraItems) {
         if (item is BoardCubit) {
-          item.updateSize(Offset(delta, 0));
+          item.updateSize(Offset(delta, 0), 200);
           item.updatePosition(Offset(-delta / 2, 0));
         }
       }
@@ -61,7 +61,7 @@ extension Resizer on EquationBloc {
       }
       for (var item in state.extraItems) {
         if (item is BoardCubit) {
-          item.updateSize(Offset(delta, 0));
+          item.updateSize(Offset(delta, 0), 200);
           item.updatePosition(Offset(-delta / 2, 0));
         }
       }

@@ -35,10 +35,10 @@ class NumberState extends GameItemState {
   @override
   NumberState copyWith(
       {UniqueKey? id,
-      Offset? position,
-      Offset? size,
+      AnimatedProp<Offset>? position,
+      AnimatedProp<Offset>? size,
       bool? isHovered,
-      double? opacity,
+      AnimatedProp<double>? opacity,
       double? radius}) {
     return NumberState(
         id: id ?? this.id,

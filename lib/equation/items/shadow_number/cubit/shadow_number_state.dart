@@ -14,10 +14,10 @@ class ShadowNumberState extends GameItemState {
   @override
   ShadowNumberState copyWith(
       {UniqueKey? id,
-      Offset? position,
-      Offset? size,
+      AnimatedProp<Offset>? position,
+      AnimatedProp<Offset>? size,
       bool? isHovered,
-      double? opacity,
+      AnimatedProp<double>? opacity,
       double? radius}) {
     return ShadowNumberState(
         id: id ?? this.id,

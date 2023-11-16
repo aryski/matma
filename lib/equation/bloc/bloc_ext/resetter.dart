@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/equation/bloc/bloc_ext/items_generator.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
@@ -37,7 +38,9 @@ extension Resetter on EquationBloc {
     var allMargin = (widthSpace - totaldx) / 2 - gs.wUnit / 6.7;
     SignCubit? lastSignCubit;
     for (var state in states) {
-      state.position += Offset(allMargin, 0);
+      state = state.copyWith(
+          position: AnimatedProp.zero(
+              value: state.position.value + Offset(allMargin, 0)));
       if (state is SignState) {
         lastSignCubit = SignCubit(state);
       } else if (state is NumberState) {
@@ -72,7 +75,7 @@ extension Resetter on EquationBloc {
       }
       if (signState != null) {
         states.add(signState);
-        totaldx += signState.size.dx;
+        totaldx += signState.size.value.dx;
       }
 
       var numberState = BoardItemsGenerator.generateNumberState(
@@ -81,7 +84,7 @@ extension Resetter on EquationBloc {
           gs: gs,
           withDarkenedColor: withDarkenedColor);
       states.add(numberState);
-      totaldx += numberState.size.dx;
+      totaldx += numberState.size.value.dx;
     }
     return (totaldx, states);
   }

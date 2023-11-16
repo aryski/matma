@@ -23,6 +23,7 @@ class Arrow extends StatelessWidget {
             initialState: initialState,
             state: state,
             child: DefaultTweenAnimationBuilder(
+                duration: const Duration(milliseconds: 200),
                 initial: initialState.animProgress,
                 updated: state.animProgress,
                 builder: (context, animationProgress, child) {

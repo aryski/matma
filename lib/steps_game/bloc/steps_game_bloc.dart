@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/arrows_reductor.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
@@ -61,6 +62,17 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
 
     on<StepsGameEventClick>((event, emit) async {
       await handleClick(event, emit);
+    }, transformer: sequential());
+
+    on<StepsGameEventPopFilling>((event, emit) async {
+      var item = state.getItem(event.id);
+      if (item is FillingCubit) {
+        var number = state.getNumberFromItem(item);
+        if (number != null && number.steps.isNotEmpty) {
+          var floor = number.steps.last.floor;
+          await handleReduction(floor, -floor.state.size.value.dx, state, emit);
+        }
+      }
     }, transformer: sequential());
   }
 

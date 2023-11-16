@@ -7,7 +7,7 @@ class TweenAnimatedSize extends StatelessWidget {
     required this.child,
     required this.initialSize,
     required this.updatedSize,
-    this.duration = const Duration(milliseconds: 200),
+    required this.duration, // = const Duration(milliseconds: 200),
   });
   final Widget child;
   final Offset initialSize;
@@ -25,10 +25,10 @@ class TweenAnimatedSize extends StatelessWidget {
           var height = size.dy * MediaQuery.of(context).size.height;
           return ConstrainedBox(
               constraints: BoxConstraints(
-                  minWidth: width,
-                  maxWidth: width,
-                  minHeight: height,
-                  maxHeight: height),
+                  minWidth: width < 0 ? 0 : width,
+                  maxWidth: width < 0 ? 0 : width,
+                  minHeight: height < 0 ? 0 : height,
+                  maxHeight: height < 0 ? 0 : height),
               child: child);
         });
   }

@@ -6,7 +6,7 @@ class DefaultTweenAnimationBuilder<T> extends StatelessWidget {
     required this.initial,
     required this.updated,
     required this.builder,
-    this.duration = const Duration(milliseconds: 200),
+    required this.duration, // = const Duration(milliseconds: 200),
   });
   final T initial;
   final T updated;
@@ -16,7 +16,7 @@ class DefaultTweenAnimationBuilder<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-      curve: Curves.ease,
+      curve: duration.inMilliseconds < 150 ? Curves.linear : Curves.ease,
       tween: Tween<T>(begin: initial, end: updated),
       duration: duration,
       builder: builder,

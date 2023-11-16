@@ -19,8 +19,8 @@ class ShadowNumber extends StatelessWidget {
         builder: (context, state) {
           return TweenAnimatedPosition(
             duration: const Duration(milliseconds: 1000),
-            initialPosition: initialState.position,
-            updatedPosition: state.position,
+            initialPosition: initialState.position.value,
+            updatedPosition: state.position.value,
             child: DefaultTweenAnimationBuilder(
               duration: const Duration(milliseconds: 1000),
               initial: 0,
@@ -29,9 +29,10 @@ class ShadowNumber extends StatelessWidget {
                 return Row(
                   children: [
                     SizedBox(
-                      width: state.size.dx * MediaQuery.of(context).size.width,
-                      height:
-                          state.size.dy * MediaQuery.of(context).size.height,
+                      width: state.size.value.dx *
+                          MediaQuery.of(context).size.width,
+                      height: state.size.value.dy *
+                          MediaQuery.of(context).size.height,
                       child: Opacity(
                         opacity:
                             opacity < 0.5 ? opacity * 2 : (1 - opacity) * 2,
@@ -44,7 +45,7 @@ class ShadowNumber extends StatelessWidget {
                               style: TextStyle(
                                   color: defaultGrey,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: state.size.dx *
+                                  fontSize: state.size.value.dx *
                                       MediaQuery.of(context).size.width *
                                       3 /
                                       4),
