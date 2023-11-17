@@ -2,7 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/arrows_reductor.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/number_split_joiner.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/number_joiner.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/number_splitter.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/opposite_arrow_insertor.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
@@ -26,7 +27,7 @@ extension ScrollHandler on StepsGameBloc {
         } else {
           print("JOIN AND");
           print("CLASSIC");
-          handleJoin2(item, delta, gs, state, emit);
+          handleJoin(item, delta, gs, state, emit);
           //XDDD ok więc chyba działa, ale możnaby go w sumie troszkę zmodyfikować
           // delta = guardDeltaSize(
           //     currentW: item.state.size.value.dx, delta: delta, minW: gs.floorW);
@@ -36,7 +37,7 @@ extension ScrollHandler on StepsGameBloc {
         }
       } else {
         if (allowedOps.contains(StepsGameOps.splitJoinArrows)) {
-          handleSplit2(item, delta, gs, state, emit, 200);
+          handleSplit(item, delta, gs, state, emit, 200);
         }
       }
     }
@@ -50,7 +51,8 @@ extension ScrollHandler on StepsGameBloc {
 double guardDeltaSize(
     {required double currentW, required double delta, required double minW}) {
   if (currentW + delta < minW) {
-    delta = minW - currentW;
+    delta = minW -
+        currentW * 1.0000000000001; //TODO better floating point solution.
   }
   return delta;
 }

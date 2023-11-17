@@ -62,9 +62,9 @@ var _taskA1 = Task(
   instructions: [
     NextMsg(text: 'Lepiej łączyć niż dzielić.', seconds: 1.5),
     NextMsg(text: 'No więc będziemy teraz łączyć.', seconds: 1.5),
-    NextMsg(text: 'Scrolluj długie szare w krótkie', seconds: 3),
+    NextMsg(text: 'Scrolluj długie szare w krótkie, kolorowe', seconds: 3),
     NextMsg(text: 'Ma powstać 2', seconds: 5),
-    NextMsg(text: 'Scrolluj długie szare w krótkie'),
+    NextMsg(text: 'Scrolluj długie szare w krótkie, kolorowe'),
   ],
   onEvents: [
     OnEvent(requiredEvent: GameEventEquationValue(numbers: [2]), task: _taskA2)
@@ -80,7 +80,7 @@ var _taskB1 = Task(
   instructions: [
     NextMsg(text: 'Znowu połączymy liczbę.', seconds: 3),
     NextMsg(text: 'Zamień -1 -1 -1 w -3.', seconds: 3),
-    NextMsg(text: 'Scrolluj długie szare w krótkie', seconds: 5),
+    NextMsg(text: 'Scrolluj długie szare w krótkie, kolorowe', seconds: 5),
     NextMsg(text: 'Ma powstać -3', seconds: 5),
     NextMsg(text: 'Scrolluj szare'),
   ],

@@ -4,31 +4,9 @@ import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
 
 extension FillingUpdater on StepsGameBloc {
-  void updateFillingWidth(StepsGameState state, FloorCubit item, double delta) {
-    var ind = state.getNumberIndexFromItem(item);
-    if (ind != null && state.numbers[ind].steps.last.floor == item) {
-      var filling = state.numbers[ind].filling;
-      if (filling != null) {
-        filling.updateSize(Offset(delta, 0), 200);
-      }
-    }
-  }
-
-  void updateFillingHeight(
-      StepsGameState state, FloorCubit item, double delta) {
-    var ind = state.getNumberIndexFromItem(item);
-    if (ind != null && state.numbers[ind].steps.last.floor == item) {
-      var filling = state.numbers[ind].filling;
-      if (filling != null) {
-        filling.updateSize(Offset(0, delta), 200);
-      }
-    }
-  }
-
   void animateNeigboringFillings(int ind, bool animateIn) {
     var number = state.numbers[ind];
     var filling = number.filling;

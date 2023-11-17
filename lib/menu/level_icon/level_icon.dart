@@ -4,9 +4,16 @@ import 'package:matma/menu/level_icon/cubit/level_icon_cubit.dart';
 
 class LevelButton extends StatelessWidget {
   const LevelButton(
-      {super.key, required this.unlocked, required this.minature, this.onTap});
+      {super.key,
+      required this.unlocked,
+      required this.minature,
+      this.onTap,
+      required this.text,
+      this.textColor});
   final bool unlocked;
   final Widget minature;
+  final String text;
+  final Color? textColor;
   final void Function()? onTap;
 
   @override
@@ -59,7 +66,19 @@ class LevelButton extends StatelessWidget {
                               padding: const EdgeInsets.all(20.0),
                               child: FittedBox(
                                 fit: BoxFit.contain,
-                                child: minature,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    minature,
+                                    Text(
+                                      text,
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
                               ),
                             )),
                         unlocked

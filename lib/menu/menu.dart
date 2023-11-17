@@ -46,177 +46,55 @@ class PickMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // LevelButton(
-        //   unlocked: true,
-        //   onTap: () {
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => const Tutorial()));
-        //   },
-        //   minature: const Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: [
-        //       Icon(
-        //         Icons.fitness_center_outlined,
-        //         size: 150,
-        //       ),
-        //       Text(
-        //         'Tutorial',
-        //         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        //       )
-        //     ],
-        //   ),
-        // ),
-        // const SizedBox(width: 30),
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Level1()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.add_box_outlined,
-                size: 150,
-              ),
-              Text(
-                'Poziom 1',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(width: 30),
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Level2()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.developer_board_rounded,
-                size: 150,
-              ),
-              Text(
-                'Poziom 2',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(width: 30),
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Level3()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.route_rounded,
-                size: 150,
-              ),
-              Text(
-                'Poziom 3',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(width: 30),
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Level4()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.call_split_rounded,
-                size: 150,
-              ),
-              Text(
-                'Poziom 4',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(width: 30),
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Level5()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.join_full_rounded,
-                size: 150,
-              ),
-              Text(
-                'Poziom 5',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(width: 30),
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Level6()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.reduce_capacity_rounded,
-                size: 150,
-              ),
-              Text(
-                'Poziom 6',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(width: 30),
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Level7()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.area_chart_rounded,
-                size: 150,
-              ),
-              Text(
-                'Poziom 7',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
+        _ClassicLevelButton(
+            icon: Icons.add_box_outlined, text: 'Poziom 1', level: Level1()),
+        SizedBox(width: 30),
+        _ClassicLevelButton(
+            icon: Icons.developer_board_rounded,
+            text: 'Poziom 2',
+            level: Level2()),
+        SizedBox(width: 30),
+        _ClassicLevelButton(
+            icon: Icons.route_rounded, text: 'Poziom 3', level: Level3()),
+        SizedBox(width: 30),
+        _ClassicLevelButton(
+            icon: Icons.call_split_rounded, text: 'Poziom 4', level: Level4()),
+        SizedBox(width: 30),
+        _ClassicLevelButton(
+            icon: Icons.join_full_rounded, text: 'Poziom 5', level: Level5()),
+        SizedBox(width: 30),
+        _ClassicLevelButton(
+            icon: Icons.reduce_capacity_rounded,
+            text: 'Poziom 6',
+            level: Level6()),
+        SizedBox(width: 30),
+        _ClassicLevelButton(
+            icon: Icons.area_chart_rounded, text: 'Poziom 7', level: Level7()),
       ],
+    );
+  }
+}
+
+class _ClassicLevelButton extends StatelessWidget {
+  final Widget level;
+  final IconData icon;
+  final String text;
+
+  const _ClassicLevelButton(
+      {super.key, required this.level, required this.icon, required this.text});
+  @override
+  Widget build(BuildContext context) {
+    return LevelButton(
+      unlocked: true,
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => level));
+      },
+      minature: Icon(icon, size: 150),
+      text: text,
+      textColor: Colors.black87,
     );
   }
 }

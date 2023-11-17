@@ -104,22 +104,12 @@ class _SummaryNextButton extends StatelessWidget {
               context, MaterialPageRoute(builder: (context) => next!));
         }
       },
-      minature: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.keyboard_double_arrow_right_rounded,
-            size: 150,
-          ),
-          Text(
-            'Następny',
-            style: TextStyle(
-                fontSize: 30,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold),
-          )
-        ],
+      minature: const Icon(
+        Icons.keyboard_double_arrow_right_rounded,
+        size: 150,
       ),
+      text: 'Następny',
+      textColor: Colors.black87,
     );
   }
 }
@@ -134,22 +124,12 @@ class _SummaryMenuButton extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
       },
-      minature: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.home_filled,
-            size: 150,
-          ),
-          Text(
-            'Menu',
-            style: TextStyle(
-                fontSize: 30,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold),
-          )
-        ],
+      minature: const Icon(
+        Icons.home_filled,
+        size: 150,
       ),
+      text: 'Menu',
+      textColor: Colors.black87,
     );
   }
 }
