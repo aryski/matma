@@ -81,8 +81,8 @@ extension NumberSplitJoiner on StepsGameBloc {
     }
     var id = state.getNumberIndexFromItem(item);
     if (id != null && state.numbers[id].steps.last.floor != item) {
-      state.numbers[id].filling
-          ?.updatePositionDelayed(Offset(delta, 0), const Duration(milliseconds: 20));
+      state.numbers[id].filling?.updatePositionDelayed(
+          Offset(delta, 0), const Duration(milliseconds: 20));
     }
   }
 

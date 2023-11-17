@@ -36,7 +36,6 @@ class Floor extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<FloorCubit, FloorState>(
         builder: (context, state) {
-          print(state.isHovered);
           return DefaultGameItemAnimations(
             initialState: initialState,
             state: state,

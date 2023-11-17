@@ -84,7 +84,7 @@ var _taskB2 = Task(instructions: [
 var _taskC1 = Task(
   instructions: [
     NextMsg(text: 'Znowu dojdź do obrazka w tle.', seconds: 7),
-    NextMsg(text: 'Uźyj złotych.')
+    NextMsg(text: 'Użyj złotych.')
   ],
   onEvents: [
     OnEvent(

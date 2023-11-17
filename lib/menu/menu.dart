@@ -5,7 +5,8 @@ import 'package:matma/levels/levels/level2.dart';
 import 'package:matma/levels/levels/level3.dart';
 import 'package:matma/levels/levels/level4.dart';
 import 'package:matma/levels/levels/level5.dart';
-import 'package:matma/levels/levels/tutorial.dart';
+import 'package:matma/levels/levels/level6.dart';
+import 'package:matma/levels/levels/level7.dart';
 import 'package:matma/menu/level_icon/level_icon.dart';
 
 class Menu extends StatelessWidget {
@@ -48,27 +49,27 @@ class PickMenu extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LevelButton(
-          unlocked: true,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Tutorial()));
-          },
-          minature: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.fitness_center_outlined,
-                size: 150,
-              ),
-              Text(
-                'Tutorial',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(width: 30),
+        // LevelButton(
+        //   unlocked: true,
+        //   onTap: () {
+        //     Navigator.push(context,
+        //         MaterialPageRoute(builder: (context) => const Tutorial()));
+        //   },
+        //   minature: const Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Icon(
+        //         Icons.fitness_center_outlined,
+        //         size: 150,
+        //       ),
+        //       Text(
+        //         'Tutorial',
+        //         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        //       )
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(width: 30),
         LevelButton(
           unlocked: true,
           onTap: () {
@@ -168,6 +169,48 @@ class PickMenu extends StatelessWidget {
               ),
               Text(
                 'Poziom 5',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(width: 30),
+        LevelButton(
+          unlocked: true,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Level6()));
+          },
+          minature: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.join_full_rounded,
+                size: 150,
+              ),
+              Text(
+                'Poziom 6',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(width: 30),
+        LevelButton(
+          unlocked: true,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Level7()));
+          },
+          minature: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.follow_the_signs_rounded,
+                size: 150,
+              ),
+              Text(
+                'Poziom 7',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               )
             ],

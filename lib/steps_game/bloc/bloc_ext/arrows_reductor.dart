@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
+import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:flutter/material.dart';
@@ -18,16 +19,18 @@ extension ArrowsReductor on StepsGameBloc {
     animateLeftFilling(item, false);
     animateRightFilling(item, false);
     await reduceStepAndStepToTheRight(state.getStep(item), 200);
-
-    if (number != null && number.filling != null) {
-      for (int i = number.steps.length - 1; i >= 0; i--) {
-        var step = number.steps[i];
-        var rightStep = state.rightStep(step);
-        if (rightStep != null) {
-          await reduceStepAndStepToTheRight(step, i == 0 ? 150 : 70);
+    if (allowedOps.contains(StepsGameOps.reducingArrowsCascadedly)) {
+      if (number != null && number.filling != null) {
+        for (int i = number.steps.length - 1; i >= 0; i--) {
+          var step = number.steps[i];
+          var rightStep = state.rightStep(step);
+          if (rightStep != null) {
+            await reduceStepAndStepToTheRight(step, i == 0 ? 150 : 70);
+          }
         }
       }
     }
+
     taskCubit.merged();
     generateFillings();
     // beforeEmit();

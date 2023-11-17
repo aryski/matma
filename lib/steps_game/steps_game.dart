@@ -227,7 +227,9 @@ class RawStepsGame extends StatelessWidget {
                 }
               }
               for (var value in state.unorderedItems.values) {
-                items.add(value);
+                if (value is! FillingCubit) {
+                  items.add(value);
+                }
               }
 
               return Stack(clipBehavior: Clip.hardEdge, children: [
@@ -240,11 +242,9 @@ class RawStepsGame extends StatelessWidget {
                       );
                     } else if (cubit is FloorCubit) {
                       return Floor(cubit: cubit, key: cubit.state.id);
-                    }
-                    // else if (cubit is FillingCubit) {
-                    //   return Filling(cubit: cubit, key: cubit.state.id);
-                    // }
-                    else {
+                    } else if (cubit is FillingCubit) {
+                      return Filling(cubit: cubit, key: cubit.state.id);
+                    } else {
                       return const SizedBox.shrink();
                     }
                   },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
+import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
@@ -83,8 +84,10 @@ extension FillingUpdater on StepsGameBloc {
   }
 
   void generateFillings() {
-    for (int i = 0; i < state.numbers.length; i++) {
-      updateFilling(state, i);
+    if (allowedOps.contains(StepsGameOps.reducingArrowsCascadedly)) {
+      for (int i = 0; i < state.numbers.length; i++) {
+        updateFilling(state, i);
+      }
     }
   }
 

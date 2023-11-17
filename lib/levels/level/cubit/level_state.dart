@@ -24,6 +24,7 @@ enum StepsGameOps {
   reduceArrows,
   splitJoinArrows,
   addOppositeArrow,
+  reducingArrowsCascadedly
 }
 
 class StepsGameData extends GameData {

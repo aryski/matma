@@ -33,12 +33,13 @@ class GameItemCubit<T extends GameItemState> extends Cubit<T> {
   }
 
   void hoverStart() {
-    print("hover started");
+    print("hover started ${state.id}");
+
     emit(state.copyWith(isHovered: true) as T);
   }
 
   void hoverEnd() {
-    print("hover ended");
+    print("hover ended  ${state.id}");
     emit(state.copyWith(isHovered: false) as T);
   }
 }

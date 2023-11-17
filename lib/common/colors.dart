@@ -20,10 +20,8 @@ int _reduceNegative(int value) {
 }
 
 Color darkenColor(Color color, int delta) {
-  print(color);
   int red = _reduceNegative(color.red - delta);
   int blue = _reduceNegative(color.blue - delta);
   int green = _reduceNegative(color.green - delta);
-  print(Color.fromARGB(255, red, green, blue));
   return Color.fromARGB(255, red, green, blue);
 }

@@ -1,4 +1,3 @@
-import 'package:bloc/src/change.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
@@ -35,13 +34,5 @@ class FloorCubit extends GameItemCubit<FloorState> {
         size: AnimatedProp(
             value: state.size.value + Offset(delta.dx, delta.dy),
             duration: milliseconds)));
-  }
-
-  @override
-  void onChange(Change<FloorState> change) {
-    // TODO: implement onChange
-    print("next state");
-    print(change.nextState.isHovered);
-    super.onChange(change);
   }
 }

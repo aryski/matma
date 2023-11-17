@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
+import 'package:matma/levels/levels/level6.dart';
 import 'package:matma/quests/game_events/game_events.dart';
 import 'package:matma/quests/task.dart';
 
-// Level 4
-// Matching steps to equation.
+// Level 5
+// Joining numbers.
 //Zadanie 4
 //Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
 //błąd w steps game blocu z łączeniem jak jest -1,-1,-1 i pierwsze dwie laczymy wychodzi 3-3 xD
@@ -14,6 +15,7 @@ class Level5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Level(
+      next: const Level6(),
       data: LevelData(
         name: 'Level5',
         gamesData: [

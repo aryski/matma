@@ -65,12 +65,15 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
     }, transformer: sequential());
 
     on<StepsGameEventPopFilling>((event, emit) async {
-      var item = state.getItem(event.id);
-      if (item is FillingCubit) {
-        var number = state.getNumberFromItem(item);
-        if (number != null && number.steps.isNotEmpty) {
-          var floor = number.steps.last.floor;
-          await handleReduction(floor, -floor.state.size.value.dx, state, emit);
+      if (allowedOps.contains(StepsGameOps.reducingArrowsCascadedly)) {
+        var item = state.getItem(event.id);
+        if (item is FillingCubit) {
+          var number = state.getNumberFromItem(item);
+          if (number != null && number.steps.isNotEmpty) {
+            var floor = number.steps.last.floor;
+            await handleReduction(
+                floor, -floor.state.size.value.dx, state, emit);
+          }
         }
       }
     }, transformer: sequential());
