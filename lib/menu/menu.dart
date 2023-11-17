@@ -101,7 +101,7 @@ class PickMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.wind_power_rounded,
+                Icons.developer_board_rounded,
                 size: 150,
               ),
               Text(
@@ -122,7 +122,7 @@ class PickMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.rocket_rounded,
+                Icons.route_rounded,
                 size: 150,
               ),
               Text(
@@ -143,7 +143,7 @@ class PickMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.handyman_rounded,
+                Icons.call_split_rounded,
                 size: 150,
               ),
               Text(
@@ -164,7 +164,7 @@ class PickMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.control_point_duplicate_outlined,
+                Icons.join_full_rounded,
                 size: 150,
               ),
               Text(
@@ -185,7 +185,7 @@ class PickMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.join_full_rounded,
+                Icons.reduce_capacity_rounded,
                 size: 150,
               ),
               Text(
@@ -206,7 +206,7 @@ class PickMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.follow_the_signs_rounded,
+                Icons.area_chart_rounded,
                 size: 150,
               ),
               Text(
