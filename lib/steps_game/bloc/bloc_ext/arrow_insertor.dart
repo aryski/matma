@@ -9,7 +9,7 @@ import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/quests/cubit/quests_cubit.dart';
+import 'package:matma/prompts/cubit/quests_cubit.dart';
 
 extension ArrowInsertor on StepsGameBloc {
   Future<void> handleArrowInsertion(

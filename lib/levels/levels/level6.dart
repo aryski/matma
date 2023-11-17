@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
 import 'package:matma/levels/levels/level7.dart';
-import 'package:matma/quests/game_events/game_events.dart';
-import 'package:matma/quests/task.dart';
+import 'package:matma/prompts/game_events/game_events.dart';
+import 'package:matma/prompts/task.dart';
 
 // Level 6
 // Reducing numbers.
@@ -20,9 +20,6 @@ class Level6 extends StatelessWidget {
           StepsGameData(
             allowedOps: [
               StepsGameOps.splitJoinArrows,
-              StepsGameOps.addArrowUp,
-              StepsGameOps.addArrowDown,
-              StepsGameOps.addOppositeArrow,
               StepsGameOps.reduceArrows
             ],
             initNumbers: [2, -1],
@@ -31,9 +28,6 @@ class Level6 extends StatelessWidget {
           StepsGameData(
             allowedOps: [
               StepsGameOps.splitJoinArrows,
-              StepsGameOps.addArrowUp,
-              StepsGameOps.addArrowDown,
-              StepsGameOps.addOppositeArrow,
               StepsGameOps.reduceArrows
             ],
             initNumbers: [4, -3],
@@ -42,9 +36,6 @@ class Level6 extends StatelessWidget {
           StepsGameData(
             allowedOps: [
               StepsGameOps.splitJoinArrows,
-              StepsGameOps.addArrowUp,
-              StepsGameOps.addArrowDown,
-              StepsGameOps.addOppositeArrow,
               StepsGameOps.reduceArrows
             ],
             initNumbers: [-4, 3],
@@ -52,9 +43,6 @@ class Level6 extends StatelessWidget {
           ),
           StepsGameData(allowedOps: [
             StepsGameOps.splitJoinArrows,
-            StepsGameOps.addArrowUp,
-            StepsGameOps.addArrowDown,
-            StepsGameOps.addOppositeArrow,
             StepsGameOps.reduceArrows
           ], initNumbers: [
             1,

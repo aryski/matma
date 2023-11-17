@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
 import 'package:matma/levels/levels/level5.dart';
-import 'package:matma/quests/game_events/game_events.dart';
-import 'package:matma/quests/task.dart';
+import 'package:matma/prompts/game_events/game_events.dart';
+import 'package:matma/prompts/task.dart';
 
 // Level 4
-// Matching steps to equation.
+// Splitting numbers.
 //Zadanie 4
 //Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
 class Level4 extends StatelessWidget {

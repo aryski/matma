@@ -1,4 +1,4 @@
-import 'package:matma/quests/game_events/game_events.dart';
+import 'package:matma/prompts/game_events/game_events.dart';
 
 class OnEvent {
   final GameEvent requiredEvent;

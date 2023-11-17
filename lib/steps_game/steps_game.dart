@@ -17,9 +17,9 @@ import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor.dart';
-import 'package:matma/quests/cubit/quests_cubit.dart';
-import 'package:matma/quests/task.dart';
-import 'package:matma/quests/task_simulator.dart';
+import 'package:matma/prompts/cubit/quests_cubit.dart';
+import 'package:matma/prompts/task.dart';
+import 'package:matma/prompts/task_simulator.dart';
 
 class StepsGame extends StatelessWidget {
   const StepsGame({super.key, required this.data});

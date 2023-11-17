@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/quests/task.dart';
+import 'package:matma/prompts/task.dart';
 
 part 'level_state.dart';
 
