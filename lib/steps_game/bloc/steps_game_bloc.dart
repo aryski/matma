@@ -13,7 +13,7 @@ import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/prompts/cubit/quests_cubit.dart';
+import 'package:matma/prompts/cubit/prompts_cubit.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 part 'steps_game_event.dart';
@@ -48,7 +48,7 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   final EquationBloc board;
   final GameSize gs;
   final List<UniqueKey> lockedIds = [];
-  final QuestsCubit taskCubit;
+  final PromptsCubit taskCubit;
   DateTime downClick = DateTime.timestamp();
   @override
   StepsGameBloc(this.gs, this.board, this.taskCubit, this.allowedOps)

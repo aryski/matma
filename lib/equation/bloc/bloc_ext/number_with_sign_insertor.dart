@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:matma/equation/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/equation/items/number/cubit/number_cubit.dart';
-import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
+part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension NumberWithSignInsertor on EquationBloc {
   void insertNumberWithSignAfterItem(
@@ -13,9 +8,10 @@ extension NumberWithSignInsertor on EquationBloc {
       if (item == previousItem) {
         var numberState = BoardItemsGenerator.generateNumberState(
             number: value,
-            position: Offset(previousItem.position.dx + gs.wUnit * 1.5,
+            position: Offset(
+                previousItem.position.dx + gs.wUnit * constants.signRatio.dx,
                 previousItem.position.dy),
-            opacity: 0,
+            opacity: constants.opacityNone,
             gs: gs);
         var numberCubit = NumberCubit(numberState);
 
@@ -23,17 +19,17 @@ extension NumberWithSignInsertor on EquationBloc {
             sign: value > 0 ? Signs.addition : Signs.substraction,
             position:
                 Offset(previousItem.position.dx, previousItem.position.dy),
-            opacity: 0,
+            opacity: constants.opacityNone,
             gs: gs);
         var signCubit = SignCubit(signState);
         var myItem = EquationDefaultItem(sign: signCubit, number: numberCubit);
         state.items.insert(i + 1, myItem);
-        numberCubit.updatePositionDelayed(
-            Offset(previousItem.width, 0), const Duration(milliseconds: 20));
-        signCubit.updatePositionDelayed(
-            Offset(previousItem.width, 0), const Duration(milliseconds: 20));
-        numberCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
-        signCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
+        numberCubit.updatePosition(Offset(previousItem.width, 0),
+            delayInMillis: constants.smallDelayInMillis);
+        signCubit.updatePosition(Offset(previousItem.width, 0),
+            delayInMillis: constants.smallDelayInMillis);
+        numberCubit.setOpacity(1, delayInMillis: constants.smallDelayInMillis);
+        signCubit.setOpacity(1, delayInMillis: constants.smallDelayInMillis);
         spread(myItem, myItem.width);
         break;
       }
@@ -49,17 +45,16 @@ extension NumberWithSignInsertor on EquationBloc {
             number: value,
             position:
                 Offset(previousItem.position.dx, previousItem.position.dy),
-            opacity: 0,
+            opacity: constants.opacityNone,
             gs: gs);
         var numberCubit = NumberCubit(numberState);
-
         var myItem = EquationDefaultItem(sign: null, number: numberCubit);
+
         state.items.insert(i + 1, myItem);
-        numberCubit.updatePositionDelayed(
-            Offset(previousItem.width, 0), const Duration(milliseconds: 20));
-
-        numberCubit.setOpacityDelayed(1, const Duration(milliseconds: 20));
-
+        numberCubit.updatePosition(Offset(previousItem.width, 0),
+            delayInMillis: constants.smallDelayInMillis);
+        numberCubit.setOpacity(constants.opacityFull,
+            delayInMillis: constants.smallDelayInMillis);
         spread(myItem, myItem.width);
         break;
       }

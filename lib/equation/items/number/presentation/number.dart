@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
-import 'package:matma/common/items/game_item/default_game_item_animations.dart';
+import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 
@@ -11,7 +11,7 @@ class Number extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NumberState initialState = cubit.state.copy();
+    NumberState initialState = cubit.state.copyWith();
 
     return BlocProvider<NumberCubit>(
       create: (context) => cubit,
@@ -57,8 +57,8 @@ class Number extends StatelessWidget {
                                                 ? defaultBackground
                                                 : defaultBackground)
                                             : ((state.sign == Signs.addition)
-                                                ? defaultGreen
-                                                : defaultRed),
+                                                ? defGreen
+                                                : defRed),
                                         fontWeight: FontWeight.bold,
                                         fontSize: state.size.value.dx *
                                             MediaQuery.of(context).size.width),

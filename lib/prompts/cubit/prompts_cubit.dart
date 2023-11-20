@@ -5,15 +5,15 @@ import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/prompts/items/line/cubit/line_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/prompts/cubit/quests_state.dart';
+import 'package:matma/prompts/cubit/prompts_state.dart';
 import 'package:matma/prompts/game_events/game_events.dart';
 import 'package:matma/prompts/task.dart';
 
-class QuestsCubit extends Cubit<QuestsState> {
+class PromptsCubit extends Cubit<PromptsState> {
   final LevelCubit parent;
-  QuestsCubit(this.firstTask, this.parent)
+  PromptsCubit(this.firstTask, this.parent)
       : currentTask = firstTask,
-        super(QuestsState(lines: [])) {
+        super(PromptsState(lines: [])) {
     addLine("");
     planTask(firstTask);
   }
@@ -73,15 +73,15 @@ class QuestsCubit extends Cubit<QuestsState> {
       if (instruction is NextMsg) {
         if (currentInd == ind) {
           addLine(instruction.text);
-          if (instruction.time != Duration.zero) {
-            await Future.delayed(instruction.time);
+          if (instruction.milliseconds != Duration.zero) {
+            await Future.delayed(instruction.milliseconds);
           }
         } else {
           break;
         }
       } else if (instruction is EndMsg) {
         parent.nextGame();
-        addLine("Koniec zabawy.");
+        addLine("");
       }
     }
   }
@@ -107,8 +107,7 @@ class QuestsCubit extends Cubit<QuestsState> {
         opacity: AnimatedProp.zero(value: 0.0),
         radius: 15.0));
 
-    newLine.setOpacityDelayed(1.0, const Duration(milliseconds: 20),
-        milliseconds: 400);
+    newLine.setOpacity(1.0, delayInMillis: 20, milliseconds: 400);
     emit(state.copyWith(lines: [...state.lines, newLine]));
   }
 }

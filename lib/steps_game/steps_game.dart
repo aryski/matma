@@ -17,7 +17,7 @@ import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor.dart';
-import 'package:matma/prompts/cubit/quests_cubit.dart';
+import 'package:matma/prompts/cubit/prompts_cubit.dart';
 import 'package:matma/prompts/task.dart';
 import 'package:matma/prompts/task_simulator.dart';
 
@@ -30,7 +30,7 @@ class StepsGame extends StatelessWidget {
     List<UniqueKey> blockedIds = [];
     var gs = const GameSize(hUnits: 18, wUnits: 66);
     final taskCubit =
-        QuestsCubit(data.firstTask, BlocProvider.of<LevelCubit>(context));
+        PromptsCubit(data.firstTask, BlocProvider.of<LevelCubit>(context));
     final eqCubit = EquationBloc(
         init: EquationState(),
         gs: gs,
@@ -45,7 +45,7 @@ class StepsGame extends StatelessWidget {
           providers: [
             BlocProvider<StepsGameBloc>(create: (context) => bloc),
             BlocProvider<EquationBloc>(create: (context) => eqCubit),
-            BlocProvider<QuestsCubit>(create: (context) => taskCubit)
+            BlocProvider<PromptsCubit>(create: (context) => taskCubit)
           ],
           child: StepsSimulatorContent(
             gs: gs,
@@ -173,7 +173,7 @@ class ShadedRawStepsGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskCubit = QuestsCubit(Task(instructions: [], onEvents: []),
+    final taskCubit = PromptsCubit(Task(instructions: [], onEvents: []),
         BlocProvider.of<LevelCubit>(context));
 
     final eqCubit =
@@ -249,33 +249,24 @@ class RawStepsGame extends StatelessWidget {
                     }
                   },
                 ),
-                ...items.map(
-                  (cubit) {
-                    if (cubit is FillingCubit) {
-                      return Filling(cubit: cubit, key: cubit.state.id);
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-                ...items.map(
-                  (cubit) {
-                    if (cubit is FloorCubit) {
-                      return Floor(cubit: cubit, key: cubit.state.id);
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-                ...items.map(
-                  (cubit) {
-                    if (cubit is ArrowCubit) {
-                      return Arrow(cubit: cubit, key: cubit.state.id);
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
+                ...items.whereType<FillingCubit>().map(
+                      (cubit) => Filling(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                      ),
+                    ),
+                ...items.whereType<FloorCubit>().map(
+                      (cubit) => Floor(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                      ),
+                    ),
+                ...items.whereType<ArrowCubit>().map(
+                      (cubit) => Arrow(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                      ),
+                    ),
               ]);
             },
           ),

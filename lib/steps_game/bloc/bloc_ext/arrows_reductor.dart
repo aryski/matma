@@ -70,7 +70,8 @@ extension ArrowsReductor on StepsGameBloc {
       e.setOpacity(0, milliseconds: milliseconds);
     }
     var delta = -floor.state.size.value.dx;
-    floor.updateSize(Offset(delta + gs.wUnit / 4, 0), milliseconds);
+    floor.updateSize(Offset(delta + gs.wUnit / 4, 0),
+        milliseconds: milliseconds);
     print("REDUCTOR");
 
     state.updatePositionSince(
@@ -101,7 +102,8 @@ extension ArrowsReductor on StepsGameBloc {
         rightStep.floor.state.size.value.dx - gs.wUnit / 2 + gs.wUnit / 4;
 
     if (leftStep != null && !state.isLastItem(rightStep.floor)) {
-      leftStep.floor.updateSize(Offset(inheritedWidth, 0), milliseconds);
+      leftStep.floor
+          .updateSize(Offset(inheritedWidth, 0), milliseconds: milliseconds);
     }
     if (state.isFirstStep(step)) {
       state.updatePositionSince(
@@ -110,8 +112,8 @@ extension ArrowsReductor on StepsGameBloc {
               -rightStep.floor.state.size.value.dx + 1 / 2 * gs.wUnit, 0),
           milliseconds: milliseconds);
     }
-    rightStep.floor.updateSize(
-        Offset(-rightStep.floor.state.size.value.dx, 0), milliseconds);
+    rightStep.floor.updateSize(Offset(-rightStep.floor.state.size.value.dx, 0),
+        milliseconds: milliseconds);
     rightStep.floor.setOpacity(0);
   }
 
@@ -132,7 +134,7 @@ extension ArrowsReductor on StepsGameBloc {
     if (leftStep != null && state.isLastItem(leftStep.floor)) {
       leftStep.floor.updateSize(
           Offset(-leftStep.floor.state.size.value.dx + 1.25 * gs.wUnit, 0),
-          200);
+          milliseconds: 200);
       leftStep.floor.setLastInGame();
     }
   }

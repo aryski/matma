@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/menu/level_icon/cubit/level_icon_cubit.dart';
 
-class LevelButton extends StatelessWidget {
-  const LevelButton(
+class SquareButton extends StatelessWidget {
+  const SquareButton(
       {super.key,
       required this.unlocked,
       required this.minature,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_color_animation_builder.dart';
-import 'package:matma/common/items/game_item/default_game_item_animations.dart';
+import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
@@ -10,17 +10,17 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor_gesture_detector.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor_painter.dart';
 
-Color _colorGen(FloorState state) {
+Color _colorGen(FloorState state, bool isHovered) {
   if (state.isLastInGame) {
-    return defaultYellow;
+    return isHovered ? shadyDefYellow : defYellow;
   } else if (state.isLastInNumber) {
-    return defaultGrey;
+    return isHovered ? shadyDefGrey : defGrey;
   } else if (state.direction == Direction.up) {
-    return darkenColor(defaultGreen, 60);
+    return isHovered ? shadyDarkGreen : darkGreen;
   } else if (state.direction == Direction.down) {
-    return darkenColor(defaultRed, 60);
+    return isHovered ? shadyDarkRed : darkRed;
   } else {
-    return defaultGrey;
+    return defGrey;
   }
 }
 
@@ -43,12 +43,9 @@ class Floor extends StatelessWidget {
               return FloorGestureDetector(
                   id: state.id,
                   child: DefaultColorAnimationBuilder(
-                    initial: initialState.isHovered
-                        ? darkenColor(_colorGen(state), 20)
-                        : _colorGen(state),
-                    updated: state.isHovered
-                        ? darkenColor(_colorGen(state), 20)
-                        : _colorGen(state),
+                    duration: const Duration(milliseconds: 400),
+                    initial: _colorGen(state, initialState.isHovered),
+                    updated: _colorGen(state, state.isHovered),
                     builder: (context, color, child) {
                       return CustomPaint(
                         size: Size(constrains.maxWidth, constrains.maxHeight),
@@ -56,7 +53,7 @@ class Floor extends StatelessWidget {
                           constrains.maxWidth,
                           constrains.maxHeight,
                           state.radius * MediaQuery.of(context).size.width,
-                          color ?? defaultGrey,
+                          color ?? defGrey,
                         ),
                       );
                     },

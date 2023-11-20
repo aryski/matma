@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_color_animation_builder.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
-import 'package:matma/common/items/game_item/default_game_item_animations.dart';
+import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling_gesture_detector.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling_painter.dart';
@@ -34,10 +34,10 @@ class Filling extends StatelessWidget {
                         child: DefaultColorAnimationBuilder(
                           duration: const Duration(milliseconds: 50),
                           initial: initialState.isHovered
-                              ? darkenColor(defaultEquator, 5)
+                              ? shadyDefEquator
                               : defaultEquator,
                           updated: state.isHovered
-                              ? darkenColor(defaultEquator, 5)
+                              ? shadyDefEquator
                               : defaultEquator,
                           builder: (context, color, child) {
                             return CustomPaint(
@@ -54,7 +54,7 @@ class Filling extends StatelessWidget {
                                     MediaQuery.of(context).size.width,
                                 radius: state.radius *
                                     MediaQuery.of(context).size.width,
-                                color: color ?? defaultGrey,
+                                color: color ?? defGrey,
                               ),
                             );
                           },

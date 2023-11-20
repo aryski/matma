@@ -1,19 +1,24 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/equation/bloc/bloc_ext/number_with_sign_insertor.dart';
-
-import 'package:matma/equation/bloc/bloc_ext/resetter.dart';
-import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
-import 'package:matma/equation/bloc/bloc_ext/remover.dart';
-import 'package:matma/equation/bloc/bloc_ext/reducer.dart';
-import 'package:matma/equation/bloc/bloc_ext/shadow_numbers_generator.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
+import 'package:matma/equation/constants.dart' as constants;
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
+import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
+import 'package:matma/equation/items/board/cubit/board_cubit.dart';
+import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 
 part 'equation_event.dart';
 part 'equation_state.dart';
+part 'bloc_ext/items_generator.dart';
+part 'bloc_ext/number_with_sign_insertor.dart';
+part 'bloc_ext/reducer.dart';
+part 'bloc_ext/remover.dart';
+part 'bloc_ext/resetter.dart';
+part 'bloc_ext/resizer.dart';
+part 'bloc_ext/shadow_numbers_generator.dart';
 
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final EquationState init;

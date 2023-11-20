@@ -9,14 +9,14 @@ import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/prompts/cubit/quests_cubit.dart';
+import 'package:matma/prompts/cubit/prompts_cubit.dart';
 
 extension ArrowInsertor on StepsGameBloc {
   Future<void> handleArrowInsertion(
       StepsGameEventClickUp event,
       Emitter<StepsGameState> emit,
       EquationBloc board,
-      QuestsCubit taskCubit) async {
+      PromptsCubit taskCubit) async {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       bool isUp = (item.state.direction == Direction.up);
@@ -77,7 +77,7 @@ extension ArrowInsertor on StepsGameBloc {
   void _animateNewStep(StepsGameDefaultItem newStep, int milliseconds) {
     newStep.arrow.animate(1);
     var delta = gs.wUnit;
-    newStep.floor.updateSize(Offset(delta, 0), milliseconds);
+    newStep.floor.updateSize(Offset(delta, 0), milliseconds: milliseconds);
     state.updatePositionSince(
         item: newStep.floor,
         offset: Offset(delta, 0),

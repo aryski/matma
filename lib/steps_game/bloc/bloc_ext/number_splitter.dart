@@ -13,7 +13,7 @@ extension NumberSplitter on StepsGameBloc {
     delta = guardDeltaSize(
         currentW: item.state.size.value.dx, delta: delta, minW: gs.floorW);
     if (delta != 0) taskCubit.scrolled();
-    item.updateSize(Offset(delta, 0), 200);
+    item.updateSize(Offset(delta, 0), milliseconds: 200);
     var newW = item.state.size.value.dx;
     int? numberInd = state.getNumberIndexFromItem(item);
     if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
@@ -56,8 +56,8 @@ extension NumberSplitter on StepsGameBloc {
     }
     var id = state.getNumberIndexFromItem(item);
     if (id != null && state.numbers[id].steps.last.floor != item) {
-      state.numbers[id].filling?.updatePositionDelayed(
-          Offset(delta, 0), const Duration(milliseconds: 20));
+      state.numbers[id].filling
+          ?.updatePosition(Offset(delta, 0), delayInMillis: 20);
     }
   }
 }

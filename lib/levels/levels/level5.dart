@@ -97,7 +97,7 @@ var _taskB2 = Task(instructions: [
 var _taskC1 = Task(
   instructions: [
     NextMsg(text: 'No i zwijamy wszystko', seconds: 1.5),
-    NextMsg(text: 'Szare mają być krótie', seconds: 1.5),
+    NextMsg(text: 'Szare mają być kolorowe', seconds: 1.5),
     NextMsg(text: 'Ma powstać 3-3.', seconds: 5),
     NextMsg(text: 'Scrolluj szare, w końcu się uda.'),
   ],

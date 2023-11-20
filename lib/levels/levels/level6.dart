@@ -79,7 +79,7 @@ var _taskA2 = Task(instructions: [
 
 var _taskB1 = Task(
   instructions: [
-    NextMsg(text: 'Teraz zrobimy to samo kilka razy.', seconds: 3),
+    NextMsg(text: 'Teraz zrobimy to samo kilka razy.', seconds: 2),
     NextMsg(text: 'Scrolluj szare pomiędzy zielonym i czerwonym.', seconds: 3),
     NextMsg(text: 'Aż zostanie sama 1.', seconds: 5),
     NextMsg(text: 'Scrolluj w dół szare pomiędzy zielonym i czerwonym.'),

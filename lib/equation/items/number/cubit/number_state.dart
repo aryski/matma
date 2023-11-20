@@ -18,21 +18,6 @@ class NumberState extends GameItemState {
   }) : assert(value >= 0);
 
   @override
-  NumberState copy() {
-    return NumberState(
-      withDarkenedColor: withDarkenedColor,
-      sign: sign,
-      value: value,
-      id: id,
-      position: position,
-      size: size,
-      opacity: opacity,
-      radius: radius,
-      textKey: textKey,
-    );
-  }
-
-  @override
   NumberState copyWith(
       {UniqueKey? id,
       AnimatedProp<Offset>? position,

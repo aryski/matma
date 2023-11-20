@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
-import 'package:matma/equation/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/equation/items/board/cubit/board_cubit.dart';
-import 'package:matma/equation/items/number/cubit/number_cubit.dart';
-import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
+part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Resetter on EquationBloc {
   static EquationState hardResetState(
@@ -35,7 +26,7 @@ extension Resetter on EquationBloc {
     double totaldx = result.$1;
     List<GameItemState> states = result.$2;
 
-    var allMargin = (widthSpace - totaldx) / 2 - gs.wUnit / 6.7;
+    var allMargin = (widthSpace - totaldx) / 2;
     SignCubit? lastSignCubit;
     for (var state in states) {
       state = state.copyWith(
@@ -49,7 +40,7 @@ extension Resetter on EquationBloc {
         lastSignCubit = null;
       }
     }
-    var x = 0.02;
+    var x = 0.02; //padding TODO
     var boardCubit = BoardCubit(BoardItemsGenerator.generateBoardState(
         position: Offset(allMargin - x / 2, top),
         size: Offset(totaldx + x, gs.hUnit * 2)));

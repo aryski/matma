@@ -12,7 +12,7 @@ extension NumberSplitJoiner on StepsGameBloc {
     delta = guardDeltaSize(
         currentW: item.state.size.value.dx, delta: delta, minW: gs.floorW);
     if (delta != 0) taskCubit.scrolled();
-    item.updateSize(Offset(delta, 0), 200);
+    item.updateSize(Offset(delta, 0), delayInMillis: 20, milliseconds: 200);
     int? numberInd = state.getNumberIndexFromItem(item);
     if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
       if (item.state.size.value.dx <= gs.floorW) {

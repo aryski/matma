@@ -81,7 +81,7 @@ extension FillingUpdater on StepsGameBloc {
           var n = state.numbers[ind].number;
           if (state.numbers[ind].filling == null) {
             FillingCubit filling = generateFilling(n, floorState, gs);
-            filling.setOpacityDelayed(1.0, const Duration(milliseconds: 200));
+            filling.setOpacity(1.0, delayInMillis: 200);
             state.numbers[ind].setFilling(filling);
           }
         }

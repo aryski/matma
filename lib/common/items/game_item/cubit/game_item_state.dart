@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 
 abstract class GameItemState {
-  UniqueKey id;
-  AnimatedProp<Offset> position;
-  AnimatedProp<Offset> size;
-  bool isHovered;
-  AnimatedProp<double> opacity;
-  double radius;
+  final UniqueKey id;
+  final AnimatedProp<Offset> position;
+  final AnimatedProp<Offset> size;
+  final bool isHovered;
+  final AnimatedProp<double> opacity;
+  final double radius;
 
   GameItemState(
       {required this.id,

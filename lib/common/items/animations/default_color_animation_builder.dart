@@ -6,7 +6,7 @@ class DefaultColorAnimationBuilder extends StatelessWidget {
     required this.initial,
     required this.updated,
     required this.builder,
-    this.duration = const Duration(milliseconds: 400),
+    required this.duration,
   });
   final Color initial;
   final Color updated;

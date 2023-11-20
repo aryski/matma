@@ -6,10 +6,16 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 class FloorCubit extends GameItemCubit<FloorState> {
   FloorCubit(super.initialState);
 
-  Future<void> updateSizeDelayed(
-      Duration delay, Offset delta, int milliseconds) async {
-    await Future.delayed(delay);
-    updateSize(delta, milliseconds);
+  Future<void> updateSize(Offset delta,
+      {int delayInMillis = 0, int milliseconds = 200}) async {
+    if (delayInMillis > 0) {
+      await Future.delayed(Duration(milliseconds: delayInMillis));
+    }
+
+    emit(state.copyWith(
+        size: AnimatedProp(
+            value: state.size.value + Offset(delta.dx, delta.dy),
+            duration: milliseconds)));
   }
 
   void setLastInNumber() {
@@ -26,13 +32,5 @@ class FloorCubit extends GameItemCubit<FloorState> {
 
   void setNotLastInGame() {
     emit(state.copyWith(isLastInGame: false));
-  }
-
-  void updateSize(Offset delta, int milliseconds) {
-    print("Size update1: $delta");
-    emit(state.copyWith(
-        size: AnimatedProp(
-            value: state.size.value + Offset(delta.dx, delta.dy),
-            duration: milliseconds)));
   }
 }

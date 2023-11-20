@@ -7,7 +7,7 @@ class TweenAnimatedSize extends StatelessWidget {
     required this.child,
     required this.initialSize,
     required this.updatedSize,
-    required this.duration, // = const Duration(milliseconds: 200),
+    required this.duration,
   });
   final Widget child;
   final Offset initialSize;

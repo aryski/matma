@@ -7,7 +7,7 @@ class TweenAnimatedPosition extends StatelessWidget {
     required this.child,
     required this.initialPosition,
     required this.updatedPosition,
-    required this.duration, // = const Duration(milliseconds: 200),
+    required this.duration,
   });
   final Widget child;
   final Offset initialPosition;

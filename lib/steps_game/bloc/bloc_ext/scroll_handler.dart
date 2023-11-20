@@ -23,7 +23,9 @@ extension ScrollHandler on StepsGameBloc {
         if (item.state.size.value.dx <= gs.floorW &&
             delta < 0 &&
             areNeighboringArrowsOpposite(item, state)) {
-          await handleReduction(item, delta, state, emit);
+          if (allowedOps.contains(StepsGameOps.reduceArrows)) {
+            await handleReduction(item, delta, state, emit);
+          }
         } else {
           print("JOIN AND");
           print("CLASSIC");

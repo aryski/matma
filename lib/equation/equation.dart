@@ -2,14 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/equation/items/board/cubit/board_cubit.dart';
-import 'package:matma/equation/items/board/presentation/board.dart';
-import 'package:matma/equation/items/number/cubit/number_cubit.dart';
-import 'package:matma/equation/items/number/presentation/number.dart';
-import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
-import 'package:matma/equation/items/shadow_number/presentation/shadow_number.dart';
-import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/equation/items/sign/presentation/sign.dart';
+import 'package:matma/equation/items/items.dart';
 
 class Equation extends StatelessWidget {
   const Equation({super.key, required this.unit});

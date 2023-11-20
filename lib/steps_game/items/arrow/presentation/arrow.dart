@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
-import 'package:matma/common/items/game_item/default_game_item_animations.dart';
+import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/arrow/presentation/arrow_controls.dart';
@@ -36,12 +36,8 @@ class Arrow extends StatelessWidget {
                             constrains.maxHeight,
                             state.radius * MediaQuery.of(context).size.width,
                             state.direction == Direction.up
-                                ? (state.isHovered
-                                    ? darkenColor(defaultGreen, 20)
-                                    : defaultGreen)
-                                : (state.isHovered
-                                    ? darkenColor(defaultRed, 20)
-                                    : defaultRed),
+                                ? (state.isHovered ? shadyDefGreen : defGreen)
+                                : (state.isHovered ? shadyDefRed : defRed),
                             state.direction,
                             animationProgress),
                       );

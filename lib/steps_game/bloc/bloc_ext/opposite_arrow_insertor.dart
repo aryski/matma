@@ -45,8 +45,7 @@ extension OppositeArrowInsertor on StepsGameBloc {
       floor.updatePosition(Offset(0, -gs.hUnit));
     }
 
-    floor.updateSizeDelayed(
-        const Duration(milliseconds: 200), Offset(1.25 * gs.wUnit, 0), 200);
+    floor.updateSize(Offset(1.25 * gs.wUnit, 0), milliseconds: 200);
     arrow.animate(1.0);
     arrow.updateHeight(gs.hUnit, 200);
 

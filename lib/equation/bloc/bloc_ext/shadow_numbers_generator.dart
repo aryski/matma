@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:matma/equation/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
-import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
+part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension ShadowNumbersGenerator on EquationBloc {
   Future<void> generateShadowNumbers(
@@ -20,8 +16,7 @@ extension ShadowNumbersGenerator on EquationBloc {
               item.number.state.position.value,
               gs));
       state.extraItems.add(shadowCubit);
-      shadowCubit.updatePositionDelayed(
-          Offset(0, gs.hUnit * 2), const Duration(milliseconds: 20));
+      shadowCubit.updatePosition(Offset(0, gs.hUnit * 2), delayInMillis: 20);
     }
   }
 }

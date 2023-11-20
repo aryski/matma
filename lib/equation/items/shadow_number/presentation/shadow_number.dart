@@ -43,7 +43,7 @@ class ShadowNumber extends StatelessWidget {
                             child: Text(
                               state.value,
                               style: TextStyle(
-                                  color: defaultGrey,
+                                  color: defGrey,
                                   fontWeight: FontWeight.bold,
                                   fontSize: state.size.value.dx *
                                       MediaQuery.of(context).size.width *

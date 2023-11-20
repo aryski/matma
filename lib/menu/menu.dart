@@ -84,10 +84,10 @@ class _ClassicLevelButton extends StatelessWidget {
   final String text;
 
   const _ClassicLevelButton(
-      {super.key, required this.level, required this.icon, required this.text});
+      {required this.level, required this.icon, required this.text});
   @override
   Widget build(BuildContext context) {
-    return LevelButton(
+    return SquareButton(
       unlocked: true,
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => level));

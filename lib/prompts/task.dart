@@ -15,7 +15,7 @@ class NextMsg extends Instruction {
 
   NextMsg({required this.text, this.seconds = 0});
 
-  Duration get time => Duration(milliseconds: (seconds * 1000).toInt());
+  Duration get milliseconds => Duration(milliseconds: (seconds * 1000).toInt());
 }
 
 class EndMsg extends Instruction {}

@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:matma/equation/bloc/bloc_ext/resizer.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
+part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Remover on EquationBloc {
   removeEquationDefaultItemWithPositionUpdate(EquationDefaultItem myItem) {
-    for (int i = 0; i < state.items.length; i++) {
-      var item = state.items[i]; //TODO
+    for (var item in state.items) {
       if (item == myItem) {
         double delta = myItem.width;
         spread(myItem, -delta);
@@ -17,8 +14,8 @@ extension Remover on EquationBloc {
             .updatePosition(Offset(-myItem.number.state.size.value.dx, 0));
         myItem.sign
             ?.updatePosition(Offset(-myItem.number.state.size.value.dx, 0));
-        myItem.number.setOpacity(0);
-        myItem.sign?.setOpacity(0);
+        myItem.number.setOpacity(constants.opacityNone);
+        myItem.sign?.setOpacity(constants.opacityNone);
         state.items.remove(myItem);
       }
     }

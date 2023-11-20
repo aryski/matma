@@ -96,7 +96,7 @@ class _SummaryNextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LevelButton(
+    return SquareButton(
       unlocked: true,
       onTap: () {
         if (next != null) {
@@ -119,7 +119,7 @@ class _SummaryMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LevelButton(
+    return SquareButton(
       unlocked: true,
       onTap: () {
         Navigator.pop(context);

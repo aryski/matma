@@ -50,7 +50,7 @@ var _taskA1 = Task(
   instructions: [
     NextMsg(text: 'Widzisz cyfrę?', seconds: 3),
     NextMsg(text: 'Zrób tyle strzałek.', seconds: 7),
-    NextMsg(text: 'Trzy zielone obok siebie.')
+    NextMsg(text: 'Trzy zielone strzałki.')
   ],
   onEvents: [
     OnEvent(requiredEvent: GameEventEquationValue(numbers: [3]), task: _taskA2)
@@ -65,7 +65,7 @@ var _taskA2 = Task(instructions: [
 var _taskB1 = Task(
   instructions: [
     NextMsg(text: 'Zrób -3 strzałki.', seconds: 7),
-    NextMsg(text: 'Trzy czerwone strzałki obok siebie.')
+    NextMsg(text: 'Trzy czerwone strzałki.')
   ],
   onEvents: [
     OnEvent(requiredEvent: GameEventEquationValue(numbers: [-3]), task: _taskB2)
