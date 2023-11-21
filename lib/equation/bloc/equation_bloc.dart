@@ -22,21 +22,20 @@ part 'bloc_ext/shadow_numbers_generator.dart';
 
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final EquationState init;
-  final GameSize gs;
   final List<int>? targetValues;
   EquationBloc(
       {required this.init,
-      required this.gs,
       required List<int> initNumbers,
-      this.targetValues})
-      : super(Resetter.hardResetState(initNumbers, gs, targetValues)) {
+      this.targetValues,
+      required int wUnits})
+      : super(Resetter.hardResetState(initNumbers, targetValues, wUnits)) {
     on<EquationEventIncreaseNumber>((event, emit) async {
       var itemInd = state.itemIndex(event.ind);
       if (itemInd != null) {
         var item = state.items[itemInd];
         item.number.updateValue(item.number.state.value + 1);
         if (item.number.state.value == 10) {
-          resize(item, gs.wUnit * 2);
+          resize(item, 2);
         }
         generateShadowNumbers(item, 1);
         updateFixedItemsColors(state);
@@ -113,7 +112,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
   void decreaseValue(EquationDefaultItem myItem) {
     var number = myItem.number;
     if (number.state.value == 10) {
-      resize(myItem, -gs.wUnit * 2);
+      resize(myItem, -2);
     }
     number.updateValue(number.state.value - 1);
   }

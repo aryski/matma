@@ -13,10 +13,9 @@ extension ShadowNumbersGenerator on EquationBloc {
       var shadowCubit = ShadowNumberCubit(
           BoardItemsGenerator.generateShadowNumberState(
               sign == Signs.addition ? "-1" : "+1",
-              item.number.state.position.value,
-              gs));
+              item.number.state.position.value));
       state.extraItems.add(shadowCubit);
-      shadowCubit.updatePosition(Offset(0, gs.hUnit * 2), delayInMillis: 20);
+      shadowCubit.updatePosition(const Offset(0, 2), delayInMillis: 20);
     }
   }
 }

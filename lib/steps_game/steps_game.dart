@@ -33,7 +33,7 @@ class StepsGame extends StatelessWidget {
         PromptsCubit(data.firstTask, BlocProvider.of<LevelCubit>(context));
     final eqCubit = EquationBloc(
         init: EquationState(),
-        gs: gs,
+        wUnits: gs.wUnits.toInt(),
         initNumbers: data.initNumbers,
         targetValues: data.withFixedEquation);
     final bloc = StepsGameBloc(gs, eqCubit, taskCubit, data.allowedOps);
@@ -135,7 +135,7 @@ class _StepsSimulatorContent extends StatelessWidget {
           if (data.shadedSteps != null)
             ShadedRawStepsGame(gs: gs, initNumbers: data.shadedSteps!),
           RawStepsGame(gs: gs),
-          if (data.withEquation) Equation(unit: gs.hUnit),
+          if (data.withEquation) Equation(gs: gs),
           TaskSimulator(unit: gs.hUnit),
           const Align(
             alignment: Alignment.topLeft,
@@ -176,8 +176,10 @@ class ShadedRawStepsGame extends StatelessWidget {
     final taskCubit = PromptsCubit(Task(instructions: [], onEvents: []),
         BlocProvider.of<LevelCubit>(context));
 
-    final eqCubit =
-        EquationBloc(init: EquationState(), gs: gs, initNumbers: initNumbers);
+    final eqCubit = EquationBloc(
+        init: EquationState(),
+        initNumbers: initNumbers,
+        wUnits: gs.wUnits.toInt());
 
     final bloc = StepsGameBloc(gs, eqCubit, taskCubit, []);
     return MultiBlocProvider(

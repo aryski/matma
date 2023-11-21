@@ -4,10 +4,12 @@ import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 class Number extends StatelessWidget {
-  const Number({super.key, required this.cubit});
+  const Number({super.key, required this.cubit, required this.gs});
   final NumberCubit cubit;
+  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,10 @@ class Number extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<NumberCubit, NumberState>(
         builder: (context, state) {
+          print(
+              "value of number ${state.size.value.dx} ${state.size.value.dx}");
           return DefaultGameItemAnimations(
+            gs: gs,
             initialState: initialState,
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
@@ -61,6 +66,7 @@ class Number extends StatelessWidget {
                                                 : defRed),
                                         fontWeight: FontWeight.bold,
                                         fontSize: state.size.value.dx *
+                                            gs.wUnit *
                                             MediaQuery.of(context).size.width),
                                   ),
                                 ],

@@ -7,7 +7,7 @@ extension BoardItemsGenerator on EquationBloc {
         id: UniqueKey(),
         position: AnimatedProp.zero(value: position),
         size: AnimatedProp.zero(value: size),
-        opacity: AnimatedProp.zero(value: constants.opacityFull),
+        opacity: AnimatedProp.zero(value: 1.0),
         radius: constants.boardRadius);
   }
 
@@ -15,7 +15,6 @@ extension BoardItemsGenerator on EquationBloc {
       {required int number,
       required Offset position,
       double? opacity,
-      required GameSize gs,
       bool? isInactive,
       bool withDarkenedColor = false}) {
     return NumberState(
@@ -25,40 +24,34 @@ extension BoardItemsGenerator on EquationBloc {
       id: UniqueKey(),
       position: AnimatedProp.zero(value: position),
       size: AnimatedProp.zero(
-          value: constants.numberRatio
-              .scale(gs.wUnit, gs.hUnit)
-              .scale(((number.abs() >= 10) ? 2 : 1), 1)),
-      opacity: AnimatedProp.zero(value: opacity ?? constants.opacityFull),
+          value:
+              constants.numberRatio.scale(((number.abs() >= 10) ? 2 : 1), 1)),
+      opacity: AnimatedProp.zero(value: opacity ?? 1.0),
       radius: constants.numberRadius,
       textKey: UniqueKey(),
     );
   }
 
   static SignState generateSignState(
-      {required Signs sign,
-      required Offset position,
-      double? opacity,
-      required GameSize gs}) {
+      {required Signs sign, required Offset position, double? opacity}) {
     return SignState(
       value: sign,
       id: UniqueKey(),
       position: AnimatedProp.zero(value: position),
-      size: AnimatedProp.zero(
-          value: constants.signRatio.scale(gs.wUnit, gs.hUnit)),
-      opacity: AnimatedProp.zero(value: opacity ?? constants.opacityFull),
+      size: AnimatedProp.zero(value: constants.signRatio),
+      opacity: AnimatedProp.zero(value: opacity ?? 1.0),
       radius: constants.numberRadius,
     );
   }
 
   static ShadowNumberState generateShadowNumberState(
-      String value, Offset position, GameSize gs) {
+      String value, Offset position) {
     return ShadowNumberState(
       value: value,
       id: UniqueKey(),
       position: AnimatedProp.zero(value: position),
-      size: AnimatedProp.zero(
-          value: constants.numberRatio.scale(gs.wUnit, gs.hUnit)),
-      opacity: AnimatedProp.zero(value: constants.opacityFull),
+      size: AnimatedProp.zero(value: constants.numberRatio),
+      opacity: AnimatedProp.zero(value: 1.0),
       radius: constants.numberRadius,
     );
   }

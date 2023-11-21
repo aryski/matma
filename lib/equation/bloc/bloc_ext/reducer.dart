@@ -21,9 +21,9 @@ extension Reducer on EquationBloc {
       state.items.replaceRange(0, 1,
           [EquationDefaultItem(sign: null, number: state.items.first.number)]);
 
-      spread(state.items.first, -constants.signRatio.dx * gs.wUnit);
+      spread(state.items.first, -constants.signRatio.dx);
       state.items.first.number
-          .updatePosition(Offset(-constants.signRatio.dx * gs.wUnit, 0));
+          .updatePosition(Offset(-constants.signRatio.dx, 0));
     }
   }
 }

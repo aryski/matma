@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
+import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 class Sign extends StatelessWidget {
-  const Sign({super.key, required this.cubit});
+  const Sign({super.key, required this.cubit, required this.gs});
   final SignCubit cubit;
+  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,10 @@ class Sign extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<SignCubit, SignState>(
         builder: (context, state) {
+          print("value of sign ${state.size.value.dx} ${state.size.value.dx}");
+
           return DefaultGameItemAnimations(
+            gs: gs,
             initialState: initialState,
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
@@ -31,6 +36,7 @@ class Sign extends StatelessWidget {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: state.size.value.dx *
+                              gs.wUnit *
                               MediaQuery.of(context).size.width),
                     ),
                   ),

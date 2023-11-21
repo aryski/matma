@@ -4,10 +4,12 @@ import 'package:matma/common/colors.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
+import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 class ShadowNumber extends StatelessWidget {
-  const ShadowNumber({super.key, required this.cubit});
+  const ShadowNumber({super.key, required this.cubit, required this.gs});
   final ShadowNumberCubit cubit;
+  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,9 @@ class ShadowNumber extends StatelessWidget {
         builder: (context, state) {
           return TweenAnimatedPosition(
             duration: const Duration(milliseconds: 1000),
-            initialPosition: initialState.position.value,
-            updatedPosition: state.position.value,
+            initialPosition:
+                initialState.position.value.scale(gs.wUnit, gs.hUnit),
+            updatedPosition: state.position.value.scale(gs.wUnit, gs.hUnit),
             child: DefaultTweenAnimationBuilder(
               duration: const Duration(milliseconds: 1000),
               initial: 0,
@@ -30,8 +33,10 @@ class ShadowNumber extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: state.size.value.dx *
+                          gs.wUnit *
                           MediaQuery.of(context).size.width,
                       height: state.size.value.dy *
+                          gs.hUnit *
                           MediaQuery.of(context).size.height,
                       child: Opacity(
                         opacity:
@@ -46,6 +51,7 @@ class ShadowNumber extends StatelessWidget {
                                   color: defGrey,
                                   fontWeight: FontWeight.bold,
                                   fontSize: state.size.value.dx *
+                                      gs.wUnit *
                                       MediaQuery.of(context).size.width *
                                       3 /
                                       4),
