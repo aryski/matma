@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/prompts/cubit/prompts_cubit.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ArrowInsertor on StepsGameBloc {
   Future<void> handleArrowInsertion(
@@ -22,7 +11,7 @@ extension ArrowInsertor on StepsGameBloc {
       bool isUp = (item.state.direction == Direction.up);
       state.updateStepHgt(
           item: item,
-          delta: gs.arrowReleasedHgt - gs.arrowClickedHgt,
+          delta: constants.arrowReleasedHgt - constants.arrowClickedHgt,
           milliseconds: 200);
       await Future.delayed(const Duration(milliseconds: 200));
       var newStep = _insertStep(item, isUp);
@@ -41,15 +30,15 @@ extension ArrowInsertor on StepsGameBloc {
     var pos =
         Offset(item.state.position.value.dx, item.state.position.value.dy);
     ArrowCubit arrow = generateArrow(
-        position: pos + Offset(0, isUp ? gs.hUnit : 0),
+        position: pos + Offset(0, isUp ? constants.arrowH : 0),
         animationProgress: 0,
         direction: isUp ? Direction.up : Direction.down);
     FloorCubit floor = generateFloor(
         direction: isUp ? Direction.up : Direction.down,
         position: pos,
-        widthSize: gs.floorWMini);
-    floor.updatePosition(
-        Offset(gs.wUnit / 2, isUp ? gs.hUnit : (gs.hUnit - gs.floorH)));
+        widthSize: constants.floorWMini);
+    floor.updatePosition(Offset(constants.arrowW / 2,
+        isUp ? constants.arrowH : (constants.arrowH - constants.floorH)));
 
     var stepsDefault = StepsGameDefaultItem(arrow: arrow, floor: floor);
     int? ind = state.getNumberIndexFromItem(item);
@@ -67,7 +56,7 @@ extension ArrowInsertor on StepsGameBloc {
       newStep = StepsGameDefaultItem(
           arrow: generateArrow(
               position: step.arrow.state.position.value +
-                  Offset(0, isUp ? 0 : gs.hUnit),
+                  Offset(0, isUp ? 0 : constants.arrowH),
               direction: isUp ? Direction.up : Direction.down),
           floor: step.floor);
       state.replaceStep(step, newStep);
@@ -76,7 +65,7 @@ extension ArrowInsertor on StepsGameBloc {
 
   void _animateNewStep(StepsGameDefaultItem newStep, int milliseconds) {
     newStep.arrow.animate(1);
-    var delta = gs.wUnit;
+    var delta = constants.arrowW;
     newStep.floor.updateSize(Offset(delta, 0), milliseconds: milliseconds);
     state.updatePositionSince(
         item: newStep.floor,

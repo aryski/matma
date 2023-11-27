@@ -1,17 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension OppositeArrowInsertor on StepsGameBloc {
   Future<bool> handleOppositeInsertion(StepsGameState state, FloorCubit item,
-      GameSize gs, Emitter<StepsGameState> emit) async {
+      Emitter<StepsGameState> emit) async {
     var step = state.getStep(item);
     if (step == null) return false;
     var dir = step.arrow.state.direction;
@@ -22,13 +13,13 @@ extension OppositeArrowInsertor on StepsGameBloc {
     arrow = generateArrow(
         animationProgress: 0,
         position: item.state.position.value +
-            Offset(gs.wUnit * 0.5, isUp ? gs.floorH : 0),
-        size: AnimatedProp.zero(value: Offset(gs.wUnit, 0)),
+            Offset(constants.arrowW * 0.5, isUp ? constants.floorH : 0),
+        size: AnimatedProp.zero(value: const Offset(constants.arrowW, 0)),
         direction: isUp ? Direction.down : Direction.up);
     floor = generateFloor(
         direction: isUp ? Direction.down : Direction.up,
-        position: item.state.position.value + Offset(gs.wUnit, 0),
-        size: AnimatedProp.zero(value: Offset(0, gs.floorH)));
+        position: item.state.position.value + const Offset(constants.arrowW, 0),
+        size: AnimatedProp.zero(value: const Offset(0, constants.floorH)));
     state.numbers.add(StepsGameNumberState(
         steps: [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
     taskCubit.insertedOpposite();
@@ -39,15 +30,16 @@ extension OppositeArrowInsertor on StepsGameBloc {
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 20));
     if (dir == Direction.up) {
-      floor.updatePosition(Offset(0, gs.hUnit));
+      floor.updatePosition(const Offset(0, constants.arrowH));
     } else {
-      arrow.updatePosition(Offset(0, -gs.hUnit));
-      floor.updatePosition(Offset(0, -gs.hUnit));
+      arrow.updatePosition(const Offset(0, -constants.arrowH));
+      floor.updatePosition(const Offset(0, -constants.arrowH));
     }
 
-    floor.updateSize(Offset(1.25 * gs.wUnit, 0), milliseconds: 200);
+    floor.updateSize(const Offset(1.25 * constants.arrowW, 0),
+        milliseconds: 200);
     arrow.animate(1.0);
-    arrow.updateHeight(gs.hUnit, 200);
+    arrow.updateHeight(constants.arrowH, 200);
 
     floor.setLastInGame();
     item.setNotLastInGame();

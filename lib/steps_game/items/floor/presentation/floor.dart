@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_color_animation_builder.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
+import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
@@ -25,9 +26,9 @@ Color _colorGen(FloorState state, bool isHovered) {
 }
 
 class Floor extends StatelessWidget {
-  const Floor({super.key, required this.cubit});
+  const Floor({super.key, required this.cubit, required this.gs});
   final FloorCubit cubit;
-
+  final GameSize gs;
   @override
   Widget build(BuildContext context) {
     FloorState initialState = cubit.state.copyWith();
@@ -39,6 +40,7 @@ class Floor extends StatelessWidget {
           return DefaultGameItemAnimations(
             initialState: initialState,
             state: state,
+            gs: gs,
             child: LayoutBuilder(builder: (context, constrains) {
               return FloorGestureDetector(
                   id: state.id,
@@ -52,7 +54,9 @@ class Floor extends StatelessWidget {
                         painter: FloorPainter(
                           constrains.maxWidth,
                           constrains.maxHeight,
-                          state.radius * MediaQuery.of(context).size.width,
+                          state.radius *
+                              gs.wUnit *
+                              MediaQuery.of(context).size.width,
                           color ?? defGrey,
                         ),
                       );

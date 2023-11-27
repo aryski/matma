@@ -36,7 +36,8 @@ class StepsGame extends StatelessWidget {
         wUnits: gs.wUnits.toInt(),
         initNumbers: data.initNumbers,
         targetValues: data.withFixedEquation);
-    final bloc = StepsGameBloc(gs, eqCubit, taskCubit, data.allowedOps);
+    final bloc = StepsGameBloc(eqCubit, taskCubit, data.allowedOps,
+        gs.wUnits.toInt(), gs.hUnits.toInt());
     return DefaultTextStyle(
       style: const TextStyle(color: Colors.white),
       child: ConstrainedBox(
@@ -181,7 +182,8 @@ class ShadedRawStepsGame extends StatelessWidget {
         initNumbers: initNumbers,
         wUnits: gs.wUnits.toInt());
 
-    final bloc = StepsGameBloc(gs, eqCubit, taskCubit, []);
+    final bloc = StepsGameBloc(
+        eqCubit, taskCubit, [], gs.wUnits.toInt(), gs.hUnits.toInt());
     return MultiBlocProvider(
       providers: [
         BlocProvider<StepsGameBloc>(create: (context) => bloc),
@@ -215,7 +217,7 @@ class RawStepsGame extends StatelessWidget {
         ),
         SizedBox(
           height: 17 * gs.hUnit * MediaQuery.of(context).size.height,
-          width: 65 * gs.wUnit * MediaQuery.of(context).size.width,
+          width: MediaQuery.of(context).size.width,
           child: BlocBuilder<StepsGameBloc, StepsGameState>(
             builder: (context, state) {
               List<GameItemCubit> items = [];
@@ -239,13 +241,22 @@ class RawStepsGame extends StatelessWidget {
                   (cubit) {
                     if (cubit is EquatorCubit) {
                       return Equator(
+                        gs: gs,
                         cubit: cubit,
                         key: cubit.state.id,
                       );
                     } else if (cubit is FloorCubit) {
-                      return Floor(cubit: cubit, key: cubit.state.id);
+                      return Floor(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                        gs: gs,
+                      );
                     } else if (cubit is FillingCubit) {
-                      return Filling(cubit: cubit, key: cubit.state.id);
+                      return Filling(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                        gs: gs,
+                      );
                     } else {
                       return const SizedBox.shrink();
                     }
@@ -255,17 +266,20 @@ class RawStepsGame extends StatelessWidget {
                       (cubit) => Filling(
                         cubit: cubit,
                         key: cubit.state.id,
+                        gs: gs,
                       ),
                     ),
                 ...items.whereType<FloorCubit>().map(
                       (cubit) => Floor(
                         cubit: cubit,
                         key: cubit.state.id,
+                        gs: gs,
                       ),
                     ),
                 ...items.whereType<ArrowCubit>().map(
                       (cubit) => Arrow(
                         cubit: cubit,
+                        gs: gs,
                         key: cubit.state.id,
                       ),
                     ),

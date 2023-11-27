@@ -1,13 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ArrowsReductor on StepsGameBloc {
   Future<void> handleReduction(FloorCubit item, double delta,
@@ -55,13 +46,15 @@ extension ArrowsReductor on StepsGameBloc {
     var arrows = <ArrowCubit>{left, right};
     if (floor.state.direction == Direction.up) {
       for (var element in all) {
-        element.updatePosition(Offset(0, gs.hUnit), milliseconds: milliseconds);
+        element.updatePosition(Offset(0, constants.arrowH),
+            milliseconds: milliseconds);
       }
     } else {
-      floor.updatePosition(Offset(0, -gs.hUnit), milliseconds: milliseconds);
+      floor.updatePosition(Offset(0, -constants.arrowH),
+          milliseconds: milliseconds);
     }
     for (var e in arrows) {
-      e.updateHeight(-gs.arrowH, milliseconds);
+      e.updateHeight(-constants.arrowH, milliseconds);
     }
     for (var e in arrows) {
       e.animate(0);
@@ -70,13 +63,13 @@ extension ArrowsReductor on StepsGameBloc {
       e.setOpacity(0, milliseconds: milliseconds);
     }
     var delta = -floor.state.size.value.dx;
-    floor.updateSize(Offset(delta + gs.wUnit / 4, 0),
+    floor.updateSize(Offset(delta + constants.arrowW / 4, 0),
         milliseconds: milliseconds);
     print("REDUCTOR");
 
     state.updatePositionSince(
         item: floor,
-        offset: Offset(delta + gs.wUnit / 4, 0),
+        offset: Offset(delta + constants.arrowW / 4, 0),
         fillingIncluded: false,
         milliseconds: milliseconds);
   }
@@ -98,8 +91,9 @@ extension ArrowsReductor on StepsGameBloc {
       StepsGameDefaultItem step,
       int milliseconds) {
     var inheritedWidth = 0.0;
-    inheritedWidth =
-        rightStep.floor.state.size.value.dx - gs.wUnit / 2 + gs.wUnit / 4;
+    inheritedWidth = rightStep.floor.state.size.value.dx -
+        constants.arrowW / 2 +
+        constants.arrowW / 4;
 
     if (leftStep != null && !state.isLastItem(rightStep.floor)) {
       leftStep.floor
@@ -109,7 +103,8 @@ extension ArrowsReductor on StepsGameBloc {
       state.updatePositionSince(
           item: rightStep.floor,
           offset: Offset(
-              -rightStep.floor.state.size.value.dx + 1 / 2 * gs.wUnit, 0),
+              -rightStep.floor.state.size.value.dx + 1 / 2 * constants.arrowW,
+              0),
           milliseconds: milliseconds);
     }
     rightStep.floor.updateSize(Offset(-rightStep.floor.state.size.value.dx, 0),
@@ -133,7 +128,8 @@ extension ArrowsReductor on StepsGameBloc {
     }
     if (leftStep != null && state.isLastItem(leftStep.floor)) {
       leftStep.floor.updateSize(
-          Offset(-leftStep.floor.state.size.value.dx + 1.25 * gs.wUnit, 0),
+          Offset(
+              -leftStep.floor.state.size.value.dx + 1.25 * constants.arrowW, 0),
           milliseconds: 200);
       leftStep.floor.setLastInGame();
     }

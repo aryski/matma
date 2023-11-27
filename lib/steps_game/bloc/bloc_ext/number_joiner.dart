@@ -1,21 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/scroll_handler.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension NumberSplitJoiner on StepsGameBloc {
-  void handleJoin(FloorCubit item, double delta, GameSize gs,
-      StepsGameState state, Emitter<StepsGameState> emit) {
+  void handleJoin(FloorCubit item, double delta, StepsGameState state,
+      Emitter<StepsGameState> emit) {
     delta = guardDeltaSize(
-        currentW: item.state.size.value.dx, delta: delta, minW: gs.floorW);
+        currentW: item.state.size.value.dx,
+        delta: delta,
+        minW: constants.floorW);
     if (delta != 0) taskCubit.scrolled();
     item.updateSize(Offset(delta, 0), delayInMillis: 20, milliseconds: 200);
     int? numberInd = state.getNumberIndexFromItem(item);
     if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
-      if (item.state.size.value.dx <= gs.floorW) {
+      if (item.state.size.value.dx <= constants.floorW) {
         handleJoinCore(state, numberInd, item, delta);
       }
       state.updatePositionSince(

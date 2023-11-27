@@ -1,29 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/items_generator.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension Initializer on StepsGameBloc {
-  List<StepsGameNumberState> initializeSimulationItems() {
-    var initialTop = (gs.hUnits / 2).floor() * gs.hUnit - gs.hUnit;
-    var initialLeft = gs.wUnit * 2;
-    _generateEquator(initialTop);
+  List<StepsGameNumberState> initializeSimulationItems(int wUnits, int hUnits) {
+    double initialTop = (hUnits / 2).floor() - 1;
+    var initialLeft = 2.0;
+    _generateEquator(initialTop, wUnits);
     return _generateSteps(board.state.numbers, initialLeft, initialTop);
   }
 
-  void _generateEquator(double currentTop) {
+  void _generateEquator(double currentTop, int wUnits) {
     var id = UniqueKey();
     state.unorderedItems[id] = EquatorCubit(EquatorState(
         id: id,
-        position: AnimatedProp.zero(value: Offset(0, currentTop + gs.hUnit)),
-        size:
-            AnimatedProp.zero(value: Offset(gs.wUnit * (gs.wUnits), gs.floorH)),
+        position:
+            AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
+        size: AnimatedProp.zero(
+            value: Offset(constants.arrowW * wUnits, constants.floorH)),
         opacity: AnimatedProp.zero(value: 1),
-        radius: gs.radius));
+        radius: constants.radius));
   }
 
   List<StepsGameNumberState> _generateSteps(
@@ -37,9 +31,9 @@ extension Initializer on StepsGameBloc {
       bool nextNumberSameSign = isNextNumberSameSign(j, init, number);
       for (int i = 0; i < stepsCount; i++) {
         var pos = Offset(currentLeft, currentTop);
-        double floorWidth = gs.floorW;
+        double floorWidth = constants.floorW;
         if (nextNumberSameSign && i + 1 == stepsCount) {
-          floorWidth = gs.floorWExt;
+          floorWidth = constants.floorWExt;
         }
         var isPositive = number > 0;
         var step = generateStep(pos, isPositive, floorWidth);
@@ -49,8 +43,10 @@ extension Initializer on StepsGameBloc {
             floor: step.floor);
         steps.add(step);
 
-        currentTop += isPositive ? -gs.hUnit : gs.hUnit;
-        currentLeft += (floorWidth == gs.floorWExt) ? gs.wUnit * 2 : gs.wUnit;
+        currentTop += isPositive ? -constants.arrowH : constants.arrowH;
+        currentLeft += (floorWidth == constants.floorWExt)
+            ? constants.arrowW * 2
+            : constants.arrowW;
       }
       result.add(StepsGameNumberState(steps: steps));
     }
@@ -59,12 +55,14 @@ extension Initializer on StepsGameBloc {
 
   StepsGameDefaultItem generateStep(Offset pos, bool isPos, double floorWidth) {
     ArrowCubit arrow = generateArrow(
-        position: pos + Offset(0, isPos ? 0 : (gs.hUnit + gs.floorH)),
+        position:
+            pos + Offset(0, isPos ? 0 : (constants.arrowH + constants.floorH)),
         direction: isPos ? Direction.up : Direction.down);
     FloorCubit floor = generateFloor(
       direction: isPos ? Direction.up : Direction.down,
       widthSize: floorWidth,
-      position: pos += Offset(gs.wUnit / 2, isPos ? 0 : 2 * gs.hUnit),
+      position: pos +=
+          Offset(constants.arrowW / 2, isPos ? 0 : 2 * constants.arrowH),
     );
     return StepsGameDefaultItem(arrow: arrow, floor: floor);
   }

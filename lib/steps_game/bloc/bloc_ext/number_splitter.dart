@@ -1,23 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/equation/bloc/equation_bloc.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/scroll_handler.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension NumberSplitter on StepsGameBloc {
-  void handleSplit(FloorCubit item, double delta, GameSize gs,
-      StepsGameState state, Emitter<StepsGameState> emit, int milliseconds) {
+  void handleSplit(FloorCubit item, double delta, StepsGameState state,
+      Emitter<StepsGameState> emit, int milliseconds) {
     delta = guardDeltaSize(
-        currentW: item.state.size.value.dx, delta: delta, minW: gs.floorW);
+        currentW: item.state.size.value.dx,
+        delta: delta,
+        minW: constants.floorW);
     if (delta != 0) taskCubit.scrolled();
     item.updateSize(Offset(delta, 0), milliseconds: 200);
     var newW = item.state.size.value.dx;
     int? numberInd = state.getNumberIndexFromItem(item);
     if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
-      if (newW > gs.floorW) {
+      if (newW > constants.floorW) {
         handleSplitCore(state, item, numberInd, delta);
       }
       state.updatePositionSince(

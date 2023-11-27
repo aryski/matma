@@ -1,26 +1,18 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
-import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/arrows_reductor.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/number_joiner.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/number_splitter.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/opposite_arrow_insertor.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ScrollHandler on StepsGameBloc {
   Future<void> handleScroll(StepsGameState state, StepsGameEventScroll event,
-      GameSize gs, Emitter<StepsGameState> emit) async {
+      Emitter<StepsGameState> emit) async {
     var item = state.getItem(event.id);
-    var delta = -event.dy * gs.wUnit / 50;
+    var delta = -event.dy * 1 / 50;
     if (item is FloorCubit) {
       if (item.state.isLastInGame) {
         //OPPOSITE INSERTION
         if (allowedOps.contains(StepsGameOps.addOppositeArrow)) {
-          await handleOppositeInsertion(state, item, gs, emit);
+          await handleOppositeInsertion(state, item, emit);
         }
       } else if (item.state.isLastInNumber) {
-        if (item.state.size.value.dx <= gs.floorW &&
+        if (item.state.size.value.dx <= constants.floorW &&
             delta < 0 &&
             areNeighboringArrowsOpposite(item, state)) {
           if (allowedOps.contains(StepsGameOps.reduceArrows)) {
@@ -29,17 +21,17 @@ extension ScrollHandler on StepsGameBloc {
         } else {
           print("JOIN AND");
           print("CLASSIC");
-          handleJoin(item, delta, gs, state, emit);
+          handleJoin(item, delta, state, emit);
           //XDDD ok więc chyba działa, ale możnaby go w sumie troszkę zmodyfikować
           // delta = guardDeltaSize(
-          //     currentW: item.state.size.value.dx, delta: delta, minW: gs.floorW);
+          //     currentW: item.state.size.value.dx, delta: delta, minW: constants.floorW);
           // item.updateSize(Offset(delta, 0));
           // updateFillingWidth(state, item, delta);
           // state.updatePositionSince(item, Offset(delta, 0));
         }
       } else {
         if (allowedOps.contains(StepsGameOps.splitJoinArrows)) {
-          handleSplit(item, delta, gs, state, emit, 200);
+          handleSplit(item, delta, state, emit, 200);
         }
       }
     }

@@ -1,10 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/arrow_insertor.dart';
-import 'package:matma/steps_game/bloc/bloc_ext/filling_updater.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ClickHandler on StepsGameBloc {
   Future<void> handleClick(
@@ -15,7 +9,7 @@ extension ClickHandler on StepsGameBloc {
       if (event is StepsGameEventClickUp) {
         downClick = event.time;
       }
-      await handleClickAnimation(state, event, gs, emit, 200);
+      await handleClickAnimation(state, event, emit, 200);
     }
   }
 
@@ -44,14 +38,13 @@ extension ClickHandler on StepsGameBloc {
   Future<void> handleClickAnimation(
     StepsGameState state,
     dynamic event,
-    GameSize gs,
     Emitter<StepsGameState> emit,
     int milliseconds,
   ) async {
     if (event is StepsGameEventClickDown || event is StepsGameEventClickUp) {
       var item = state.getItem(event.id);
       if (item is ArrowCubit) {
-        var delta = gs.arrowH - gs.arrowClickedHgt;
+        var delta = constants.arrowH - constants.arrowClickedHgt;
         if (event is StepsGameEventClickDown) {
           delta = -delta;
           onArrowClickDown(item, delta);

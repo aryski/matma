@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
-import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension FillingUpdater on StepsGameBloc {
   void animateNeigboringFillings(int ind, bool animateIn) {
@@ -80,7 +74,7 @@ extension FillingUpdater on StepsGameBloc {
           var floorState = state.numbers[ind].steps.last.floor.state;
           var n = state.numbers[ind].number;
           if (state.numbers[ind].filling == null) {
-            FillingCubit filling = generateFilling(n, floorState, gs);
+            FillingCubit filling = generateFilling(n, floorState);
             filling.setOpacity(1.0, delayInMillis: 200);
             state.numbers[ind].setFilling(filling);
           }
@@ -105,30 +99,33 @@ bool removeFilling(StepsGameState state, int ind) {
   return false;
 }
 
-FillingCubit generateFilling(int n, FloorState floorState, GameSize gs) {
+FillingCubit generateFilling(int n, FloorState floorState) {
   var filling = FillingCubit(
     FillingState(
-        stepHgt: gs.arrowH,
+        stepHgt: constants.arrowH,
         animProgress: 0,
         steps: n,
-        stepWdt: gs.wUnit,
+        stepWdt: constants.arrowW,
         id: UniqueKey(),
         position: AnimatedProp.zero(
             value: n > 0
                 ? floorState.position.value +
-                    Offset(-(n.abs() - 1) * gs.wUnit, gs.floorH)
+                    Offset(-(n.abs() - 1) * constants.arrowW, constants.floorH)
                 : floorState.position.value +
-                    Offset(-(n.abs() - 1) * gs.wUnit,
-                        gs.floorH - n.abs() * gs.hUnit - gs.floorH)),
+                    Offset(
+                        -(n.abs() - 1) * constants.arrowW,
+                        constants.floorH -
+                            n.abs() * constants.arrowH -
+                            constants.floorH)),
         size: AnimatedProp.zero(
             value: Offset(
-                (n.abs() - 1) * 2 * gs.wUnit +
+                (n.abs() - 1) * 2 * constants.arrowW +
                     floorState.size.value.dx -
-                    gs.wUnit / 4,
-                n.abs() * gs.hUnit)),
+                    constants.arrowW / 4,
+                n.abs() * constants.arrowH)),
         isHovered: false,
         opacity: AnimatedProp.zero(value: 0.0),
-        radius: gs.radius),
+        radius: constants.radius),
   );
   return filling;
 }

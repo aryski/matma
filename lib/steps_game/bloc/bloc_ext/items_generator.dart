@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
-import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
+part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ItemsGenerator on StepsGameBloc {
   ArrowCubit generateArrow(
@@ -16,10 +10,12 @@ extension ItemsGenerator on StepsGameBloc {
       ArrowState(
         id: UniqueKey(),
         position: AnimatedProp.zero(value: position),
-        size: size ?? AnimatedProp.zero(value: Offset(gs.arrowW, gs.arrowH)),
+        size: size ??
+            AnimatedProp.zero(
+                value: const Offset(constants.arrowW, constants.arrowH)),
         opacity: AnimatedProp.zero(value: 1.0),
         direction: direction,
-        radius: gs.radius,
+        radius: constants.radius,
         animProgress: animationProgress,
       ),
     );
@@ -30,15 +26,16 @@ extension ItemsGenerator on StepsGameBloc {
       double? widthSize,
       AnimatedProp<Offset>? size,
       required Direction direction}) {
-    widthSize ??= gs.floorW;
+    widthSize ??= constants.floorW;
     return FloorCubit(
       FloorState(
         direction: direction,
         id: UniqueKey(),
         position: AnimatedProp.zero(value: position),
-        size: size ?? AnimatedProp.zero(value: Offset(widthSize, gs.floorH)),
+        size: size ??
+            AnimatedProp.zero(value: Offset(widthSize, constants.floorH)),
         opacity: AnimatedProp.zero(value: 1.0),
-        radius: gs.radius,
+        radius: constants.radius,
       ),
     );
   }

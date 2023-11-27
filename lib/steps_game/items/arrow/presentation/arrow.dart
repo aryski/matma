@@ -3,14 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
+import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/arrow/presentation/arrow_controls.dart';
 import 'package:matma/steps_game/items/arrow/presentation/arrow_painter.dart';
 
 class Arrow extends StatelessWidget {
-  const Arrow({super.key, required this.cubit});
+  const Arrow({super.key, required this.cubit, required this.gs});
   final ArrowCubit cubit;
+  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class Arrow extends StatelessWidget {
           return DefaultGameItemAnimations(
             initialState: initialState,
             state: state,
+            gs: gs,
             child: DefaultTweenAnimationBuilder(
                 duration: const Duration(milliseconds: 200),
                 initial: initialState.animProgress,
@@ -34,7 +37,9 @@ class Arrow extends StatelessWidget {
                         painter: ArrowPainter(
                             constrains.maxWidth,
                             constrains.maxHeight,
-                            state.radius * MediaQuery.of(context).size.width,
+                            state.radius *
+                                gs.wUnit *
+                                MediaQuery.of(context).size.width,
                             state.direction == Direction.up
                                 ? (state.isHovered ? shadyDefGreen : defGreen)
                                 : (state.isHovered ? shadyDefRed : defRed),
