@@ -2,7 +2,7 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:matma/menu/menu.dart';
+import 'package:matma/menu.dart';
 
 void main() {
   //zredukowac powtarzalny kod

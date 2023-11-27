@@ -7,7 +7,7 @@ import 'package:matma/levels/levels/level4.dart';
 import 'package:matma/levels/levels/level5.dart';
 import 'package:matma/levels/levels/level6.dart';
 import 'package:matma/levels/levels/level7.dart';
-import 'package:matma/menu/level_icon/level_icon.dart';
+import 'package:matma/common/square_button/square_button.dart';
 
 class Menu extends StatelessWidget {
   const Menu({super.key});

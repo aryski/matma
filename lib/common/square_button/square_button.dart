@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/menu/level_icon/cubit/level_icon_cubit.dart';
+import 'package:matma/common/square_button/cubit/square_button_cubit.dart';
 
 class SquareButton extends StatelessWidget {
   const SquareButton(
@@ -31,11 +31,7 @@ class SquareButton extends StatelessWidget {
               context.read<LevelIconCubit>().onHoverEnd();
             },
             child: GestureDetector(
-              onTap: () {
-                if (unlocked && onTap != null) {
-                  onTap!();
-                }
-              },
+              onTap: (unlocked) ? onTap : null,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 clipBehavior: Clip.hardEdge,
