@@ -24,8 +24,6 @@ extension OppositeArrowInsertor on StepsGameBloc {
         steps: [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
     taskCubit.insertedOpposite();
     item.setLastInNumber();
-    // beforeEmit();
-    // emit(state.copy());
     generateFillings();
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 20));
@@ -36,10 +34,10 @@ extension OppositeArrowInsertor on StepsGameBloc {
       floor.updatePosition(const Offset(0, -constants.arrowH));
     }
 
-    floor.updateSize(const Offset(1.25 * constants.arrowW, 0),
-        milliseconds: 200);
     arrow.animate(1.0);
     arrow.updateHeight(constants.arrowH, 200);
+    floor.updateSize(const Offset(1.25 * constants.arrowW, 0),
+        delayInMillis: 200, milliseconds: 200);
 
     floor.setLastInGame();
     item.setNotLastInGame();
