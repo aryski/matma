@@ -31,28 +31,6 @@ part 'bloc_ext/scroll_handler.dart';
 
 UniqueKey? hoverKepper;
 
-class GameSize {
-  final double hUnits;
-  final double wUnits;
-
-  double get hUnit => 1 / hUnits;
-  double get wUnit => 1 / wUnits;
-
-  // double get arrowH => hUnit;
-  // double get arrowClickedHgt => arrowH / 2;
-  // double get arrowReleasedHgt => arrowH * 2;
-  // double get arrowW => wUnit;
-
-  // double get radius => 1 / 15 * wUnit;
-
-  // double get floorH => arrowH / 5;
-  // double get floorWMini => wUnit * 0.25;
-  // double get floorW => wUnit * 1.25;
-  // double get floorWExt => wUnit + floorW;
-
-  const GameSize({required this.hUnits, required this.wUnits});
-}
-
 class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   final List<StepsGameOps> allowedOps;
   final EquationBloc board;

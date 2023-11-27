@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/equation/items/items.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
+import 'package:matma/common/game_size.dart';
 
 class Equation extends StatelessWidget {
   const Equation({super.key, required this.gs});

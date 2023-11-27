@@ -4,7 +4,7 @@ import 'package:matma/common/colors.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
+import 'package:matma/common/game_size.dart';
 
 class ShadowNumber extends StatelessWidget {
   const ShadowNumber({super.key, required this.cubit, required this.gs});

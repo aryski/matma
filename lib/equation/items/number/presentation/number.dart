@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
+import 'package:matma/common/game_size.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/number/cubit/number_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 class Number extends StatelessWidget {
   const Number({super.key, required this.cubit, required this.gs});

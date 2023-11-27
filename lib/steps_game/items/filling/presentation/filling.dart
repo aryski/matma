@@ -4,7 +4,7 @@ import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_color_animation_builder.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
+import 'package:matma/common/game_size.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling_gesture_detector.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling_painter.dart';

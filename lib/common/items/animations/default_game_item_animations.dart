@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
 import 'package:matma/common/items/animations/tween_animated_size.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
+import 'package:matma/common/game_size.dart';
 
 class DefaultGameItemAnimations extends StatelessWidget {
   const DefaultGameItemAnimations(
