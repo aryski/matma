@@ -17,8 +17,6 @@ class Sign extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<SignCubit, SignState>(
         builder: (context, state) {
-          print("value of sign ${state.size.value.dx} ${state.size.value.dx}");
-
           return DefaultGameItemAnimations(
             gs: gs,
             initialState: initialState,

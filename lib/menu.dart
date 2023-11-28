@@ -88,11 +88,13 @@ class _ClassicLevelButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SquareButton(
+      width: 200,
+      height: 200,
       unlocked: true,
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => level));
       },
-      minature: Icon(icon, size: 150),
+      minature: Icon(icon),
       text: text,
       textColor: Colors.black87,
     );

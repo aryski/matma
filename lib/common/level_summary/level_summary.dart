@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matma/common/colors.dart';
-import 'package:matma/common/square_button/square_button.dart';
+import 'package:matma/common/level_summary/home_button.dart';
+import 'package:matma/common/level_summary/next_button.dart';
 
 class LevelSummary extends StatelessWidget {
   const LevelSummary({super.key, required this.next});
@@ -15,7 +16,7 @@ class LevelSummary extends StatelessWidget {
         child: Stack(
           children: [
             const _LevelSummaryBackground(),
-            _LevelSummaryForeground(next: next),
+            _LevelSummaryContent(next: next),
           ],
         ),
       ),
@@ -39,10 +40,12 @@ class _LevelSummaryBackground extends StatelessWidget {
   }
 }
 
-class _LevelSummaryForeground extends StatelessWidget {
-  const _LevelSummaryForeground({
+class _LevelSummaryContent extends StatelessWidget {
+  const _LevelSummaryContent({
     required this.next,
   });
+
+  static const text = "Ukończyłeś poziom.";
 
   final Widget? next;
 
@@ -61,7 +64,7 @@ class _LevelSummaryForeground extends StatelessWidget {
             children: [
               const Spacer(),
               const Text(
-                'Ukończyłeś poziom',
+                text,
                 style: TextStyle(color: Colors.white),
               ),
               const Spacer(),
@@ -69,10 +72,10 @@ class _LevelSummaryForeground extends StatelessWidget {
                 children: [
                   const Spacer(),
                   const Spacer(),
-                  const _SummaryMenuButton(),
+                  const HomeButton(),
                   if (next != null) ...[
                     const Spacer(),
-                    _SummaryNextButton(next: next),
+                    NextButton(next: next),
                   ],
                   const Spacer(),
                   const Spacer(),
@@ -83,53 +86,6 @@ class _LevelSummaryForeground extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SummaryNextButton extends StatelessWidget {
-  const _SummaryNextButton({
-    required this.next,
-  });
-
-  final Widget? next;
-
-  @override
-  Widget build(BuildContext context) {
-    return SquareButton(
-      unlocked: true,
-      onTap: () {
-        if (next != null) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => next!));
-        }
-      },
-      minature: const Icon(
-        Icons.keyboard_double_arrow_right_rounded,
-        size: 150,
-      ),
-      text: 'Następny',
-      textColor: Colors.black87,
-    );
-  }
-}
-
-class _SummaryMenuButton extends StatelessWidget {
-  const _SummaryMenuButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return SquareButton(
-      unlocked: true,
-      onTap: () {
-        Navigator.pop(context);
-      },
-      minature: const Icon(
-        Icons.home_filled,
-        size: 150,
-      ),
-      text: 'Menu',
-      textColor: Colors.black87,
     );
   }
 }

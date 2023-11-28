@@ -19,8 +19,6 @@ class Number extends StatelessWidget {
       create: (context) => cubit,
       child: BlocBuilder<NumberCubit, NumberState>(
         builder: (context, state) {
-          print(
-              "value of number ${state.size.value.dx} ${state.size.value.dx}");
           return DefaultGameItemAnimations(
             gs: gs,
             initialState: initialState,

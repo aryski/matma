@@ -11,7 +11,7 @@ extension NumberSplitJoiner on StepsGameBloc {
     item.updateSize(Offset(delta, 0), delayInMillis: 20, milliseconds: 200);
     int? numberInd = state.getNumberIndexFromItem(item);
     if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
-      if (item.state.size.value.dx <= constants.floorW) {
+      if (item.state.size.value.dx + delta <= constants.floorW) {
         handleJoinCore(state, numberInd, item, delta);
       }
       state.updatePositionSince(
@@ -44,12 +44,3 @@ extension NumberSplitJoiner on StepsGameBloc {
     }
   }
 }
-
-// double _guardDeltaSize(
-//     {required double currentW, required double delta, required double minW}) {
-//   if (currentW + delta < minW) {
-//     delta = (minW - currentW) *
-//         1.0000000000001; //TODO better floating point solution.
-//   }
-//   return delta;
-// }
