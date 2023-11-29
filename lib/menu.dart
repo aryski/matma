@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:matma/common/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:matma/color_schemes.g.dart';
+import 'package:matma/equation/items/board/presentation/board.dart';
 import 'package:matma/levels/levels/level1.dart';
 import 'package:matma/levels/levels/level2.dart';
 import 'package:matma/levels/levels/level3.dart';
@@ -8,22 +10,81 @@ import 'package:matma/levels/levels/level5.dart';
 import 'package:matma/levels/levels/level6.dart';
 import 'package:matma/levels/levels/level7.dart';
 import 'package:matma/common/square_button/square_button.dart';
+import 'package:matma/main.dart';
 
 class Menu extends StatelessWidget {
   const Menu({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: defaultBackground,
-      body: Center(
-          child: Column(children: [
-        Spacer(),
-        Logo(),
-        Spacer(flex: 2),
-        PickMenu(),
-        Spacer(flex: 6)
-      ])),
+    return Container(
+      color: Theme.of(context).colorScheme.onBackground,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Scaffold(
+          body: Center(
+              child: Column(children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: IconButton.outlined(
+                      onPressed: () {
+                        var cubit = BlocProvider.of<AppCubit>(context);
+                        switch (cubit.state) {
+                          case ThemeMode.dark:
+                            cubit.updateThemeMode(ThemeMode.light);
+                            break;
+                          case ThemeMode.light:
+                            cubit.updateThemeMode(ThemeMode.dark);
+                            break;
+                          default:
+                        }
+                      },
+                      icon: const Icon(Icons.dark_mode_outlined))),
+            ),
+            const Spacer(),
+            const Logo(),
+            const Spacer(flex: 2),
+            const PickMenu(),
+            const Spacer(flex: 6),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0)))),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Theme(
+                                      data: ThemeData(
+                                          useMaterial3: true,
+                                          textTheme: Typography.dense2021,
+                                          colorScheme: lightColorScheme),
+                                      child: const LicensePage(
+                                        applicationName: "Matma",
+                                        applicationVersion: "1.0",
+                                        applicationIcon: Image(
+                                            image: AssetImage(
+                                                "web/icons/Icon-maskable-192.png")),
+                                        applicationLegalese:
+                                            "Copyright (c) 2023 Adam Ryski",
+                                      ),
+                                    )));
+                      },
+                      child: const Text("Licencje")),
+                ],
+              ),
+            ),
+          ])),
+        ),
+      ),
     );
   }
 }
@@ -33,10 +94,24 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Matma',
-      style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 135),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        BoardDesign(
+          width: 700,
+          height: 180,
+          radius: 15,
+          fillColor: Theme.of(context).colorScheme.background,
+          frameColor: Theme.of(context).colorScheme.onSecondaryContainer,
+        ),
+        Text(
+          'Matma',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 135,
+              color: Theme.of(context).colorScheme.onBackground),
+        ),
+      ],
     );
   }
 }
@@ -96,7 +171,6 @@ class _ClassicLevelButton extends StatelessWidget {
       },
       minature: Icon(icon),
       text: text,
-      textColor: Colors.black87,
     );
   }
 }

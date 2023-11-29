@@ -56,9 +56,15 @@ class Number extends StatelessWidget {
                                     state.value.abs().toString(),
                                     style: TextStyle(
                                         color: state.withDarkenedColor
-                                            ? ((state.sign == Signs.addition)
-                                                ? defaultBackground
-                                                : defaultBackground)
+                                            ? ((state.sign ==
+                                                    Signs
+                                                        .addition) //TODO co to ma być???
+                                                ? Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondaryContainer
+                                                : Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondaryContainer)
                                             : ((state.sign == Signs.addition)
                                                 ? defGreen
                                                 : defRed),

@@ -54,6 +54,7 @@ class StepsGameState {
         if (number.steps.isEmpty) {
           numbers.remove(number);
         }
+        break;
       }
     }
   }

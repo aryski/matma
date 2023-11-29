@@ -36,11 +36,19 @@ class Filling extends StatelessWidget {
                         child: DefaultColorAnimationBuilder(
                           duration: const Duration(milliseconds: 50),
                           initial: initialState.isHovered
-                              ? shadyDefEquator
-                              : defaultEquator,
+                              ? darkenColor(
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  0.1)
+                              : Theme.of(context).colorScheme.primaryContainer,
                           updated: state.isHovered
-                              ? shadyDefEquator
-                              : defaultEquator,
+                              ? darkenColor(
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  0.1)
+                              : Theme.of(context).colorScheme.primaryContainer,
                           builder: (context, color, child) {
                             return CustomPaint(
                               size: Size(

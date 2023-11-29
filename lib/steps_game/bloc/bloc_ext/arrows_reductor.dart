@@ -6,23 +6,25 @@ extension ArrowsReductor on StepsGameBloc {
     var number = state.getNumberFromItem(item);
     if (number != null && number.filling != null) {
       number.filling?.animateToLeft();
-    }
+    } //usuwanie z tyh list cos nie cos
     animateLeftFilling(item, false);
     animateRightFilling(item, false);
     await reduceStepAndStepToTheRight(state.getStep(item), 200);
     if (allowedOps.contains(StepsGameOps.reducingArrowsCascadedly)) {
       if (number != null && number.filling != null) {
         for (int i = number.steps.length - 1; i >= 0; i--) {
+          //TODO reducing in the loop doesnt work on linux
           var step = number.steps[i];
           var rightStep = state.rightStep(step);
           if (rightStep != null) {
             await reduceStepAndStepToTheRight(step, i == 0 ? 150 : 70);
+            // i = i - 1;
           }
         }
       }
     }
 
-    taskCubit.merged();
+    promptCubit.merged();
     generateFillings();
     // beforeEmit();
     emit(state.copy());
@@ -65,8 +67,6 @@ extension ArrowsReductor on StepsGameBloc {
     var delta = -floor.state.size.value.dx;
     floor.updateSize(Offset(delta + constants.arrowW / 4, 0),
         milliseconds: milliseconds);
-    print("REDUCTOR");
-
     state.updatePositionSince(
         item: floor,
         offset: Offset(delta + constants.arrowW / 4, 0),

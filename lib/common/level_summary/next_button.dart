@@ -24,7 +24,6 @@ class NextButton extends StatelessWidget {
       },
       minature: const Icon(Icons.keyboard_double_arrow_right_rounded),
       text: text,
-      textColor: Colors.black87,
     );
   }
 }

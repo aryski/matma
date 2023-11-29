@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/common/game_size.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
@@ -33,7 +32,7 @@ class Equator extends StatelessWidget {
                     constrains.maxWidth,
                     constrains.maxHeight,
                     state.radius * gs.wUnit * MediaQuery.of(context).size.width,
-                    defaultEquator),
+                    Theme.of(context).colorScheme.secondaryContainer),
               );
             }),
           );

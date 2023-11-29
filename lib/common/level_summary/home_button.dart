@@ -17,7 +17,6 @@ class HomeButton extends StatelessWidget {
       },
       minature: const Icon(Icons.home_filled),
       text: text,
-      textColor: Colors.black87,
     );
   }
 }

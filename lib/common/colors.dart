@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Color defYellow = Color.fromARGB(255, 255, 217, 0);
+const Color defYellow = Color(0xFFFFD900);
 const Color shadyDefYellow = Color.fromARGB(255, 215, 177, 0);
 
 const Color defGreen = Color.fromARGB(255, 31, 183, 101);
@@ -16,7 +16,11 @@ const Color shadyDefRed = Color.fromARGB(255, 206, 33, 76);
 const Color darkRed = Color.fromARGB(255, 166, 0, 36);
 const Color shadyDarkRed = Color.fromARGB(255, 146, 0, 16);
 
-const Color defaultEquator = Color.fromARGB(255, 33, 45, 67);
-const Color shadyDefEquator = Color.fromARGB(255, 28, 40, 62);
+// const Color defaultEquator = Color(0xFF212D43);
+// const Color shadyDefEquator = Color.fromARGB(255, 28, 40, 62);
 
-const Color defaultBackground = Color.fromARGB(255, 23, 33, 50);
+// const Color defaultBackground = Color(0xFF172132);
+
+Color darkenColor(Color color, percent) {
+  return Color.alphaBlend(Colors.black.withOpacity(percent), color);
+}

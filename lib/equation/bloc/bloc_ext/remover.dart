@@ -17,6 +17,7 @@ extension Remover on EquationBloc {
         myItem.number.setOpacity(0.0);
         myItem.sign?.setOpacity(0.0);
         state.items.remove(myItem);
+        break;
       }
     }
   }

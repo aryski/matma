@@ -46,8 +46,9 @@ class SquareButton extends StatelessWidget {
                     height: height,
                     child: state && unlocked
                         ? Container(
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                          )
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer)
                         : null,
                   ),
                   Padding(
@@ -97,7 +98,7 @@ class SquareButtonContent extends StatelessWidget {
           Container(
             width: width,
             height: height,
-            color: Colors.amberAccent,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -115,7 +116,9 @@ class SquareButtonContent extends StatelessWidget {
                       text,
                       style: TextStyle(
                           fontSize: 30,
-                          color: textColor,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer,
                           fontWeight: FontWeight.bold),
                     ),
                   )

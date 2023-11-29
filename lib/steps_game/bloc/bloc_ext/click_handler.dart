@@ -4,7 +4,7 @@ extension ClickHandler on StepsGameBloc {
   Future<void> handleClick(
       StepsGameEventClick event, Emitter<StepsGameState> emit) async {
     if (event is StepsGameEventClickUp && isSafe(event)) {
-      await handleArrowInsertion(event, emit, board, taskCubit);
+      await handleArrowInsertion(event, emit, board, promptCubit);
     } else {
       if (event is StepsGameEventClickUp) {
         downClick = event.time;

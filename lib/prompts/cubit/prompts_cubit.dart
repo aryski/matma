@@ -11,13 +11,14 @@ import 'package:matma/prompts/task.dart';
 
 class PromptsCubit extends Cubit<PromptsState> {
   final LevelCubit parent;
-  PromptsCubit(this.firstTask, this.parent)
+  PromptsCubit(this.firstTask, this.parent, this.topPadding)
       : currentTask = firstTask,
         super(PromptsState(lines: [])) {
     addLine("");
     planTask(firstTask);
   }
   final Task firstTask;
+  final double topPadding;
   List<GameEvent> recent = [];
   Task currentTask;
   int ind = 0;
@@ -102,7 +103,7 @@ class PromptsCubit extends Cubit<PromptsState> {
     var newLine = LineCubit(LineState(
         text: text,
         id: UniqueKey(),
-        position: AnimatedProp.zero(value: const Offset(0.0, 0.22)),
+        position: AnimatedProp.zero(value: Offset(0.0, topPadding)),
         size: AnimatedProp.zero(value: const Offset(1.0, 0.04)),
         opacity: AnimatedProp.zero(value: 0.0),
         radius: 15.0));

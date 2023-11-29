@@ -68,8 +68,6 @@ extension FillingUpdater on StepsGameBloc {
     int ind = numberInd;
     if (0 <= ind && ind + 1 < state.numbers.length) {
       if (state.numbers[ind].number == -state.numbers[ind + 1].number) {
-        // print(
-        //     "BUENO: ${state.numbers[ind].number} ${state.numbers[ind + 1].number}");
         if (state.numbers[ind].steps.isNotEmpty) {
           var floorState = state.numbers[ind].steps.last.floor.state;
           var n = state.numbers[ind].number;
@@ -80,8 +78,6 @@ extension FillingUpdater on StepsGameBloc {
           }
         }
       } else {
-        // print(
-        //     "NO BUENO: ${state.numbers[ind].number} ${state.numbers[ind + 1].number}");
         removeFilling(state, ind);
       }
     }

@@ -31,7 +31,9 @@ class Sign extends StatelessWidget {
                     child: Text(
                       state.value == Signs.addition ? "+" : "-",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer,
                           fontWeight: FontWeight.bold,
                           fontSize: state.size.value.dx *
                               gs.wUnit *

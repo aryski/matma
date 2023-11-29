@@ -35,13 +35,13 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   final List<StepsGameOps> allowedOps;
   final EquationBloc board;
   final List<UniqueKey> lockedIds = [];
-  final PromptsCubit taskCubit;
+  final PromptsCubit promptCubit;
   final int hUnits;
   final int wUnits;
   DateTime downClick = DateTime.timestamp();
   @override
   StepsGameBloc(
-      this.board, this.taskCubit, this.allowedOps, this.wUnits, this.hUnits)
+      this.board, this.promptCubit, this.allowedOps, this.wUnits, this.hUnits)
       : super(StepsGameState(numbers: [], unorderedItems: {})) {
     state.numbers.addAll(initializeSimulationItems(wUnits, hUnits));
     generateFillings();
@@ -89,7 +89,7 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
 
   @override
   void onChange(Change<StepsGameState> change) {
-    taskCubit.equationValue(state.numbers.map((e) => e.number).toList());
+    promptCubit.equationValue(state.numbers.map((e) => e.number).toList());
     super.onChange(change);
   }
 }

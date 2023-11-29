@@ -7,7 +7,7 @@ extension NumberSplitter on StepsGameBloc {
         currentW: item.state.size.value.dx,
         delta: delta,
         minW: constants.floorW);
-    if (delta != 0) taskCubit.scrolled();
+    if (delta != 0) promptCubit.scrolled();
     item.updateSize(Offset(delta, 0), milliseconds: 200);
     var newW = item.state.size.value.dx;
     int? numberInd = state.getNumberIndexFromItem(item);
@@ -33,7 +33,7 @@ extension NumberSplitter on StepsGameBloc {
           leftValue: state.numbers[numberInd].number,
           rightValue: state.numbers[numberInd + 1].number));
       item.setLastInNumber();
-      taskCubit.splited();
+      promptCubit.splited();
       if (item.state.direction == Direction.down) {
         var ind = state.getNumberIndexFromItem(item);
         if (ind != null) {
@@ -47,7 +47,7 @@ extension NumberSplitter on StepsGameBloc {
       }
     }
     if (delta != 0) {
-      taskCubit.scrolled();
+      promptCubit.scrolled();
     }
     var id = state.getNumberIndexFromItem(item);
     if (id != null && state.numbers[id].steps.last.floor != item) {

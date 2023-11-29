@@ -22,7 +22,7 @@ extension OppositeArrowInsertor on StepsGameBloc {
         size: AnimatedProp.zero(value: const Offset(0, constants.floorH)));
     state.numbers.add(StepsGameNumberState(
         steps: [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
-    taskCubit.insertedOpposite();
+    promptCubit.insertedOpposite();
     item.setLastInNumber();
     generateFillings();
     emit(state.copy());

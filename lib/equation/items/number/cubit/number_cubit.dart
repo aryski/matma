@@ -40,7 +40,6 @@ class NumberCubit extends GameItemCubit<NumberState> {
   }
 
   void updateSize(Offset offset, int milliseconds) {
-    print("Size update4: $offset");
     emit(
       NumberState(
         withDarkenedColor: state.withDarkenedColor,

@@ -5,7 +5,7 @@ extension ArrowInsertor on StepsGameBloc {
       StepsGameEventClickUp event,
       Emitter<StepsGameState> emit,
       EquationBloc board,
-      PromptsCubit taskCubit) async {
+      PromptsCubit promptCubit) async {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       bool isUp = (item.state.direction == Direction.up);
@@ -19,7 +19,7 @@ extension ArrowInsertor on StepsGameBloc {
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
       _animateNewStep(newStep, 200);
-      taskCubit.inserted(item.state.direction);
+      promptCubit.inserted(item.state.direction);
       generateFillings();
       emit(state.copy());
     }

@@ -24,7 +24,6 @@ class FillingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    print(width);
     var path = Path();
     bool isUp = steps > 0;
     //animProgress
