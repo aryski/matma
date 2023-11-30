@@ -8,43 +8,41 @@ import 'package:matma/prompts/task.dart';
 // Level 2
 // Matching steps to shaded fixed steps, with above equation.
 // TODO maybe better "in" animation of the equation.
-class Level2 extends StatelessWidget {
-  const Level2({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Level(
-      next: const Level3(),
-      data: LevelData(
-        name: 'Level2',
-        gamesData: [
-          StepsGameData(
-              allowedOps: [StepsGameOps.addArrowUp],
-              initNumbers: [1],
-              shadedSteps: [3],
-              firstTask: _taskA1,
-              withEquation: true),
-          StepsGameData(
-              allowedOps: [StepsGameOps.addArrowDown],
-              initNumbers: [-1],
-              shadedSteps: [-3],
-              firstTask: _taskB1,
-              withEquation: true),
-          StepsGameData(allowedOps: [
-            StepsGameOps.addArrowDown,
-            StepsGameOps.addArrowUp,
-            StepsGameOps.addOppositeArrow
-          ], initNumbers: [
-            1
-          ], shadedSteps: [
-            3,
-            -2,
-            4,
-            -1
-          ], firstTask: _taskC1, withEquation: true),
-        ],
-      ),
-    );
-  }
+Level getLevel2() {
+  return Level(
+    next: getLevel3(),
+    data: LevelData(
+      icon: Icons.developer_board_rounded,
+      ind: 2,
+      name: 'Level2',
+      gamesData: [
+        StepsGameData(
+            allowedOps: [StepsGameOps.addArrowUp],
+            initNumbers: [1],
+            shadedSteps: [3],
+            firstTask: _taskA1,
+            withEquation: true),
+        StepsGameData(
+            allowedOps: [StepsGameOps.addArrowDown],
+            initNumbers: [-1],
+            shadedSteps: [-3],
+            firstTask: _taskB1,
+            withEquation: true),
+        StepsGameData(allowedOps: [
+          StepsGameOps.addArrowDown,
+          StepsGameOps.addArrowUp,
+          StepsGameOps.addOppositeArrow
+        ], initNumbers: [
+          1
+        ], shadedSteps: [
+          3,
+          -2,
+          4,
+          -1
+        ], firstTask: _taskC1, withEquation: true),
+      ],
+    ),
+  );
 }
 
 var _taskA1 = Task(

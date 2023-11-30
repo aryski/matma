@@ -1,12 +1,12 @@
-
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
 import 'package:matma/color_schemes.g.dart';
 import 'package:matma/menu.dart';
 
-void main() {
+void main() async {
   //TODO dodatkowe tabele z liczbami reprezentjące liczby tuż nad strzałkami
   //zredukowac powtarzalny kod
   //A można jeszcze dorzucic do TASK, informacje ile czasu zajęło userowi to,
@@ -16,9 +16,14 @@ void main() {
   //Tak, aby każdy poziom się wydłużał dopóki ktoś nie będzie odpowiednio szybko kapował o co biega.
 
   Bloc.transformer = sequential();
+  await Hive.openBox<bool>('levels');
+  Hive.box<bool>('levels').put(1, true);
   runApp(BlocProvider(
     create: (context) => AppCubit(ThemeMode.light),
     child: BlocBuilder<AppCubit, ThemeMode>(builder: (context, state) {
+      print("");
+      print(MediaQuery.of(context).size.height * 1920 / 1080);
+      print(MediaQuery.of(context).size.height);
       return MaterialApp(
           localizationsDelegates: GlobalMaterialLocalizations.delegates,
           supportedLocales: const [Locale('pl', 'PL')],

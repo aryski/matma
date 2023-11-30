@@ -39,16 +39,20 @@ class Filling extends StatelessWidget {
                               ? darkenColor(
                                   Theme.of(context)
                                       .colorScheme
-                                      .primaryContainer,
+                                      .secondaryContainer,
                                   0.1)
-                              : Theme.of(context).colorScheme.primaryContainer,
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer,
                           updated: state.isHovered
                               ? darkenColor(
                                   Theme.of(context)
                                       .colorScheme
-                                      .primaryContainer,
+                                      .secondaryContainer,
                                   0.1)
-                              : Theme.of(context).colorScheme.primaryContainer,
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer,
                           builder: (context, color, child) {
                             return CustomPaint(
                               size: Size(
@@ -63,11 +67,18 @@ class Filling extends StatelessWidget {
                                 height: constrains.maxHeight,
                                 stepWdt: state.stepWdt *
                                     gs.wUnit *
-                                    MediaQuery.of(context).size.width,
+                                    MediaQuery.of(context).size.height *
+                                    1920 /
+                                    1080,
                                 radius: state.radius *
                                     gs.wUnit *
-                                    MediaQuery.of(context).size.width,
-                                color: color ?? defGrey,
+                                    MediaQuery.of(context).size.height *
+                                    1920 /
+                                    1080,
+                                color: color ??
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
                               ),
                             );
                           },

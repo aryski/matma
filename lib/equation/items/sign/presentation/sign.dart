@@ -18,6 +18,7 @@ class Sign extends StatelessWidget {
       child: BlocBuilder<SignCubit, SignState>(
         builder: (context, state) {
           return DefaultGameItemAnimations(
+            keepPositionRatio: false,
             gs: gs,
             initialState: initialState,
             state: state,
@@ -37,7 +38,9 @@ class Sign extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: state.size.value.dx *
                               gs.wUnit *
-                              MediaQuery.of(context).size.width),
+                              MediaQuery.of(context).size.height *
+                              1920 /
+                              1080),
                     ),
                   ),
                 ),

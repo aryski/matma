@@ -15,7 +15,7 @@ extension Initializer on StepsGameBloc {
         position:
             AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
         size: AnimatedProp.zero(
-            value: Offset(constants.arrowW * wUnits, constants.floorH)),
+            value: Offset(constants.arrowW * wUnits * 3, constants.floorH)),
         opacity: AnimatedProp.zero(value: 1),
         radius: constants.radius));
   }

@@ -9,56 +9,54 @@ import 'package:matma/prompts/task.dart';
 // Splitting numbers.
 //Zadanie 4
 //Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
-class Level4 extends StatelessWidget {
-  const Level4({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Level(
-      next: const Level5(),
-      data: LevelData(
-        name: 'Level4',
-        gamesData: [
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.addArrowUp,
-              StepsGameOps.addArrowDown,
-              StepsGameOps.addOppositeArrow
-            ],
-            initNumbers: [2],
-            // withFixedEquation: [1, 1],
-            firstTask: _taskA1,
-          ),
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.addArrowUp,
-              StepsGameOps.addArrowDown,
-              StepsGameOps.addOppositeArrow
-            ],
-            initNumbers: [-3],
-            // withFixedEquation: [-1, -1, -1],
-            firstTask: _taskB1,
-          ),
-          StepsGameData(allowedOps: [
+Level getLevel4() {
+  return Level(
+    next: getLevel5(),
+    data: LevelData(
+      name: 'Level4',
+      icon: Icons.call_split_rounded,
+      ind: 4,
+      gamesData: [
+        StepsGameData(
+          allowedOps: [
             StepsGameOps.splitJoinArrows,
             StepsGameOps.addArrowUp,
             StepsGameOps.addArrowDown,
             StepsGameOps.addOppositeArrow
-          ], initNumbers: [
-            1
-          ], withFixedEquation: [
-            1,
-            1,
-            1, //TODO -1 matchuje z 1 trzeba poprawic boarda xD
-            -1,
-            -1,
-            -1
-          ], firstTask: _taskC1),
-        ],
-      ),
-    );
-  }
+          ],
+          initNumbers: [2],
+          // withFixedEquation: [1, 1],
+          firstTask: _taskA1,
+        ),
+        StepsGameData(
+          allowedOps: [
+            StepsGameOps.splitJoinArrows,
+            StepsGameOps.addArrowUp,
+            StepsGameOps.addArrowDown,
+            StepsGameOps.addOppositeArrow
+          ],
+          initNumbers: [-3],
+          // withFixedEquation: [-1, -1, -1],
+          firstTask: _taskB1,
+        ),
+        StepsGameData(allowedOps: [
+          StepsGameOps.splitJoinArrows,
+          StepsGameOps.addArrowUp,
+          StepsGameOps.addArrowDown,
+          StepsGameOps.addOppositeArrow
+        ], initNumbers: [
+          1
+        ], withFixedEquation: [
+          1,
+          1,
+          1, //TODO -1 matchuje z 1 trzeba poprawic boarda xD
+          -1,
+          -1,
+          -1
+        ], firstTask: _taskC1),
+      ],
+    ),
+  );
 }
 
 var _taskA1 = Task(

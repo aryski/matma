@@ -31,7 +31,11 @@ class Equator extends StatelessWidget {
                 painter: EquatorPainter(
                     constrains.maxWidth,
                     constrains.maxHeight,
-                    state.radius * gs.wUnit * MediaQuery.of(context).size.width,
+                    state.radius *
+                        gs.wUnit *
+                        MediaQuery.of(context).size.height *
+                        1920 /
+                        1080,
                     Theme.of(context).colorScheme.secondaryContainer),
               );
             }),

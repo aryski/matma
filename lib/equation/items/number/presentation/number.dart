@@ -20,6 +20,8 @@ class Number extends StatelessWidget {
       child: BlocBuilder<NumberCubit, NumberState>(
         builder: (context, state) {
           return DefaultGameItemAnimations(
+            keepPositionRatio: false,
+            keepSizeRatio: false,
             gs: gs,
             initialState: initialState,
             state: state,
@@ -71,7 +73,9 @@ class Number extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontSize: state.size.value.dx *
                                             gs.wUnit *
-                                            MediaQuery.of(context).size.width),
+                                            MediaQuery.of(context).size.height *
+                                            1920 /
+                                            1080),
                                   ),
                                 ],
                               ),

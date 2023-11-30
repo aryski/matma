@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/colors.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
@@ -20,6 +19,7 @@ class ShadowNumber extends StatelessWidget {
       child: BlocBuilder<ShadowNumberCubit, ShadowNumberState>(
         builder: (context, state) {
           return TweenAnimatedPosition(
+            keepRatio: false,
             duration: const Duration(milliseconds: 1000),
             initialPosition:
                 initialState.position.value.scale(gs.wUnit, gs.hUnit),
@@ -34,7 +34,9 @@ class ShadowNumber extends StatelessWidget {
                     SizedBox(
                       width: state.size.value.dx *
                           gs.wUnit *
-                          MediaQuery.of(context).size.width,
+                          MediaQuery.of(context).size.height *
+                          1920 /
+                          1080,
                       height: state.size.value.dy *
                           gs.hUnit *
                           MediaQuery.of(context).size.height,
@@ -48,11 +50,15 @@ class ShadowNumber extends StatelessWidget {
                             child: Text(
                               state.value,
                               style: TextStyle(
-                                  color: defGrey,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
                                   fontWeight: FontWeight.bold,
                                   fontSize: state.size.value.dx *
                                       gs.wUnit *
-                                      MediaQuery.of(context).size.width *
+                                      MediaQuery.of(context).size.height *
+                                      1920 /
+                                      1080 *
                                       3 /
                                       4),
                             ),

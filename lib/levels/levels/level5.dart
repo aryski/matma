@@ -10,52 +10,50 @@ import 'package:matma/prompts/task.dart';
 //Zadanie 4
 //Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
 //błąd w steps game blocu z łączeniem jak jest -1,-1,-1 i pierwsze dwie laczymy wychodzi 3-3 xD
-class Level5 extends StatelessWidget {
-  const Level5({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Level(
-      next: const Level6(),
-      data: LevelData(
-        name: 'Level5',
-        gamesData: [
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.addArrowUp,
-              StepsGameOps.addArrowDown,
-              StepsGameOps.addOppositeArrow
-            ],
-            initNumbers: [1, 1],
-            firstTask: _taskA1,
-          ),
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.addArrowUp,
-              StepsGameOps.addArrowDown,
-              StepsGameOps.addOppositeArrow
-            ],
-            initNumbers: [-1, -1, -1],
-            firstTask: _taskB1,
-          ),
-          StepsGameData(allowedOps: [
+Level getLevel5() {
+  return Level(
+    next: getLevel6(),
+    data: LevelData(
+      name: 'Level5',
+      icon: Icons.join_full_rounded,
+      ind: 5,
+      gamesData: [
+        StepsGameData(
+          allowedOps: [
             StepsGameOps.splitJoinArrows,
             StepsGameOps.addArrowUp,
             StepsGameOps.addArrowDown,
             StepsGameOps.addOppositeArrow
-          ], initNumbers: [
-            1,
-            1,
-            1,
-            -1,
-            -1,
-            -1
-          ], firstTask: _taskC1),
-        ],
-      ),
-    );
-  }
+          ],
+          initNumbers: [1, 1],
+          firstTask: _taskA1,
+        ),
+        StepsGameData(
+          allowedOps: [
+            StepsGameOps.splitJoinArrows,
+            StepsGameOps.addArrowUp,
+            StepsGameOps.addArrowDown,
+            StepsGameOps.addOppositeArrow
+          ],
+          initNumbers: [-1, -1, -1],
+          firstTask: _taskB1,
+        ),
+        StepsGameData(allowedOps: [
+          StepsGameOps.splitJoinArrows,
+          StepsGameOps.addArrowUp,
+          StepsGameOps.addArrowDown,
+          StepsGameOps.addOppositeArrow
+        ], initNumbers: [
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          -1
+        ], firstTask: _taskC1),
+      ],
+    ),
+  );
 }
 
 var _taskA1 = Task(

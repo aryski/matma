@@ -4,8 +4,8 @@ import 'package:matma/prompts/cubit/prompts_cubit.dart';
 import 'package:matma/prompts/cubit/prompts_state.dart';
 import 'package:matma/prompts/items/line/presentation/line.dart';
 
-class TaskSimulator extends StatelessWidget {
-  const TaskSimulator({super.key, required this.unit});
+class Prompts extends StatelessWidget {
+  const Prompts({super.key, required this.unit});
   final double unit;
 
   @override

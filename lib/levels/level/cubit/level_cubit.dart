@@ -5,10 +5,16 @@ import 'package:matma/prompts/task.dart';
 part 'level_state.dart';
 
 class LevelData {
+  final int ind;
   final String name;
+  final IconData icon;
   final List<GameData> gamesData;
 
-  LevelData({required this.name, required this.gamesData});
+  LevelData(
+      {required this.icon,
+      required this.ind,
+      required this.name,
+      required this.gamesData});
 }
 
 class LevelCubit extends Cubit<LevelState> {

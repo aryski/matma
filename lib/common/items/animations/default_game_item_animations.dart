@@ -10,15 +10,20 @@ class DefaultGameItemAnimations extends StatelessWidget {
       required this.child,
       required this.initialState,
       required this.state,
-      this.gs});
+      this.gs,
+      this.keepSizeRatio = true,
+      this.keepPositionRatio = true});
   final Widget child;
   final GameItemState initialState;
   final GameItemState state;
   final GameSize? gs;
+  final bool keepSizeRatio;
+  final bool keepPositionRatio;
 
   @override
   Widget build(BuildContext context) {
     return TweenAnimatedPosition(
+      keepRatio: keepPositionRatio,
       initialPosition: initialState.position.value
           .scale(gs != null ? gs!.wUnit : 1, gs != null ? gs!.hUnit : 1),
       updatedPosition: state.position.value
@@ -28,6 +33,7 @@ class DefaultGameItemAnimations extends StatelessWidget {
         opacity: state.opacity.value,
         duration: Duration(milliseconds: state.opacity.duration),
         child: TweenAnimatedSize(
+            keepRatio: keepSizeRatio,
             initialSize: initialState.size.value
                 .scale(gs != null ? gs!.wUnit : 1, gs != null ? gs!.hUnit : 1),
             updatedSize: state.size.value

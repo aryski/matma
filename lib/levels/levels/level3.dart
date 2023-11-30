@@ -7,43 +7,42 @@ import 'package:matma/prompts/task.dart';
 
 // Level 3
 // Matching steps to equation.
-class Level3 extends StatelessWidget {
-  const Level3({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Level(
-      next: const Level4(),
-      data: LevelData(
-        name: 'Level3',
-        gamesData: [
-          StepsGameData(
-            allowedOps: [StepsGameOps.addArrowUp],
-            initNumbers: [1],
-            withFixedEquation: [3],
-            firstTask: _taskA1,
-          ),
-          StepsGameData(
-            allowedOps: [StepsGameOps.addArrowDown],
-            initNumbers: [-1],
-            withFixedEquation: [-3],
-            firstTask: _taskB1,
-          ),
-          StepsGameData(allowedOps: [
-            StepsGameOps.addArrowDown,
-            StepsGameOps.addArrowUp,
-            StepsGameOps.addOppositeArrow
-          ], initNumbers: [
-            1
-          ], withFixedEquation: [
-            3,
-            -2,
-            4,
-            -1
-          ], firstTask: _taskC1),
-        ],
-      ),
-    );
-  }
+
+Level getLevel3() {
+  return Level(
+    next: getLevel4(),
+    data: LevelData(
+      icon: Icons.route_rounded,
+      ind: 3,
+      name: 'Level3',
+      gamesData: [
+        StepsGameData(
+          allowedOps: [StepsGameOps.addArrowUp],
+          initNumbers: [1],
+          withFixedEquation: [3],
+          firstTask: _taskA1,
+        ),
+        StepsGameData(
+          allowedOps: [StepsGameOps.addArrowDown],
+          initNumbers: [-1],
+          withFixedEquation: [-3],
+          firstTask: _taskB1,
+        ),
+        StepsGameData(allowedOps: [
+          StepsGameOps.addArrowDown,
+          StepsGameOps.addArrowUp,
+          StepsGameOps.addOppositeArrow
+        ], initNumbers: [
+          1
+        ], withFixedEquation: [
+          3,
+          -2,
+          4,
+          -1
+        ], firstTask: _taskC1),
+      ],
+    ),
+  );
 }
 
 var _taskA1 = Task(

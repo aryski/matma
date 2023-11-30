@@ -7,49 +7,47 @@ import 'package:matma/prompts/task.dart';
 // Level 7
 // Reducing numbers in a cascade way.
 
-class Level7 extends StatelessWidget {
-  const Level7({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Level(
-      data: LevelData(
-        name: 'Level7',
-        gamesData: [
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.reduceArrows,
-              StepsGameOps.reducingArrowsCascadedly
-            ],
-            initNumbers: [4, -3],
-            firstTask: _taskA1,
-          ),
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.reduceArrows,
-              StepsGameOps.reducingArrowsCascadedly
-            ],
-            initNumbers: [4, -3, -2, -3, 3],
-            firstTask: _taskB1,
-          ),
-          StepsGameData(allowedOps: [
+Level getLevel7() {
+  return Level(
+    data: LevelData(
+      icon: Icons.area_chart_rounded,
+      ind: 7,
+      name: 'Level7',
+      gamesData: [
+        StepsGameData(
+          allowedOps: [
             StepsGameOps.splitJoinArrows,
             StepsGameOps.reduceArrows,
             StepsGameOps.reducingArrowsCascadedly
-          ], initNumbers: [
-            1,
-            5,
-            -5,
-            1,
-            -6,
-            6,
-            -3
-          ], firstTask: _taskC1),
-        ],
-      ),
-    );
-  }
+          ],
+          initNumbers: [4, -3],
+          firstTask: _taskA1,
+        ),
+        StepsGameData(
+          allowedOps: [
+            StepsGameOps.splitJoinArrows,
+            StepsGameOps.reduceArrows,
+            StepsGameOps.reducingArrowsCascadedly
+          ],
+          initNumbers: [4, -3, -2, -3, 3],
+          firstTask: _taskB1,
+        ),
+        StepsGameData(allowedOps: [
+          StepsGameOps.splitJoinArrows,
+          StepsGameOps.reduceArrows,
+          StepsGameOps.reducingArrowsCascadedly
+        ], initNumbers: [
+          1,
+          5,
+          -5,
+          1,
+          -6,
+          6,
+          -3
+        ], firstTask: _taskC1),
+      ],
+    ),
+  );
 }
 
 var _taskA1 = Task(

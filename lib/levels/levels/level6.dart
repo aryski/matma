@@ -8,55 +8,44 @@ import 'package:matma/prompts/task.dart';
 // Level 6
 // Reducing numbers.
 
-class Level6 extends StatelessWidget {
-  const Level6({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Level(
-      next: const Level7(),
-      data: LevelData(
-        name: 'Level6',
-        gamesData: [
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.reduceArrows
-            ],
-            initNumbers: [2, -1],
-            firstTask: _taskA1,
-          ),
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.reduceArrows
-            ],
-            initNumbers: [4, -3],
-            firstTask: _taskB1,
-          ),
-          StepsGameData(
-            allowedOps: [
-              StepsGameOps.splitJoinArrows,
-              StepsGameOps.reduceArrows
-            ],
-            initNumbers: [-4, 3],
-            firstTask: _taskC1,
-          ),
-          StepsGameData(allowedOps: [
-            StepsGameOps.splitJoinArrows,
-            StepsGameOps.reduceArrows
-          ], initNumbers: [
-            1,
-            5,
-            -5,
-            1,
-            -6,
-            6,
-            -3
-          ], firstTask: _taskD1),
-        ],
-      ),
-    );
-  }
+Level getLevel6() {
+  return Level(
+    next: getLevel7(),
+    data: LevelData(
+      icon: Icons.reduce_capacity_rounded,
+      ind: 6,
+      name: 'Level6',
+      gamesData: [
+        StepsGameData(
+          allowedOps: [StepsGameOps.splitJoinArrows, StepsGameOps.reduceArrows],
+          initNumbers: [2, -1],
+          firstTask: _taskA1,
+        ),
+        StepsGameData(
+          allowedOps: [StepsGameOps.splitJoinArrows, StepsGameOps.reduceArrows],
+          initNumbers: [4, -3],
+          firstTask: _taskB1,
+        ),
+        StepsGameData(
+          allowedOps: [StepsGameOps.splitJoinArrows, StepsGameOps.reduceArrows],
+          initNumbers: [-4, 3],
+          firstTask: _taskC1,
+        ),
+        StepsGameData(allowedOps: [
+          StepsGameOps.splitJoinArrows,
+          StepsGameOps.reduceArrows
+        ], initNumbers: [
+          1,
+          5,
+          -5,
+          1,
+          -6,
+          6,
+          -3
+        ], firstTask: _taskD1),
+      ],
+    ),
+  );
 }
 
 var _taskA1 = Task(

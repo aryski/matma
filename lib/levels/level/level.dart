@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:matma/common/level_summary/level_summary.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
+import 'package:matma/menu.dart';
 import 'package:matma/steps_game/steps_game.dart';
 
 /* Use                
@@ -13,6 +15,27 @@ class Level extends StatelessWidget {
   const Level({super.key, required this.data, this.next});
   final LevelData data;
   final Widget? next;
+
+  Widget generateButton() {
+    // Hive.box<bool>('levels');
+    // var box = Hive.openBox<bool>('levels');
+    print(Hive.box<bool>('levels').get(data.ind));
+    var unlocked = Hive.box<bool>('levels').get(data.ind) ?? false;
+    return StreamBuilder(
+      stream: Hive.box<bool>('levels').watch(),
+      builder: (context, snapshot) {
+        if (snapshot.data != null && snapshot.data!.key == data.ind) {
+          unlocked = snapshot.data!.value;
+        }
+        return ClassicLevelButton(
+          unlocked: unlocked,
+          level: this,
+          icon: data.icon,
+          text: data.name,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +77,7 @@ class Level extends StatelessWidget {
                               height: MediaQuery.of(context).size.height,
                               color: Colors.black.withOpacity(0.3),
                             ),
-                            LevelSummary(next: next),
+                            LevelSummary(next: next, data: data),
                           ],
                         )
                       : const SizedBox.shrink());

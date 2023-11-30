@@ -94,23 +94,38 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
+    return Row(
       children: [
-        BoardDesign(
-          width: 700,
-          height: 180,
-          radius: 15,
-          fillColor: Theme.of(context).colorScheme.background,
-          frameColor: Theme.of(context).colorScheme.onSecondaryContainer,
+        const Spacer(),
+        Expanded(
+          flex: 1,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              AspectRatio(
+                aspectRatio: 35 / 9,
+                child: Stack(alignment: Alignment.center, children: [
+                  BoardDesign(
+                    fillColor: Theme.of(context).colorScheme.background,
+                    frameColor:
+                        Theme.of(context).colorScheme.onSecondaryContainer,
+                  ),
+                  FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text(
+                      'Matma',
+                      style: TextStyle(
+                          fontSize: 135,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onBackground),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
         ),
-        Text(
-          'Matma',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 135,
-              color: Theme.of(context).colorScheme.onBackground),
-        ),
+        const Spacer(),
       ],
     );
   }
@@ -121,51 +136,63 @@ class PickMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    var levels = [
+      getLevel1(),
+      getLevel2(),
+      getLevel3(),
+      getLevel4(),
+      getLevel5(),
+      getLevel6(),
+      getLevel7()
+    ];
+
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _ClassicLevelButton(
-            icon: Icons.add_box_outlined, text: 'Poziom 1', level: Level1()),
-        SizedBox(width: 30),
-        _ClassicLevelButton(
-            icon: Icons.developer_board_rounded,
-            text: 'Poziom 2',
-            level: Level2()),
-        SizedBox(width: 30),
-        _ClassicLevelButton(
-            icon: Icons.route_rounded, text: 'Poziom 3', level: Level3()),
-        SizedBox(width: 30),
-        _ClassicLevelButton(
-            icon: Icons.call_split_rounded, text: 'Poziom 4', level: Level4()),
-        SizedBox(width: 30),
-        _ClassicLevelButton(
-            icon: Icons.join_full_rounded, text: 'Poziom 5', level: Level5()),
-        SizedBox(width: 30),
-        _ClassicLevelButton(
-            icon: Icons.reduce_capacity_rounded,
-            text: 'Poziom 6',
-            level: Level6()),
-        SizedBox(width: 30),
-        _ClassicLevelButton(
-            icon: Icons.area_chart_rounded, text: 'Poziom 7', level: Level7()),
+        const Spacer(flex: 3),
+        ...List.generate(
+            levels.length * 2,
+            (index) => index % 2 == 0
+                ? Expanded(
+                    flex: 5,
+                    child: AspectRatio(
+                        aspectRatio: 1.0,
+                        child: levels[index ~/ 2].generateButton()),
+                  )
+                : const Spacer()),
+        const Spacer(flex: 2),
       ],
     );
   }
 }
 
-class _ClassicLevelButton extends StatelessWidget {
+class Frame extends StatelessWidget {
+  const Frame({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+class ClassicLevelButton extends StatelessWidget {
   final Widget level;
   final IconData icon;
   final String text;
+  final bool unlocked;
 
-  const _ClassicLevelButton(
-      {required this.level, required this.icon, required this.text});
+  const ClassicLevelButton(
+      {super.key,
+      required this.level,
+      required this.icon,
+      required this.text,
+      required this.unlocked});
   @override
   Widget build(BuildContext context) {
     return SquareButton(
       width: 200,
       height: 200,
-      unlocked: true,
+      unlocked: unlocked,
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => level));
       },

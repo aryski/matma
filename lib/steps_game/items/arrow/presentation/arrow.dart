@@ -39,10 +39,16 @@ class Arrow extends StatelessWidget {
                             constrains.maxHeight,
                             state.radius *
                                 gs.wUnit *
-                                MediaQuery.of(context).size.width,
+                                MediaQuery.of(context).size.height *
+                                1920 /
+                                1080,
                             state.direction == Direction.up
-                                ? (state.isHovered ? shadyDefGreen : defGreen)
-                                : (state.isHovered ? shadyDefRed : defRed),
+                                ? (state.isHovered
+                                    ? darkenColor(defGreen, 0.2)
+                                    : defGreen)
+                                : (state.isHovered
+                                    ? darkenColor(defRed, 0.2)
+                                    : defRed),
                             state.direction,
                             animationProgress),
                       );

@@ -8,11 +8,13 @@ class TweenAnimatedSize extends StatelessWidget {
     required this.initialSize,
     required this.updatedSize,
     required this.duration,
+    required this.keepRatio,
   });
   final Widget child;
   final Offset initialSize;
   final Offset updatedSize;
   final Duration duration;
+  final bool keepRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,9 @@ class TweenAnimatedSize extends StatelessWidget {
         initial: initialSize,
         updated: updatedSize,
         builder: (context, size, widget) {
-          var width = size.dx * MediaQuery.of(context).size.width;
+          var width = keepRatio
+              ? size.dx * MediaQuery.of(context).size.height * 1920 / 1080
+              : size.dx * MediaQuery.of(context).size.width;
           var height = size.dy * MediaQuery.of(context).size.height;
           return ConstrainedBox(
               constraints: BoxConstraints(

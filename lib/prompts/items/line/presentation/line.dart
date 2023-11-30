@@ -17,6 +17,8 @@ class Line extends StatelessWidget {
           return DefaultGameItemAnimations(
             initialState: initialState,
             state: state,
+            keepPositionRatio: false,
+            keepSizeRatio: false,
             child: Center(
               child: SizedBox(
                 width: state.size.value.dx * MediaQuery.of(context).size.width,

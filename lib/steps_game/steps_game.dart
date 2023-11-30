@@ -108,7 +108,7 @@ class _StepsSimulatorContent extends StatelessWidget {
           ShadedRawStepsGame(gs: gs, initNumbers: data.shadedSteps!),
         RawStepsGame(gs: gs),
         if (data.withEquation) Equation(gs: gs),
-        TaskSimulator(unit: gs.hUnit),
+        Prompts(unit: gs.hUnit),
         const Align(
           alignment: Alignment.topLeft,
           child: Padding(

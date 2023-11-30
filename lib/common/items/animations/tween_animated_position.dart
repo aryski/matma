@@ -8,11 +8,13 @@ class TweenAnimatedPosition extends StatelessWidget {
     required this.initialPosition,
     required this.updatedPosition,
     required this.duration,
+    required this.keepRatio,
   });
   final Widget child;
   final Offset initialPosition;
   final Offset updatedPosition;
   final Duration duration;
+  final bool keepRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,12 @@ class TweenAnimatedPosition extends StatelessWidget {
         updated: updatedPosition,
         builder: (context, position, widget) {
           return Positioned(
-              left: position.dx * MediaQuery.of(context).size.width,
+              left: keepRatio
+                  ? position.dx *
+                      MediaQuery.of(context).size.height *
+                      1920 /
+                      1080
+                  : position.dx * MediaQuery.of(context).size.width,
               top: position.dy * MediaQuery.of(context).size.height,
               child: child);
         });
