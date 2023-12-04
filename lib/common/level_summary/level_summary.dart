@@ -13,7 +13,6 @@ class LevelSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Hive.box<bool>('levels').put(data.ind + 1, true);
-    print("putting ind ${data.ind}");
     return Column(
       children: [
         const Spacer(flex: 5),

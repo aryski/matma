@@ -17,9 +17,6 @@ class Level extends StatelessWidget {
   final Widget? next;
 
   Widget generateButton() {
-    // Hive.box<bool>('levels');
-    // var box = Hive.openBox<bool>('levels');
-    print(Hive.box<bool>('levels').get(data.ind));
     var unlocked = Hive.box<bool>('levels').get(data.ind) ?? false;
     return StreamBuilder(
       stream: Hive.box<bool>('levels').watch(),

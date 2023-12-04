@@ -41,7 +41,10 @@ class Menu extends StatelessWidget {
                           default:
                         }
                       },
-                      icon: const Icon(Icons.dark_mode_outlined))),
+                      icon: Icon((BlocProvider.of<AppCubit>(context).state ==
+                              ThemeMode.dark)
+                          ? Icons.light_mode_outlined
+                          : Icons.dark_mode_outlined))),
             ),
             const Spacer(),
             const Logo(),

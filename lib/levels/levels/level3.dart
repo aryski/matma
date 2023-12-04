@@ -14,7 +14,7 @@ Level getLevel3() {
     data: LevelData(
       icon: Icons.route_rounded,
       ind: 3,
-      name: 'Level3',
+      name: 'Poziom 3',
       gamesData: [
         StepsGameData(
           allowedOps: [StepsGameOps.addArrowUp],

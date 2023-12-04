@@ -12,7 +12,7 @@ Level getLevel7() {
     data: LevelData(
       icon: Icons.area_chart_rounded,
       ind: 7,
-      name: 'Level7',
+      name: 'Poziom 7',
       gamesData: [
         StepsGameData(
           allowedOps: [

@@ -13,7 +13,7 @@ Level getLevel4() {
   return Level(
     next: getLevel5(),
     data: LevelData(
-      name: 'Level4',
+      name: 'Poziom 4',
       icon: Icons.call_split_rounded,
       ind: 4,
       gamesData: [

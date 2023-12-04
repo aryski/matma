@@ -14,7 +14,7 @@ Level getLevel1() {
     data: LevelData(
       icon: Icons.add_box_outlined,
       ind: 1,
-      name: 'Level1',
+      name: 'Poziom 1',
       gamesData: [
         // StepsGameData(allowedOps: [
         //   StepsGameOps.addArrowDown,

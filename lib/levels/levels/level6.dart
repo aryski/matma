@@ -14,7 +14,7 @@ Level getLevel6() {
     data: LevelData(
       icon: Icons.reduce_capacity_rounded,
       ind: 6,
-      name: 'Level6',
+      name: 'Poziom 6',
       gamesData: [
         StepsGameData(
           allowedOps: [StepsGameOps.splitJoinArrows, StepsGameOps.reduceArrows],

@@ -14,7 +14,7 @@ Level getLevel2() {
     data: LevelData(
       icon: Icons.developer_board_rounded,
       ind: 2,
-      name: 'Level2',
+      name: 'Poziom 2',
       gamesData: [
         StepsGameData(
             allowedOps: [StepsGameOps.addArrowUp],
