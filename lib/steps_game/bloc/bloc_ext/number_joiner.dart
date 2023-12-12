@@ -3,15 +3,13 @@ part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 extension NumberSplitJoiner on StepsGameBloc {
   void handleJoin(FloorCubit item, double delta, StepsGameState state,
       Emitter<StepsGameState> emit) {
+    var width = item.state.size.value.dx;
     delta = guardDeltaSize(
-        currentW: item.state.size.value.dx,
-        delta: delta,
-        minW: constants.floorW);
+        currentW: width, delta: delta, minW: constants.floorWDef);
     if (delta != 0) promptCubit.scrolled();
-    item.updateSize(Offset(delta, 0), delayInMillis: 20, milliseconds: 200);
     int? numberInd = state.getNumberIndexFromItem(item);
     if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
-      if (item.state.size.value.dx + delta <= constants.floorW) {
+      if (width + delta <= constants.floorWDef) {
         handleJoinCore(state, numberInd, item, delta);
       }
       state.updatePositionSince(
@@ -19,8 +17,12 @@ extension NumberSplitJoiner on StepsGameBloc {
           offset: Offset(delta, 0),
           fillingIncluded: false,
           milliseconds: 200);
+      item.updateSize(Offset(delta, 0), delayInMillis: 0, milliseconds: 200);
+      state.getNumberFromItem(item)?.filling?.resizeWidth(delta);
       generateFillings();
       emit(state.copy());
+    } else {
+      item.updateSize(Offset(delta, 0), delayInMillis: 0, milliseconds: 200);
     }
   }
 

@@ -56,9 +56,7 @@ class SquareButton extends StatelessWidget {
                               : null,
                         ),
                         Padding(
-                          padding: EdgeInsets.all(padding *
-                              MediaQuery.of(context).size.height /
-                              1080),
+                          padding: EdgeInsets.all(constrains.maxHeight * 0.025),
                           child: SquareButtonContent(
                               padding: padding,
                               width: width,
@@ -100,8 +98,7 @@ class SquareButtonContent extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constrains) {
         return ClipRRect(
-          borderRadius: BorderRadius.circular(constrains.maxHeight * 0.1 -
-              padding * MediaQuery.of(context).size.height / 1080 / 2),
+          borderRadius: BorderRadius.circular(constrains.maxHeight * 0.075),
           clipBehavior: Clip.hardEdge,
           child: FittedBox(
             fit: BoxFit.fill,

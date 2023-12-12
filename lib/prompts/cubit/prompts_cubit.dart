@@ -89,7 +89,7 @@ class PromptsCubit extends Cubit<PromptsState> {
 
   void addLine(String text) {
     for (var line in state.lines) {
-      line.updatePosition(const Offset(0, -0.04));
+      line.updatePosition(const Offset(0, -0.04 * 1080));
     }
     for (int i = 0; i < state.lines.length; i++) {
       state.lines[i].updatePosition(const Offset(0, -0.005));
@@ -103,8 +103,8 @@ class PromptsCubit extends Cubit<PromptsState> {
     var newLine = LineCubit(LineState(
         text: text,
         id: UniqueKey(),
-        position: AnimatedProp.zero(value: Offset(0.0, topPadding)),
-        size: AnimatedProp.zero(value: const Offset(1.0, 0.04)),
+        position: AnimatedProp.zero(value: Offset(0.0, topPadding * 1080)),
+        size: AnimatedProp.zero(value: const Offset(1920, 0.04 * 1080)),
         opacity: AnimatedProp.zero(value: 0.0),
         radius: 15.0));
 

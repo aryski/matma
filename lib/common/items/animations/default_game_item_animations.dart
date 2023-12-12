@@ -2,45 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:matma/common/items/animations/tween_animated_position.dart';
 import 'package:matma/common/items/animations/tween_animated_size.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
-import 'package:matma/common/game_size.dart';
 
 class DefaultGameItemAnimations extends StatelessWidget {
-  const DefaultGameItemAnimations(
-      {super.key,
-      required this.child,
-      required this.initialState,
-      required this.state,
-      this.gs,
-      this.keepSizeRatio = true,
-      this.keepPositionRatio = true});
+  const DefaultGameItemAnimations({
+    super.key,
+    required this.child,
+    required this.initialState,
+    required this.state,
+    this.noResize = false,
+    this.halfWidthOffset = false,
+    this.halfHeightOffset = true,
+  });
   final Widget child;
   final GameItemState initialState;
   final GameItemState state;
-  final GameSize? gs;
-  final bool keepSizeRatio;
-  final bool keepPositionRatio;
+  final bool noResize;
+  final bool halfWidthOffset;
+  final bool halfHeightOffset;
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimatedPosition(
-      keepRatio: keepPositionRatio,
-      initialPosition: initialState.position.value
-          .scale(gs != null ? gs!.wUnit : 1, gs != null ? gs!.hUnit : 1),
-      updatedPosition: state.position.value
-          .scale(gs != null ? gs!.wUnit : 1, gs != null ? gs!.hUnit : 1),
-      duration: Duration(milliseconds: state.position.duration),
-      child: AnimatedOpacity(
-        opacity: state.opacity.value,
-        duration: Duration(milliseconds: state.opacity.duration),
-        child: TweenAnimatedSize(
-            keepRatio: keepSizeRatio,
-            initialSize: initialState.size.value
-                .scale(gs != null ? gs!.wUnit : 1, gs != null ? gs!.hUnit : 1),
-            updatedSize: state.size.value
-                .scale(gs != null ? gs!.wUnit : 1, gs != null ? gs!.hUnit : 1),
-            duration: Duration(milliseconds: state.size.duration),
-            child: child),
-      ),
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      return TweenAnimatedPosition(
+        halfHeightOffset: halfHeightOffset,
+        halfWidthOffset: halfWidthOffset,
+        noResize: noResize,
+        initialPosition: initialState.position.value,
+        updatedPosition: state.position.value,
+        duration: Duration(milliseconds: state.position.duration),
+        child: AnimatedOpacity(
+          opacity: state.opacity.value,
+          duration: Duration(milliseconds: state.opacity.duration),
+          child: TweenAnimatedSize(
+              noResize: noResize,
+              maxX: constraints.maxWidth,
+              maxY: constraints.maxHeight,
+              initialSize: initialState.size.value,
+              updatedSize: state.size.value,
+              duration: Duration(milliseconds: state.size.duration),
+              child: child),
+        ),
+      );
+    });
   }
 }

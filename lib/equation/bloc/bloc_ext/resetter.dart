@@ -2,9 +2,9 @@ part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Resetter on EquationBloc {
   static EquationState hardResetState(
-      List<int> updatedNumbers, List<int>? targetValues, int wUnits) {
-    var result1 = _generateBoardData(updatedNumbers, false, wUnits);
-    var result2 = _generateBoardData(targetValues, true, wUnits);
+      List<int> updatedNumbers, List<int>? targetValues) {
+    var result1 = _generateBoardData(updatedNumbers, false);
+    var result2 = _generateBoardData(targetValues, true);
     return EquationState(
         items: result1.$1,
         extraItems: result1.$2,
@@ -13,12 +13,13 @@ extension Resetter on EquationBloc {
   }
 
   static (List<EquationDefaultItem>, List<GameItemCubit>) _generateBoardData(
-      List<int>? numbers, bool withDarkenedColor, int wUnits) {
+      List<int>? numbers, bool withDarkenedColor) {
     if (numbers == null) {
       return ([], []);
     }
-    var top = 1 / 2;
-    var widthSpace = wUnits;
+    var top = 0.0;
+    // var widthSpace = wUnits;
+    var leftPadding = 14.0;
 
     List<EquationDefaultItem> items = [];
 
@@ -26,7 +27,7 @@ extension Resetter on EquationBloc {
     double totaldx = result.$1;
     List<GameItemState> states = result.$2;
 
-    var allMargin = (widthSpace - totaldx) / 2;
+    var allMargin = (-totaldx) / 2;
     SignCubit? lastSignCubit;
     for (var state in states) {
       state = state.copyWith(
@@ -40,10 +41,10 @@ extension Resetter on EquationBloc {
         lastSignCubit = null;
       }
     }
-    var x = 2; //padding TODO
+
     var boardCubit = BoardCubit(BoardItemsGenerator.generateBoardState(
-        position: Offset(allMargin - x / 2, top),
-        size: Offset(totaldx + x, 2)));
+        position: Offset(allMargin - leftPadding, top),
+        size: Offset(totaldx + 2 * leftPadding, 112.0)));
     return (items, [boardCubit]);
   }
 

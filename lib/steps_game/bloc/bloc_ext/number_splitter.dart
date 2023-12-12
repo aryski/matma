@@ -6,13 +6,13 @@ extension NumberSplitter on StepsGameBloc {
     delta = guardDeltaSize(
         currentW: item.state.size.value.dx,
         delta: delta,
-        minW: constants.floorW);
+        minW: constants.floorWDef);
     if (delta != 0) promptCubit.scrolled();
     item.updateSize(Offset(delta, 0), milliseconds: 200);
     var newW = item.state.size.value.dx;
     int? numberInd = state.getNumberIndexFromItem(item);
     if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
-      if (newW > constants.floorW) {
+      if (newW > constants.floorWDef) {
         handleSplitCore(state, item, numberInd, delta);
       }
       state.updatePositionSince(

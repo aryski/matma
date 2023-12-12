@@ -65,7 +65,7 @@ extension ArrowInsertor on StepsGameBloc {
 
   void _animateNewStep(StepsGameDefaultItem newStep, int milliseconds) {
     newStep.arrow.animate(1);
-    var delta = constants.arrowW;
+    var delta = constants.floorWDef - constants.floorWMini;
     newStep.floor.updateSize(Offset(delta, 0), milliseconds: milliseconds);
     state.updatePositionSince(
         item: newStep.floor,

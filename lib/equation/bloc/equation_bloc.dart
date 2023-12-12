@@ -22,12 +22,13 @@ part 'bloc_ext/shadow_numbers_generator.dart';
 class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final EquationState init;
   final List<int>? targetValues;
+
   EquationBloc(
       {required this.init,
       required List<int> initNumbers,
       this.targetValues,
       required int wUnits})
-      : super(Resetter.hardResetState(initNumbers, targetValues, wUnits)) {
+      : super(Resetter.hardResetState(initNumbers, targetValues)) {
     on<EquationEventIncreaseNumber>((event, emit) async {
       var itemInd = state.itemIndex(event.ind);
       if (itemInd != null) {

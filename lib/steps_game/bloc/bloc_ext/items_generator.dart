@@ -26,7 +26,7 @@ extension ItemsGenerator on StepsGameBloc {
       double? widthSize,
       AnimatedProp<Offset>? size,
       required Direction direction}) {
-    widthSize ??= constants.floorW;
+    widthSize ??= constants.floorWDef;
     return FloorCubit(
       FloorState(
         direction: direction,

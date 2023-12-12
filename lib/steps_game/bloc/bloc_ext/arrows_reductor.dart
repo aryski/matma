@@ -5,7 +5,7 @@ extension ArrowsReductor on StepsGameBloc {
       StepsGameState state, Emitter<StepsGameState> emit) async {
     var number = state.getNumberFromItem(item);
     if (number != null && number.filling != null) {
-      number.filling?.animateToLeft();
+      number.filling!.animateToLeft();
     } //usuwanie z tyh list cos nie cos
     animateLeftFilling(item, false);
     animateRightFilling(item, false);
@@ -48,11 +48,11 @@ extension ArrowsReductor on StepsGameBloc {
     var arrows = <ArrowCubit>{left, right};
     if (floor.state.direction == Direction.up) {
       for (var element in all) {
-        element.updatePosition(Offset(0, constants.arrowH),
+        element.updatePosition(const Offset(0, constants.arrowH),
             milliseconds: milliseconds);
       }
     } else {
-      floor.updatePosition(Offset(0, -constants.arrowH),
+      floor.updatePosition(const Offset(0, -constants.arrowH),
           milliseconds: milliseconds);
     }
     for (var e in arrows) {

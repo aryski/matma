@@ -41,7 +41,6 @@ class StepsGameNumberState {
 }
 
 class StepsGameState {
-  // final GameSize gs;
   final List<StepsGameNumberState> numbers;
   Map<UniqueKey, GameItemCubit> unorderedItems;
 

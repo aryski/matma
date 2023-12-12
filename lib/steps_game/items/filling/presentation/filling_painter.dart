@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class FillingPainter extends CustomPainter {
   final double width;
-  final double height;
   final double stepWdt;
   final double stepHgt;
   final double radius;
@@ -13,7 +12,6 @@ class FillingPainter extends CustomPainter {
   FillingPainter(
       {required this.width,
       required this.radius,
-      required this.height,
       required this.stepWdt,
       required this.color,
       required this.steps,
@@ -24,6 +22,7 @@ class FillingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    print("WIDTH: $width");
     var path = Path();
     bool isUp = steps > 0;
     //animProgress
@@ -34,7 +33,14 @@ class FillingPainter extends CustomPainter {
     if (isUp) {
       var left = stepWdt * (steps - 1);
       for (int i = 0; i < steps.abs(); i++) {
-        addRectangle(rectWidth, stepHgt, path, left, degress, top);
+        if (rectWidth < stepWdt) {}
+        addRectangle(
+            rectWidth,
+            i == 0 ? stepHgt * (1 - animProgress.abs() / 1) : stepHgt,
+            path,
+            left,
+            degress,
+            i == 0 ? top + stepHgt * (animProgress.abs() / 1) : top);
 
         left = left - stepWdt;
         top += stepHgt;
@@ -44,7 +50,15 @@ class FillingPainter extends CustomPainter {
       var rectWidth = width;
       var left = 0.0;
       for (int i = 0; i < steps.abs(); i++) {
-        addRectangle(rectWidth, stepHgt, path, left, degress, top);
+        addRectangle(
+            rectWidth,
+            i == steps.abs() - 1
+                ? stepHgt * (1 - animProgress.abs() / 1)
+                : stepHgt,
+            path,
+            left,
+            degress,
+            top);
 
         left = left + stepWdt;
         top += stepHgt;

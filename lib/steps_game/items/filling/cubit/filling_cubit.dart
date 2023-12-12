@@ -17,4 +17,11 @@ class FillingCubit extends GameItemCubit<FillingState> {
   void animateToDef() {
     emit(state.copyWith(animProgress: 0));
   }
+
+  void resizeWidth(double delta) {
+    emit(state.copyWith(
+        size: AnimatedProp<Offset>(
+            value: state.size.value + Offset(delta, 0),
+            duration: state.size.duration)));
+  }
 }

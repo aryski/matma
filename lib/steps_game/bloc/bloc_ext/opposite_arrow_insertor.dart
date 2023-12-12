@@ -13,12 +13,14 @@ extension OppositeArrowInsertor on StepsGameBloc {
     arrow = generateArrow(
         animationProgress: 0,
         position: item.state.position.value +
-            Offset(constants.arrowW * 0.5, isUp ? constants.floorH : 0),
+            Offset(item.state.size.value.dx - constants.arrowW * 3 / 4,
+                isUp ? constants.floorH : 0),
         size: AnimatedProp.zero(value: const Offset(constants.arrowW, 0)),
         direction: isUp ? Direction.down : Direction.up);
     floor = generateFloor(
         direction: isUp ? Direction.down : Direction.up,
-        position: item.state.position.value + const Offset(constants.arrowW, 0),
+        position: item.state.position.value +
+            Offset(item.state.size.value.dx - 1 / 4 * constants.arrowW, 0),
         size: AnimatedProp.zero(value: const Offset(0, constants.floorH)));
     state.numbers.add(StepsGameNumberState(
         steps: [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
@@ -36,7 +38,7 @@ extension OppositeArrowInsertor on StepsGameBloc {
 
     arrow.animate(1.0);
     arrow.updateHeight(constants.arrowH, 200);
-    floor.updateSize(const Offset(1.25 * constants.arrowW, 0),
+    floor.updateSize(const Offset(constants.floorWLarge, 0),
         delayInMillis: 200, milliseconds: 200);
 
     floor.setLastInGame();

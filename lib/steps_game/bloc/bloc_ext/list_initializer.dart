@@ -1,16 +1,18 @@
 part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension Initializer on StepsGameBloc {
-  List<StepsGameNumberState> initializeSimulationItems(int wUnits, int hUnits) {
-    double initialTop = (hUnits / 2).floor() - 1;
-    var initialLeft = 2.0;
-    _generateEquator(initialTop, wUnits);
-    return _generateSteps(board.state.numbers, initialLeft, initialTop);
+  void initializeSimulationItems() {
+    var equator = _generateEquator(constants.initialTop);
+    state.unorderedItems[equator.state.id] = equator;
+    state.numbers.addAll(_generateSteps(
+        board.state.numbers, constants.initialLeft, constants.initialTop));
+    generateFillings();
   }
 
-  void _generateEquator(double currentTop, int wUnits) {
+  EquatorCubit _generateEquator(double currentTop) {
+    int wUnits = 66;
     var id = UniqueKey();
-    state.unorderedItems[id] = EquatorCubit(EquatorState(
+    return EquatorCubit(EquatorState(
         id: id,
         position:
             AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
@@ -31,12 +33,14 @@ extension Initializer on StepsGameBloc {
       bool nextNumberSameSign = isNextNumberSameSign(j, init, number);
       for (int i = 0; i < stepsCount; i++) {
         var pos = Offset(currentLeft, currentTop);
-        double floorWidth = constants.floorW;
-        if (nextNumberSameSign && i + 1 == stepsCount) {
-          floorWidth = constants.floorWExt;
-        }
+        double floorWidth = constants.floorWDef; //TODO
+        var isLastInNumber = i + 1 == stepsCount;
+        // if (nextNumberSameSign && i + 1 == stepsCount) {
+        //   floorWidth = constants.floorWExt;
+        // }
         var isPositive = number > 0;
-        var step = generateStep(pos, isPositive, floorWidth);
+        var step = generateStep(pos, isPositive,
+            isLastInNumber ? constants.floorWLarge : constants.floorWDef);
         _updateLastness(
             isLastInNumber: i + 1 == stepsCount,
             isLastInGame: j + 1 == init.length,
@@ -44,9 +48,9 @@ extension Initializer on StepsGameBloc {
         steps.add(step);
 
         currentTop += isPositive ? -constants.arrowH : constants.arrowH;
-        currentLeft += (floorWidth == constants.floorWExt)
-            ? constants.arrowW * 2
-            : constants.arrowW;
+        currentLeft += isLastInNumber
+            ? constants.floorWLarge - constants.arrowW / 4
+            : constants.floorWDef - constants.arrowW / 4;
       }
       result.add(StepsGameNumberState(steps: steps));
     }

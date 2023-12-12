@@ -4,7 +4,7 @@ extension ScrollHandler on StepsGameBloc {
   Future<void> handleScroll(StepsGameState state, StepsGameEventScroll event,
       Emitter<StepsGameState> emit) async {
     var item = state.getItem(event.id);
-    var delta = -event.dy * 1 / 50;
+    var delta = -event.dy * 1 / 2000;
     if (item is FloorCubit) {
       if (item.state.isLastInGame) {
         //OPPOSITE INSERTION
@@ -12,13 +12,14 @@ extension ScrollHandler on StepsGameBloc {
           await handleOppositeInsertion(state, item, emit);
         }
       } else if (item.state.isLastInNumber) {
-        if (item.state.size.value.dx <= constants.floorW &&
+        if (item.state.size.value.dx <= constants.floorWDef &&
             delta < 0 &&
             areNeighboringArrowsOpposite(item, state)) {
           if (allowedOps.contains(StepsGameOps.reduceArrows)) {
             await handleReduction(item, delta, state, emit);
           }
         } else {
+          print("JOIN");
           handleJoin(item, delta, state, emit);
           //XDDD ok więc chyba działa, ale możnaby go w sumie troszkę zmodyfikować
           // delta = guardDeltaSize(
@@ -29,6 +30,7 @@ extension ScrollHandler on StepsGameBloc {
         }
       } else {
         if (allowedOps.contains(StepsGameOps.splitJoinArrows)) {
+          print("SPLIT");
           handleSplit(item, delta, state, emit, 200);
         }
       }

@@ -13,34 +13,20 @@ class LevelSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Hive.box<bool>('levels').put(data.ind + 1, true);
-    return Column(
-      children: [
-        const Spacer(flex: 5),
-        Flexible(
-          flex: 7,
-          child: DefaultTextStyle(
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            child: Center(
-              child: Row(
-                children: [
-                  const Spacer(),
-                  Flexible(
-                    flex: 1,
-                    child: Stack(
-                      children: [
-                        const _LevelSummaryBackground(),
-                        _LevelSummaryContent(next: next),
-                      ],
-                    ),
-                  ),
-                  const Spacer()
-                ],
-              ),
-            ),
+    return SizedBox(
+      width: 640,
+      height: 400,
+      child: DefaultTextStyle(
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+        child: Center(
+          child: Stack(
+            children: [
+              const _LevelSummaryBackground(),
+              _LevelSummaryContent(next: next),
+            ],
           ),
         ),
-        const Spacer(flex: 5),
-      ],
+      ),
     );
   }
 }

@@ -3,35 +3,40 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
-import 'package:matma/common/game_size.dart';
 
 class Board extends StatelessWidget {
-  const Board({super.key, required this.cubit, required this.gs});
+  const Board({super.key, required this.cubit});
   final BoardCubit cubit;
-  final GameSize gs;
+
   @override
   Widget build(BuildContext context) {
     BoardState initialState = cubit.state.copyWith();
 
-    return BlocProvider<BoardCubit>(
-      create: (context) => cubit,
-      child: BlocBuilder<BoardCubit, BoardState>(
-        builder: (context, state) {
-          return DefaultGameItemAnimations(
-            keepPositionRatio: false,
-            keepSizeRatio: false,
-            gs: gs,
-            initialState: initialState,
-            state: state,
-            child: LayoutBuilder(builder: (context, constrains) {
-              return BoardDesign(
-                fillColor: Theme.of(context).colorScheme.secondaryContainer,
-                frameColor: Theme.of(context).colorScheme.onSecondaryContainer,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // print("LBB ${constraints.maxWidth} x ${constraints.maxHeight}");
+
+        return BlocProvider<BoardCubit>(
+          create: (context) => cubit,
+          child: BlocBuilder<BoardCubit, BoardState>(
+            builder: (context, state) {
+              return DefaultGameItemAnimations(
+                halfWidthOffset: true,
+                noResize: true,
+                initialState: initialState,
+                state: state,
+                child: LayoutBuilder(builder: (context, constrains) {
+                  return BoardDesign(
+                    fillColor: Theme.of(context).colorScheme.secondaryContainer,
+                    frameColor:
+                        Theme.of(context).colorScheme.onSecondaryContainer,
+                  );
+                }),
               );
-            }),
-          );
-        },
-      ),
+            },
+          ),
+        );
+      },
     );
   }
 }

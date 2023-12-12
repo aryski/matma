@@ -6,7 +6,6 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 
 import 'package:matma/equation/equation.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/common/game_size.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
@@ -27,16 +26,14 @@ class StepsGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<UniqueKey> blockedIds = [];
-    var gs = const GameSize(hUnits: 18, wUnits: 66);
     final promptCubit = PromptsCubit(data.firstTask,
-        BlocProvider.of<LevelCubit>(context), data.withEquation ? 0.22 : 0.12);
+        BlocProvider.of<LevelCubit>(context), data.withEquation ? 0.18 : 0.12);
     final eqCubit = EquationBloc(
         init: EquationState(),
-        wUnits: gs.wUnits.toInt(),
+        wUnits: 66,
         initNumbers: data.initNumbers,
         targetValues: data.withFixedEquation);
-    final bloc = StepsGameBloc(eqCubit, promptCubit, data.allowedOps,
-        gs.wUnits.toInt(), gs.hUnits.toInt());
+    final bloc = StepsGameBloc(eqCubit, promptCubit, data.allowedOps);
     return DefaultTextStyle(
       style: const TextStyle(),
       child: ConstrainedBox(
@@ -53,7 +50,6 @@ class StepsGame extends StatelessWidget {
             blockedIds: blockedIds,
             child: _StepsSimulatorContent(
               data: data,
-              gs: gs,
             ),
           ),
         ),
@@ -89,10 +85,8 @@ class _ScrollListener extends StatelessWidget {
 class _StepsSimulatorContent extends StatelessWidget {
   const _StepsSimulatorContent({
     required this.data,
-    required this.gs,
   });
   final StepsGameData data;
-  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +99,10 @@ class _StepsSimulatorContent extends StatelessWidget {
           ),
         ),
         if (data.shadedSteps != null)
-          ShadedRawStepsGame(gs: gs, initNumbers: data.shadedSteps!),
-        RawStepsGame(gs: gs),
-        if (data.withEquation) Equation(gs: gs),
-        Prompts(unit: gs.hUnit),
+          ShadedRawStepsGame(initNumbers: data.shadedSteps!),
+        const RawStepsGame(),
+        if (data.withEquation) const Equation(),
+        const Prompts(),
         const Align(
           alignment: Alignment.topLeft,
           child: Padding(
@@ -134,10 +128,8 @@ class _StepsSimulatorContent extends StatelessWidget {
 }
 
 class ShadedRawStepsGame extends StatelessWidget {
-  const ShadedRawStepsGame(
-      {super.key, required this.gs, required this.initNumbers});
+  const ShadedRawStepsGame({super.key, required this.initNumbers});
   final List<int> initNumbers;
-  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -145,19 +137,16 @@ class ShadedRawStepsGame extends StatelessWidget {
         BlocProvider.of<LevelCubit>(context), 0);
 
     final eqCubit = EquationBloc(
-        init: EquationState(),
-        initNumbers: initNumbers,
-        wUnits: gs.wUnits.toInt());
+        init: EquationState(), initNumbers: initNumbers, wUnits: 66);
 
-    final bloc = StepsGameBloc(
-        eqCubit, promptCubit, [], gs.wUnits.toInt(), gs.hUnits.toInt());
+    final bloc = StepsGameBloc(eqCubit, promptCubit, []);
     return MultiBlocProvider(
       providers: [
         BlocProvider<StepsGameBloc>(create: (context) => bloc),
         BlocProvider<EquationBloc>(create: (context) => eqCubit),
       ],
       child: Stack(children: [
-        RawStepsGame(gs: gs),
+        const RawStepsGame(),
         Opacity(
           opacity: 0.75,
           child: Container(color: Theme.of(context).colorScheme.background),
@@ -168,88 +157,79 @@ class ShadedRawStepsGame extends StatelessWidget {
 }
 
 class RawStepsGame extends StatelessWidget {
-  const RawStepsGame({
-    super.key,
-    required this.gs,
-  });
-
-  final GameSize gs;
+  const RawStepsGame({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const Spacer(),
-        Expanded(
-            flex: 17,
-            child: BlocBuilder<StepsGameBloc, StepsGameState>(
-              builder: (context, state) {
-                List<GameItemCubit> items = [];
-                for (var number in state.numbers) {
-                  if (number.filling != null) {
-                    items.add(number.filling!);
-                  }
-                  for (var item in number.steps) {
-                    items.add(item.arrow);
-                    items.add(item.floor);
-                  }
+        SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: BlocBuilder<StepsGameBloc, StepsGameState>(
+            builder: (context, state) {
+              List<GameItemCubit> items = [];
+              for (var number in state.numbers) {
+                if (number.filling != null) {
+                  items.add(number.filling!);
                 }
-                for (var value in state.unorderedItems.values) {
-                  if (value is! FillingCubit) {
-                    items.add(value);
-                  }
+                for (var item in number.steps) {
+                  items.add(item.arrow);
+                  items.add(item.floor);
                 }
+              }
+              for (var value in state.unorderedItems.values) {
+                if (value is! FillingCubit) {
+                  items.add(value);
+                }
+              }
 
-                return Stack(clipBehavior: Clip.hardEdge, children: [
-                  ...state.unorderedItems.values.map(
-                    (cubit) {
-                      if (cubit is EquatorCubit) {
-                        return Equator(
-                          gs: gs,
-                          cubit: cubit,
-                          key: cubit.state.id,
-                        );
-                      } else if (cubit is FloorCubit) {
-                        return Floor(
-                          cubit: cubit,
-                          key: cubit.state.id,
-                          gs: gs,
-                        );
-                      } else if (cubit is FillingCubit) {
-                        return Filling(
-                          cubit: cubit,
-                          key: cubit.state.id,
-                          gs: gs,
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                  ...items.whereType<FillingCubit>().map(
-                        (cubit) => Filling(
-                          cubit: cubit,
-                          key: cubit.state.id,
-                          gs: gs,
-                        ),
+              return Stack(clipBehavior: Clip.hardEdge, children: [
+                ...state.unorderedItems.values.map(
+                  (cubit) {
+                    if (cubit is EquatorCubit) {
+                      return Equator(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                      );
+                    } else if (cubit is FloorCubit) {
+                      return Floor(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                      );
+                    } else if (cubit is FillingCubit) {
+                      return Filling(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
+                ...items.whereType<FillingCubit>().map(
+                      (cubit) => Filling(
+                        cubit: cubit,
+                        key: cubit.state.id,
                       ),
-                  ...items.whereType<FloorCubit>().map(
-                        (cubit) => Floor(
-                          cubit: cubit,
-                          key: cubit.state.id,
-                          gs: gs,
-                        ),
+                    ),
+                ...items.whereType<FloorCubit>().map(
+                      (cubit) => Floor(
+                        cubit: cubit,
+                        key: cubit.state.id,
                       ),
-                  ...items.whereType<ArrowCubit>().map(
-                        (cubit) => Arrow(
-                          cubit: cubit,
-                          gs: gs,
-                          key: cubit.state.id,
-                        ),
+                    ),
+                ...items.whereType<ArrowCubit>().map(
+                      (cubit) => Arrow(
+                        cubit: cubit,
+                        key: cubit.state.id,
                       ),
-                ]);
-              },
-            )),
+                    ),
+              ]);
+            },
+          ),
+        ),
       ],
     );
   }

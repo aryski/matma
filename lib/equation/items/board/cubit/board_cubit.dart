@@ -6,7 +6,12 @@ part 'board_state.dart';
 class BoardCubit extends GameItemCubit<BoardState> {
   BoardCubit(super.initialState);
 
-  void updateSize(Offset offset, int milliseconds) {
+  void updateSize(Offset offset, int milliseconds,
+      {int delayInMillis = 0}) async {
+    if (delayInMillis > 0) {
+      await Future.delayed(Duration(milliseconds: delayInMillis));
+    }
+
     emit(BoardState(
       id: state.id,
       position: state.position,

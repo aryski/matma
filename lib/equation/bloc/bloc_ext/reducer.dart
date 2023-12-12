@@ -2,6 +2,7 @@ part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Reducer on EquationBloc {
   void reduce(EquationDefaultItem leftItem, EquationDefaultItem rightItem) {
+    print("REDUCE");
     decreaseValue(leftItem);
     decreaseValue(rightItem);
     if (leftItem.number.state.value == 0) {

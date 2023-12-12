@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/game_size.dart';
 
 class Sign extends StatelessWidget {
-  const Sign({super.key, required this.cubit, required this.gs});
+  const Sign({super.key, required this.cubit});
   final SignCubit cubit;
-  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -18,30 +16,65 @@ class Sign extends StatelessWidget {
       child: BlocBuilder<SignCubit, SignState>(
         builder: (context, state) {
           return DefaultGameItemAnimations(
-            keepPositionRatio: false,
-            gs: gs,
+            halfWidthOffset: true,
+            noResize: true,
             initialState: initialState,
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
+              // print(constrains.maxHeight);
               return SizedBox(
                 width: constrains.maxWidth,
                 height: constrains.maxHeight,
                 child: Container(
                   color: Colors.grey.withOpacity(0.0),
-                  child: Center(
-                    child: Text(
-                      state.value == Signs.addition ? "+" : "-",
-                      style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSecondaryContainer,
-                          fontWeight: FontWeight.bold,
-                          fontSize: state.size.value.dx *
-                              gs.wUnit *
-                              MediaQuery.of(context).size.height *
-                              1920 /
-                              1080),
-                    ),
+                  child: AnimatedSwitcher(
+                    key: state.id,
+                    switchInCurve: Curves.ease,
+                    switchOutCurve: Curves.ease,
+                    transitionBuilder: (child, animation) {
+                      return RotationTransition(
+                        turns: animation,
+                        child: ScaleTransition(
+                          scale: animation,
+                          child: child,
+                        ),
+                      );
+                    },
+                    duration: const Duration(milliseconds: 200),
+                    child: state.opacity.value == 1.0
+                        ? Center(
+                            child: Container(
+                            height: 90.0,
+                            // color: Colors.amberAccent.withOpacity(0.4),
+                            child: Builder(builder: (context) {
+                              // return Text(
+                              //   state.value == Signs.addition ? "+" : "−",
+                              //   style: TextStyle(
+                              //       color: Theme.of(context)
+                              //           .colorScheme
+                              //           .onSecondaryContainer,
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: 75),
+                              // );
+                              return AspectRatio(
+                                aspectRatio:
+                                    state.value == Signs.addition ? 0.5 : 0.4,
+                                child: FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Text(
+                                    state.value == Signs.addition ? "+" : "−",
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 75),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ))
+                        : const SizedBox.shrink(),
                   ),
                 ),
               );

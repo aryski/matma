@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -25,7 +26,9 @@ class Level extends StatelessWidget {
           unlocked = snapshot.data!.value;
         }
         return ClassicLevelButton(
-          unlocked: unlocked,
+          unlocked: kReleaseMode
+              ? unlocked
+              : true, //  unlock all levels in debug mode
           level: this,
           icon: data.icon,
           text: data.name,
@@ -74,7 +77,7 @@ class Level extends StatelessWidget {
                               height: MediaQuery.of(context).size.height,
                               color: Colors.black.withOpacity(0.3),
                             ),
-                            LevelSummary(next: next, data: data),
+                            Center(child: LevelSummary(next: next, data: data)),
                           ],
                         )
                       : const SizedBox.shrink());

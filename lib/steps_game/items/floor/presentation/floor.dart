@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_color_animation_builder.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
-import 'package:matma/common/game_size.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
@@ -12,25 +11,30 @@ import 'package:matma/steps_game/items/floor/presentation/floor_gesture_detector
 import 'package:matma/steps_game/items/floor/presentation/floor_painter.dart';
 
 Color _colorGen(BuildContext context, FloorState state, bool isHovered) {
+  var color = Color.alphaBlend(
+      Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
+      Theme.of(context).colorScheme.background);
+  color = Theme.of(context).colorScheme.onSecondaryContainer;
+  color = Color.alphaBlend(
+      Theme.of(context).colorScheme.onSecondaryContainer.withOpacity(0.8),
+      Theme.of(context).colorScheme.background);
   if (state.isLastInGame) {
     return isHovered ? shadyDefYellow : defYellow;
   } else if (state.isLastInNumber) {
-    return isHovered
-        ? darkenColor(Theme.of(context).colorScheme.secondaryContainer, 0.3)
-        : darkenColor(Theme.of(context).colorScheme.secondaryContainer, 0.2);
+    return isHovered ? darkenColor(color, 0.1) : darkenColor(color, 0.0);
   } else if (state.direction == Direction.up) {
     return isHovered ? darkenColor(darkGreen, 0.2) : darkGreen;
   } else if (state.direction == Direction.down) {
     return isHovered ? darkenColor(darkRed, 0.2) : darkRed;
   } else {
-    return Theme.of(context).colorScheme.secondaryContainer;
+    return color;
   }
 }
 
 class Floor extends StatelessWidget {
-  const Floor({super.key, required this.cubit, required this.gs});
+  const Floor({super.key, required this.cubit});
   final FloorCubit cubit;
-  final GameSize gs;
+
   @override
   Widget build(BuildContext context) {
     FloorState initialState = cubit.state.copyWith();
@@ -42,24 +46,23 @@ class Floor extends StatelessWidget {
           return DefaultGameItemAnimations(
             initialState: initialState,
             state: state,
-            gs: gs,
             child: LayoutBuilder(builder: (context, constrains) {
+              var initColor = _colorGen(context, state, initialState.isHovered);
+              var updatedColor = _colorGen(context, state, state.isHovered);
               return FloorGestureDetector(
                   id: state.id,
                   child: DefaultColorAnimationBuilder(
                     duration: const Duration(milliseconds: 400),
-                    initial: _colorGen(context, state, initialState.isHovered),
-                    updated: _colorGen(context, state, state.isHovered),
+                    initial: initColor,
+                    updated: updatedColor,
                     builder: (context, color, child) {
                       return CustomPaint(
                         size: Size(constrains.maxWidth, constrains.maxHeight),
                         painter: FloorPainter(
-                          constrains.maxWidth,
-                          constrains.maxHeight,
-                          state.radius * constrains.maxHeight * 0.9,
-                          color ??
-                              Theme.of(context).colorScheme.secondaryContainer,
-                        ),
+                            constrains.maxWidth,
+                            constrains.maxHeight,
+                            state.radius * constrains.maxHeight * 0.9,
+                            color ?? initColor),
                       );
                     },
                   ));

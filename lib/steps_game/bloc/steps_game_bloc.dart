@@ -36,15 +36,11 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
   final EquationBloc board;
   final List<UniqueKey> lockedIds = [];
   final PromptsCubit promptCubit;
-  final int hUnits;
-  final int wUnits;
   DateTime downClick = DateTime.timestamp();
   @override
-  StepsGameBloc(
-      this.board, this.promptCubit, this.allowedOps, this.wUnits, this.hUnits)
+  StepsGameBloc(this.board, this.promptCubit, this.allowedOps)
       : super(StepsGameState(numbers: [], unorderedItems: {})) {
-    state.numbers.addAll(initializeSimulationItems(wUnits, hUnits));
-    generateFillings();
+    initializeSimulationItems();
 
     on<StepsGameEventScroll>((event, emit) async {
       await handleScroll(state, event, emit);

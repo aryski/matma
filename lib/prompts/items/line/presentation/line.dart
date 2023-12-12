@@ -15,27 +15,38 @@ class Line extends StatelessWidget {
       child: BlocBuilder<LineCubit, LineState>(
         builder: (context, state) {
           return DefaultGameItemAnimations(
+            noResize: true,
             initialState: initialState,
             state: state,
-            keepPositionRatio: false,
-            keepSizeRatio: false,
-            child: Center(
-              child: SizedBox(
-                width: state.size.value.dx * MediaQuery.of(context).size.width,
-                height:
-                    state.size.value.dy * MediaQuery.of(context).size.height,
-                child: FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Text(state.text,
-                      key: state.id,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color:
-                                  Theme.of(context).colorScheme.onBackground)),
-                ),
+            halfWidthOffset: false,
+            halfHeightOffset: false,
+            child: Container(
+              // color: Colors.amber.withOpacity(0.6),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Center(
+                    child: SizedBox(
+                      width: state.size.value.dx,
+                      height: state.size.value.dy,
+                      child: Container(
+                        // color: Colors.redAccent,
+                        child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: Text(state.text,
+                              key: state.id,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineLarge
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground)),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           );
