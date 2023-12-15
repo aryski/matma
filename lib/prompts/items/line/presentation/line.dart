@@ -25,27 +25,24 @@ class Line extends StatelessWidget {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return Center(
-                    child: SizedBox(
-                      width: state.size.value.dx,
-                      height: state.size.value.dy,
-                      child: Container(
-                        // color: Colors.redAccent,
-                        child: FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: Text(state.text,
-                              key: state.id,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineLarge
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground)),
-                        ),
-                      ),
+                      child: SizedBox(
+                    width: state.size.value.dx,
+                    height: state.size.value.dy,
+                    child: Container(
+                      // color: Colors.redAccent,
+                      child: Text(state.text,
+                          key: state.id,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground)),
                     ),
-                  );
+                  ));
                 },
               ),
             ),

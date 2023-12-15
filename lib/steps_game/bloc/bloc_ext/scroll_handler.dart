@@ -12,11 +12,15 @@ extension ScrollHandler on StepsGameBloc {
           await handleOppositeInsertion(state, item, emit);
         }
       } else if (item.state.isLastInNumber) {
-        if (item.state.size.value.dx <= constants.floorWDef &&
-            delta < 0 &&
-            areNeighboringArrowsOpposite(item, state)) {
-          if (allowedOps.contains(StepsGameOps.reduceArrows)) {
-            await handleReduction(item, delta, state, emit);
+        if (areNeighboringArrowsOpposite(item, state) && delta < 0) {
+          if (item.state.size.value.dx <= constants.floorWLarge) {
+            if (allowedOps.contains(StepsGameOps.reduceArrows)) {
+              await handleReduction(item, delta, state, emit);
+            }
+          } else {
+            if (true) {
+              handleReductionWithoutReduction(item, delta, state, emit);
+            }
           }
         } else {
           print("JOIN");

@@ -10,6 +10,8 @@ import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/presentation/arrow.dart';
+import 'package:matma/steps_game/items/brackets/cubit/bracket_cubit.dart';
+import 'package:matma/steps_game/items/brackets/presentation/bracket.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
@@ -26,8 +28,8 @@ class StepsGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<UniqueKey> blockedIds = [];
-    final promptCubit = PromptsCubit(data.firstTask,
-        BlocProvider.of<LevelCubit>(context), data.withEquation ? 0.18 : 0.12);
+    final promptCubit = PromptsCubit(
+        data.firstTask, BlocProvider.of<LevelCubit>(context), 0.15);
     final eqCubit = EquationBloc(
         init: EquationState(),
         wUnits: 66,
@@ -100,9 +102,9 @@ class _StepsSimulatorContent extends StatelessWidget {
         ),
         if (data.shadedSteps != null)
           ShadedRawStepsGame(initNumbers: data.shadedSteps!),
+        const Prompts(),
         const RawStepsGame(),
         if (data.withEquation) const Equation(),
-        const Prompts(),
         const Align(
           alignment: Alignment.topLeft,
           child: Padding(
@@ -200,6 +202,11 @@ class RawStepsGame extends StatelessWidget {
                       );
                     } else if (cubit is FillingCubit) {
                       return Filling(
+                        cubit: cubit,
+                        key: cubit.state.id,
+                      );
+                    } else if (cubit is BracketCubit) {
+                      return Bracket(
                         cubit: cubit,
                         key: cubit.state.id,
                       );

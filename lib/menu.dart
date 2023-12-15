@@ -61,7 +61,8 @@ class Menu extends StatelessWidget {
                 ),
                 Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxHeight: 110, maxWidth: 500),
+                    constraints:
+                        const BoxConstraints(maxHeight: 110, maxWidth: 500),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                       child: Container(

@@ -22,6 +22,7 @@ class PromptsCubit extends Cubit<PromptsState> {
   List<GameEvent> recent = [];
   Task currentTask;
   int ind = 0;
+  final howManyLines = 3;
 
   void inserted(Direction direction) {
     if (direction == Direction.up) {
@@ -93,12 +94,10 @@ class PromptsCubit extends Cubit<PromptsState> {
     }
     for (int i = 0; i < state.lines.length; i++) {
       state.lines[i].updatePosition(const Offset(0, -0.005));
-
-      if (i < state.lines.length - 1) {
-        state.lines[i].setOpacity(0, milliseconds: 100);
-      } else {
-        state.lines[i].setOpacity(0.5, milliseconds: 200);
-      }
+      var opacityDelta =
+          state.lines[i].state.opacity.value - 1.0 / howManyLines;
+      if (opacityDelta < 0.01) opacityDelta = 0;
+      state.lines[i].setOpacity(opacityDelta, milliseconds: 100);
     }
     var newLine = LineCubit(LineState(
         text: text,

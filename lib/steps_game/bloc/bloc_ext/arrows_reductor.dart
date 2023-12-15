@@ -1,6 +1,21 @@
 part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ArrowsReductor on StepsGameBloc {
+  void handleReductionWithoutReduction(FloorCubit item, double delta,
+      StepsGameState state, Emitter<StepsGameState> emit) {
+    var width = item.state.size.value.dx;
+    delta = guardDeltaSize(
+        currentW: width, delta: delta, minW: constants.floorWLarge);
+    if (delta != 0) promptCubit.scrolled();
+    int? numberInd = state.getNumberIndexFromItem(item);
+    state.updatePositionSince(
+        item: item,
+        offset: Offset(delta, 0),
+        fillingIncluded: false,
+        milliseconds: 200);
+    item.updateSize(Offset(delta, 0), delayInMillis: 0, milliseconds: 200);
+  }
+
   Future<void> handleReduction(FloorCubit item, double delta,
       StepsGameState state, Emitter<StepsGameState> emit) async {
     var number = state.getNumberFromItem(item);
@@ -13,20 +28,16 @@ extension ArrowsReductor on StepsGameBloc {
     if (allowedOps.contains(StepsGameOps.reducingArrowsCascadedly)) {
       if (number != null && number.filling != null) {
         for (int i = number.steps.length - 1; i >= 0; i--) {
-          //TODO reducing in the loop doesnt work on linux
           var step = number.steps[i];
           var rightStep = state.rightStep(step);
           if (rightStep != null) {
             await reduceStepAndStepToTheRight(step, i == 0 ? 150 : 70);
-            // i = i - 1;
           }
         }
       }
     }
-
     promptCubit.merged();
     generateFillings();
-    // beforeEmit();
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 200));
   }

@@ -9,23 +9,30 @@ class Prompts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PromptsCubit, PromptsState>(builder: (context, state) {
-      return LayoutBuilder(
-        builder: (context, constraints) {
-          return SizedBox(
-            width: constraints.maxWidth,
-            height: constraints.maxHeight,
-            child: Center(
-              child: Stack(
-                children: [
-                  ...state.lines
-                      .map((cubit) => Center(child: Line(cubit: cubit)))
-                ],
-              ),
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(50.0),
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child:
+            BlocBuilder<PromptsCubit, PromptsState>(builder: (context, state) {
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              return SizedBox(
+                width: constraints.maxWidth,
+                height: 224,
+                child: Center(
+                  child: Stack(
+                    children: [
+                      ...state.lines
+                          .map((cubit) => Center(child: Line(cubit: cubit)))
+                    ],
+                  ),
+                ),
+              );
+            },
           );
-        },
-      );
-    });
+        }),
+      ),
+    );
   }
 }

@@ -15,7 +15,7 @@ Level getDebugLevel() {
       gamesData: [
         StepsGameData(
           allowedOps: StepsGameOps.values,
-          initNumbers: [1, 5, -5, 1, -6, 6, -3],
+          initNumbers: [1, -2, 4, -5, 1, -5, 6, -3, 3, 3],
           firstTask: _taskA1,
         ),
       ],

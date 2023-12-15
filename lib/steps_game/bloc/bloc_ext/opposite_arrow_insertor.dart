@@ -10,6 +10,10 @@ extension OppositeArrowInsertor on StepsGameBloc {
     FloorCubit floor;
     bool isUp = (dir == Direction.up);
     board.add(EquationEventAddNumber(value: isUp ? -1 : 1));
+    item.updateSize(
+        Offset(constants.floorWLarge - constants.floorWDef, 0), //TODO
+        milliseconds: 200);
+    await Future.delayed(Duration(milliseconds: 200));
     arrow = generateArrow(
         animationProgress: 0,
         position: item.state.position.value +
@@ -38,7 +42,7 @@ extension OppositeArrowInsertor on StepsGameBloc {
 
     arrow.animate(1.0);
     arrow.updateHeight(constants.arrowH, 200);
-    floor.updateSize(const Offset(constants.floorWLarge, 0),
+    floor.updateSize(const Offset(constants.floorWDef, 0),
         delayInMillis: 200, milliseconds: 200);
 
     floor.setLastInGame();
