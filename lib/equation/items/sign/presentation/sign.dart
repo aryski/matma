@@ -17,7 +17,7 @@ class Sign extends StatelessWidget {
         builder: (context, state) {
           return DefaultGameItemAnimations(
             halfWidthOffset: true,
-            noResize: true,
+            halfHeightOffset: false,
             initialState: initialState,
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
@@ -43,7 +43,7 @@ class Sign extends StatelessWidget {
                     duration: const Duration(milliseconds: 200),
                     child: state.opacity.value == 1.0
                         ? Center(
-                            child: Container(
+                            child: SizedBox(
                             height: 90.0,
                             // color: Colors.amberAccent.withOpacity(0.4),
                             child: Builder(builder: (context) {

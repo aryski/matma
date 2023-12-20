@@ -22,7 +22,7 @@ class Board extends StatelessWidget {
             builder: (context, state) {
               return DefaultGameItemAnimations(
                 halfWidthOffset: true,
-                noResize: true,
+                halfHeightOffset: false,
                 initialState: initialState,
                 state: state,
                 child: LayoutBuilder(builder: (context, constrains) {

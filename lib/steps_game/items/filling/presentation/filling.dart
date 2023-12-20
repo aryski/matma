@@ -61,26 +61,12 @@ class Filling extends StatelessWidget {
                                     size: Size(constrains.maxWidth,
                                         constrains.maxHeight),
                                     painter: FillingPainter(
-                                      stepHgt: state.stepHgt *
-                                          1 *
-                                          MediaQuery.of(context).size.height,
+                                      stepHgt: state.stepHgt,
                                       animProgress: animationProgress,
                                       steps: state.steps,
-                                      width: dx *
-                                          1 *
-                                          MediaQuery.of(context).size.height *
-                                          1920 /
-                                          1080,
-                                      stepWdt: state.stepWdt *
-                                          1 *
-                                          MediaQuery.of(context).size.height *
-                                          1920 /
-                                          1080,
-                                      radius: state.radius *
-                                          1 *
-                                          MediaQuery.of(context).size.height *
-                                          1920 /
-                                          1080,
+                                      width: dx,
+                                      stepWdt: state.stepWdt,
+                                      radius: state.radius,
                                       color: color ??
                                           Theme.of(context)
                                               .colorScheme

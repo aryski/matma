@@ -28,3 +28,27 @@ var _taskA1 = Task(instructions: [
     text: 'Hej potężny programisto!',
   ),
 ], onEvents: []);
+
+Level getDebugLevelTrivial() {
+  return Level(
+    data: LevelData(
+      icon: Icons.computer_rounded,
+      ind: 0,
+      name: 'Debug Trivial',
+      gamesData: [
+        StepsGameData(
+          allowedOps: StepsGameOps.values,
+          initNumbers: [1],
+          firstTask: _taskB1,
+        ),
+      ],
+    ),
+  );
+}
+
+var _taskB1 = Task(instructions: [
+  NextMsg(
+    text: 'Hej potężny programisto!',
+  ),
+  EndMsg()
+], onEvents: []);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/color_schemes.g.dart';
 import 'package:matma/equation/items/board/presentation/board.dart';
+import 'package:matma/global_cubits/theme_mode_cubit.dart';
 import 'package:matma/levels/levels/debug.dart';
 import 'package:matma/levels/levels/level1.dart';
 import 'package:matma/levels/levels/level2.dart';
@@ -11,8 +12,7 @@ import 'package:matma/levels/levels/level4.dart';
 import 'package:matma/levels/levels/level5.dart';
 import 'package:matma/levels/levels/level6.dart';
 import 'package:matma/levels/levels/level7.dart';
-import 'package:matma/common/square_button/square_button.dart';
-import 'package:matma/main.dart';
+import 'package:matma/common/buttons/square_button/square_button.dart';
 
 //TODO bajzel z rozmiarówką, może jednak spoko pomysł na resize'owanie danych wewnątrz bloc'a bo takie abstrakcje tylko utrudniają wszystkow
 
@@ -30,7 +30,7 @@ class Menu extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   height: 80,
                   child: Align(
                     alignment: Alignment.topRight,
@@ -38,7 +38,8 @@ class Menu extends StatelessWidget {
                         padding: const EdgeInsets.all(20),
                         child: IconButton.outlined(
                             onPressed: () {
-                              var cubit = BlocProvider.of<AppCubit>(context);
+                              var cubit =
+                                  BlocProvider.of<ThemeModeCubit>(context);
                               switch (cubit.state) {
                                 case ThemeMode.dark:
                                   cubit.updateThemeMode(ThemeMode.light);
@@ -49,11 +50,11 @@ class Menu extends StatelessWidget {
                                 default:
                               }
                             },
-                            icon: Icon(
-                                (BlocProvider.of<AppCubit>(context).state ==
-                                        ThemeMode.dark)
-                                    ? Icons.light_mode_outlined
-                                    : Icons.dark_mode_outlined))),
+                            icon: Icon((BlocProvider.of<ThemeModeCubit>(context)
+                                        .state ==
+                                    ThemeMode.dark)
+                                ? Icons.light_mode_outlined
+                                : Icons.dark_mode_outlined))),
                   ),
                 ),
                 const SizedBox(
@@ -96,14 +97,14 @@ class Menu extends StatelessWidget {
                 ),
                 LayoutBuilder(builder: (context, constrains) {
                   if (constrains.maxWidth > 1000) {
-                    return Container(
+                    return const SizedBox(
                       height: 160,
-                      child: const Center(child: LevelPicker()),
+                      child: Center(child: LevelPicker()),
                     );
                   } else {
-                    return Container(
+                    return const SizedBox(
                       height: 120,
-                      child: const Center(child: LevelPicker()),
+                      child: Center(child: LevelPicker()),
                     );
                   }
                 }),
@@ -192,6 +193,7 @@ class LevelPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     var levels = [
       if (!kReleaseMode) getDebugLevel(),
+      if (!kReleaseMode) getDebugLevelTrivial(),
       getLevel1(),
       getLevel2(),
       getLevel3(),
@@ -203,19 +205,6 @@ class LevelPicker extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // print(constraints.maxHeight);
-        // print(constraints.maxWidth);
-        // int levelsPerRow = levels.length;
-        // while (
-        //     levelsPerRow * (constraints.maxHeight / 8 + constraints.maxHeight) >
-        //         constraints.maxWidth) {
-        //   levelsPerRow = (levelsPerRow / 2).ceil();
-        // }
-        // int count = levels.length;
-        // var result = [];
-        // while (count > 0) {
-        //   result.add([levelsPerRow]);
-        // }
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -225,46 +214,15 @@ class LevelPicker extends StatelessWidget {
               ...List.generate(
                   levels.length * 2,
                   (index) => index % 2 == 0
-                      ? Container(
-                          height: constraints.maxHeight,
-                          width: constraints.maxHeight,
-                          child: AspectRatio(
-                              aspectRatio: 1.0,
-                              child: levels[index ~/ 2].generateButton()),
+                      ? FittedBox(
+                          fit: BoxFit.contain,
+                          child: levels[index ~/ 2].generateButton(),
                         )
                       : const SizedBox.shrink()),
               SizedBox(width: constraints.maxHeight / 8)
             ],
           ),
         );
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(width: constraints.maxHeight / 8),
-            ...List.generate(
-                levels.length * 2,
-                (index) => index % 2 == 0
-                    ? Container(
-                        height: constraints.maxHeight,
-                        width: constraints.maxHeight,
-                        child: AspectRatio(
-                            aspectRatio: 1.0,
-                            child: levels[index ~/ 2].generateButton()),
-                      )
-                    : const SizedBox.shrink()),
-            SizedBox(width: constraints.maxHeight / 8)
-          ],
-        );
-        return ListView(
-          scrollDirection: Axis.horizontal,
-          children: [],
-        );
-        // return Scrollbar(
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: [],
-        //   ),
-        // );
       },
     );
   }
@@ -283,20 +241,19 @@ class ClassicLevelButton extends StatelessWidget {
   final Widget level;
   final IconData icon;
   final String text;
-  final bool unlocked;
+  final bool locked;
 
   const ClassicLevelButton(
       {super.key,
       required this.level,
       required this.icon,
       required this.text,
-      required this.unlocked});
+      required this.locked});
   @override
   Widget build(BuildContext context) {
     return SquareButton(
-      width: 200,
-      height: 200,
-      unlocked: unlocked,
+      sideWidth: 200,
+      locked: locked,
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => level));
       },

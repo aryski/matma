@@ -8,17 +8,15 @@ class TweenAnimatedSize extends StatelessWidget {
     required this.initialSize,
     required this.updatedSize,
     required this.duration,
-    required this.maxX,
-    required this.maxY,
-    required this.noResize,
+    required this.maxWidth,
+    required this.maxHeight,
   });
   final Widget child;
   final Offset initialSize;
   final Offset updatedSize;
   final Duration duration;
-  final bool noResize;
-  final double maxX;
-  final double maxY;
+  final double maxWidth;
+  final double maxHeight;
   @override
   Widget build(BuildContext context) {
     return DefaultTweenAnimationBuilder(
@@ -26,8 +24,8 @@ class TweenAnimatedSize extends StatelessWidget {
         initial: initialSize,
         updated: updatedSize,
         builder: (context, size, widget) {
-          var width = noResize ? size.dx : size.dx * maxY * 1920 / 1080;
-          var height = noResize ? size.dy : size.dy * maxY;
+          var width = size.dx;
+          var height = size.dy;
           return ConstrainedBox(
               constraints: BoxConstraints(
                   minWidth: width < 0 ? 0 : width,

@@ -11,9 +11,9 @@ extension OppositeArrowInsertor on StepsGameBloc {
     bool isUp = (dir == Direction.up);
     board.add(EquationEventAddNumber(value: isUp ? -1 : 1));
     item.updateSize(
-        Offset(constants.floorWLarge - constants.floorWDef, 0), //TODO
+        const Offset(constants.floorWLarge - constants.floorWDef, 0), //TODO
         milliseconds: 200);
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     arrow = generateArrow(
         animationProgress: 0,
         position: item.state.position.value +

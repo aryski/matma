@@ -19,9 +19,8 @@ class ShadowNumber extends StatelessWidget {
           return LayoutBuilder(
             builder: (context, constraints) {
               return TweenAnimatedPosition(
-                halfHeightOffset: false,
                 halfWidthOffset: true,
-                noResize: true,
+                halfHeightOffset: false,
                 duration: Duration(milliseconds: state.position.duration),
                 initialPosition: initialState.position.value.scale(1, 1),
                 updatedPosition: state.position.value.scale(1, 1),

@@ -163,31 +163,33 @@ class RawStepsGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Spacer(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: BlocBuilder<StepsGameBloc, StepsGameState>(
-            builder: (context, state) {
-              List<GameItemCubit> items = [];
-              for (var number in state.numbers) {
-                if (number.filling != null) {
-                  items.add(number.filling!);
-                }
-                for (var item in number.steps) {
-                  items.add(item.arrow);
-                  items.add(item.floor);
-                }
+    return SizedBox(
+      height: 1080,
+      child: FittedBox(
+        fit: BoxFit.fitHeight,
+        alignment: Alignment.centerLeft,
+        child: BlocBuilder<StepsGameBloc, StepsGameState>(
+          builder: (context, state) {
+            List<GameItemCubit> items = [];
+            for (var number in state.numbers) {
+              if (number.filling != null) {
+                items.add(number.filling!);
               }
-              for (var value in state.unorderedItems.values) {
-                if (value is! FillingCubit) {
-                  items.add(value);
-                }
+              for (var item in number.steps) {
+                items.add(item.arrow);
+                items.add(item.floor);
               }
+            }
+            for (var value in state.unorderedItems.values) {
+              if (value is! FillingCubit) {
+                items.add(value);
+              }
+            }
 
-              return Stack(clipBehavior: Clip.hardEdge, children: [
+            return SizedBox(
+              width: 5000,
+              height: 1080,
+              child: Stack(clipBehavior: Clip.hardEdge, children: [
                 ...state.unorderedItems.values.map(
                   (cubit) {
                     if (cubit is EquatorCubit) {
@@ -233,11 +235,11 @@ class RawStepsGame extends StatelessWidget {
                         key: cubit.state.id,
                       ),
                     ),
-              ]);
-            },
-          ),
+              ]),
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 }

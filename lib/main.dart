@@ -4,9 +4,10 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:matma/color_schemes.g.dart';
+import 'package:matma/global_cubits/responsive_cubit.dart';
+import 'package:matma/global_cubits/theme_mode_cubit.dart';
 import 'package:matma/menu.dart';
 
 void main() async {
@@ -22,9 +23,16 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox<bool>('levels');
   Hive.box<bool>('levels').put(1, true);
-  runApp(BlocProvider(
-    create: (context) => AppCubit(ThemeMode.light),
-    child: BlocBuilder<AppCubit, ThemeMode>(builder: (context, state) {
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider<ThemeModeCubit>(
+          create: (context) => ThemeModeCubit(ThemeMode.light)),
+      BlocProvider<ResponsiveCubit>(
+          create: (context) => ResponsiveCubit(
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height)),
+    ],
+    child: BlocBuilder<ThemeModeCubit, ThemeMode>(builder: (context, state) {
       return MaterialApp(
           scrollBehavior: const MaterialScrollBehavior().copyWith(
               scrollbars: true,
@@ -48,12 +56,4 @@ void main() async {
           home: const Menu());
     }),
   ));
-}
-
-class AppCubit extends Cubit<ThemeMode> {
-  AppCubit(super.initialState);
-
-  void updateThemeMode(ThemeMode mode) {
-    emit(mode);
-  }
 }

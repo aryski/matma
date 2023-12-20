@@ -15,11 +15,10 @@ class Line extends StatelessWidget {
       child: BlocBuilder<LineCubit, LineState>(
         builder: (context, state) {
           return DefaultGameItemAnimations(
-            noResize: true,
+            halfHeightOffset: false,
             initialState: initialState,
             state: state,
             halfWidthOffset: false,
-            halfHeightOffset: false,
             child: Container(
               // color: Colors.amber.withOpacity(0.6),
               child: LayoutBuilder(

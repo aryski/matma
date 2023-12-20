@@ -9,14 +9,13 @@ class DefaultGameItemAnimations extends StatelessWidget {
     required this.child,
     required this.initialState,
     required this.state,
-    this.noResize = false,
     this.halfWidthOffset = false,
     this.halfHeightOffset = true,
   });
   final Widget child;
   final GameItemState initialState;
   final GameItemState state;
-  final bool noResize;
+
   final bool halfWidthOffset;
   final bool halfHeightOffset;
 
@@ -26,7 +25,6 @@ class DefaultGameItemAnimations extends StatelessWidget {
       return TweenAnimatedPosition(
         halfHeightOffset: halfHeightOffset,
         halfWidthOffset: halfWidthOffset,
-        noResize: noResize,
         initialPosition: initialState.position.value,
         updatedPosition: state.position.value,
         duration: Duration(milliseconds: state.position.duration),
@@ -34,9 +32,8 @@ class DefaultGameItemAnimations extends StatelessWidget {
           opacity: state.opacity.value,
           duration: Duration(milliseconds: state.opacity.duration),
           child: TweenAnimatedSize(
-              noResize: noResize,
-              maxX: constraints.maxWidth,
-              maxY: constraints.maxHeight,
+              maxWidth: constraints.maxWidth,
+              maxHeight: constraints.maxHeight,
               initialSize: initialState.size.value,
               updatedSize: state.size.value,
               duration: Duration(milliseconds: state.size.duration),

@@ -61,7 +61,7 @@ class Floor extends StatelessWidget {
                         painter: FloorPainter(
                             constrains.maxWidth,
                             constrains.maxHeight,
-                            state.radius * constrains.maxHeight * 0.9,
+                            state.radius * constrains.maxHeight * 0.05,
                             color ?? initColor),
                       );
                     },

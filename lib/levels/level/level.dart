@@ -26,9 +26,11 @@ class Level extends StatelessWidget {
           unlocked = snapshot.data!.value;
         }
         return ClassicLevelButton(
-          unlocked: kReleaseMode
+          locked: kReleaseMode
               ? unlocked
-              : true, //  unlock all levels in debug mode
+              : data.ind == 7
+                  ? true
+                  : false, //  unlock all levels in debug mode
           level: this,
           icon: data.icon,
           text: data.name,

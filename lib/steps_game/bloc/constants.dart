@@ -1,5 +1,5 @@
-const double arrowH = 1 / 18;
-const double arrowW = 1 / 66;
+const double arrowH = 56.0;
+const double arrowW = 28.0;
 const double arrowClickedHgt = 0.5 * arrowH;
 const double arrowReleasedHgt = 2.0 * arrowH;
 const double radius = 1 / 15 * arrowH;
