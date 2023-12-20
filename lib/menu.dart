@@ -12,7 +12,7 @@ import 'package:matma/levels/levels/level4.dart';
 import 'package:matma/levels/levels/level5.dart';
 import 'package:matma/levels/levels/level6.dart';
 import 'package:matma/levels/levels/level7.dart';
-import 'package:matma/common/buttons/square_button/square_button.dart';
+import 'package:matma/common/square_button/square_button.dart';
 
 //TODO bajzel z rozmiarówką, może jednak spoko pomysł na resize'owanie danych wewnątrz bloc'a bo takie abstrakcje tylko utrudniają wszystkow
 

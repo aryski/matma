@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:matma/common/buttons/hoverable_square/hoverable_square.dart';
+import 'package:matma/common/square_button/hoverable_square/hoverable_square.dart';
+import 'package:matma/common/square_button/hoverable_square/rounded_square.dart';
 
 class SquareButton extends StatelessWidget {
   const SquareButton({
@@ -23,13 +24,15 @@ class SquareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return locked
-        ? SquareWithPadding(
-            color: Theme.of(context).colorScheme.shadow.withOpacity(0.7),
-            padding: stroke,
-            radius: radius - stroke,
-            sideWidth: sideWidth - 2 * stroke,
-            child: LevelSquareDetails(
-                locked: locked, minature: minature, text: text),
+        ? Padding(
+            padding: EdgeInsets.all(stroke),
+            child: RoundedSquare(
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.7),
+              radius: radius - stroke,
+              sideWidth: sideWidth - 2 * stroke,
+              child: LevelSquareDetails(
+                  locked: locked, minature: minature, text: text),
+            ),
           )
         : GestureDetector(
             onTap: onTap,
@@ -69,17 +72,10 @@ class LevelSquareDetails extends StatelessWidget {
           Flexible(
             flex: 3,
             fit: FlexFit.tight,
-            child: FittedBox(
-              child: locked
-                  ? FittedBox(
-                      fit: BoxFit.fill,
-                      child: Icon(Icons.lock,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSecondaryContainer),
-                    )
-                  : minature,
-            ),
+            child: locked
+                ? Icon(Icons.lock,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer)
+                : minature,
           ),
           Flexible(
             flex: 1,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:matma/common/buttons/square_button/square_button.dart';
+import 'package:matma/common/square_button/square_button.dart';
 
 class NextButton extends StatelessWidget {
   const NextButton({
