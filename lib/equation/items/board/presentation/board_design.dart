@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:matma/common/items/animations/default_game_item_animations.dart';
-import 'package:matma/equation/items/board/cubit/board_cubit.dart';
 
 class BoardDesign extends StatelessWidget {
   const BoardDesign({

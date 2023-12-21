@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/square_button/hoverable_square/hoverable_square_cubit.dart';
 
 class RoundedSquare extends StatelessWidget {
   const RoundedSquare({

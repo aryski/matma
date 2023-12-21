@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
-import 'package:matma/common/items/animations/tween_animated_position.dart';
 import 'package:matma/equation/constants.dart' as constants;
 
 class ShadowNumber extends StatelessWidget {
@@ -54,7 +53,7 @@ class _ShadowNumberDesign extends StatelessWidget {
     return Opacity(
       opacity: opacity < 0.5 ? opacity * 2 : (1 - opacity) * 2,
       child: Container(
-        color: Color.fromARGB(255, 201, 255, 234).withOpacity(0.0),
+        color: const Color.fromARGB(255, 201, 255, 234).withOpacity(0.0),
         child: Center(
           child: Text(
             state.value,

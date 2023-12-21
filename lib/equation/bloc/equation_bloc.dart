@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/equation/constants.dart' as constants;
 import 'package:matma/equation/items/value/cubit/value_cubit.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
@@ -8,7 +7,6 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_property.dart';
 import 'package:matma/equation/items/board/cubit/board_cubit.dart';
 import 'package:matma/equation/items/shadow_number/cubit/shadow_number_cubit.dart';
-import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 part 'equation_event.dart';
 part 'equation_state.dart';

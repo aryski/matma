@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/color_schemes.g.dart';
-import 'package:matma/equation/items/board/presentation/board.dart';
 import 'package:matma/equation/items/board/presentation/board_design.dart';
 import 'package:matma/global_cubits/theme_mode_cubit.dart';
 import 'package:matma/levels/levels/debug.dart';
