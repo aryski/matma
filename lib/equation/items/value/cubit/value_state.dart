@@ -1,11 +1,11 @@
-part of 'number_cubit.dart';
+part of 'value_cubit.dart';
 
-class NumberState extends GameItemState {
+class ValueState extends GameItemState {
   final UniqueKey textKey;
   final Signs sign;
   final bool withDarkenedColor;
   final int value;
-  NumberState({
+  ValueState({
     required this.withDarkenedColor,
     required this.sign,
     required this.value,
@@ -18,22 +18,25 @@ class NumberState extends GameItemState {
   }) : assert(value >= 0);
 
   @override
-  NumberState copyWith(
+  ValueState copyWith(
       {UniqueKey? id,
       AnimatedProp<Offset>? position,
       AnimatedProp<Offset>? size,
       bool? isHovered,
       AnimatedProp<double>? opacity,
-      double? radius}) {
-    return NumberState(
+      double? radius,
+      int? value,
+      UniqueKey? textKey,
+      bool? withDarkenedColor}) {
+    return ValueState(
         id: id ?? this.id,
         position: position ?? this.position,
         size: size ?? this.size,
         opacity: opacity ?? this.opacity,
         radius: radius ?? this.radius,
-        withDarkenedColor: withDarkenedColor,
+        withDarkenedColor: withDarkenedColor ?? this.withDarkenedColor,
         sign: sign,
-        value: value,
-        textKey: textKey);
+        value: value ?? this.value,
+        textKey: textKey ?? this.textKey);
   }
 }

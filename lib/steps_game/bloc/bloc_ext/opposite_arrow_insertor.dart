@@ -9,7 +9,7 @@ extension OppositeArrowInsertor on StepsGameBloc {
     ArrowCubit arrow;
     FloorCubit floor;
     bool isUp = (dir == Direction.up);
-    board.add(EquationEventAddNumber(value: isUp ? -1 : 1));
+    board.add(EquationEventInsertNumber(number: isUp ? -1 : 1));
     item.updateSize(
         const Offset(constants.floorWLarge - constants.floorWDef, 0), //TODO
         milliseconds: 200);

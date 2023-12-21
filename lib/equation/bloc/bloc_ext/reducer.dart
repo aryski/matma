@@ -1,30 +1,45 @@
 part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Reducer on EquationBloc {
-  void reduce(EquationDefaultItem leftItem, EquationDefaultItem rightItem) {
-    print("REDUCE");
-    decreaseValue(leftItem);
-    decreaseValue(rightItem);
-    if (leftItem.number.state.value == 0) {
-      removeEquationDefaultItemWithPositionUpdate(leftItem);
+  void reduce(NumberItem leftItem, NumberItem rightItem) {
+    if (leftItem.value.state.value != 1 && rightItem.value.state.value != 1) {
+      generateShadowNumbers(leftItem, -1);
+      generateShadowNumbers(rightItem, -1);
     }
-    if (rightItem.number.state.value == 0) {
-      removeEquationDefaultItemWithPositionUpdate(rightItem);
+    _decreaseValue(leftItem);
+    _decreaseValue(rightItem);
+    if (leftItem.value.state.value == 0) {
+      removeNumber(leftItem);
     }
-    generateShadowNumbers(leftItem, -1);
-    generateShadowNumbers(rightItem, -1);
+    if (rightItem.value.state.value == 0) {
+      removeNumber(rightItem);
+    }
 
-    if (state.items.isNotEmpty &&
+    bool doesFirstNumberHaveAdditionSign = state.items.isNotEmpty &&
         state.items.first.sign != null &&
-        state.items.first.sign!.state.value == Signs.addition) {
-      state.extraItems.add(state.items.first.sign!);
-      state.items.first.sign!.setOpacity(0);
-      state.items.replaceRange(0, 1,
-          [EquationDefaultItem(sign: null, number: state.items.first.number)]);
+        state.items.first.sign!.state.value == Signs.addition;
 
-      spread(state.items.first, -constants.signRatio.dx);
-      state.items.first.number
-          .updatePosition(Offset(-constants.signRatio.dx, 0));
+    if (doesFirstNumberHaveAdditionSign) {
+      _removeAdditionSignFromFirstNumber();
     }
+  }
+
+  void _removeAdditionSignFromFirstNumber() {
+    state.extraItems.add(state.items.first.sign!);
+    state.items.first.sign!.setOpacity(0);
+    state.items.replaceRange(
+        0, 1, [NumberItem(sign: null, value: state.items.first.value)]);
+
+    spread(state.items.first, -constants.signRatio.dx);
+    state.items.first.value.updatePosition(Offset(-constants.signRatio.dx, 0));
+  }
+
+  void _decreaseValue(NumberItem myItem) {
+    var number = myItem.value;
+    if (number.state.value == 10) {
+      // TODO for now only double digits
+      resize(myItem, -constants.numberRatio.dx);
+    }
+    number.updateValue(number.state.value - 1);
   }
 }

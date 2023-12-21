@@ -21,66 +21,66 @@ class Sign extends StatelessWidget {
             initialState: initialState,
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
-              // print(constrains.maxHeight);
-              return SizedBox(
-                width: constrains.maxWidth,
-                height: constrains.maxHeight,
-                child: Container(
-                  color: Colors.grey.withOpacity(0.0),
-                  child: AnimatedSwitcher(
-                    key: state.id,
-                    switchInCurve: Curves.ease,
-                    switchOutCurve: Curves.ease,
-                    transitionBuilder: (child, animation) {
-                      return RotationTransition(
-                        turns: animation,
-                        child: ScaleTransition(
-                          scale: animation,
-                          child: child,
-                        ),
-                      );
-                    },
-                    duration: const Duration(milliseconds: 200),
-                    child: state.opacity.value == 1.0
-                        ? Center(
-                            child: SizedBox(
-                            height: 90.0,
-                            // color: Colors.amberAccent.withOpacity(0.4),
-                            child: Builder(builder: (context) {
-                              // return Text(
-                              //   state.value == Signs.addition ? "+" : "−",
-                              //   style: TextStyle(
-                              //       color: Theme.of(context)
-                              //           .colorScheme
-                              //           .onSecondaryContainer,
-                              //       fontWeight: FontWeight.bold,
-                              //       fontSize: 75),
-                              // );
-                              return AspectRatio(
-                                aspectRatio:
-                                    state.value == Signs.addition ? 0.5 : 0.4,
-                                child: FittedBox(
-                                  fit: BoxFit.fill,
-                                  child: Text(
-                                    state.value == Signs.addition ? "+" : "−",
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondaryContainer,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 75),
-                                  ),
-                                ),
-                              );
-                            }),
-                          ))
+              return AnimatedSwitcher(
+                key: state.id,
+                switchInCurve: Curves.ease,
+                switchOutCurve: Curves.ease,
+                transitionBuilder: (child, animation) {
+                  return RotationTransition(
+                    turns: animation,
+                    child: ScaleTransition(
+                      scale: animation,
+                      child: child,
+                    ),
+                  );
+                },
+                duration: const Duration(milliseconds: 200),
+                child:
+                    state.opacity.value == 1.0 //TODO fix amiguous code solution
+                        ? SizedBox(
+                            key: state.animationKey,
+                            width: constrains.maxWidth,
+                            height: constrains.maxHeight,
+                            child: _SignDesign(state: state))
                         : const SizedBox.shrink(),
-                  ),
-                ),
               );
             }),
           );
         },
+      ),
+    );
+  }
+}
+
+class _SignDesign extends StatelessWidget {
+  const _SignDesign({required this.state});
+  final SignState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.grey.withOpacity(0.0),
+      child: Center(
+        child: SizedBox(
+          height: 90.0,
+          child: Builder(builder: (context) {
+            return AspectRatio(
+              aspectRatio: state.value == Signs.addition
+                  ? 0.5
+                  : 0.4, // To make minus shorter
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Text(
+                  state.value == Signs.addition ? "+" : "−",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 75),
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

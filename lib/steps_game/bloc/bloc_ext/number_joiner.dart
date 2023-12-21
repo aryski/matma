@@ -34,8 +34,7 @@ extension NumberSplitJoiner on StepsGameBloc {
         var number = state.numbers[numberInd];
         var nextNumber = state.numbers[nextInd];
         if (number.number * nextNumber.number > 0) {
-          board.add(
-              EquationEventJoinNumbers(leftInd: numberInd, rightInd: nextInd));
+          board.add(EquationEventJoinNumbers(lInd: numberInd, rInd: nextInd));
           item.setNotLastInNumber();
           number.steps.addAll(nextNumber.steps);
           nextNumber.filling?.updatePosition(Offset(delta, 0));

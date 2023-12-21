@@ -72,10 +72,13 @@ class LevelSquareDetails extends StatelessWidget {
           Flexible(
             flex: 3,
             fit: FlexFit.tight,
-            child: locked
-                ? Icon(Icons.lock,
-                    color: Theme.of(context).colorScheme.onSecondaryContainer)
-                : minature,
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: locked
+                  ? Icon(Icons.lock,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer)
+                  : minature,
+            ),
           ),
           Flexible(
             flex: 1,

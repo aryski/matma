@@ -128,8 +128,7 @@ extension ArrowsReductor on StepsGameBloc {
     var indLeft = state.getNumberIndexFromStep(step);
     var indRight = state.getNumberIndexFromStep(rightStep);
     if (indLeft != null && indRight != null) {
-      board.add(
-          EquationEventNumbersReduction(indLeft: indLeft, indRight: indRight));
+      board.add(EquationEventNumbersReduction(lInd: indLeft, rInd: indRight));
     }
   }
 

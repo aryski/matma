@@ -30,8 +30,8 @@ extension NumberSplitter on StepsGameBloc {
           numberInd: numberInd, splitStep: myStep, numbers: state.numbers);
       board.add(EquationEventSplitNumber(
           ind: numberInd,
-          leftValue: state.numbers[numberInd].number,
-          rightValue: state.numbers[numberInd + 1].number));
+          lNumber: state.numbers[numberInd].number,
+          rNumber: state.numbers[numberInd + 1].number));
       item.setLastInNumber();
       promptCubit.splited();
       if (item.state.direction == Direction.down) {

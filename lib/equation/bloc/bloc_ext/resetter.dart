@@ -1,79 +1,76 @@
 part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Resetter on EquationBloc {
-  static EquationState hardResetState(
+  static const y = 0.0;
+  static const boardPadding = 14.0;
+  static EquationState generateState(
       List<int> updatedNumbers, List<int>? targetValues) {
-    var result1 = _generateBoardData(updatedNumbers, false);
-    var result2 = _generateBoardData(targetValues, true);
+    var (items, extraItems) = _generateBoardData(updatedNumbers, false);
+    var (fixedItems, fixedExtraItems) = _generateBoardData(targetValues, true);
     return EquationState(
-        items: result1.$1,
-        extraItems: result1.$2,
-        fixedItems: result2.$1,
-        fixedExtraItems: result2.$2);
+      items: items,
+      extraItems: extraItems,
+      fixedItems: fixedItems,
+      fixedExtraItems: fixedExtraItems,
+    );
   }
 
-  static (List<EquationDefaultItem>, List<GameItemCubit>) _generateBoardData(
+  static (List<NumberItem>, List<GameItemCubit>) _generateBoardData(
       List<int>? numbers, bool withDarkenedColor) {
     if (numbers == null) {
       return ([], []);
     }
-    var top = 0.0;
-    // var widthSpace = wUnits;
-    var leftPadding = 14.0;
 
-    List<EquationDefaultItem> items = [];
-
-    var result = _numbersToItemsStates(numbers, top, withDarkenedColor);
-    double totaldx = result.$1;
-    List<GameItemState> states = result.$2;
-
+    var (totaldx, numberStates) = _numbersToStates(numbers, withDarkenedColor);
     var allMargin = (-totaldx) / 2;
-    SignCubit? lastSignCubit;
-    for (var state in states) {
-      state = state.copyWith(
-          position: AnimatedProp.zero(
-              value: state.position.value + Offset(allMargin, 0)));
-      if (state is SignState) {
-        lastSignCubit = SignCubit(state);
-      } else if (state is NumberState) {
-        items.add(EquationDefaultItem(
-            sign: lastSignCubit, number: NumberCubit(state)));
-        lastSignCubit = null;
-      }
-    }
 
-    var boardCubit = BoardCubit(BoardItemsGenerator.generateBoardState(
-        position: Offset(allMargin - leftPadding, top),
-        size: Offset(totaldx + 2 * leftPadding, 112.0)));
+    List<NumberItem> items = [];
+    for (var (signState, valueState) in numberStates) {
+      signState = signState?.copyWith(
+        position: AnimatedProp.zero(
+          value: signState.position.value + Offset(allMargin, y),
+        ),
+      );
+      valueState = valueState.copyWith(
+        position: AnimatedProp.zero(
+          value: valueState.position.value + Offset(allMargin, y),
+        ),
+      );
+      items.add(NumberItem(
+          sign: signState != null ? SignCubit(signState) : null,
+          value: ValueCubit(valueState)));
+    }
+    var boardCubit = BoardCubit(
+      BoardItemsGenerator.genBoardState(
+        position: Offset(allMargin - boardPadding, y),
+        size: Offset(totaldx + 2 * boardPadding, constants.textHgt),
+      ),
+    );
     return (items, [boardCubit]);
   }
 
-  static (double, List<GameItemState>) _numbersToItemsStates(
-      List<int> updatedNumbers, double top, bool withDarkenedColor) {
-    List<GameItemState> states = [];
+  static (double, List<(SignState?, ValueState)>) _numbersToStates(
+      List<int> updatedNumbers, bool withDarkenedColor) {
+    List<(SignState?, ValueState)> numberStates = [];
     double totaldx = 0;
     for (int i = 0; i < updatedNumbers.length; i++) {
       var number = updatedNumbers[i];
       SignState? signState;
-      if (number > 0 && i != 0) {
-        signState = BoardItemsGenerator.generateSignState(
-            sign: Signs.addition, position: Offset(totaldx, top));
-      } else if (number < 0) {
-        signState = BoardItemsGenerator.generateSignState(
-            sign: Signs.substraction, position: Offset(totaldx, top));
-      }
-      if (signState != null) {
-        states.add(signState);
+      if (number < 0 || i != 0) {
+        signState = BoardItemsGenerator.genSignState(
+          sign: (number >= 0) ? Signs.addition : Signs.substraction,
+          position: Offset(totaldx, y),
+        );
         totaldx += signState.size.value.dx;
       }
-
-      var numberState = BoardItemsGenerator.generateNumberState(
-          number: number,
-          position: Offset(totaldx, top),
-          withDarkenedColor: withDarkenedColor);
-      states.add(numberState);
-      totaldx += numberState.size.value.dx;
+      var valueState = BoardItemsGenerator.genValueState(
+        number: number,
+        position: Offset(totaldx, y),
+        withDarkenedColor: withDarkenedColor,
+      );
+      numberStates.add((signState, valueState));
+      totaldx += valueState.size.value.dx;
     }
-    return (totaldx, states);
+    return (totaldx, numberStates);
   }
 }
