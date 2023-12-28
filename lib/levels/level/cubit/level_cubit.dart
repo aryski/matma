@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/items/mini_quest.dart';
 
 part 'level_state.dart';
 
@@ -45,7 +45,7 @@ class LevelCubit extends Cubit<LevelState> {
     var gamesData = levelData.gamesData;
     if (currentState is LevelGameState) {
       for (int i = 0; i < gamesData.length; i++) {
-        if (gamesData[i] == currentState.gameData && i < gamesData.length) {
+        if (gamesData[i] == currentState.gameData) {
           emit(LevelGameState(UniqueKey(),
               startTime: DateTime.now(), gameData: gamesData[i]));
           return;

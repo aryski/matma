@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 7
 // Reducing numbers in a cascade way.
@@ -23,11 +23,11 @@ Level getDebugLevel() {
   );
 }
 
-var _taskA1 = Task(instructions: [
-  NextMsg(
+var _taskA1 = MiniQuest(prompts: [
+  NextPrompt(
     text: 'Hej potężny programisto!',
   ),
-], onEvents: []);
+], choices: []);
 
 Level getDebugLevelTrivial() {
   return Level(
@@ -46,9 +46,9 @@ Level getDebugLevelTrivial() {
   );
 }
 
-var _taskB1 = Task(instructions: [
-  NextMsg(
+var _taskB1 = MiniQuest(prompts: [
+  NextPrompt(
     text: 'Hej potężny programisto!',
   ),
-  EndMsg()
-], onEvents: []);
+  EndPrompt()
+], choices: []);

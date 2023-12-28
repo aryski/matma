@@ -29,7 +29,7 @@ enum StepsGameOps {
 
 class StepsGameData extends GameData {
   final List<StepsGameOps> allowedOps;
-  final Task firstTask;
+  final MiniQuest firstTask;
   final List<int> initNumbers;
   final bool withEquation;
   final List<int>? withFixedEquation;

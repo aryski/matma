@@ -1,7 +1,7 @@
 part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ScrollHandler on StepsGameBloc {
-  Future<void> handleScroll(StepsGameState state, StepsGameEventScroll event,
+  Future<void> handleScroll(StepsGameState state, StepsTrigEventScroll event,
       Emitter<StepsGameState> emit) async {
     var item = state.getItem(event.id);
     var delta = -event.dy;

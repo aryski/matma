@@ -2,18 +2,18 @@ part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ClickHandler on StepsGameBloc {
   Future<void> handleClick(
-      StepsGameEventClick event, Emitter<StepsGameState> emit) async {
-    if (event is StepsGameEventClickUp && isSafe(event)) {
-      await handleArrowInsertion(event, emit, board, promptCubit);
+      StepsTrigEventClick event, Emitter<StepsGameState> emit) async {
+    if (event is StepsTrigEventClickUp && isSafe(event)) {
+      await handleArrowInsertion(event, emit, board, questsBloc);
     } else {
-      if (event is StepsGameEventClickUp) {
+      if (event is StepsTrigEventClickUp) {
         downClick = event.time;
       }
       await handleClickAnimation(state, event, emit, 200);
     }
   }
 
-  bool isSafe(StepsGameEventClickUp event) {
+  bool isSafe(StepsTrigEventClickUp event) {
     Duration pressTime = event.time.difference(downClick);
     if (pressTime.inMilliseconds >
         const Duration(milliseconds: 80).inMilliseconds) {
@@ -41,11 +41,11 @@ extension ClickHandler on StepsGameBloc {
     Emitter<StepsGameState> emit,
     int milliseconds,
   ) async {
-    if (event is StepsGameEventClickDown || event is StepsGameEventClickUp) {
+    if (event is StepsTrigEventClickDown || event is StepsTrigEventClickUp) {
       var item = state.getItem(event.id);
       if (item is ArrowCubit) {
         var delta = constants.arrowH - constants.arrowClickedHgt;
-        if (event is StepsGameEventClickDown) {
+        if (event is StepsTrigEventClickDown) {
           delta = -delta;
           onArrowClickDown(item, delta);
         } else {

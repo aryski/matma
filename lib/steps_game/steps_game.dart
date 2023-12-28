@@ -6,6 +6,8 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 
 import 'package:matma/equation/equation.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
+import 'package:matma/quest/bloc/quests_bloc.dart';
+import 'package:matma/quest/quests.dart';
 import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
@@ -18,9 +20,7 @@ import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor.dart';
-import 'package:matma/prompts/cubit/prompts_cubit.dart';
-import 'package:matma/prompts/task.dart';
-import 'package:matma/prompts/task_simulator.dart';
+import 'package:matma/quest/items/mini_quest.dart';
 
 class StepsGame extends StatelessWidget {
   const StepsGame({super.key, required this.data});
@@ -28,8 +28,8 @@ class StepsGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<UniqueKey> blockedIds = [];
-    final promptCubit = PromptsCubit(
-        data.firstTask, BlocProvider.of<LevelCubit>(context), 0.15);
+    final promptCubit =
+        QuestsBloc(BlocProvider.of<LevelCubit>(context), data.firstTask);
     final eqCubit = EquationBloc(
         init: EquationState(),
         wUnits: 66,
@@ -44,7 +44,7 @@ class StepsGame extends StatelessWidget {
           providers: [
             BlocProvider<StepsGameBloc>(create: (context) => bloc),
             BlocProvider<EquationBloc>(create: (context) => eqCubit),
-            BlocProvider<PromptsCubit>(create: (context) => promptCubit)
+            BlocProvider<QuestsBloc>(create: (context) => promptCubit)
           ],
           child: _ScrollListener(
             data: data,
@@ -77,7 +77,7 @@ class _ScrollListener extends StatelessWidget {
     return Listener(
         onPointerSignal: (event) {
           if (event is PointerScrollEvent && hoverKepper != null) {
-            bloc.add(StepsGameEventScroll(hoverKepper!, event.scrollDelta.dy));
+            bloc.add(StepsTrigEventScroll(hoverKepper!, event.scrollDelta.dy));
           }
         },
         child: child);
@@ -102,7 +102,7 @@ class _StepsSimulatorContent extends StatelessWidget {
         ),
         if (data.shadedSteps != null)
           ShadedRawStepsGame(initNumbers: data.shadedSteps!),
-        const Prompts(),
+        const Quests(),
         const RawStepsGame(),
         if (data.withEquation) const Equation(),
         const Align(
@@ -135,8 +135,8 @@ class ShadedRawStepsGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final promptCubit = PromptsCubit(Task(instructions: [], onEvents: []),
-        BlocProvider.of<LevelCubit>(context), 0);
+    final promptCubit = QuestsBloc(BlocProvider.of<LevelCubit>(context),
+        MiniQuest(prompts: [], choices: []));
 
     final eqCubit = EquationBloc(
         init: EquationState(), initNumbers: initNumbers, wUnits: 66);

@@ -6,7 +6,7 @@ extension ArrowsReductor on StepsGameBloc {
     var width = item.state.size.value.dx;
     delta = guardDeltaSize(
         currentW: width, delta: delta, minW: constants.floorWLarge);
-    if (delta != 0) promptCubit.scrolled();
+    if (delta != 0) questsBloc.add(TrigEventScrolled());
     int? numberInd = state.getNumberIndexFromItem(item);
     state.updatePositionSince(
         item: item,
@@ -36,7 +36,7 @@ extension ArrowsReductor on StepsGameBloc {
         }
       }
     }
-    promptCubit.merged();
+    questsBloc.add(TrigEventMerged());
     generateFillings();
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 200));

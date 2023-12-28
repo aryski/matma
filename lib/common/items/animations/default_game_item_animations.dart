@@ -11,6 +11,7 @@ class DefaultGameItemAnimations extends StatelessWidget {
     required this.state,
     this.halfWidthOffset = false,
     this.halfHeightOffset = true,
+    this.bottomPositioning = false,
   });
   final Widget child;
   final GameItemState initialState;
@@ -18,6 +19,7 @@ class DefaultGameItemAnimations extends StatelessWidget {
 
   final bool halfWidthOffset;
   final bool halfHeightOffset;
+  final bool bottomPositioning;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class DefaultGameItemAnimations extends StatelessWidget {
         halfWidthOffset: halfWidthOffset,
         initialPosition: initialState.position.value,
         updatedPosition: state.position.value,
+        bottomPositioning: bottomPositioning,
         duration: Duration(milliseconds: state.position.duration),
         child: AnimatedOpacity(
           opacity: state.opacity.value,

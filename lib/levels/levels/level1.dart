@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
 import 'package:matma/levels/levels/level2.dart';
-import 'package:matma/prompts/game_events/game_events.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/bloc/quests_bloc.dart';
+
+import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 1
 // Matching steps to shaded fixed steps.
@@ -16,15 +17,6 @@ Level getLevel1() {
       ind: 1,
       name: 'Poziom 1',
       gamesData: [
-        // StepsGameData(allowedOps: [
-        //   StepsGameOps.addArrowDown,
-        //   StepsGameOps.addArrowUp,
-        //   StepsGameOps.addOppositeArrow
-        // ], initNumbers: [
-        //   1
-        // ], shadedSteps: [
-        //   2
-        // ], firstTask: _taskD1, withEquation: false),
         StepsGameData(
             allowedOps: [StepsGameOps.addArrowUp],
             initNumbers: [1],
@@ -54,61 +46,65 @@ Level getLevel1() {
   );
 }
 
-var _taskA1 = Task(
-  instructions: [
-    NextMsg(text: 'Hejka.', seconds: 1.5),
-    NextMsg(text: 'Klikaj zielone strzałki.', seconds: 1.5),
-    NextMsg(text: 'Zrób obrazek jak w tle.', seconds: 7),
-    NextMsg(text: 'Trzy zielone obok siebie.')
+var _taskA1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Hejka.', seconds: 1.5),
+    NextPrompt(text: 'Klikaj zielone strzałki.', seconds: 1.5),
+    NextPrompt(text: 'Zrób obrazek jak w tle.', seconds: 7),
+    NextPrompt(text: 'Trzy zielone obok siebie.')
   ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [3]), task: _taskA2)
-  ],
-);
-
-var _taskA2 = Task(instructions: [
-  NextMsg(text: 'Udało Ci się!', seconds: 2),
-  NextMsg(text: 'Spróbujmy czegoś innego.', seconds: 2),
-  EndMsg(),
-], onEvents: []);
-
-var _taskB1 = Task(
-  instructions: [
-    NextMsg(text: 'Znowu zrób obrazek jak w tle.', seconds: 7),
-    NextMsg(text: 'Trzy czerwone strzałki.')
-  ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [-3]), task: _taskB2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [3]),
+        miniQuest: _taskA2)
   ],
 );
 
-var _taskB2 = Task(instructions: [
-  NextMsg(text: 'Najs.', seconds: 2),
-  NextMsg(text: 'Kolejny przykład.', seconds: 2),
-  EndMsg(),
-], onEvents: []);
+var _taskA2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Udało Ci się!', seconds: 2),
+  NextPrompt(text: 'Spróbujmy czegoś innego.', seconds: 2),
+  EndPrompt(),
+], choices: []);
 
-var _taskC1 = Task(
-  instructions: [
-    NextMsg(text: 'Znowu dojdź do obrazka w tle.', seconds: 2),
-    NextMsg(text: 'Scrolluj po złotych.')
+var _taskB1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Znowu zrób obrazek jak w tle.', seconds: 7),
+    NextPrompt(text: 'Trzy czerwone strzałki.')
   ],
-  onEvents: [
-    OnEvent(
-        requiredEvent: GameEventEquationValue(numbers: [3, -2, 4, -1]),
-        task: _taskC2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [-3]),
+        miniQuest: _taskB2)
   ],
 );
 
-var _taskC2 = Task(instructions: [
-  NextMsg(text: 'Gites majonez.', seconds: 2),
-  EndMsg(),
-], onEvents: []);
+var _taskB2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Najs.', seconds: 2),
+  NextPrompt(text: 'Kolejny przykład.', seconds: 2),
+  EndPrompt(),
+], choices: []);
 
-var _taskD1 = Task(
-  instructions: [
-    NextMsg(text: 'Znowu dojdź do obrazka w tle.', seconds: 2),
-    EndMsg(),
+var _taskC1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Znowu dojdź do obrazka w tle.', seconds: 2),
+    NextPrompt(text: 'Scrolluj po złotych.')
   ],
-  onEvents: [],
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [3, -2, 4, -1]),
+        miniQuest: _taskC2)
+  ],
+);
+
+var _taskC2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Gites majonez.', seconds: 2),
+  EndPrompt(),
+], choices: []);
+
+var _taskD1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Znowu dojdź do obrazka w tle.', seconds: 2),
+    EndPrompt(),
+  ],
+  choices: [],
 );

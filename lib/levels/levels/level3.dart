@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
 import 'package:matma/levels/levels/level4.dart';
-import 'package:matma/prompts/game_events/game_events.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/bloc/quests_bloc.dart';
+
+import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 3
 // Matching steps to equation.
@@ -45,49 +46,53 @@ Level getLevel3() {
   );
 }
 
-var _taskA1 = Task(
-  instructions: [
-    NextMsg(text: 'Widzisz cyfrę?', seconds: 3),
-    NextMsg(text: 'Zrób tyle strzałek.', seconds: 7),
-    NextMsg(text: 'Trzy zielone strzałki.')
+var _taskA1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Widzisz cyfrę?', seconds: 3),
+    NextPrompt(text: 'Zrób tyle strzałek.', seconds: 7),
+    NextPrompt(text: 'Trzy zielone strzałki.')
   ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [3]), task: _taskA2)
-  ],
-);
-
-var _taskA2 = Task(instructions: [
-  NextMsg(text: 'Git.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
-
-var _taskB1 = Task(
-  instructions: [
-    NextMsg(text: 'Zrób -3 strzałki.', seconds: 7),
-    NextMsg(text: 'Trzy czerwone strzałki.')
-  ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [-3]), task: _taskB2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [3]),
+        miniQuest: _taskA2)
   ],
 );
 
-var _taskB2 = Task(instructions: [
-  NextMsg(text: 'Najs.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
+var _taskA2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Git.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
 
-var _taskC1 = Task(
-  instructions: [
-    NextMsg(text: 'Znowu, klikaj strzałki hop hop.'),
+var _taskB1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Zrób -3 strzałki.', seconds: 7),
+    NextPrompt(text: 'Trzy czerwone strzałki.')
   ],
-  onEvents: [
-    OnEvent(
-        requiredEvent: GameEventEquationValue(numbers: [3, -2, 4, -1]),
-        task: _taskC2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [-3]),
+        miniQuest: _taskB2)
   ],
 );
 
-var _taskC2 = Task(instructions: [
-  NextMsg(text: 'No i elegancko.', seconds: 2),
-  EndMsg(),
-], onEvents: []);
+var _taskB2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Najs.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
+
+var _taskC1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Znowu, klikaj strzałki hop hop.'),
+  ],
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [3, -2, 4, -1]),
+        miniQuest: _taskC2)
+  ],
+);
+
+var _taskC2 = MiniQuest(prompts: [
+  NextPrompt(text: 'No i elegancko.', seconds: 2),
+  EndPrompt(),
+], choices: []);

@@ -1,4 +1,4 @@
-import 'package:matma/prompts/items/line/cubit/line_cubit.dart';
+import 'package:matma/quest/items/line/cubit/line_cubit.dart';
 
 class PromptsState {
   final List<LineCubit> lines;

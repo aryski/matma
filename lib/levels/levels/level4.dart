@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
 import 'package:matma/levels/levels/level5.dart';
-import 'package:matma/prompts/game_events/game_events.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/bloc/quests_bloc.dart';
+
+import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 4
 // Splitting numbers.
@@ -59,61 +60,63 @@ Level getLevel4() {
   );
 }
 
-var _taskA1 = Task(
-  instructions: [
-    NextMsg(text: 'Zrobimy coś dziwnego', seconds: 1.5),
-    NextMsg(text: 'Zamień 2 w 1+1', seconds: 1.5),
-    NextMsg(text: 'Scrolluj ciemnozielone', seconds: 5),
-    NextMsg(text: 'Ma powstać 1 + 1.', seconds: 5),
-    NextMsg(text: 'Scrolluj ciemnozielone'),
+var _taskA1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Zrobimy coś dziwnego', seconds: 1.5),
+    NextPrompt(text: 'Zamień 2 w 1+1', seconds: 1.5),
+    NextPrompt(text: 'Scrolluj ciemnozielone', seconds: 5),
+    NextPrompt(text: 'Ma powstać 1 + 1.', seconds: 5),
+    NextPrompt(text: 'Scrolluj ciemnozielone'),
   ],
-  onEvents: [
-    OnEvent(
-        requiredEvent: GameEventEquationValue(numbers: [1, 1]), task: _taskA2)
-  ],
-);
-
-var _taskA2 = Task(instructions: [
-  NextMsg(text: 'Git.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
-
-var _taskB1 = Task(
-  instructions: [
-    NextMsg(text: 'Znowu rozbijemy liczbę.', seconds: 3),
-    NextMsg(text: 'Zamień -3 w -1 -1 -1.', seconds: 3),
-    NextMsg(text: 'Scrolluj ciemnoczerwone', seconds: 5),
-    NextMsg(text: 'Ma powstać -1 - 1 - 1.', seconds: 5),
-    NextMsg(text: 'Scrolluj ciemnoczerwone'),
-  ],
-  onEvents: [
-    OnEvent(
-        requiredEvent: GameEventEquationValue(numbers: [-1, -1, -1]),
-        task: _taskB2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [1, 1]),
+        miniQuest: _taskA2)
   ],
 );
 
-var _taskB2 = Task(instructions: [
-  NextMsg(text: 'Najs.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
+var _taskA2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Git.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
 
-var _taskC1 = Task(
-  instructions: [
-    NextMsg(text: 'Teraz będzie dopakowany przykład', seconds: 1.5),
-    NextMsg(text: 'Narób dużo strzałek', seconds: 1.5),
-    NextMsg(text: 'Ale, mają się zgadzać z górą', seconds: 5),
-    NextMsg(text: 'Ma powstać 1 + 1 + 1 - 1 - 1 - 1.', seconds: 5),
-    NextMsg(text: 'Scrolluj szare, żółte, klikaj co się da, w końcu się uda.'),
+var _taskB1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Znowu rozbijemy liczbę.', seconds: 3),
+    NextPrompt(text: 'Zamień -3 w -1 -1 -1.', seconds: 3),
+    NextPrompt(text: 'Scrolluj ciemnoczerwone', seconds: 5),
+    NextPrompt(text: 'Ma powstać -1 - 1 - 1.', seconds: 5),
+    NextPrompt(text: 'Scrolluj ciemnoczerwone'),
   ],
-  onEvents: [
-    OnEvent(
-        requiredEvent: GameEventEquationValue(numbers: [1, 1, 1, -1, -1, -1]),
-        task: _taskC2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [-1, -1, -1]),
+        miniQuest: _taskB2)
   ],
 );
 
-var _taskC2 = Task(instructions: [
-  NextMsg(text: 'No i elegancko.', seconds: 2),
-  EndMsg(),
-], onEvents: []);
+var _taskB2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Najs.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
+
+var _taskC1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Teraz będzie dopakowany przykład', seconds: 1.5),
+    NextPrompt(text: 'Narób dużo strzałek', seconds: 1.5),
+    NextPrompt(text: 'Ale, mają się zgadzać z górą', seconds: 5),
+    NextPrompt(text: 'Ma powstać 1 + 1 + 1 - 1 - 1 - 1.', seconds: 5),
+    NextPrompt(
+        text: 'Scrolluj szare, żółte, klikaj co się da, w końcu się uda.'),
+  ],
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [1, 1, 1, -1, -1, -1]),
+        miniQuest: _taskC2)
+  ],
+);
+
+var _taskC2 = MiniQuest(prompts: [
+  NextPrompt(text: 'No i elegancko.', seconds: 2),
+  EndPrompt(),
+], choices: []);

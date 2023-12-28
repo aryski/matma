@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +6,12 @@ import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
+import 'package:matma/quest/bloc/quests_bloc.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
-import 'package:matma/prompts/cubit/prompts_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:matma/steps_game/bloc/constants.dart' as constants;
@@ -32,26 +31,26 @@ part 'bloc_ext/scroll_handler.dart';
 
 UniqueKey? hoverKepper;
 
-class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
+class StepsGameBloc extends Bloc<StepsTrigEvent, StepsGameState> {
   final List<StepsGameOps> allowedOps;
   final EquationBloc board;
   final List<UniqueKey> lockedIds = [];
-  final PromptsCubit promptCubit;
+  final QuestsBloc questsBloc;
   DateTime downClick = DateTime.timestamp();
   @override
-  StepsGameBloc(this.board, this.promptCubit, this.allowedOps)
+  StepsGameBloc(this.board, this.questsBloc, this.allowedOps)
       : super(StepsGameState(numbers: [], unorderedItems: {})) {
     initializeSimulationItems();
 
-    on<StepsGameEventScroll>((event, emit) async {
+    on<StepsTrigEventScroll>((event, emit) async {
       await handleScroll(state, event, emit);
     }, transformer: eventScrollTransformer);
 
-    on<StepsGameEventClick>((event, emit) async {
+    on<StepsTrigEventClick>((event, emit) async {
       await handleClick(event, emit);
     }, transformer: sequential());
 
-    on<StepsGameEventPopFilling>((event, emit) async {
+    on<StepsTrigEventPopFilling>((event, emit) async {
       if (allowedOps.contains(StepsGameOps.reducingArrowsCascadedly)) {
         var item = state.getItem(event.id);
         if (item is FillingCubit) {
@@ -66,10 +65,10 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
     }, transformer: sequential());
   }
 
-  Stream<StepsGameEventScroll> eventScrollTransformer(
-      Stream<StepsGameEventScroll> events,
-      EventMapper<StepsGameEventScroll> mapper) {
-    return sequential<StepsGameEventScroll>()(
+  Stream<StepsTrigEventScroll> eventScrollTransformer(
+      Stream<StepsTrigEventScroll> events,
+      EventMapper<StepsTrigEventScroll> mapper) {
+    return sequential<StepsTrigEventScroll>()(
         events.debounceBuffer(const Duration(milliseconds: 50)).map(
           (bufferedEvents) {
             UniqueKey scroll = UniqueKey();
@@ -78,7 +77,7 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
               scroll = event.id;
               dySum += event.dy;
             }
-            return StepsGameEventScroll(scroll, dySum);
+            return StepsTrigEventScroll(scroll, dySum);
           },
         ),
         mapper);
@@ -86,7 +85,8 @@ class StepsGameBloc extends Bloc<StepsGameEvent, StepsGameState> {
 
   @override
   void onChange(Change<StepsGameState> change) {
-    promptCubit.equationValue(state.numbers.map((e) => e.number).toList());
+    questsBloc.add(TrigEventEquationValue(
+        numbers: state.numbers.map((e) => e.number).toList()));
     super.onChange(change);
   }
 }

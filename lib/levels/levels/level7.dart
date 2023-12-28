@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
-import 'package:matma/prompts/game_events/game_events.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/bloc/quests_bloc.dart';
+
+import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 7
 // Reducing numbers in a cascade way.
@@ -50,69 +51,75 @@ Level getLevel7() {
   );
 }
 
-var _taskA1 = Task(
-  instructions: [
-    NextMsg(text: 'Zamień 4 - 3 w 1 + 3 - 3', seconds: 3),
-    NextMsg(text: 'Podziel 4 na 1 + 3 scrollem.', seconds: 3),
-    NextMsg(text: 'Ma powstać 1 + 3 - 3', seconds: 5),
-    NextMsg(text: 'Podziel 4 na 1 + 3 scrollem.'),
+var _taskA1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Zamień 4 - 3 w 1 + 3 - 3', seconds: 3),
+    NextPrompt(text: 'Podziel 4 na 1 + 3 scrollem.', seconds: 3),
+    NextPrompt(text: 'Ma powstać 1 + 3 - 3', seconds: 5),
+    NextPrompt(text: 'Podziel 4 na 1 + 3 scrollem.'),
   ],
-  onEvents: [
-    OnEvent(
-        requiredEvent: GameEventEquationValue(numbers: [1, 3, -3]),
-        task: _taskA2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [1, 3, -3]),
+        miniQuest: _taskA2)
   ],
 );
 
-var _taskA2 = Task(
-  instructions: [
-    NextMsg(text: 'Teraz kliknij na szarą górkę.', seconds: 3),
-    NextMsg(text: 'Dzięki temu zostanie ci 1.', seconds: 3),
-    NextMsg(
+var _taskA2 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Teraz kliknij na szarą górkę.', seconds: 3),
+    NextPrompt(text: 'Dzięki temu zostanie ci 1.', seconds: 3),
+    NextPrompt(
         text: 'Kliknij na szarą górkę, albo scrolluj szare pomiędzy kolorami.'),
   ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [1]), task: _taskA3)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [1]),
+        miniQuest: _taskA3)
   ],
 );
 
-var _taskA3 = Task(instructions: [
-  NextMsg(text: 'Git.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
+var _taskA3 = MiniQuest(prompts: [
+  NextPrompt(text: 'Git.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
 
-var _taskB1 = Task(
-  instructions: [
-    NextMsg(text: 'Teraz zrobimy to samo kilka razy.', seconds: 3),
-    NextMsg(text: 'Klikaj górki i dolinki.', seconds: 3),
-    NextMsg(text: 'Używaj też scrolla.', seconds: 3),
-    NextMsg(text: 'Aż zostanie samo -1.', seconds: 5),
-    NextMsg(text: 'Klikaj górki i dolinki, używaj scrolla, aż zostanie -1.'),
+var _taskB1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Teraz zrobimy to samo kilka razy.', seconds: 3),
+    NextPrompt(text: 'Klikaj górki i dolinki.', seconds: 3),
+    NextPrompt(text: 'Używaj też scrolla.', seconds: 3),
+    NextPrompt(text: 'Aż zostanie samo -1.', seconds: 5),
+    NextPrompt(text: 'Klikaj górki i dolinki, używaj scrolla, aż zostanie -1.'),
   ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [-1]), task: _taskB2)
-  ],
-);
-
-var _taskB2 = Task(instructions: [
-  NextMsg(text: 'Najs.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
-
-var _taskC1 = Task(
-  instructions: [
-    NextMsg(text: 'Popatrz na to jak się zmienia równanie.', seconds: 1.5),
-    NextMsg(text: 'Klikaj górki i dolinki.', seconds: 3),
-    NextMsg(text: 'Używaj też scrolla.', seconds: 3),
-    NextMsg(text: 'Aż zostanie samo -1.', seconds: 5),
-    NextMsg(text: 'Klikaj górki i dolinki, używaj scrolla, aż zostanie -1.'),
-  ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [-1]), task: _taskC2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [-1]),
+        miniQuest: _taskB2)
   ],
 );
 
-var _taskC2 = Task(instructions: [
-  NextMsg(text: 'Git.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
+var _taskB2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Najs.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
+
+var _taskC1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Popatrz na to jak się zmienia równanie.', seconds: 1.5),
+    NextPrompt(text: 'Klikaj górki i dolinki.', seconds: 3),
+    NextPrompt(text: 'Używaj też scrolla.', seconds: 3),
+    NextPrompt(text: 'Aż zostanie samo -1.', seconds: 5),
+    NextPrompt(text: 'Klikaj górki i dolinki, używaj scrolla, aż zostanie -1.'),
+  ],
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [-1]),
+        miniQuest: _taskC2)
+  ],
+);
+
+var _taskC2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Git.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);

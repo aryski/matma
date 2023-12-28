@@ -2,10 +2,10 @@ part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension ArrowInsertor on StepsGameBloc {
   Future<void> handleArrowInsertion(
-      StepsGameEventClickUp event,
+      StepsTrigEventClickUp event,
       Emitter<StepsGameState> emit,
       EquationBloc board,
-      PromptsCubit promptCubit) async {
+      QuestsBloc questsBloc) async {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       bool isUp = (item.state.direction == Direction.up);
@@ -19,7 +19,11 @@ extension ArrowInsertor on StepsGameBloc {
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
       _animateNewStep(newStep, 200);
-      promptCubit.inserted(item.state.direction);
+      if (item.state.direction == Direction.up) {
+        questsBloc.add(TrigEventInsertedUp());
+      } else {
+        questsBloc.add(TrigEventInsertedDown());
+      }
       generateFillings();
       emit(state.copy());
     }

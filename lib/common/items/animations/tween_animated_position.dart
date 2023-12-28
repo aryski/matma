@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:matma/common/items/animations/default_tween_animation_builder.dart';
 
 class TweenAnimatedPosition extends StatelessWidget {
-  const TweenAnimatedPosition({
-    super.key,
-    required this.child,
-    required this.initialPosition,
-    required this.updatedPosition,
-    required this.duration,
-    required this.halfWidthOffset,
-    required this.halfHeightOffset,
-  });
+  const TweenAnimatedPosition(
+      {super.key,
+      required this.child,
+      required this.initialPosition,
+      required this.updatedPosition,
+      required this.duration,
+      required this.halfWidthOffset,
+      required this.halfHeightOffset,
+      required this.bottomPositioning});
   final Widget child;
   final Offset initialPosition;
   final Offset updatedPosition;
   final Duration duration;
   final bool halfWidthOffset;
   final bool halfHeightOffset;
+  final bool bottomPositioning;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,11 @@ class TweenAnimatedPosition extends StatelessWidget {
               position += Offset(halfWidthOffset ? constraints.maxWidth / 2 : 0,
                   halfHeightOffset ? constraints.maxHeight / 2 : 0);
               return Stack(children: [
-                Positioned(left: position.dx, top: position.dy, child: child),
+                Positioned(
+                    left: position.dx,
+                    bottom: bottomPositioning ? position.dy : null,
+                    top: bottomPositioning ? null : position.dy,
+                    child: child),
               ]);
             });
       },

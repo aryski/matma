@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/levels/level/level.dart';
 import 'package:matma/levels/levels/level3.dart';
-import 'package:matma/prompts/game_events/game_events.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/bloc/quests_bloc.dart';
+
+import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 2
 // Matching steps to shaded fixed steps, with above equation.
@@ -45,50 +46,54 @@ Level getLevel2() {
   );
 }
 
-var _taskA1 = Task(
-  instructions: [
-    NextMsg(text: 'Widzisz cyfrę?', seconds: 1.5),
-    NextMsg(text: 'Obserwuj cyfrę!', seconds: 1.5),
-    NextMsg(text: 'Zrób obrazek jak w tle.', seconds: 7),
-    NextMsg(text: 'Trzy zielone obok siebie.')
+var _taskA1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Widzisz cyfrę?', seconds: 1.5),
+    NextPrompt(text: 'Obserwuj cyfrę!', seconds: 1.5),
+    NextPrompt(text: 'Zrób obrazek jak w tle.', seconds: 7),
+    NextPrompt(text: 'Trzy zielone obok siebie.')
   ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [3]), task: _taskA2)
-  ],
-);
-
-var _taskA2 = Task(instructions: [
-  NextMsg(text: 'Git.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
-
-var _taskB1 = Task(
-  instructions: [
-    NextMsg(text: 'Znowu zrób obrazek jak w tle.', seconds: 7),
-    NextMsg(text: 'Trzy zielone obok siebie.')
-  ],
-  onEvents: [
-    OnEvent(requiredEvent: GameEventEquationValue(numbers: [-3]), task: _taskB2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [3]),
+        miniQuest: _taskA2)
   ],
 );
 
-var _taskB2 = Task(instructions: [
-  NextMsg(text: 'Najs.', seconds: 1.5),
-  EndMsg(),
-], onEvents: []);
+var _taskA2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Git.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
 
-var _taskC1 = Task(
-  instructions: [
-    NextMsg(text: 'Znowu to samo, obserwuj górę'),
+var _taskB1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Znowu zrób obrazek jak w tle.', seconds: 7),
+    NextPrompt(text: 'Trzy zielone obok siebie.')
   ],
-  onEvents: [
-    OnEvent(
-        requiredEvent: GameEventEquationValue(numbers: [3, -2, 4, -1]),
-        task: _taskC2)
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [-3]),
+        miniQuest: _taskB2)
   ],
 );
 
-var _taskC2 = Task(instructions: [
-  NextMsg(text: 'Gites majonez.', seconds: 2),
-  EndMsg(),
-], onEvents: []);
+var _taskB2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Najs.', seconds: 1.5),
+  EndPrompt(),
+], choices: []);
+
+var _taskC1 = MiniQuest(
+  prompts: [
+    NextPrompt(text: 'Znowu to samo, obserwuj górę'),
+  ],
+  choices: [
+    Choice(
+        trigEvent: TrigEventEquationValue(numbers: const [3, -2, 4, -1]),
+        miniQuest: _taskC2)
+  ],
+);
+
+var _taskC2 = MiniQuest(prompts: [
+  NextPrompt(text: 'Gites majonez.', seconds: 2),
+  EndPrompt(),
+], choices: []);
