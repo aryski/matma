@@ -98,28 +98,29 @@ bool removeFilling(StepsGameState state, int ind) {
 FillingCubit generateFilling(int n, FloorState floorState) {
   var filling = FillingCubit(
     FillingState(
-        stepHgt: constants.arrowH,
-        animProgress: 0,
-        steps: n,
-        stepWdt: constants.floorW,
-        id: UniqueKey(),
-        position: AnimatedProp.zero(
-            value: n > 0
-                ? floorState.position.value +
-                    Offset(-(n.abs() - 1) * constants.floorW, constants.floorH)
-                : floorState.position.value +
-                    Offset(
-                        -(n.abs() - 1) * constants.floorW,
-                        constants.floorH -
-                            n.abs() * constants.arrowH -
-                            constants.floorH)),
-        size: AnimatedProp.zero(
-            value: Offset(
-                (n.abs() - 1) * 2 * constants.floorW + floorState.size.value.dx,
-                n.abs() * constants.arrowH)),
-        isHovered: false,
-        opacity: AnimatedProp.zero(value: 0.0),
-        radius: constants.radius),
+      stepHgt: constants.arrowH,
+      animProgress: 0,
+      steps: n,
+      stepWdt: constants.floorW,
+      id: UniqueKey(),
+      position: AnimatedProp.zero(
+          value: n > 0
+              ? floorState.position.value +
+                  Offset(-(n.abs() - 1) * constants.floorW, constants.floorH)
+              : floorState.position.value +
+                  Offset(
+                      -(n.abs() - 1) * constants.floorW,
+                      constants.floorH -
+                          n.abs() * constants.arrowH -
+                          constants.floorH)),
+      size: AnimatedProp.zero(
+          value: Offset(
+              (n.abs() - 1) * 2 * constants.floorW + floorState.size.value.dx,
+              n.abs() * constants.arrowH)),
+      isHovered: false,
+      opacity: AnimatedProp.zero(value: 0.0),
+      // radius: constants.radius,
+    ),
   );
   return filling;
 }

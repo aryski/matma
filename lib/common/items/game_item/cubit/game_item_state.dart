@@ -7,15 +7,13 @@ abstract class GameItemState {
   final AnimatedProp<Offset> size;
   final bool isHovered;
   final AnimatedProp<double> opacity;
-  final double radius;
 
   GameItemState(
       {required this.id,
       required this.position,
       required this.size,
       this.isHovered = false,
-      required this.opacity,
-      required this.radius});
+      required this.opacity});
 
   GameItemState copyWith(
       {UniqueKey? id,

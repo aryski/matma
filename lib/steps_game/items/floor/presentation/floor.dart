@@ -6,6 +6,7 @@ import 'package:matma/common/items/animations/default_game_item_animations.dart'
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_cubit.dart';
 import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
+import 'package:matma/steps_game/bloc/constants.dart' as constants;
 
 import 'package:matma/steps_game/items/floor/presentation/floor_gesture_detector.dart';
 import 'package:matma/steps_game/items/floor/presentation/floor_painter.dart';
@@ -61,7 +62,7 @@ class Floor extends StatelessWidget {
                         painter: FloorPainter(
                             constrains.maxWidth,
                             constrains.maxHeight,
-                            state.radius * constrains.maxHeight * 0.05,
+                            constants.radius * constrains.maxHeight * 0.05,
                             color ?? initColor),
                       );
                     },

@@ -38,14 +38,12 @@ class Value extends StatelessWidget {
                     );
                   },
                   duration: const Duration(milliseconds: 200),
-                  child: state.opacity.value == 1.0 //TODO fixme
-                      ? SizedBox(
-                          key: state.textKey,
-                          width: constrains.maxWidth,
-                          height: constrains.maxHeight,
-                          child: _ValueDesign(state: state),
-                        )
-                      : const SizedBox.shrink());
+                  child: SizedBox(
+                    key: state.switcherKey,
+                    width: constrains.maxWidth,
+                    height: constrains.maxHeight,
+                    child: _ValueDesign(state: state),
+                  ));
             }),
           );
         },

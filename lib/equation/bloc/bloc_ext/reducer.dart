@@ -9,10 +9,10 @@ extension Reducer on EquationBloc {
     _decreaseValue(leftItem);
     _decreaseValue(rightItem);
     if (leftItem.value.state.value == 0) {
-      removeNumber(leftItem);
+      removeNumber(leftItem, FadeDirection.right);
     }
     if (rightItem.value.state.value == 0) {
-      removeNumber(rightItem);
+      removeNumber(rightItem, FadeDirection.left);
     }
 
     bool doesFirstNumberHaveAdditionSign = state.items.isNotEmpty &&
@@ -27,6 +27,7 @@ extension Reducer on EquationBloc {
   void _removeAdditionSignFromFirstNumber() {
     state.extraItems.add(state.items.first.sign!);
     state.items.first.sign!.setOpacity(0);
+    state.items.first.sign!.refreshSwitcherKey();
     state.items.replaceRange(
         0, 1, [NumberItem(sign: null, value: state.items.first.value)]);
 
@@ -35,11 +36,6 @@ extension Reducer on EquationBloc {
   }
 
   void _decreaseValue(NumberItem myItem) {
-    var number = myItem.value;
-    if (number.state.value == 10) {
-      // TODO for now only double digits
-      resize(myItem, -constants.numberRatio.dx);
-    }
-    number.updateValue(number.state.value - 1);
+    updateValueWithResize(myItem, -1);
   }
 }

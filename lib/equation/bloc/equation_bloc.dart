@@ -12,6 +12,7 @@ part 'equation_event.dart';
 part 'equation_state.dart';
 part 'bloc_ext/common/items_generator.dart';
 part 'bloc_ext/insertor.dart';
+part 'bloc_ext/common/updater.dart';
 part 'bloc_ext/reducer.dart';
 part 'bloc_ext/splitter.dart';
 part 'bloc_ext/joiner.dart';
@@ -55,10 +56,10 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
       },
     );
     on<EquationEventSplitNumber>(
-      (event, emit) {
+      (event, emit) async {
         var item = state.getItem(event.ind);
         if (item != null) {
-          split(item, event);
+          await split(item, event);
         }
         emit(state.copyWith());
       },

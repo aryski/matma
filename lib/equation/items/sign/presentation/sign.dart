@@ -22,28 +22,24 @@ class Sign extends StatelessWidget {
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
               return AnimatedSwitcher(
-                key: state.id,
-                switchInCurve: Curves.ease,
-                switchOutCurve: Curves.ease,
-                transitionBuilder: (child, animation) {
-                  return RotationTransition(
-                    turns: animation,
-                    child: ScaleTransition(
-                      scale: animation,
-                      child: child,
-                    ),
-                  );
-                },
-                duration: const Duration(milliseconds: 200),
-                child:
-                    state.opacity.value == 1.0 //TODO fix amiguous code solution
-                        ? SizedBox(
-                            key: state.animationKey,
-                            width: constrains.maxWidth,
-                            height: constrains.maxHeight,
-                            child: _SignDesign(state: state))
-                        : const SizedBox.shrink(),
-              );
+                  key: state.id,
+                  switchInCurve: Curves.ease,
+                  switchOutCurve: Curves.ease,
+                  transitionBuilder: (child, animation) {
+                    return RotationTransition(
+                      turns: animation,
+                      child: ScaleTransition(
+                        scale: animation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  duration: const Duration(milliseconds: 200),
+                  child: SizedBox(
+                      key: state.switcherKey,
+                      width: constrains.maxWidth,
+                      height: constrains.maxHeight,
+                      child: _SignDesign(state: state)));
             }),
           );
         },

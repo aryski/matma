@@ -4,15 +4,14 @@ enum Signs { addition, substraction }
 
 class SignState extends GameItemState {
   Signs value;
-  UniqueKey animationKey;
+  UniqueKey switcherKey;
   SignState(
       {required this.value,
       required super.id,
       required super.position,
       required super.size,
       required super.opacity,
-      required super.radius,
-      required this.animationKey});
+      required this.switcherKey});
 
   @override
   SignState copyWith(
@@ -22,15 +21,14 @@ class SignState extends GameItemState {
       bool? isHovered,
       AnimatedProp<double>? opacity,
       double? radius,
-      UniqueKey? animationKey,
+      UniqueKey? switcherKey,
       Signs? value}) {
     return SignState(
         id: id ?? this.id,
         position: position ?? this.position,
         size: size ?? this.size,
         opacity: opacity ?? this.opacity,
-        radius: radius ?? this.radius,
-        animationKey: animationKey ?? this.animationKey,
+        switcherKey: switcherKey ?? this.switcherKey,
         value: value ?? this.value);
   }
 }

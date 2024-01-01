@@ -7,7 +7,6 @@ class LineState extends GameItemState {
       required super.position,
       required super.size,
       required super.opacity,
-      required super.radius,
       required this.text});
   @override
   LineState copyWith(
@@ -23,7 +22,6 @@ class LineState extends GameItemState {
         position: position ?? this.position,
         size: size ?? this.size,
         opacity: opacity ?? this.opacity,
-        radius: radius ?? this.radius,
         text: text ?? this.text);
   }
 }

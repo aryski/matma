@@ -15,7 +15,7 @@ extension ItemsGenerator on StepsGameBloc {
                 value: const Offset(constants.arrowW, constants.arrowH)),
         opacity: AnimatedProp.zero(value: 1.0),
         direction: direction,
-        radius: constants.radius,
+        // radius: constants.radius,
         animProgress: animationProgress,
       ),
     );
@@ -35,7 +35,7 @@ extension ItemsGenerator on StepsGameBloc {
         size: size ??
             AnimatedProp.zero(value: Offset(widthSize, constants.floorH)),
         opacity: AnimatedProp.zero(value: 1.0),
-        radius: constants.radius,
+        // radius: constants.radius,
       ),
     );
   }

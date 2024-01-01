@@ -2,14 +2,12 @@ part of 'shadow_number_cubit.dart';
 
 class ShadowNumberState extends GameItemState {
   String value;
-  ShadowNumberState({
-    required this.value,
-    required super.id,
-    required super.position,
-    required super.size,
-    required super.opacity,
-    required super.radius,
-  });
+  ShadowNumberState(
+      {required this.value,
+      required super.id,
+      required super.position,
+      required super.size,
+      required super.opacity});
 
   @override
   ShadowNumberState copyWith(
@@ -24,7 +22,6 @@ class ShadowNumberState extends GameItemState {
         position: position ?? this.position,
         size: size ?? this.size,
         opacity: opacity ?? this.opacity,
-        radius: radius ?? this.radius,
         value: value);
   }
 }

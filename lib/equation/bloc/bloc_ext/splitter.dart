@@ -1,8 +1,8 @@
 part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Splitter on EquationBloc {
-  void split(NumberItem item, EquationEventSplitNumber event) {
-    item.value.updateValue(event.lNumber.abs());
+  Future<void> split(NumberItem item, EquationEventSplitNumber event) async {
+    updateValueWithResize(item, event.lNumber.abs() - item.value.state.value);
     insertNumberAfterItem(event.rNumber, item);
   }
 }

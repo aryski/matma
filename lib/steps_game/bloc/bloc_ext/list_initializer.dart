@@ -71,13 +71,14 @@ extension Initializer on StepsGameBloc {
     int wUnits = 66;
     var id = UniqueKey();
     return EquatorCubit(EquatorState(
-        id: id,
-        position:
-            AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
-        size: AnimatedProp.zero(
-            value: Offset(constants.arrowW * wUnits * 3, constants.floorH)),
-        opacity: AnimatedProp.zero(value: 1),
-        radius: constants.radius));
+      id: id,
+      position:
+          AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
+      size: AnimatedProp.zero(
+          value: Offset(constants.arrowW * wUnits * 3, constants.floorH)),
+      opacity: AnimatedProp.zero(value: 1),
+      // radius: constants.radius,
+    ));
   }
 
   List<StepsGameNumberState> _generateNumbers(

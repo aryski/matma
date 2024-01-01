@@ -15,8 +15,7 @@ class FloorState extends GameItemState {
       required super.size,
       super.isHovered,
       required this.direction,
-      required super.opacity,
-      required super.radius});
+      required super.opacity});
 
   @override
   FloorState copyWith(
@@ -35,7 +34,6 @@ class FloorState extends GameItemState {
         position: position ?? this.position,
         size: size ?? this.size,
         opacity: opacity ?? this.opacity,
-        radius: radius ?? this.radius,
         direction: direction,
         isLastInNumber: isLastInNumber ?? this.isLastInNumber,
         isLastInGame: isLastInGame ?? this.isLastInGame);

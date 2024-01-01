@@ -17,7 +17,6 @@ class BracketState extends GameItemState {
       super.isHovered,
       required this.direction,
       required super.opacity,
-      required super.radius,
       required this.heightOffset});
 
   @override
@@ -38,7 +37,6 @@ class BracketState extends GameItemState {
         position: position ?? this.position,
         size: size ?? this.size,
         opacity: opacity ?? this.opacity,
-        radius: radius ?? this.radius,
         direction: direction,
         isLastInNumber: isLastInNumber ?? this.isLastInNumber,
         isLastInGame: isLastInGame ?? this.isLastInGame,

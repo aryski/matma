@@ -7,6 +7,7 @@ import 'package:matma/common/items/animations/default_game_item_animations.dart'
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling_gesture_detector.dart';
 import 'package:matma/steps_game/items/filling/presentation/filling_painter.dart';
+import 'package:matma/steps_game/bloc/constants.dart' as constants;
 
 class Filling extends StatelessWidget {
   const Filling({super.key, required this.cubit});
@@ -66,7 +67,7 @@ class Filling extends StatelessWidget {
                                       steps: state.steps,
                                       width: dx,
                                       stepWdt: state.stepWdt,
-                                      radius: state.radius,
+                                      radius: constants.radius,
                                       color: color ??
                                           Theme.of(context)
                                               .colorScheme

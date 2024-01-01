@@ -6,6 +6,7 @@ import 'package:matma/steps_game/items/brackets/cubit/bracket_cubit.dart';
 import 'package:matma/steps_game/items/brackets/cubit/bracket_state.dart';
 import 'package:matma/steps_game/items/brackets/presentation/bracket_gesture_detector.dart';
 import 'package:matma/steps_game/items/brackets/presentation/bracket_painter.dart';
+import 'package:matma/steps_game/bloc/constants.dart' as constants;
 
 class Bracket extends StatelessWidget {
   const Bracket({super.key, required this.cubit});
@@ -41,7 +42,7 @@ class Bracket extends StatelessWidget {
                           painter: BracketPainter(
                               constrains.maxWidth,
                               constrains.maxHeight,
-                              state.radius * constrains.maxHeight * 0.9,
+                              constants.radius * constrains.maxHeight * 0.9,
                               color ?? initColor,
                               state.direction,
                               state.heightOffset),

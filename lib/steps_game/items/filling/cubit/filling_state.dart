@@ -14,7 +14,6 @@ class FillingState extends GameItemState {
       required super.size,
       required super.isHovered,
       required super.opacity,
-      required super.radius,
       required this.animProgress});
 
   @override
@@ -37,7 +36,6 @@ class FillingState extends GameItemState {
       position: position ?? this.position,
       size: size ?? this.size,
       opacity: opacity ?? this.opacity,
-      radius: radius ?? this.radius,
       steps: steps ?? this.steps,
       animProgress: animProgress ?? this.animProgress,
     );

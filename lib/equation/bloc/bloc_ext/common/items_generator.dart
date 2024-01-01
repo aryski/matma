@@ -7,8 +7,7 @@ extension BoardItemsGenerator on EquationBloc {
         id: UniqueKey(),
         position: AnimatedProp.zero(value: position),
         size: AnimatedProp.zero(value: size),
-        opacity: AnimatedProp.zero(value: 1.0),
-        radius: constants.boardRadius);
+        opacity: AnimatedProp.zero(value: 1.0));
   }
 
   static ValueState genValueState(
@@ -24,24 +23,22 @@ extension BoardItemsGenerator on EquationBloc {
       id: UniqueKey(),
       position: AnimatedProp.zero(value: position),
       size: AnimatedProp.zero(
-          value:
-              constants.numberRatio.scale(((number.abs() >= 10) ? 2 : 1), 1)),
+          value: constants.numberRatio
+              .scale(number.abs().toString().length.toDouble(), 1)),
       opacity: AnimatedProp.zero(value: opacity ?? 1.0),
-      radius: constants.numberRadius,
-      textKey: UniqueKey(),
+      switcherKey: UniqueKey(),
     );
   }
 
   static SignState genSignState(
       {required Signs sign, required Offset position, double? opacity}) {
     return SignState(
-      animationKey: UniqueKey(),
+      switcherKey: UniqueKey(),
       value: sign,
       id: UniqueKey(),
       position: AnimatedProp.zero(value: position),
       size: AnimatedProp.zero(value: constants.signRatio),
       opacity: AnimatedProp.zero(value: opacity ?? 1.0),
-      radius: constants.numberRadius,
     );
   }
 
@@ -52,7 +49,6 @@ extension BoardItemsGenerator on EquationBloc {
       position: AnimatedProp.zero(value: position),
       size: AnimatedProp.zero(value: constants.numberRatio),
       opacity: AnimatedProp.zero(value: 1.0),
-      radius: constants.numberRadius,
     );
   }
 }
