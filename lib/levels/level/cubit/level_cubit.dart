@@ -34,8 +34,6 @@ class LevelCubit extends Cubit<LevelState> {
           return;
         }
       }
-    }
-    if (currentState is LevelGameState) {
       emit(LevelGameEndState(currentState));
     }
   }
