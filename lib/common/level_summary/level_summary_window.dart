@@ -4,8 +4,8 @@ import 'package:matma/common/level_summary/home_button.dart';
 import 'package:matma/common/level_summary/next_button.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 
-class LevelSummary extends StatelessWidget {
-  const LevelSummary({super.key, required this.next, required this.data});
+class LevelSummaryWindow extends StatelessWidget {
+  const LevelSummaryWindow({super.key, required this.next, required this.data});
 
   final Widget? next;
   final LevelData data;

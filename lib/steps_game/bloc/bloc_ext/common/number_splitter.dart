@@ -77,12 +77,3 @@ void _splitNumber(
   numbers[numberInd].steps.addAll(left);
   numbers.insert(numberInd + 1, StepsGameNumberState(steps: right));
 }
-
-// double _guardDeltaSize(
-//     {required double currentW, required double delta, required double minW}) {
-//   if (currentW + delta < minW) {
-//     delta = (minW - currentW) *
-//         1.0000000000001; //TODO better floating point solution.
-//   }
-//   return delta;
-// }

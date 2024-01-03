@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:matma/common/level_summary/level_summary.dart';
+import 'package:matma/common/level_summary/level_summary_window.dart';
+import 'package:matma/levels/level/classic_level_button.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
-import 'package:matma/menu.dart';
 import 'package:matma/steps_game/steps_game.dart';
 
 /* Use                
@@ -25,9 +25,9 @@ class Level extends StatelessWidget {
         if (snapshot.data != null && snapshot.data!.key == data.ind) {
           unlocked = snapshot.data!.value;
         }
-        return ClassicLevelButton(
+        return LevelButton(
           locked: kReleaseMode
-              ? unlocked
+              ? !unlocked
               : data.ind == 7 //  unlock all levels except 7 in debug mode
                   ? true
                   : false,
@@ -77,7 +77,7 @@ class LevelSummary extends StatelessWidget {
                         height: MediaQuery.of(context).size.height,
                         color: Colors.black.withOpacity(0.3),
                       ),
-                      Center(child: LevelSummary(next: next, data: data)),
+                      Center(child: LevelSummaryWindow(next: next, data: data)),
                     ],
                   )
                 : const SizedBox.shrink());

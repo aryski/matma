@@ -8,7 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:matma/color_schemes.g.dart';
 import 'package:matma/global_cubits/responsive_cubit.dart';
 import 'package:matma/global_cubits/theme_mode_cubit.dart';
-import 'package:matma/menu.dart';
+import 'package:matma/menu/menu.dart';
 
 void main() async {
   //TODO dodatkowe tabele z liczbami reprezentjące liczby tuż nad strzałkami
@@ -18,7 +18,6 @@ void main() async {
   //ale też w zależności od czasu do jakiego kolejnego taska trzeba przejść.
   //wykombinuje jak bardzo rozwlekać poziomy w zależności od tego jak SZYBKO ktoś rozumie.
   //Tak, aby każdy poziom się wydłużał dopóki ktoś nie będzie odpowiednio szybko kapował o co biega.
-//TODO zmiana tablicy z liczbami
   Bloc.transformer = sequential();
   await Hive.initFlutter();
   await Hive.openBox<bool>('levels');

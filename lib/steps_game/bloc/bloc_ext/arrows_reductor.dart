@@ -13,6 +13,7 @@ extension ArrowsReductor on StepsGameBloc {
         offset: Offset(delta, 0),
         fillingIncluded: false,
         milliseconds: 200);
+    state.getNumberFromItem(item)?.filling?.resizeWidth(delta);
     item.updateSize(Offset(delta, 0), delayInMillis: 0, milliseconds: 200);
   }
 

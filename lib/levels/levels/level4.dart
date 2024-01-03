@@ -50,7 +50,7 @@ Level getLevel4() {
         ], withFixedEquation: [
           1,
           1,
-          1, //TODO -1 matchuje z 1 trzeba poprawic boarda xD
+          1,
           -1,
           -1,
           -1

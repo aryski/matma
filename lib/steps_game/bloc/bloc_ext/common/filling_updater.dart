@@ -104,22 +104,15 @@ FillingCubit generateFilling(int n, FloorState floorState) {
       stepWdt: constants.floorW,
       id: UniqueKey(),
       position: AnimatedProp.zero(
-          value: n > 0
-              ? floorState.position.value +
-                  Offset(-(n.abs() - 1) * constants.floorW, constants.floorH)
-              : floorState.position.value +
-                  Offset(
-                      -(n.abs() - 1) * constants.floorW,
-                      constants.floorH -
-                          n.abs() * constants.arrowH -
-                          constants.floorH)),
+          value: floorState.position.value +
+              Offset(-(n.abs() - 1) * constants.floorW,
+                  n > 0 ? constants.floorH : -n.abs() * constants.arrowH)),
       size: AnimatedProp.zero(
           value: Offset(
               (n.abs() - 1) * 2 * constants.floorW + floorState.size.value.dx,
               n.abs() * constants.arrowH)),
       isHovered: false,
       opacity: AnimatedProp.zero(value: 0.0),
-      // radius: constants.radius,
     ),
   );
   return filling;

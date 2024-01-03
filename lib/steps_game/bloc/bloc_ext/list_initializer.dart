@@ -6,63 +6,6 @@ extension Initializer on StepsGameBloc {
     state.unorderedItems[equator.state.id] = equator;
     var numbers = _generateNumbers(
         board.state.numbers, constants.initialLeft, constants.initialTop);
-
-    // for (var number in numbers) {
-    //   late double width;
-    //   late double height;
-    //   late Offset newPosition;
-    //   late double heightOffset;
-
-    //   const double bracketsY = -constants.arrowH * 3;
-
-    //   if (number.number > 0) {
-    //     var left = number.steps.first.arrow.state.position.value +
-    //         const Offset(-constants.arrowW / 4, constants.arrowH);
-    //     var right = number.steps.last.arrow.state.position.value +
-    //         const Offset(constants.arrowW + constants.arrowW / 8, 0);
-    //     height = (right.dy - left.dy).abs();
-    //     width = (right.dx - left.dx).abs();
-
-    //     newPosition = right + Offset(-width, 0);
-    //     heightOffset = (bracketsY - newPosition.dy).abs() /
-    //         (height + (bracketsY - newPosition.dy).abs());
-    //     height = height + (bracketsY - newPosition.dy).abs();
-    //     newPosition = Offset(newPosition.dx, bracketsY);
-    //   } else {
-    //     var left = number.steps.first.arrow.state.position.value +
-    //         const Offset(constants.arrowW / 8, 0);
-    //     var right = number.steps.last.arrow.state.position.value +
-    //         const Offset(
-    //             constants.arrowW / 4 + constants.arrowW, constants.arrowH);
-    //     height = (right.dy - left.dy).abs();
-    //     width = (right.dx - left.dx).abs();
-
-    //     newPosition = left;
-    //     heightOffset = (bracketsY - newPosition.dy).abs() /
-    //         (height + (bracketsY - newPosition.dy).abs());
-    //     height = height + (bracketsY - newPosition.dy).abs();
-    //     newPosition = Offset(newPosition.dx, bracketsY);
-    //   }
-
-    //   // right += Offset(0, left.dy - right.dy);
-    //   // if (number.number > 0) {
-    //   //   left += Offset(0, constants.arrowH + 1.5 * constants.floorH);
-    //   // } else
-    //   //   left += Offset(0, -1.5 * constants.floorH - constants.arrowH * 2 / 4);
-
-    //   var key = UniqueKey();
-    //   var bracket = BracketCubit(BracketState(
-    //       heightOffset: heightOffset,
-    //       id: key,
-    //       position: AnimatedProp.zero(
-    //           value:
-    //               newPosition), //+ Offset(0, -left.dy - constants.arrowH * 5)),
-    //       size: AnimatedProp.zero(value: Offset(width, height)),
-    //       direction: number.number > 0 ? Direction.up : Direction.down,
-    //       opacity: AnimatedProp.zero(value: 1.0),
-    //       radius: constants.radius));
-    //   state.unorderedItems[key] = bracket;
-    // }
     state.numbers.addAll(numbers);
     generateFillings();
   }
@@ -70,15 +13,16 @@ extension Initializer on StepsGameBloc {
   EquatorCubit _generateEquator(double currentTop) {
     int wUnits = 66;
     var id = UniqueKey();
-    return EquatorCubit(EquatorState(
-      id: id,
-      position:
-          AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
-      size: AnimatedProp.zero(
-          value: Offset(constants.arrowW * wUnits * 3, constants.floorH)),
-      opacity: AnimatedProp.zero(value: 1),
-      // radius: constants.radius,
-    ));
+    return EquatorCubit(
+      EquatorState(
+        id: id,
+        position:
+            AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
+        size: AnimatedProp.zero(
+            value: Offset(constants.arrowW * wUnits * 3, constants.floorH)),
+        opacity: AnimatedProp.zero(value: 1),
+      ),
+    );
   }
 
   List<StepsGameNumberState> _generateNumbers(
@@ -86,7 +30,6 @@ extension Initializer on StepsGameBloc {
     init.removeWhere((element) => element == 0);
     List<StepsGameNumberState> result = [];
     for (int j = 0; j < init.length; j++) {
-      var firstLeft = currentLeft;
       int number = init[j];
       int stepsCount = number.abs();
       final List<StepsGameDefaultItem> steps = [];
@@ -111,7 +54,6 @@ extension Initializer on StepsGameBloc {
         currentLeft += isLastInNumber && !isLastInGame
             ? constants.floorWLarge - constants.arrowW / 4
             : constants.floorWDef - constants.arrowW / 4;
-        var endLeft = currentLeft;
       }
       result.add(StepsGameNumberState(steps: steps));
     }
@@ -144,13 +86,3 @@ void _updateLastness(
     floor.setLastInNumber();
   }
 }
-
-// bool isNextNumberSameSign(int j, List<int> init, int number) {
-//   if (j + 1 < init.length) {
-//     int nextNumber = init[j + 1];
-//     if (nextNumber * number > 0) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }

@@ -10,16 +10,6 @@ class StepsGameDefaultItem {
 class StepsGameNumberState {
   List<StepsGameDefaultItem> steps;
   FillingCubit? filling;
-  //get top width
-
-  //
-
-  //FillingCubit TODO add FIllingCubit here
-  //we add FillingCubit that's "technically" placed after the floor
-  //actually all we need from the following StepsGameDefItem is that,
-  //the next NumberState has opposite number
-  //fade right, fade left, for now add it with fade out and fade in
-  //i tylko potrzebuję liczbę oraz długość ostatniego floora xd zeby to namalować w sumie xd
 
   StepsGameNumberState({required this.steps, this.filling});
 

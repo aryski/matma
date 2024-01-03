@@ -18,7 +18,6 @@ class RoundedSquare extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
-      clipBehavior: Clip.hardEdge,
       child: Container(
           width: sideWidth, height: sideWidth, color: color, child: child),
     );

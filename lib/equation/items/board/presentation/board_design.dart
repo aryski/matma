@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class BoardDesign extends StatelessWidget {
   const BoardDesign({
     super.key,

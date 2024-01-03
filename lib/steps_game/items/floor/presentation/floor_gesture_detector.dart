@@ -11,16 +11,24 @@ class FloorGestureDetector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (event) {
-        hoverKepper = id;
-        context.read<FloorCubit>().hoverStart();
-      },
-      onExit: (event) {
-        hoverKepper = null;
-        context.read<FloorCubit>().hoverEnd();
-      },
-      child: child,
+    var bloc = context.read<StepsGameBloc>();
+    var id = context.read<FloorCubit>().state.id;
+    return Listener(
+      onPointerDown: (event) => bloc.add(StepsTrigEventClickFloor(id: id)),
+      onPointerUp: (event) => bloc.add(StepsTrigEventClickFloor(id: id)),
+      behavior: HitTestBehavior.deferToChild,
+      child: MouseRegion(
+        // hitTestBehavior: HitTestBehavior.deferToChild,
+        onEnter: (event) {
+          hoverKepper = id;
+          context.read<FloorCubit>().hoverStart();
+        },
+        onExit: (event) {
+          hoverKepper = null;
+          context.read<FloorCubit>().hoverEnd();
+        },
+        child: child,
+      ),
     );
   }
 }

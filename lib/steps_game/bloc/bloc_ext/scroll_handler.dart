@@ -13,14 +13,14 @@ extension ScrollHandler on StepsGameBloc {
         }
       } else if (item.state.isLastInNumber) {
         if (areNeighboringArrowsOpposite(item, state) && delta < 0) {
+          print("ELo");
           if (item.state.size.value.dx <= constants.floorWLarge) {
             if (allowedOps.contains(StepsGameOps.reduceArrows)) {
               await handleReduction(item, delta, state, emit);
             }
           } else {
-            if (true) {
-              handleReductionWithoutReduction(item, delta, state, emit);
-            }
+            print("ELo2");
+            handleReductionWithoutReduction(item, delta, state, emit);
           }
         } else {
           print("JOIN");
@@ -38,15 +38,6 @@ extension ScrollHandler on StepsGameBloc {
   List<int> currentNumbers() {
     return state.numbers.map((e) => e.number).toList();
   }
-}
-
-double guardDeltaSize(
-    {required double currentW, required double delta, required double minW}) {
-  if (currentW + delta < minW) {
-    delta = minW -
-        currentW * 1.0000000000001; //TODO better floating point solution.
-  }
-  return delta;
 }
 
 bool areNeighboringArrowsOpposite(GameItemCubit? item, StepsGameState state) {

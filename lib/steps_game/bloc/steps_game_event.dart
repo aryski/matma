@@ -9,22 +9,27 @@ class StepsTrigEventScroll extends StepsTrigEvent {
   StepsTrigEventScroll(this.id, this.dy);
 }
 
-abstract class StepsTrigEventClick extends StepsTrigEvent {
+abstract class StepsTrigEventClickArrow extends StepsTrigEvent {
   final UniqueKey id;
   final DateTime time;
 
-  StepsTrigEventClick({required this.id, required this.time});
+  StepsTrigEventClickArrow({required this.id, required this.time});
 }
 
-class StepsTrigEventClickUp extends StepsTrigEventClick {
-  StepsTrigEventClickUp({required super.id, required super.time});
+class StepsTrigEventClickUpArrow extends StepsTrigEventClickArrow {
+  StepsTrigEventClickUpArrow({required super.id, required super.time});
 }
 
-class StepsTrigEventClickDown extends StepsTrigEventClick {
-  StepsTrigEventClickDown({required super.id, required super.time});
+class StepsTrigEventClickDownArrow extends StepsTrigEventClickArrow {
+  StepsTrigEventClickDownArrow({required super.id, required super.time});
 }
 
 class StepsTrigEventPopFilling extends StepsTrigEvent {
   final UniqueKey id;
   StepsTrigEventPopFilling({required this.id});
+}
+
+class StepsTrigEventClickFloor extends StepsTrigEvent {
+  final UniqueKey id;
+  StepsTrigEventClickFloor({required this.id});
 }

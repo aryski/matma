@@ -3,8 +3,15 @@ part of 'package:matma/equation/bloc/equation_bloc.dart';
 extension Reducer on EquationBloc {
   void reduce(NumberItem leftItem, NumberItem rightItem) {
     if (leftItem.value.state.value != 1 && rightItem.value.state.value != 1) {
-      generateShadowNumbers(leftItem, -1);
-      generateShadowNumbers(rightItem, -1);
+      bool leftIsMinus = leftItem.sign != null &&
+          leftItem.sign!.state.value == Signs.substraction;
+      if (leftIsMinus) {
+        generateShadowNumber(leftItem, constants.addMsg);
+        generateShadowNumber(rightItem, constants.subMsg);
+      } else {
+        generateShadowNumber(leftItem, constants.subMsg);
+        generateShadowNumber(rightItem, constants.addMsg);
+      }
     }
     _decreaseValue(leftItem);
     _decreaseValue(rightItem);

@@ -17,25 +17,27 @@ class ArrowPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    path = Path();
-    var equilateralHeight = 3 * sqrt(3) / 6 * width;
-    final tHeight = height < equilateralHeight ? height : equilateralHeight;
-    var progress = animationProgress;
+    if (height != 0 && radius != 0 && width != 0) {
+      path = Path();
+      var equilateralHeight = 3 * sqrt(3) / 6 * width;
+      final tHeight = height < equilateralHeight ? height : equilateralHeight;
+      var progress = animationProgress;
 
-    path.addPath(
-        generateTriangle(width, tHeight, radius, progress), Offset.zero);
+      path.addPath(
+          generateTriangle(width, tHeight, radius, progress), Offset.zero);
 
-    path.addRRect(RRect.fromRectAndCorners(
-        Rect.fromLTWH(
-            0.25 * width, tHeight, width * 0.5, height - tHeight + radius),
-        bottomLeft: Radius.circular(radius),
-        bottomRight: Radius.circular(radius)));
-    path = path.shift(Offset(0, -radius));
-    if (direction == Direction.down) {
-      path = path.transform((Matrix4.identity()..rotateX(pi)).storage);
-      path = path.shift(Offset(0, height));
+      path.addRRect(RRect.fromRectAndCorners(
+          Rect.fromLTWH(
+              0.25 * width, tHeight, width * 0.5, height - tHeight + radius),
+          bottomLeft: Radius.circular(radius),
+          bottomRight: Radius.circular(radius)));
+      path = path.shift(Offset(0, -radius));
+      if (direction == Direction.down) {
+        path = path.transform((Matrix4.identity()..rotateX(pi)).storage);
+        path = path.shift(Offset(0, height));
+      }
+      canvas.drawPath(path, Paint()..color = color);
     }
-    canvas.drawPath(path, Paint()..color = color);
   }
 
   @override

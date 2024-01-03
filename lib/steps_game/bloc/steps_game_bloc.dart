@@ -7,6 +7,7 @@ import 'package:matma/equation/bloc/equation_bloc.dart';
 import 'package:matma/levels/level/cubit/level_cubit.dart';
 import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 import 'package:matma/quest/bloc/quests_bloc.dart';
+import 'package:matma/steps_game/bloc/bloc_ext/common/delta_size_guardian.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/cubit/arrow_state.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
@@ -18,15 +19,15 @@ import 'package:matma/steps_game/bloc/constants.dart' as constants;
 
 part 'steps_game_event.dart';
 part 'steps_game_state.dart';
-part 'bloc_ext/arrow_insertor.dart';
+part 'bloc_ext/common/arrow_insertor.dart';
 part 'bloc_ext/arrows_reductor.dart';
 part 'bloc_ext/click_handler.dart';
-part 'bloc_ext/filling_updater.dart';
-part 'bloc_ext/items_generator.dart';
+part 'bloc_ext/common/filling_updater.dart';
+part 'bloc_ext/common/items_generator.dart';
 part 'bloc_ext/list_initializer.dart';
-part 'bloc_ext/number_joiner.dart';
-part 'bloc_ext/number_splitter.dart';
-part 'bloc_ext/opposite_arrow_insertor.dart';
+part 'bloc_ext/common/number_joiner.dart';
+part 'bloc_ext/common/number_splitter.dart';
+part 'bloc_ext/common/opposite_arrow_insertor.dart';
 part 'bloc_ext/scroll_handler.dart';
 
 UniqueKey? hoverKepper;
@@ -36,7 +37,7 @@ class StepsGameBloc extends Bloc<StepsTrigEvent, StepsGameState> {
   final EquationBloc board;
   final List<UniqueKey> lockedIds = [];
   final QuestsBloc questsBloc;
-  DateTime downClick = DateTime.timestamp();
+  DateTime downClick = DateTime.timestamp(); //TODO bad architecture
   @override
   StepsGameBloc(this.board, this.questsBloc, this.allowedOps)
       : super(StepsGameState(numbers: [], unorderedItems: {})) {
@@ -46,7 +47,7 @@ class StepsGameBloc extends Bloc<StepsTrigEvent, StepsGameState> {
       await handleScroll(state, event, emit);
     }, transformer: eventScrollTransformer);
 
-    on<StepsTrigEventClick>((event, emit) async {
+    on<StepsTrigEventClickArrow>((event, emit) async {
       await handleClick(event, emit);
     }, transformer: sequential());
 
@@ -59,6 +60,16 @@ class StepsGameBloc extends Bloc<StepsTrigEvent, StepsGameState> {
             var floor = number.steps.last.floor;
             await handleReduction(
                 floor, -floor.state.size.value.dx, state, emit);
+          }
+        }
+      }
+    }, transformer: sequential());
+    on<StepsTrigEventClickFloor>((event, emit) async {
+      if (allowedOps.contains(StepsGameOps.addOppositeArrow)) {
+        var item = state.getItem(event.id);
+        if (item is FloorCubit) {
+          if (item.state.isLastInGame) {
+            await handleOppositeInsertion(state, item, emit);
           }
         }
       }
