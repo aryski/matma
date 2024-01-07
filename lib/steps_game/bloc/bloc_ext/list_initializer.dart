@@ -11,16 +11,14 @@ extension Initializer on StepsGameBloc {
   }
 
   EquatorCubit _generateEquator(double currentTop) {
-    int wUnits = 66;
-    var id = UniqueKey();
     return EquatorCubit(
       EquatorState(
-        id: id,
+        id: UniqueKey(),
         position:
             AnimatedProp.zero(value: Offset(0, currentTop + constants.arrowH)),
         size: AnimatedProp.zero(
-            value: Offset(constants.arrowW * wUnits * 3, constants.floorH)),
-        opacity: AnimatedProp.zero(value: 1),
+            value: const Offset(constants.equatorWidth, constants.floorH)),
+        opacity: AnimatedProp.zero(value: 1.0),
       ),
     );
   }
@@ -52,24 +50,24 @@ extension Initializer on StepsGameBloc {
 
         currentTop += isPositive ? -constants.arrowH : constants.arrowH;
         currentLeft += isLastInNumber && !isLastInGame
-            ? constants.floorWLarge - constants.arrowW / 4
-            : constants.floorWDef - constants.arrowW / 4;
+            ? constants.floorWLarge - constants.arrowEndToCore
+            : constants.floorWDef - constants.arrowEndToCore;
       }
       result.add(StepsGameNumberState(steps: steps));
     }
     return result;
   }
 
-  StepsGameStep generateStep(Offset pos, bool isPos, double floorWidth) {
+  StepsGameStep generateStep(Offset pos, bool isPositive, double floorWidth) {
     ArrowCubit arrow = generateArrow(
-        position:
-            pos + Offset(0, isPos ? 0 : (constants.arrowH + constants.floorH)),
-        direction: isPos ? Direction.up : Direction.down);
+        position: pos +
+            Offset(0, isPositive ? 0 : (constants.arrowH + constants.floorH)),
+        direction: isPositive ? Direction.up : Direction.down);
     FloorCubit floor = generateFloor(
-      direction: isPos ? Direction.up : Direction.down,
+      direction: isPositive ? Direction.up : Direction.down,
       widthSize: floorWidth,
       position: pos +=
-          Offset(constants.arrowW / 2, isPos ? 0 : 2 * constants.arrowH),
+          Offset(constants.arrowW / 2, isPositive ? 0 : 2 * constants.arrowH),
     );
     return StepsGameStep(arrow: arrow, floor: floor);
   }

@@ -33,7 +33,7 @@ class NextPrompt extends Prompt {
 
   NextPrompt({required this.text, this.seconds = 0});
 
-  Duration get milliseconds => Duration(milliseconds: (seconds * 1000).toInt());
+  Duration get millis => Duration(milliseconds: (seconds * 1000).toInt());
 }
 
 class EndPrompt extends Prompt {}

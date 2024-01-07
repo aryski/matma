@@ -17,7 +17,7 @@ import 'package:matma/steps_game/items/floor/%20cubit/floor_state.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:matma/steps_game/bloc/constants.dart' as constants;
 
-part 'bloc_ext/floor_resizer.dart';
+part 'bloc_ext/common/floor_resizer.dart';
 part 'steps_game_event.dart';
 part 'steps_game_state.dart';
 part 'state_ext/min_max_level.dart';
@@ -25,14 +25,15 @@ part 'state_ext/steps_ops.dart';
 part 'state_ext/items_ops.dart';
 part 'bloc_ext/common/items_updater.dart';
 part 'bloc_ext/common/arrow_insertor.dart';
-part 'bloc_ext/reduction_handler.dart';
-part 'bloc_ext/click_handler.dart';
+part 'bloc_ext/scroll_ops_handlers/reduction_handler.dart';
+part 'bloc_ext/click_arrow_handler.dart';
+part 'bloc_ext/click_filling_handler.dart';
+part 'bloc_ext/click_floor_handler.dart';
 part 'bloc_ext/common/filling_updater.dart';
 part 'bloc_ext/common/items_generator.dart';
 part 'bloc_ext/list_initializer.dart';
-part 'bloc_ext/common/join_handler.dart';
-part 'bloc_ext/common/split_handler.dart';
-part 'bloc_ext/common/opposite_arrow_insertor.dart';
+part 'bloc_ext/scroll_ops_handlers/join_handler.dart';
+part 'bloc_ext/scroll_ops_handlers/split_handler.dart';
 part 'bloc_ext/scroll_floor_handler.dart';
 
 UniqueKey? hoverKepper;
@@ -51,41 +52,16 @@ class StepsGameBloc extends Bloc<StepsTrigEvent, StepsGameState> {
     }, transformer: eventScrollTransformer);
 
     on<StepsTrigEventClickArrow>((event, emit) async {
-      await handleClickArrow(event, emit);
+      await handleClickArrow(event, emit, 200);
     }, transformer: sequential());
 
     on<StepsTrigEventClickFilling>((event, emit) async {
       await handleClickFilling(event, emit);
     }, transformer: sequential());
+
     on<StepsTrigEventClickFloor>((event, emit) async {
       await handleClickFloor(event, emit);
     }, transformer: sequential());
-  }
-
-  Future<void> handleClickFloor(
-      StepsTrigEventClickFloor event, Emitter<StepsGameState> emit) async {
-    if (allowedOps.contains(StepsGameOps.addOppositeArrow)) {
-      var item = state.getItem(event.id);
-      if (item is FloorCubit) {
-        if (state.isLastItem(item)) {
-          await handleOppositeInsertion(state, item, emit);
-        }
-      }
-    }
-  }
-
-  Future<void> handleClickFilling(
-      StepsTrigEventClickFilling event, Emitter<StepsGameState> emit) async {
-    if (allowedOps.contains(StepsGameOps.reducingArrowsCascadedly)) {
-      var item = state.getItem(event.id);
-      if (item is FillingCubit) {
-        var number = state.getNumberFromItem(item);
-        if (number != null && number.steps.isNotEmpty) {
-          var floor = number.steps.last.floor;
-          await handleReduction(floor, -floor.state.size.value.dx, state, emit);
-        }
-      }
-    }
   }
 
   Stream<StepsTrigEventScrollFloor> eventScrollTransformer(

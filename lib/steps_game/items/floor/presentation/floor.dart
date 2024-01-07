@@ -67,7 +67,7 @@ class Floor extends StatelessWidget {
               return FloorGestureDetector(
                   id: state.id,
                   child: DefaultColorAnimationBuilder(
-                    duration: Duration(milliseconds: state.colors.duration),
+                    duration: Duration(milliseconds: state.colors.millis),
                     initial: initColor,
                     updated: updatedColor,
                     builder: (context, color, child) {

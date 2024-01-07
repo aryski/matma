@@ -6,29 +6,29 @@ part 'filling_state.dart';
 class FillingCubit extends GameItemCubit<FillingState> {
   FillingCubit(super.initialState);
 
-  void animateFoldLeft({required int duration}) {
+  void animateFoldLeft({required int millis}) {
     emit(state.copyWith(
-        fold: AnimatedProp(value: FillingFold.left, duration: duration)));
+        fold: AnimatedProp(value: FillingFold.left, millis: millis)));
   }
 
-  void animateFoldFull({required int duration}) {
+  void animateFoldFull({required int millis}) {
     emit(state.copyWith(
-        fold: AnimatedProp(value: FillingFold.full, duration: duration)));
+        fold: AnimatedProp(value: FillingFold.full, millis: millis)));
   }
 
-  void animateFoldRight({required int duration}) {
+  void animateFoldRight({required int millis}) {
     emit(state.copyWith(
-        fold: AnimatedProp(value: FillingFold.right, duration: duration)));
+        fold: AnimatedProp(value: FillingFold.right, millis: millis)));
   }
 
-  void animateFoldNone({required int duration}) {
+  void animateFoldNone({required int millis}) {
     emit(state.copyWith(
-        fold: AnimatedProp(value: FillingFold.none, duration: duration)));
+        fold: AnimatedProp(value: FillingFold.none, millis: millis)));
   }
 
-  void resizeWidth({required double delta, required int duration}) {
+  void resizeWidth({required double delta, required int millis}) {
     emit(state.copyWith(
         size: AnimatedProp<Offset>(
-            value: state.size.value + Offset(delta, 0), duration: duration)));
+            value: state.size.value + Offset(delta, 0), millis: millis)));
   }
 }

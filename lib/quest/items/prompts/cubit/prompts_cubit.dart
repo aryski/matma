@@ -17,9 +17,8 @@ class PromptsCubit extends Cubit<PromptsState> {
     for (int i = 0; i < state.lines.length; i++) {
       var newOpacity = (howManyLines - i - 1) / howManyLines;
       if (newOpacity < 0) newOpacity = 0;
-      state.lines[i].setOpacity(newOpacity, milliseconds: 100);
-      state.lines[i]
-          .updatePosition(const Offset(0, lineHgt), milliseconds: 200);
+      state.lines[i].setOpacity(newOpacity, millis: 100);
+      state.lines[i].updatePosition(const Offset(0, lineHgt), millis: 200);
     }
     var newLine = LineCubit(LineState(
       text: text,
@@ -28,7 +27,7 @@ class PromptsCubit extends Cubit<PromptsState> {
       size: AnimatedProp.zero(value: const Offset(lineWdt, lineHgt)),
       opacity: AnimatedProp.zero(value: 0.0),
     ));
-    newLine.setOpacity(1.0, delayInMillis: 40, milliseconds: 400);
+    newLine.setOpacity(1.0, delayInMillis: 40, millis: 400);
     emit(state.copyWith(lines: [newLine, ...state.lines]));
   }
 }

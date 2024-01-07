@@ -16,9 +16,8 @@ class ValueCubit extends GameItemCubit<ValueState> {
     emit(state.copyWith(value: value, switcherKey: UniqueKey()));
   }
 
-  void updateSize(Offset offset, int milliseconds) {
-    var size =
-        AnimatedProp(duration: milliseconds, value: state.size.value + offset);
+  void updateSize(Offset offset, int millis) {
+    var size = AnimatedProp(millis: millis, value: state.size.value + offset);
     emit(state.copyWith(size: size));
   }
 

@@ -30,14 +30,14 @@ class DefaultGameItemAnimations extends StatelessWidget {
         initialPosition: initialState.position.value,
         updatedPosition: state.position.value,
         bottomPositioning: bottomPositioning,
-        duration: Duration(milliseconds: state.position.duration),
+        duration: Duration(milliseconds: state.position.millis),
         child: AnimatedOpacity(
           opacity: state.opacity.value,
-          duration: Duration(milliseconds: state.opacity.duration),
+          duration: Duration(milliseconds: state.opacity.millis),
           child: TweenAnimatedSize(
               initialSize: initialState.size.value,
               updatedSize: state.size.value,
-              duration: Duration(milliseconds: state.size.duration),
+              duration: Duration(milliseconds: state.size.millis),
               child: child),
         ),
       );

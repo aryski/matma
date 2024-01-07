@@ -1,7 +1,7 @@
 part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Insertor on EquationBloc {
-  void insertNumberAfterItem(int value, NumberItem item, int milliseconds) {
+  void insertNumberAfterItem(int value, NumberItem item, int millis) {
     for (int i = 0; i < state.items.length; i++) {
       if (state.items[i] == item) {
         var item = state.items[i];
@@ -18,14 +18,12 @@ extension Insertor on EquationBloc {
         var myItem = NumberItem(sign: signCubit, value: numberCubit);
         state.items.insert(i + 1, myItem);
         numberCubit.updatePosition(Offset(item.width, 0),
-            delayInMillis: constants.smallDelayInMillis,
-            milliseconds: milliseconds);
+            delayInMillis: constants.smallDelayInMillis, millis: millis);
         signCubit.updatePosition(Offset(item.width, 0),
-            delayInMillis: constants.smallDelayInMillis,
-            milliseconds: milliseconds);
+            delayInMillis: constants.smallDelayInMillis, millis: millis);
         numberCubit.refreshSwitcherKey();
         signCubit.refreshSwitcherKey();
-        spread(myItem, myItem.width, milliseconds);
+        spread(myItem, myItem.width, millis);
         break;
       }
     }

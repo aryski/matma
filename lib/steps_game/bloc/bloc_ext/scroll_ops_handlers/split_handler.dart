@@ -2,26 +2,26 @@ part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension SplitHandler on StepsGameBloc {
   void handleSplit(FloorCubit item, double delta, StepsGameState state,
-      Emitter<StepsGameState> emit, int milliseconds) {
+      Emitter<StepsGameState> emit, int millis) {
     if (allowedOps.contains(StepsGameOps.splitJoinArrows)) {
       if (delta != 0) questsBloc.add(TrigEventScrolled());
-      item.updateSize(Offset(delta, 0), milliseconds: 200);
+      item.updateSize(Offset(delta, 0), millis: 200);
       var newW = item.state.size.value.dx;
       int? numberInd = state.getNumberIndexFromItem(item);
       if (numberInd != null && state.numbers[numberInd].steps.isNotEmpty) {
         if (newW > constants.floorWDef) {
-          handleSplitCore(state, item, numberInd, delta, milliseconds);
+          handleSplitCore(state, item, numberInd, delta, millis);
         }
         updatePositionSince(
-            item: item, offset: Offset(delta, 0), milliseconds: milliseconds);
-        generateFillings(milliseconds);
+            item: item, offset: Offset(delta, 0), millis: millis);
+        generateFillings(millis);
         emit(state.copy());
       }
     }
   }
 
   void handleSplitCore(StepsGameState state, FloorCubit item, int numberInd,
-      double delta, int milliseconds) {
+      double delta, int millis) {
     var myStep = state.getStep(item);
     if (myStep != null && state.numbers[numberInd].steps.last != myStep) {
       _splitNumber(
@@ -34,7 +34,7 @@ extension SplitHandler on StepsGameBloc {
       questsBloc.add(TrigEventSplited());
       var ind = state.getNumberIndexFromItem(item);
       if (ind != null) {
-        animateNeigboringFillings(ind, false, milliseconds);
+        animateNeigboringFillings(ind, false, millis);
       }
     }
     if (delta != 0) {
@@ -42,8 +42,8 @@ extension SplitHandler on StepsGameBloc {
     }
     var id = state.getNumberIndexFromItem(item);
     if (id != null && state.numbers[id].steps.last.floor != item) {
-      state.numbers[id].filling?.updatePosition(Offset(delta, 0),
-          delayInMillis: 20, milliseconds: milliseconds);
+      state.numbers[id].filling
+          ?.updatePosition(Offset(delta, 0), delayInMillis: 20, millis: millis);
     }
   }
 }

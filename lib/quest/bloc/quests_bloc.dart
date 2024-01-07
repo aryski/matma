@@ -32,7 +32,7 @@ class QuestsBloc extends Bloc<QuestsEvent, QuestsState> {
       if (cubit.isClosed) break;
       if (prompt is NextPrompt) {
         cubit.addLine(prompt.text);
-        await Future.delayed(prompt.milliseconds);
+        await Future.delayed(prompt.millis);
       } else if (prompt is EndPrompt) {
         parent.nextGame();
       }

@@ -1,16 +1,16 @@
 part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
-extension ClickHandler on StepsGameBloc {
-  Future<void> handleClickArrow(
-      StepsTrigEventClickArrow event, Emitter<StepsGameState> emit) async {
-    if (event is StepsTrigEventClickUpArrow && isInsertionSafe(event)) {
-      await handleArrowInsertion(event, emit, board, questsBloc);
+extension ClickArrowHandler on StepsGameBloc {
+  Future<void> handleClickArrow(StepsTrigEventClickArrow event,
+      Emitter<StepsGameState> emit, int millis) async {
+    if (event is StepsTrigEventClickUpArrow && _isInsertionSafe(event)) {
+      await handleArrowInsertion(event, emit, board, questsBloc, millis);
     } else {
-      await handleClickAnimation(state, event, emit, 200);
+      await _handleClickArrowAnimation(state, event, emit, millis);
     }
   }
 
-  bool isInsertionSafe(StepsTrigEventClickUpArrow event) {
+  bool _isInsertionSafe(StepsTrigEventClickUpArrow event) {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
       int? levelSince;
@@ -24,19 +24,16 @@ extension ClickHandler on StepsGameBloc {
           levelSince = state.minimumLevelSince(number);
         }
       }
-
-      if (levelSince != null && levelSince.abs() < 7) {
-        return true;
-      }
+      return levelSince != null && levelSince.abs() < constants.maxSteps;
     }
     return false;
   }
 
-  Future<void> handleClickAnimation(
+  Future<void> _handleClickArrowAnimation(
     StepsGameState state,
     dynamic event,
     Emitter<StepsGameState> emit,
-    int milliseconds,
+    int millis,
   ) async {
     if (event is StepsTrigEventClickDownArrow ||
         event is StepsTrigEventClickUpArrow) {
@@ -45,12 +42,12 @@ extension ClickHandler on StepsGameBloc {
         var delta = constants.arrowH - constants.arrowClickedHgt;
         if (event is StepsTrigEventClickDownArrow) {
           delta = -delta;
-          onArrowClickDown(item, delta, milliseconds);
+          onArrowClickDown(item, delta, millis);
         } else {
-          onArrowClickUp(item, delta, milliseconds);
+          onArrowClickUp(item, delta, millis);
         }
-        updateStepHgt(item: item, delta: delta, milliseconds: milliseconds);
-        await Future.delayed(Duration(milliseconds: milliseconds));
+        updateStepHgt(item: item, delta: delta, millis: millis);
+        await Future.delayed(Duration(milliseconds: millis));
       }
     }
   }

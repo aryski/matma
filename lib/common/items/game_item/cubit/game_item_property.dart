@@ -1,8 +1,8 @@
 class AnimatedProp<T> {
   final T value;
-  final int duration;
+  final int millis;
 
-  AnimatedProp({required this.value, required this.duration});
+  AnimatedProp({required this.value, required this.millis});
 
-  AnimatedProp.zero({required this.value, this.duration = 0});
+  AnimatedProp.zero({required this.value, this.millis = 0});
 }

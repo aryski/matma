@@ -6,7 +6,7 @@ class BracketCubit extends GameItemCubit<BracketState> {
   BracketCubit(super.initialState);
 
   Future<void> updateSize(Offset delta,
-      {int delayInMillis = 0, int milliseconds = 200}) async {
+      {int delayInMillis = 0, int millis = 200}) async {
     if (delayInMillis > 0) {
       await Future.delayed(Duration(milliseconds: delayInMillis));
     }
@@ -14,7 +14,7 @@ class BracketCubit extends GameItemCubit<BracketState> {
     emit(state.copyWith(
         size: AnimatedProp(
             value: state.size.value + Offset(delta.dx, delta.dy),
-            duration: milliseconds)));
+            millis: millis)));
   }
 
   void setLastInNumber() {

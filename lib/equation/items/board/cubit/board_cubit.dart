@@ -7,14 +7,11 @@ class BoardCubit extends GameItemCubit<BoardState> {
   BoardCubit(super.initialState);
 
   void updateSize(
-      {required Offset offset,
-      int milliseconds = 200,
-      int delayInMillis = 0}) async {
+      {required Offset offset, int millis = 200, int delayInMillis = 0}) async {
     if (delayInMillis > 0) {
       await Future.delayed(Duration(milliseconds: delayInMillis));
     }
     emit(state.copyWith(
-        size: AnimatedProp(
-            duration: milliseconds, value: state.size.value + offset)));
+        size: AnimatedProp(millis: millis, value: state.size.value + offset)));
   }
 }

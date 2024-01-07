@@ -30,7 +30,7 @@ class FloorState extends GameItemState {
       double? animProgress,
       bool? isLastInNumber,
       AnimatedProp<FloorColors>? colors,
-      int? duration}) {
+      int? millis}) {
     return FloorState(
       id: id ?? this.id,
       isHovered: isHovered ?? this.isHovered,

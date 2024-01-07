@@ -1,70 +1,68 @@
 part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 extension FillingUpdater on StepsGameBloc {
-  void animateNeigboringFillings(int ind, bool animateIn, int milliseconds) {
+  void animateNeigboringFillings(int ind, bool animateIn, int millis) {
     var number = state.numbers[ind];
     var filling = number.filling;
     StepsGameNumberState? previousFilling =
         ind - 1 >= 0 ? state.numbers[ind - 1] : null;
     if (animateIn) {
-      filling?.animateFoldNone(duration: milliseconds);
-      previousFilling?.filling?.animateFoldNone(duration: milliseconds);
+      filling?.animateFoldNone(millis: millis);
+      previousFilling?.filling?.animateFoldNone(millis: millis);
     } else {
-      filling?.animateFoldRight(duration: milliseconds);
-      previousFilling?.filling?.animateFoldLeft(duration: milliseconds);
+      filling?.animateFoldRight(millis: millis);
+      previousFilling?.filling?.animateFoldLeft(millis: millis);
     }
   }
 
-  void animateLeftFilling(
-      GameItemCubit item, bool animateIn, int milliseconds) {
+  void animateLeftFilling(GameItemCubit item, bool animateIn, int millis) {
     var ind = state.getNumberIndexFromItem(item);
     if (ind != null) {
       StepsGameNumberState? previousFilling =
           ind - 1 >= 0 ? state.numbers[ind - 1] : null;
       if (animateIn) {
-        previousFilling?.filling?.animateFoldNone(duration: milliseconds);
+        previousFilling?.filling?.animateFoldNone(millis: millis);
       } else {
-        previousFilling?.filling?.animateFoldLeft(duration: milliseconds);
+        previousFilling?.filling?.animateFoldLeft(millis: millis);
       }
     }
   }
 
-  void animateRightFilling(
-      GameItemCubit item, bool animateIn, int milliseconds) {
+  void animateRightFilling(GameItemCubit item, bool animateIn, int millis) {
     var ind = state.getNumberIndexFromItem(item);
     if (ind != null) {
       StepsGameNumberState? nextFilling =
           ind + 1 < state.numbers.length ? state.numbers[ind + 1] : null;
       if (animateIn) {
-        nextFilling?.filling?.animateFoldNone(duration: milliseconds);
+        nextFilling?.filling?.animateFoldNone(millis: millis);
       } else {
-        nextFilling?.filling?.animateFoldRight(duration: milliseconds);
+        nextFilling?.filling?.animateFoldRight(millis: millis);
       }
     }
   }
 
-  void onArrowClickDown(GameItemCubit item, double delta, int milliseconds) {
+  void onArrowClickDown(GameItemCubit item, double delta, int millis) {
     var ind = state.getNumberIndexFromItem(item);
     if (ind != null) {
-      animateNeigboringFillings(ind, false, milliseconds);
+      animateNeigboringFillings(ind, false, millis);
     }
   }
 
-  void onArrowClickUp(GameItemCubit item, double delta, int milliseconds) {
+  void onArrowClickUp(GameItemCubit item, double delta, int millis) {
     var ind = state.getNumberIndexFromItem(item);
     if (ind != null) {
-      animateNeigboringFillings(ind, true, milliseconds);
+      animateNeigboringFillings(ind, true, millis);
     }
   }
 
-  void generateFillings(int milliseconds) {
+  void generateFillings(int millis) {
     for (int i = 0; i < state.numbers.length; i++) {
-      updateFilling(state, i, milliseconds);
+      updateFilling(state, i, millis);
     }
   }
 
 //checks in item's ind and next ind
-  void updateFilling(StepsGameState state, int numberInd, int milliseconds) {
+  void updateFilling(StepsGameState state, int numberInd, int millis) {
     int ind = numberInd;
     if (0 <= ind && ind + 1 < state.numbers.length) {
       if (state.numbers[ind].number == -state.numbers[ind + 1].number) {
@@ -73,23 +71,22 @@ extension FillingUpdater on StepsGameBloc {
           var n = state.numbers[ind].number;
           if (state.numbers[ind].filling == null) {
             FillingCubit filling = generateFilling(n, floorState);
-            filling.setOpacity(1.0,
-                delayInMillis: 200, milliseconds: milliseconds);
+            filling.setOpacity(1.0, delayInMillis: 200, millis: millis);
             state.numbers[ind].setFilling(filling);
           }
         }
       } else {
-        removeFilling(state, ind, milliseconds);
+        removeFilling(state, ind, millis);
       }
     }
   }
 }
 
-bool removeFilling(StepsGameState state, int ind, int milliseconds) {
+bool removeFilling(StepsGameState state, int ind, int millis) {
   var filling = state.numbers[ind].filling;
   if (filling != null) {
     state.unorderedItems.addAll({filling.state.id: filling});
-    filling.setOpacity(0, milliseconds: milliseconds);
+    filling.setOpacity(0, millis: millis);
     state.numbers[ind].filling = null;
     return true;
   }

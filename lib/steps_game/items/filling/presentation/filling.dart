@@ -27,13 +27,13 @@ class Filling extends StatelessWidget {
             child: LayoutBuilder(builder: (context, constrains) {
               // print("CONSTRAINS1:  ${constrains.maxWidth}");
               return DefaultTweenAnimationBuilder(
-                  duration: Duration(milliseconds: state.fold.duration),
+                  duration: Duration(milliseconds: state.fold.millis),
                   initial:
                       initialState.fold.value == FillingFold.none ? 0.0 : 1.0,
                   updated: state.fold.value == FillingFold.none ? 0.0 : 1.0,
                   builder: (context, animationProgress, child) {
                     return DefaultTweenAnimationBuilder(
-                        duration: Duration(milliseconds: state.fold.duration),
+                        duration: Duration(milliseconds: state.fold.millis),
                         initial: initialState.size.value.dx,
                         updated: state.size.value.dx,
                         builder: (context, dx, child) {

@@ -8,7 +8,7 @@ extension ShadowNumbersGenerator on EquationBloc {
               msg, item.value.state.position.value));
       state.extraItems.add(shadowCubit);
       shadowCubit.updatePosition(Offset(0, constants.numberRatio.dy / 2),
-          delayInMillis: 20, milliseconds: 1000);
+          delayInMillis: 20, millis: 1000);
     }
   }
 }
