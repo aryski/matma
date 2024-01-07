@@ -27,10 +27,16 @@ class FloorCubit extends GameItemCubit<FloorState> {
   }
 
   void setLastInGame() {
-    emit(state.copyWith(isLastInGame: true));
+    _setColors(FloorColors.special);
   }
 
   void setNotLastInGame() {
-    emit(state.copyWith(isLastInGame: false));
+    _setColors(FloorColors.def);
+  }
+
+  void _setColors(FloorColors color) {
+    emit(state.copyWith(
+        colors: AnimatedProp(
+            value: color, duration: color != state.colors.value ? 400 : 0)));
   }
 }

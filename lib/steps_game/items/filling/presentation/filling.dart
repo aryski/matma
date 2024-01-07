@@ -24,61 +24,67 @@ class Filling extends StatelessWidget {
           return DefaultGameItemAnimations(
             initialState: initialState,
             state: state,
-            child: DefaultTweenAnimationBuilder(
-                duration: const Duration(milliseconds: 200),
-                initial: initialState.animProgress,
-                updated: state.animProgress,
-                builder: (context, animationProgress, child) {
-                  return DefaultTweenAnimationBuilder(
-                      duration: const Duration(milliseconds: 200),
-                      initial: initialState.size.value.dx,
-                      updated: state.size.value.dx,
-                      builder: (context, dx, child) {
-                        return LayoutBuilder(builder: (context, constrains) {
-                          return FillingGestureDetector(
-                              id: state.id,
-                              child: DefaultColorAnimationBuilder(
-                                duration: const Duration(milliseconds: 50),
-                                initial: initialState.isHovered
-                                    ? darkenColor(
-                                        Theme.of(context)
-                                            .colorScheme
-                                            .secondaryContainer,
-                                        0.1)
-                                    : Theme.of(context)
-                                        .colorScheme
-                                        .secondaryContainer,
-                                updated: state.isHovered
-                                    ? darkenColor(
-                                        Theme.of(context)
-                                            .colorScheme
-                                            .secondaryContainer,
-                                        0.1)
-                                    : Theme.of(context)
-                                        .colorScheme
-                                        .secondaryContainer,
-                                builder: (context, color, child) {
-                                  return CustomPaint(
-                                    size: Size(constrains.maxWidth,
-                                        constrains.maxHeight),
-                                    painter: FillingPainter(
-                                      stepHgt: state.stepHgt,
-                                      animProgress: animationProgress,
-                                      steps: state.steps,
-                                      width: dx,
-                                      stepWdt: state.stepWdt,
-                                      radius: constants.radius,
-                                      color: color ??
+            child: LayoutBuilder(builder: (context, constrains) {
+              // print("CONSTRAINS1:  ${constrains.maxWidth}");
+              return DefaultTweenAnimationBuilder(
+                  duration: Duration(milliseconds: state.fold.duration),
+                  initial:
+                      initialState.fold.value == FillingFold.none ? 0.0 : 1.0,
+                  updated: state.fold.value == FillingFold.none ? 0.0 : 1.0,
+                  builder: (context, animationProgress, child) {
+                    return DefaultTweenAnimationBuilder(
+                        duration: Duration(milliseconds: state.fold.duration),
+                        initial: initialState.size.value.dx,
+                        updated: state.size.value.dx,
+                        builder: (context, dx, child) {
+                          return LayoutBuilder(builder: (context, constrains) {
+                            // print("CONSTRAINS2:  ${constrains.maxWidth}");
+                            return FillingGestureDetector(
+                                id: state.id,
+                                child: DefaultColorAnimationBuilder(
+                                  duration: const Duration(milliseconds: 50),
+                                  initial: initialState.isHovered
+                                      ? darkenColor(
                                           Theme.of(context)
                                               .colorScheme
                                               .secondaryContainer,
-                                    ),
-                                  );
-                                },
-                              ));
+                                          0.1)
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .secondaryContainer,
+                                  updated: state.isHovered
+                                      ? darkenColor(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .secondaryContainer,
+                                          0.1)
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .secondaryContainer,
+                                  builder: (context, color, child) {
+                                    return CustomPaint(
+                                      size: Size(constrains.maxWidth,
+                                          constrains.maxHeight),
+                                      painter: FillingPainter(
+                                        fold: state.fold.value,
+                                        stepHgt: state.stepHgt,
+                                        animProgress: animationProgress,
+                                        steps: state.steps,
+                                        width: constrains.maxWidth,
+                                        stepWdt: state.stepWdt,
+                                        radius: constants.radius,
+                                        color: color ??
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .secondaryContainer,
+                                      ),
+                                    );
+                                  },
+                                ));
+                          });
                         });
-                      });
-                }),
+                  });
+            }),
           );
         },
       ),

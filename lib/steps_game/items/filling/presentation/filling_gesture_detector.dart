@@ -14,7 +14,7 @@ class FillingGestureDetector extends StatelessWidget {
     var bloc = context.read<StepsGameBloc>();
     return Listener(
       onPointerDown: (event) {
-        bloc.add(StepsTrigEventPopFilling(id: id));
+        bloc.add(StepsTrigEventClickFilling(id: id));
       },
       behavior: HitTestBehavior.deferToChild,
       child: MouseRegion(

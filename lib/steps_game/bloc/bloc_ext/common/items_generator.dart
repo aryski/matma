@@ -33,6 +33,7 @@ extension ItemsGenerator on StepsGameBloc {
         size: size ??
             AnimatedProp.zero(value: Offset(widthSize, constants.floorH)),
         opacity: AnimatedProp.zero(value: 1.0),
+        colors: AnimatedProp(value: FloorColors.def, duration: 0),
       ),
     );
   }

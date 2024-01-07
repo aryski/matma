@@ -3,10 +3,10 @@ part of 'steps_game_bloc.dart';
 @immutable
 sealed class StepsTrigEvent {}
 
-class StepsTrigEventScroll extends StepsTrigEvent {
+class StepsTrigEventScrollFloor extends StepsTrigEvent {
   final UniqueKey id;
   final double dy;
-  StepsTrigEventScroll(this.id, this.dy);
+  StepsTrigEventScrollFloor(this.id, this.dy);
 }
 
 abstract class StepsTrigEventClickArrow extends StepsTrigEvent {
@@ -24,9 +24,9 @@ class StepsTrigEventClickDownArrow extends StepsTrigEventClickArrow {
   StepsTrigEventClickDownArrow({required super.id, required super.time});
 }
 
-class StepsTrigEventPopFilling extends StepsTrigEvent {
+class StepsTrigEventClickFilling extends StepsTrigEvent {
   final UniqueKey id;
-  StepsTrigEventPopFilling({required this.id});
+  StepsTrigEventClickFilling({required this.id});
 }
 
 class StepsTrigEventClickFloor extends StepsTrigEvent {

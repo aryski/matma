@@ -49,9 +49,9 @@ Level getLevel1() {
 var _taskA1 = MiniQuest(
   prompts: [
     NextPrompt(text: 'Hejka.', seconds: 1.5),
-    NextPrompt(text: 'Klikaj zielone strzałki.', seconds: 1.5),
-    NextPrompt(text: 'Zrób obrazek jak w tle.', seconds: 7),
-    NextPrompt(text: 'Trzy zielone obok siebie.')
+    NextPrompt(text: 'Klikaj na zielone strzałki.', seconds: 1.5),
+    NextPrompt(text: 'Zrób obrazek taki jak w tle.', seconds: 7),
+    NextPrompt(text: 'Mają być trzy zielone strzałki.')
   ],
   choices: [
     Choice(
@@ -68,8 +68,9 @@ var _taskA2 = MiniQuest(prompts: [
 
 var _taskB1 = MiniQuest(
   prompts: [
-    NextPrompt(text: 'Znowu zrób obrazek jak w tle.', seconds: 7),
-    NextPrompt(text: 'Trzy czerwone strzałki.')
+    NextPrompt(text: 'Znowu.', seconds: 1),
+    NextPrompt(text: 'Zrób obrazek taki jak w tle.', seconds: 7),
+    NextPrompt(text: 'Mają być trzy czerwone strzałki.')
   ],
   choices: [
     Choice(
@@ -86,8 +87,9 @@ var _taskB2 = MiniQuest(prompts: [
 
 var _taskC1 = MiniQuest(
   prompts: [
-    NextPrompt(text: 'Znowu dojdź do obrazka w tle.', seconds: 2),
-    NextPrompt(text: 'Scrolluj po złotych.')
+    NextPrompt(text: 'Znowu.', seconds: 1),
+    NextPrompt(text: 'Dojdź do obrazka w tle.', seconds: 2.5),
+    NextPrompt(text: 'Klikaj w złote łączenia.')
   ],
   choices: [
     Choice(
@@ -100,11 +102,3 @@ var _taskC2 = MiniQuest(prompts: [
   NextPrompt(text: 'Gites majonez.', seconds: 2),
   EndPrompt(),
 ], choices: []);
-
-var _taskD1 = MiniQuest(
-  prompts: [
-    NextPrompt(text: 'Znowu dojdź do obrazka w tle.', seconds: 2),
-    EndPrompt(),
-  ],
-  choices: [],
-);

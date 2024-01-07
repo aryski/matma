@@ -35,8 +35,6 @@ class DefaultGameItemAnimations extends StatelessWidget {
           opacity: state.opacity.value,
           duration: Duration(milliseconds: state.opacity.duration),
           child: TweenAnimatedSize(
-              maxWidth: constraints.maxWidth,
-              maxHeight: constraints.maxHeight,
               initialSize: initialState.size.value,
               updatedSize: state.size.value,
               duration: Duration(milliseconds: state.size.duration),

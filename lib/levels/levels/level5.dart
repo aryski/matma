@@ -101,7 +101,7 @@ var _taskC1 = MiniQuest(
   prompts: [
     NextPrompt(text: 'No i zwijamy wszystko', seconds: 1.5),
     NextPrompt(text: 'Szare mają być kolorowe', seconds: 1.5),
-    NextPrompt(text: 'Ma powstać 3-3.', seconds: 5),
+    NextPrompt(text: 'Ma powstać 3 - 3.', seconds: 5),
     NextPrompt(text: 'Scrolluj szare, w końcu się uda.'),
   ],
   choices: [

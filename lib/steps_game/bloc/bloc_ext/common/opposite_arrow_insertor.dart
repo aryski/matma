@@ -27,17 +27,20 @@ extension OppositeArrowInsertor on StepsGameBloc {
             Offset(item.state.size.value.dx - 1 / 4 * constants.arrowW, 0),
         size: AnimatedProp.zero(value: const Offset(0, constants.floorH)));
     state.numbers.add(StepsGameNumberState(
-        steps: [StepsGameDefaultItem(arrow: arrow, floor: floor)]));
+        steps: [StepsGameStep(arrow: arrow, floor: floor)]));
     questsBloc.add(TrigEventInsertedOpposite());
     item.setLastInNumber();
-    generateFillings();
+    generateFillings(200);
     emit(state.copy());
     await Future.delayed(const Duration(milliseconds: 20));
     if (dir == Direction.up) {
-      floor.updatePosition(const Offset(0, constants.arrowH));
+      floor.updatePosition(const Offset(0, constants.arrowH),
+          milliseconds: 200);
     } else {
-      arrow.updatePosition(const Offset(0, -constants.arrowH));
-      floor.updatePosition(const Offset(0, -constants.arrowH));
+      arrow.updatePosition(const Offset(0, -constants.arrowH),
+          milliseconds: 200);
+      floor.updatePosition(const Offset(0, -constants.arrowH),
+          milliseconds: 200);
     }
 
     arrow.animate(1.0);

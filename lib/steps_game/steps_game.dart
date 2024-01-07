@@ -77,7 +77,8 @@ class _ScrollListener extends StatelessWidget {
     return Listener(
         onPointerSignal: (event) {
           if (event is PointerScrollEvent && hoverKepper != null) {
-            bloc.add(StepsTrigEventScroll(hoverKepper!, event.scrollDelta.dy));
+            bloc.add(
+                StepsTrigEventScrollFloor(hoverKepper!, event.scrollDelta.dy));
           }
         },
         child: child);

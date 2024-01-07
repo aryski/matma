@@ -8,13 +8,13 @@ extension ArrowInsertor on StepsGameBloc {
       QuestsBloc questsBloc) async {
     var item = state.getItem(event.id);
     if (item is ArrowCubit) {
-      state.updateStepHgt(
+      updateStepHgt(
           item: item,
           delta: constants.arrowReleasedHgt - constants.arrowClickedHgt,
           milliseconds: 200);
       await Future.delayed(const Duration(milliseconds: 200));
 
-      var newStep = _insertStep(item, item.state.direction);
+      var newStep = _insertStep(item, item.state.direction, 200);
       _replaceStep(state.getStep(item), item.state.direction);
       emit(state.copy());
       await Future.delayed(const Duration(milliseconds: 20));
@@ -25,13 +25,13 @@ extension ArrowInsertor on StepsGameBloc {
       } else {
         questsBloc.add(TrigEventInsertedDown());
       }
-      generateFillings();
+      generateFillings(200);
       emit(state.copy());
     }
   }
 
-  StepsGameDefaultItem _insertStep(
-      GameItemCubit<GameItemState> item, Direction dir) {
+  StepsGameStep _insertStep(
+      GameItemCubit<GameItemState> item, Direction dir, int milliseconds) {
     var pos =
         Offset(item.state.position.value.dx, item.state.position.value.dy);
     ArrowCubit arrow = generateArrow(
@@ -42,11 +42,11 @@ extension ArrowInsertor on StepsGameBloc {
     FloorCubit floor = generateFloor(
         direction: dir, position: pos, widthSize: constants.floorWMini);
     floor.updatePosition(
-      const Offset(constants.arrowW / 2, constants.arrowH) +
-          Offset(0, dir == Direction.up ? 0 : -constants.floorH),
-    );
+        const Offset(constants.arrowW / 2, constants.arrowH) +
+            Offset(0, dir == Direction.up ? 0 : -constants.floorH),
+        milliseconds: milliseconds);
 
-    var stepsDefault = StepsGameDefaultItem(arrow: arrow, floor: floor);
+    var stepsDefault = StepsGameStep(arrow: arrow, floor: floor);
     int? ind = state.getNumberIndexFromItem(item);
     var step = state.getStep(item);
     if (ind != null && step != null) {
@@ -56,10 +56,10 @@ extension ArrowInsertor on StepsGameBloc {
     return stepsDefault;
   }
 
-  void _replaceStep(StepsGameDefaultItem? step, Direction dir) {
+  void _replaceStep(StepsGameStep? step, Direction dir) {
     if (step != null) {
-      StepsGameDefaultItem? newStep;
-      newStep = StepsGameDefaultItem(
+      StepsGameStep? newStep;
+      newStep = StepsGameStep(
           arrow: generateArrow(
               position: step.arrow.state.position.value +
                   Offset(0, dir == Direction.up ? 0 : constants.arrowH),
@@ -69,11 +69,11 @@ extension ArrowInsertor on StepsGameBloc {
     }
   }
 
-  void _animateNewStep(StepsGameDefaultItem newStep, int milliseconds) {
+  void _animateNewStep(StepsGameStep newStep, int milliseconds) {
     newStep.arrow.animate(1);
     var delta = constants.floorWDef - constants.floorWMini;
     newStep.floor.updateSize(Offset(delta, 0), milliseconds: milliseconds);
-    state.updatePositionSince(
+    updatePositionSince(
         item: newStep.floor,
         offset: Offset(delta, 0),
         milliseconds: milliseconds);

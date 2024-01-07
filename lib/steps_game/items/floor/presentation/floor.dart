@@ -13,24 +13,37 @@ import 'package:matma/steps_game/items/floor/presentation/floor_painter.dart';
 
 Color _colorGen(BuildContext context, FloorState state, bool isHovered) {
   var color = Color.alphaBlend(
-      Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
-      Theme.of(context).colorScheme.background);
-  color = Theme.of(context).colorScheme.onSecondaryContainer;
-  color = Color.alphaBlend(
       Theme.of(context).colorScheme.onSecondaryContainer.withOpacity(0.8),
       Theme.of(context).colorScheme.background);
-  if (state.isLastInGame) {
+  if (state.colors.value == FloorColors.def) {
+    if (state.isLastInNumber) {
+      return isHovered ? darkenColor(color, 0.1) : darkenColor(color, 0.0);
+    } else if (state.direction == Direction.up) {
+      return isHovered ? darkenColor(darkGreen, 0.2) : darkGreen;
+    } else if (state.direction == Direction.down) {
+      return isHovered ? darkenColor(darkRed, 0.2) : darkRed;
+    } else {
+      return color;
+    }
+  } else if (state.colors.value == FloorColors.special) {
     return isHovered ? shadyDefYellow : defYellow;
-  } else if (state.isLastInNumber) {
-    return isHovered ? darkenColor(color, 0.1) : darkenColor(color, 0.0);
-  } else if (state.direction == Direction.up) {
-    return isHovered ? darkenColor(darkGreen, 0.2) : darkGreen;
-  } else if (state.direction == Direction.down) {
-    return isHovered ? darkenColor(darkRed, 0.2) : darkRed;
-  } else {
-    return color;
   }
+  return color;
 }
+
+// double _updateTime(FloorState state, bool isHovered) {
+//   if (state.isLastInGame) {
+//     return isHovered ? shadyDefYellow : defYellow;
+//   } else if (state.isLastInNumber) {
+//     return isHovered ? darkenColor(color, 0.1) : darkenColor(color, 0.0);
+//   } else if (state.direction == Direction.up) {
+//     return isHovered ? darkenColor(darkGreen, 0.2) : darkGreen;
+//   } else if (state.direction == Direction.down) {
+//     return isHovered ? darkenColor(darkRed, 0.2) : darkRed;
+//   } else {
+//     return color;
+//   }
+// }
 
 class Floor extends StatelessWidget {
   const Floor({super.key, required this.cubit});
@@ -50,10 +63,11 @@ class Floor extends StatelessWidget {
             child: LayoutBuilder(builder: (context, constrains) {
               var initColor = _colorGen(context, state, initialState.isHovered);
               var updatedColor = _colorGen(context, state, state.isHovered);
+
               return FloorGestureDetector(
                   id: state.id,
                   child: DefaultColorAnimationBuilder(
-                    duration: const Duration(milliseconds: 400),
+                    duration: Duration(milliseconds: state.colors.duration),
                     initial: initColor,
                     updated: updatedColor,
                     builder: (context, color, child) {
@@ -74,4 +88,3 @@ class Floor extends StatelessWidget {
     );
   }
 }
-  // bloc.add(StepsTrigEventScroll(hoverKepper!, event.scrollDelta.dy));

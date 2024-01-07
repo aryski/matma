@@ -26,7 +26,6 @@ Level getLevel4() {
             StepsGameOps.addOppositeArrow
           ],
           initNumbers: [2],
-          // withFixedEquation: [1, 1],
           firstTask: _taskA1,
         ),
         StepsGameData(
@@ -37,7 +36,6 @@ Level getLevel4() {
             StepsGameOps.addOppositeArrow
           ],
           initNumbers: [-3],
-          // withFixedEquation: [-1, -1, -1],
           firstTask: _taskB1,
         ),
         StepsGameData(allowedOps: [

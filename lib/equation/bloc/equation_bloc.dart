@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/equation/constants.dart' as constants;
@@ -35,7 +37,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
     on<EquationEventIncreaseNumber>((event, emit) {
       var item = state.getItem(event.ind);
       if (item != null) {
-        increment(item);
+        increment(item, 200);
         emit(state.copyWith());
       }
     });
@@ -43,14 +45,14 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
       var lItem = state.getItem(event.lInd);
       var rItem = state.getItem(event.rInd);
       if (lItem != null && rItem != null) {
-        join(lItem, rItem);
+        join(lItem, rItem, 200);
         emit(state.copyWith());
       }
     });
     on<EquationEventInsertNumber>(
       (event, emit) {
         if (state.items.isNotEmpty) {
-          insertNumberAfterItem(event.number, state.items.last);
+          insertNumberAfterItem(event.number, state.items.last, 200);
           emit(state.copyWith());
         }
       },
@@ -59,7 +61,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
       (event, emit) async {
         var item = state.getItem(event.ind);
         if (item != null) {
-          await split(item, event);
+          await split(item, event, 200);
         }
         emit(state.copyWith());
       },
@@ -68,7 +70,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
       var lItem = state.getItem(event.lInd);
       var rItem = state.getItem(event.rInd);
       if (lItem != null && rItem != null) {
-        reduce(lItem, rItem);
+        reduce(lItem, rItem, 200);
         emit(state.copyWith());
       }
     });

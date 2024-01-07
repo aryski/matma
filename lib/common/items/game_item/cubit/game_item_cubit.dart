@@ -7,7 +7,7 @@ class GameItemCubit<T extends GameItemState> extends Cubit<T> {
   GameItemCubit(super.initialState);
 
   Future<void> updatePosition(Offset delta,
-      {int delayInMillis = 0, int milliseconds = 200}) async {
+      {int delayInMillis = 0, required int milliseconds}) async {
     if (delayInMillis > 0) {
       await Future.delayed(Duration(milliseconds: delayInMillis));
     }
@@ -17,7 +17,7 @@ class GameItemCubit<T extends GameItemState> extends Cubit<T> {
   }
 
   Future<void> setOpacity(double opacity,
-      {int delayInMillis = 0, int milliseconds = 200}) async {
+      {int delayInMillis = 0, required int milliseconds}) async {
     if (delayInMillis > 0) {
       await Future.delayed(Duration(milliseconds: delayInMillis));
     }

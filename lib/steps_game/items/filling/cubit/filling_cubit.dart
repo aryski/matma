@@ -6,22 +6,29 @@ part 'filling_state.dart';
 class FillingCubit extends GameItemCubit<FillingState> {
   FillingCubit(super.initialState);
 
-  void animateToLeft() {
-    emit(state.copyWith(animProgress: -1));
+  void animateFoldLeft({required int duration}) {
+    emit(state.copyWith(
+        fold: AnimatedProp(value: FillingFold.left, duration: duration)));
   }
 
-  void animateToRight() {
-    emit(state.copyWith(animProgress: 1));
+  void animateFoldFull({required int duration}) {
+    emit(state.copyWith(
+        fold: AnimatedProp(value: FillingFold.full, duration: duration)));
   }
 
-  void animateToDef() {
-    emit(state.copyWith(animProgress: 0));
+  void animateFoldRight({required int duration}) {
+    emit(state.copyWith(
+        fold: AnimatedProp(value: FillingFold.right, duration: duration)));
   }
 
-  void resizeWidth(double delta) {
+  void animateFoldNone({required int duration}) {
+    emit(state.copyWith(
+        fold: AnimatedProp(value: FillingFold.none, duration: duration)));
+  }
+
+  void resizeWidth({required double delta, required int duration}) {
     emit(state.copyWith(
         size: AnimatedProp<Offset>(
-            value: state.size.value + Offset(delta, 0),
-            duration: state.size.duration)));
+            value: state.size.value + Offset(delta, 0), duration: duration)));
   }
 }

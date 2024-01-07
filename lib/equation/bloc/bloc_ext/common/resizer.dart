@@ -1,7 +1,8 @@
 part of 'package:matma/equation/bloc/equation_bloc.dart';
 
 extension Resizer on EquationBloc {
-  resize(NumberItem myItem, double delta, {bool sizeUpdate = true}) {
+  resize(NumberItem myItem, double delta,
+      {bool sizeUpdate = true, required int milliseconds}) {
     int? itemsInd;
     for (int i = 0; i < state.items.length; i++) {
       if (state.items[i] == myItem) {
@@ -12,10 +13,11 @@ extension Resizer on EquationBloc {
     if (itemsInd != null) {
       for (int j = 0; j < state.items.length; j++) {
         var dx = j > itemsInd ? delta / 2 : -delta / 2;
-        state.items[j].value.updatePosition(Offset(dx, 0));
+        state.items[j].value
+            .updatePosition(Offset(dx, 0), milliseconds: milliseconds);
         var sign = state.items[j].sign;
         if (sign != null) {
-          sign.updatePosition(Offset(dx, 0));
+          sign.updatePosition(Offset(dx, 0), milliseconds: milliseconds);
         }
       }
       if (sizeUpdate) {
@@ -25,13 +27,14 @@ extension Resizer on EquationBloc {
       for (var item in state.extraItems) {
         if (item is BoardCubit) {
           item.updateSize(offset: Offset(delta, 0));
-          item.updatePosition(Offset(-delta / 2, 0));
+          item.updatePosition(Offset(-delta / 2, 0),
+              milliseconds: milliseconds);
         }
       }
     }
   }
 
-  spread(NumberItem myItem, double delta) {
-    resize(myItem, delta, sizeUpdate: false);
+  spread(NumberItem myItem, double delta, int milliseconds) {
+    resize(myItem, delta, sizeUpdate: false, milliseconds: milliseconds);
   }
 }

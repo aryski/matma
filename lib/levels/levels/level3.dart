@@ -83,7 +83,9 @@ var _taskB2 = MiniQuest(prompts: [
 
 var _taskC1 = MiniQuest(
   prompts: [
-    NextPrompt(text: 'Znowu, klikaj strzałki hop hop.'),
+    NextPrompt(text: 'Znowu.', seconds: 1),
+    NextPrompt(text: 'Klikaj strzałki, aby pokolorować cyferki.', seconds: 6),
+    NextPrompt(text: 'Hop hop.'),
   ],
   choices: [
     Choice(

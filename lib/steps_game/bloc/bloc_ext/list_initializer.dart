@@ -7,7 +7,7 @@ extension Initializer on StepsGameBloc {
     var numbers = _generateNumbers(
         board.state.numbers, constants.initialLeft, constants.initialTop);
     state.numbers.addAll(numbers);
-    generateFillings();
+    generateFillings(200);
   }
 
   EquatorCubit _generateEquator(double currentTop) {
@@ -32,7 +32,7 @@ extension Initializer on StepsGameBloc {
     for (int j = 0; j < init.length; j++) {
       int number = init[j];
       int stepsCount = number.abs();
-      final List<StepsGameDefaultItem> steps = [];
+      final List<StepsGameStep> steps = [];
       for (int i = 0; i < stepsCount; i++) {
         var pos = Offset(currentLeft, currentTop);
         var isLastInNumber = i + 1 == stepsCount;
@@ -60,7 +60,7 @@ extension Initializer on StepsGameBloc {
     return result;
   }
 
-  StepsGameDefaultItem generateStep(Offset pos, bool isPos, double floorWidth) {
+  StepsGameStep generateStep(Offset pos, bool isPos, double floorWidth) {
     ArrowCubit arrow = generateArrow(
         position:
             pos + Offset(0, isPos ? 0 : (constants.arrowH + constants.floorH)),
@@ -71,7 +71,7 @@ extension Initializer on StepsGameBloc {
       position: pos +=
           Offset(constants.arrowW / 2, isPos ? 0 : 2 * constants.arrowH),
     );
-    return StepsGameDefaultItem(arrow: arrow, floor: floor);
+    return StepsGameStep(arrow: arrow, floor: floor);
   }
 }
 

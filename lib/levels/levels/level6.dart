@@ -51,7 +51,7 @@ Level getLevel6() {
 
 var _taskA1 = MiniQuest(
   prompts: [
-    NextPrompt(text: 'Wiesz, że 1-1 = 0?', seconds: 1.5),
+    NextPrompt(text: 'Wiesz, że 1 - 1 = 0?', seconds: 1.5),
     NextPrompt(text: 'Wykorzystamy to teraz.', seconds: 1.5),
     NextPrompt(
         text: 'Scrolluj szare pomiędzy zielonym i czerwonym.', seconds: 3),

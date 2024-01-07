@@ -51,7 +51,7 @@ var _taskA1 = MiniQuest(
     NextPrompt(text: 'Widzisz cyfrę?', seconds: 1.5),
     NextPrompt(text: 'Obserwuj cyfrę!', seconds: 1.5),
     NextPrompt(text: 'Zrób obrazek jak w tle.', seconds: 7),
-    NextPrompt(text: 'Trzy zielone obok siebie.')
+    NextPrompt(text: 'Trzy zielone strzałki obok siebie.')
   ],
   choices: [
     Choice(
@@ -67,8 +67,9 @@ var _taskA2 = MiniQuest(prompts: [
 
 var _taskB1 = MiniQuest(
   prompts: [
-    NextPrompt(text: 'Znowu zrób obrazek jak w tle.', seconds: 7),
-    NextPrompt(text: 'Trzy zielone obok siebie.')
+    NextPrompt(text: 'Znowu.', seconds: 1.5),
+    NextPrompt(text: 'Zrób obrazek taki jak w tle.', seconds: 1.5),
+    NextPrompt(text: 'Trzy zielone strzałki obok siebie.')
   ],
   choices: [
     Choice(
@@ -84,7 +85,8 @@ var _taskB2 = MiniQuest(prompts: [
 
 var _taskC1 = MiniQuest(
   prompts: [
-    NextPrompt(text: 'Znowu to samo, obserwuj górę'),
+    NextPrompt(text: 'Znowu to samo.', seconds: 2),
+    NextPrompt(text: 'Patrz na cyferki.'),
   ],
   choices: [
     Choice(

@@ -18,7 +18,8 @@ class PromptsCubit extends Cubit<PromptsState> {
       var newOpacity = (howManyLines - i - 1) / howManyLines;
       if (newOpacity < 0) newOpacity = 0;
       state.lines[i].setOpacity(newOpacity, milliseconds: 100);
-      state.lines[i].updatePosition(const Offset(0, lineHgt));
+      state.lines[i]
+          .updatePosition(const Offset(0, lineHgt), milliseconds: 200);
     }
     var newLine = LineCubit(LineState(
       text: text,
