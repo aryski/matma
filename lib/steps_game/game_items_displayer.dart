@@ -9,8 +9,6 @@ import 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 
 import 'package:matma/steps_game/items/arrow/cubit/arrow_cubit.dart';
 import 'package:matma/steps_game/items/arrow/presentation/arrow.dart';
-import 'package:matma/steps_game/items/brackets/cubit/bracket_cubit.dart';
-import 'package:matma/steps_game/items/brackets/presentation/bracket.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator.dart';
 import 'package:matma/steps_game/items/filling/cubit/filling_cubit.dart';
@@ -94,11 +92,6 @@ class GameItemsDisplayer extends StatelessWidget {
                       );
                     } else if (cubit is FillingCubit && state.showFilling) {
                       return Filling(
-                        cubit: cubit,
-                        key: cubit.state.id,
-                      );
-                    } else if (cubit is BracketCubit) {
-                      return Bracket(
                         cubit: cubit,
                         key: cubit.state.id,
                       );
