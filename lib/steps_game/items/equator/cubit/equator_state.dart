@@ -5,8 +5,7 @@ class EquatorState extends GameItemState {
       {required super.id,
       required super.position,
       required super.size,
-      required super.opacity,
-      required super.radius});
+      required super.opacity});
 
   @override
   EquatorState copyWith(
@@ -18,11 +17,9 @@ class EquatorState extends GameItemState {
       double? radius,
       double? animProgress}) {
     return EquatorState(
-      id: id ?? this.id,
-      position: position ?? this.position,
-      size: size ?? this.size,
-      opacity: opacity ?? this.opacity,
-      radius: radius ?? this.radius,
-    );
+        id: id ?? this.id,
+        position: position ?? this.position,
+        size: size ?? this.size,
+        opacity: opacity ?? this.opacity);
   }
 }

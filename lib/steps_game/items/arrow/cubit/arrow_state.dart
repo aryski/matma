@@ -14,7 +14,6 @@ class ArrowState extends GameItemState {
       super.isHovered,
       required super.opacity,
       required this.direction,
-      required super.radius,
       required this.animProgress});
 
   @override
@@ -32,7 +31,6 @@ class ArrowState extends GameItemState {
         size: size ?? this.size,
         isHovered: isHovered ?? this.isHovered,
         opacity: opacity ?? this.opacity,
-        radius: radius ?? this.radius,
         direction: direction,
         animProgress: animProgress ?? this.animProgress);
   }

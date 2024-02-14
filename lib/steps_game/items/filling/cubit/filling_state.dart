@@ -1,10 +1,12 @@
 part of 'filling_cubit.dart';
 
+enum FillingFold { left, none, right, full }
+
 class FillingState extends GameItemState {
   final int steps;
   final double stepWdt;
   final double stepHgt;
-  final double animProgress;
+  final AnimatedProp<FillingFold> fold;
   FillingState(
       {required this.stepWdt,
       required this.stepHgt,
@@ -14,8 +16,7 @@ class FillingState extends GameItemState {
       required super.size,
       required super.isHovered,
       required super.opacity,
-      required super.radius,
-      required this.animProgress});
+      required this.fold});
 
   @override
   FillingState copyWith({
@@ -26,7 +27,7 @@ class FillingState extends GameItemState {
     bool? isHovered,
     AnimatedProp<double>? opacity,
     double? radius,
-    double? animProgress,
+    AnimatedProp<FillingFold>? fold,
     double? stepWdt,
   }) {
     return FillingState(
@@ -37,9 +38,8 @@ class FillingState extends GameItemState {
       position: position ?? this.position,
       size: size ?? this.size,
       opacity: opacity ?? this.opacity,
-      radius: radius ?? this.radius,
       steps: steps ?? this.steps,
-      animProgress: animProgress ?? this.animProgress,
+      fold: fold ?? this.fold,
     );
   }
 }

@@ -7,7 +7,7 @@ class FloorCubit extends GameItemCubit<FloorState> {
   FloorCubit(super.initialState);
 
   Future<void> updateSize(Offset delta,
-      {int delayInMillis = 0, int milliseconds = 200}) async {
+      {int delayInMillis = 0, int millis = 200}) async {
     if (delayInMillis > 0) {
       await Future.delayed(Duration(milliseconds: delayInMillis));
     }
@@ -15,7 +15,7 @@ class FloorCubit extends GameItemCubit<FloorState> {
     emit(state.copyWith(
         size: AnimatedProp(
             value: state.size.value + Offset(delta.dx, delta.dy),
-            duration: milliseconds)));
+            millis: millis)));
   }
 
   void setLastInNumber() {
@@ -27,10 +27,16 @@ class FloorCubit extends GameItemCubit<FloorState> {
   }
 
   void setLastInGame() {
-    emit(state.copyWith(isLastInGame: true));
+    _setColors(FloorColors.special);
   }
 
   void setNotLastInGame() {
-    emit(state.copyWith(isLastInGame: false));
+    _setColors(FloorColors.def);
+  }
+
+  void _setColors(FloorColors color) {
+    emit(state.copyWith(
+        colors: AnimatedProp(
+            value: color, millis: color != state.colors.value ? 400 : 0)));
   }
 }

@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
 import 'package:matma/equation/items/sign/cubit/sign_cubit.dart';
-import 'package:matma/common/game_size.dart';
 
 class Sign extends StatelessWidget {
-  const Sign({super.key, required this.cubit, required this.gs});
+  const Sign({super.key, required this.cubit});
   final SignCubit cubit;
-  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +16,67 @@ class Sign extends StatelessWidget {
       child: BlocBuilder<SignCubit, SignState>(
         builder: (context, state) {
           return DefaultGameItemAnimations(
-            gs: gs,
+            halfWidthOffset: true,
+            halfHeightOffset: false,
             initialState: initialState,
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
-              return SizedBox(
-                width: constrains.maxWidth,
-                height: constrains.maxHeight,
-                child: Container(
-                  color: Colors.grey.withOpacity(0.0),
-                  child: Center(
-                    child: Text(
-                      state.value == Signs.addition ? "+" : "-",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: state.size.value.dx *
-                              gs.wUnit *
-                              MediaQuery.of(context).size.width),
-                    ),
-                  ),
-                ),
-              );
+              return AnimatedSwitcher(
+                  key: state.id,
+                  switchInCurve: Curves.ease,
+                  switchOutCurve: Curves.ease,
+                  transitionBuilder: (child, animation) {
+                    return RotationTransition(
+                      turns: animation,
+                      child: ScaleTransition(
+                        scale: animation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  duration: const Duration(milliseconds: 200),
+                  child: SizedBox(
+                      key: state.switcherKey,
+                      width: constrains.maxWidth,
+                      height: constrains.maxHeight,
+                      child: _SignDesign(state: state)));
             }),
           );
         },
+      ),
+    );
+  }
+}
+
+class _SignDesign extends StatelessWidget {
+  const _SignDesign({required this.state});
+  final SignState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.grey.withOpacity(0.0),
+      child: Center(
+        child: SizedBox(
+          height: 90.0,
+          child: Builder(builder: (context) {
+            return AspectRatio(
+              aspectRatio: state.value == Signs.addition
+                  ? 0.5
+                  : 0.4, // To make minus shorter
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Text(
+                  state.value == Signs.addition ? "+" : "−",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 75),
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

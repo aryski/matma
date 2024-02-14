@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:matma/common/colors.dart';
 import 'package:matma/common/items/animations/default_game_item_animations.dart';
-import 'package:matma/common/game_size.dart';
 import 'package:matma/steps_game/items/equator/cubit/equator_cubit.dart';
 import 'package:matma/steps_game/items/equator/presentation/equator_painter.dart';
 
 class Equator extends StatelessWidget {
-  const Equator({super.key, required this.cubit, required this.gs});
+  const Equator({super.key, required this.cubit});
   final EquatorCubit cubit;
-  final GameSize gs;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,6 @@ class Equator extends StatelessWidget {
           return DefaultGameItemAnimations(
             initialState: initialState,
             state: state,
-            gs: gs,
             child: LayoutBuilder(builder: (context, constrains) {
               return CustomPaint(
                 size: Size(
@@ -32,8 +28,8 @@ class Equator extends StatelessWidget {
                 painter: EquatorPainter(
                     constrains.maxWidth,
                     constrains.maxHeight,
-                    state.radius * gs.wUnit * MediaQuery.of(context).size.width,
-                    defaultEquator),
+                    constrains.maxHeight / 10,
+                    Theme.of(context).colorScheme.secondaryContainer),
               );
             }),
           );

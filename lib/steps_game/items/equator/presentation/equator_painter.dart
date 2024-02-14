@@ -13,11 +13,11 @@ class EquatorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var path = Path();
-    for (int i = 0; i <= 79; i++) {
+    for (int i = 0; i <= 79 * 3; i++) {
       if (i.isEven) {
         path.addRRect(
           RRect.fromRectAndRadius(
-            Rect.fromLTWH(i * width / 79, 0, width / 79, height),
+            Rect.fromLTWH(i * width / (79 * 3), 0, width / (79 * 3), height),
             Radius.circular(radius),
           ),
         );

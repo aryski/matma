@@ -1,30 +1,35 @@
 part of 'steps_game_bloc.dart';
 
 @immutable
-sealed class StepsGameEvent {}
+sealed class StepsTrigEvent {}
 
-class StepsGameEventScroll extends StepsGameEvent {
+class StepsTrigEventScrollFloor extends StepsTrigEvent {
   final UniqueKey id;
   final double dy;
-  StepsGameEventScroll(this.id, this.dy);
+  StepsTrigEventScrollFloor(this.id, this.dy);
 }
 
-abstract class StepsGameEventClick extends StepsGameEvent {
+abstract class StepsTrigEventClickArrow extends StepsTrigEvent {
   final UniqueKey id;
   final DateTime time;
 
-  StepsGameEventClick({required this.id, required this.time});
+  StepsTrigEventClickArrow({required this.id, required this.time});
 }
 
-class StepsGameEventClickUp extends StepsGameEventClick {
-  StepsGameEventClickUp({required super.id, required super.time});
+class StepsTrigEventClickUpArrow extends StepsTrigEventClickArrow {
+  StepsTrigEventClickUpArrow({required super.id, required super.time});
 }
 
-class StepsGameEventClickDown extends StepsGameEventClick {
-  StepsGameEventClickDown({required super.id, required super.time});
+class StepsTrigEventClickDownArrow extends StepsTrigEventClickArrow {
+  StepsTrigEventClickDownArrow({required super.id, required super.time});
 }
 
-class StepsGameEventPopFilling extends StepsGameEvent {
+class StepsTrigEventClickFilling extends StepsTrigEvent {
   final UniqueKey id;
-  StepsGameEventPopFilling({required this.id});
+  StepsTrigEventClickFilling({required this.id});
+}
+
+class StepsTrigEventClickFloor extends StepsTrigEvent {
+  final UniqueKey id;
+  StepsTrigEventClickFloor({required this.id});
 }

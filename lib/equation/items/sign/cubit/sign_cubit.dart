@@ -5,4 +5,8 @@ part 'sign_state.dart';
 
 class SignCubit extends GameItemCubit<SignState> {
   SignCubit(super.initialState);
+  void refreshSwitcherKey() async {
+    await Future.delayed(const Duration(milliseconds: 20));
+    emit(state.copyWith(switcherKey: UniqueKey()));
+  }
 }

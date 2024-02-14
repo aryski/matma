@@ -5,26 +5,27 @@ class NextButton extends StatelessWidget {
   const NextButton({
     super.key,
     required this.next,
+    required this.sideWidth,
   });
   static const text = "Następny";
-
+  final double sideWidth;
   final Widget? next;
 
   @override
   Widget build(BuildContext context) {
-    return SquareButton(
-      width: 200,
-      height: 200,
-      unlocked: true,
-      onTap: () {
-        if (next != null) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => next!));
-        }
-      },
-      minature: const Icon(Icons.keyboard_double_arrow_right_rounded),
-      text: text,
-      textColor: Colors.black87,
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: SquareButton(
+        sideWidth: sideWidth,
+        onTap: () {
+          if (next != null) {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => next!));
+          }
+        },
+        minature: const Icon(Icons.keyboard_double_arrow_right_rounded),
+        text: text,
+      ),
     );
   }
 }

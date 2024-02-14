@@ -14,11 +14,10 @@ class FillingGestureDetector extends StatelessWidget {
     var bloc = context.read<StepsGameBloc>();
     return Listener(
       onPointerDown: (event) {
-        bloc.add(StepsGameEventPopFilling(id: id));
+        bloc.add(StepsTrigEventClickFilling(id: id));
       },
       behavior: HitTestBehavior.deferToChild,
       child: MouseRegion(
-        // hitTestBehavior: HitTestBehavior.deferToChild,
         onEnter: (event) {
           hoverKepper = id;
           context.read<FillingCubit>().hoverStart();
@@ -31,30 +30,4 @@ class FillingGestureDetector extends StatelessWidget {
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   var bloc = context.read<StepsGameBloc>();
-  //   var id = context.read<ArrowCubit>().state.id;
-
-  //   return Listener(
-  //     onPointerDown: (event) =>
-  //         bloc.add(StepsGameEventClickDown(id: id, time: DateTime.timestamp())),
-  //     onPointerUp: (event) =>
-  //         bloc.add(StepsGameEventClickUp(id: id, time: DateTime.timestamp())),
-  //     behavior: HitTestBehavior.deferToChild,
-  //     child: MouseRegion(
-  //       hitTestBehavior: HitTestBehavior.deferToChild,
-  //       onEnter: (event) {
-  //         hoverKepper = id;
-  //         context.read<ArrowCubit>().hoverStart();
-  //       },
-  //       onExit: (event) {
-  //         hoverKepper = null;
-  //         context.read<ArrowCubit>().hoverEnd();
-  //       },
-  //       child: child,
-  //     ),
-  //   );
-  // }
 }

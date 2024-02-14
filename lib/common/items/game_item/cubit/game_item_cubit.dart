@@ -6,23 +6,23 @@ import 'package:matma/common/items/game_item/cubit/game_item_state.dart';
 class GameItemCubit<T extends GameItemState> extends Cubit<T> {
   GameItemCubit(super.initialState);
 
-  void updatePosition(Offset delta,
-      {int delayInMillis = 0, int milliseconds = 200}) async {
+  Future<void> updatePosition(Offset delta,
+      {int delayInMillis = 0, required int millis}) async {
     if (delayInMillis > 0) {
       await Future.delayed(Duration(milliseconds: delayInMillis));
     }
     emit(state.copyWith(
         position: AnimatedProp(
-            duration: milliseconds, value: state.position.value + delta)) as T);
+            millis: millis, value: state.position.value + delta)) as T);
   }
 
-  void setOpacity(double opacity,
-      {int delayInMillis = 0, int milliseconds = 200}) async {
+  Future<void> setOpacity(double opacity,
+      {int delayInMillis = 0, required int millis}) async {
     if (delayInMillis > 0) {
       await Future.delayed(Duration(milliseconds: delayInMillis));
     }
-    emit(state.copyWith(
-        opacity: AnimatedProp(duration: milliseconds, value: opacity)) as T);
+    emit(state.copyWith(opacity: AnimatedProp(millis: millis, value: opacity))
+        as T);
   }
 
   void hoverStart() {

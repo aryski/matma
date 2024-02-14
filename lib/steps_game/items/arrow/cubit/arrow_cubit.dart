@@ -6,11 +6,10 @@ import 'package:matma/common/items/game_item/cubit/game_item_cubit.dart';
 class ArrowCubit extends GameItemCubit<ArrowState> {
   ArrowCubit(super.initialState);
 
-  void updateHeight(double delta, int milliseconds) {
+  void updateHeight(double delta, int millis) {
     emit(state.copyWith(
         size: AnimatedProp(
-            value: state.size.value + Offset(0, delta),
-            duration: milliseconds)));
+            value: state.size.value + Offset(0, delta), millis: millis)));
   }
 
   void animate(double i) {

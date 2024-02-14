@@ -1,14 +1,20 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:matma/prompts/task.dart';
+import 'package:matma/quest/items/mini_quest.dart';
 
 part 'level_state.dart';
 
 class LevelData {
+  final int ind;
   final String name;
+  final IconData icon;
   final List<GameData> gamesData;
 
-  LevelData({required this.name, required this.gamesData});
+  LevelData(
+      {required this.icon,
+      required this.ind,
+      required this.name,
+      required this.gamesData});
 }
 
 class LevelCubit extends Cubit<LevelState> {
@@ -28,8 +34,6 @@ class LevelCubit extends Cubit<LevelState> {
           return;
         }
       }
-    }
-    if (currentState is LevelGameState) {
       emit(LevelGameEndState(currentState));
     }
   }
@@ -39,7 +43,7 @@ class LevelCubit extends Cubit<LevelState> {
     var gamesData = levelData.gamesData;
     if (currentState is LevelGameState) {
       for (int i = 0; i < gamesData.length; i++) {
-        if (gamesData[i] == currentState.gameData && i < gamesData.length) {
+        if (gamesData[i] == currentState.gameData) {
           emit(LevelGameState(UniqueKey(),
               startTime: DateTime.now(), gameData: gamesData[i]));
           return;

@@ -4,11 +4,10 @@ part of 'equation_bloc.dart';
 sealed class EquationEvent {}
 
 class EquationEventNumbersReduction extends EquationEvent {
-  final int indLeft;
-  final int indRight;
+  final int lInd;
+  final int rInd;
 
-  EquationEventNumbersReduction(
-      {required this.indLeft, required this.indRight});
+  EquationEventNumbersReduction({required this.lInd, required this.rInd});
 }
 
 class EquationEventIncreaseNumber extends EquationEvent {
@@ -17,24 +16,24 @@ class EquationEventIncreaseNumber extends EquationEvent {
   EquationEventIncreaseNumber({required this.ind});
 }
 
-class EquationEventAddNumber extends EquationEvent {
-  final int value;
+class EquationEventInsertNumber extends EquationEvent {
+  final int number;
 
-  EquationEventAddNumber({required this.value});
+  EquationEventInsertNumber({required this.number});
 }
 
 class EquationEventSplitNumber extends EquationEvent {
   final int ind;
-  final int leftValue;
-  final int rightValue;
+  final int lNumber;
+  final int rNumber;
 
   EquationEventSplitNumber(
-      {required this.ind, required this.leftValue, required this.rightValue});
+      {required this.ind, required this.lNumber, required this.rNumber});
 }
 
 class EquationEventJoinNumbers extends EquationEvent {
-  final int leftInd;
-  final int rightInd;
+  final int lInd;
+  final int rInd;
 
-  EquationEventJoinNumbers({required this.leftInd, required this.rightInd});
+  EquationEventJoinNumbers({required this.lInd, required this.rInd});
 }
