@@ -34,7 +34,12 @@ class StepsGameState {
   final List<StepsGameNumberState> numbers;
   final Map<UniqueKey, GameItemCubit> unorderedItems;
 
-  StepsGameState({required this.numbers, required this.unorderedItems});
+  bool showFilling;
+
+  StepsGameState(
+      {required this.showFilling,
+      required this.numbers,
+      required this.unorderedItems});
 
   GameItemCubit? getItem(UniqueKey id) {
     for (var number in numbers) {
@@ -67,6 +72,8 @@ class StepsGameState {
 
   StepsGameState copy() {
     return StepsGameState(
-        numbers: [...numbers], unorderedItems: {...unorderedItems});
+        showFilling: showFilling,
+        numbers: [...numbers],
+        unorderedItems: {...unorderedItems});
   }
 }

@@ -9,7 +9,8 @@ extension ClickFillingHandler on StepsGameBloc {
         var number = state.getNumberFromItem(item);
         if (number != null && number.steps.isNotEmpty) {
           var floor = number.steps.last.floor;
-          await handleReduction(floor, -floor.state.size.value.dx, state, emit);
+          var width = floor.state.size.value.dx;
+          await handleReduction(floor, -width, state, emit);
         }
       }
     }

@@ -14,6 +14,7 @@ extension ScrollFloorHandler on StepsGameBloc {
           minW: areNeighboringArrowsOpposite(item, state)
               ? constants.floorWLarge
               : constants.floorWDef);
+      if (delta != 0) questsBloc.add(TrigEventScrolled());
       if (!state.isLastItem(item)) {
         if (areNeighboringArrowsOpposite(item, state) &&
             rawDelta < 0 &&

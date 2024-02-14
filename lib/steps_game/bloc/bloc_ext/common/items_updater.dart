@@ -4,17 +4,15 @@ extension ItemsUpdater on StepsGameBloc {
   void updatePositionSince(
       {required GameItemCubit item,
       required Offset offset,
-      bool fillingIncluded = true,
       required int millis}) {
-    bool update = false;
+    bool hasItemBeenReached = false;
     for (var number in state.numbers) {
-      if (!fillingIncluded) {
-        if (update && number.filling != null) {
-          number.filling?.updatePosition(offset, millis: millis);
-        }
-      }
+      //TODO breaks on level 6
+      // if (!fillingIncluded && hasItemBeenReached) {
+      //   number.filling?.updatePosition(offset, millis: millis);
+      // }
       for (var step in number.steps) {
-        if (update) {
+        if (hasItemBeenReached) {
           step.arrow.updatePosition(offset, millis: millis);
           step.floor.updatePosition(offset, millis: millis);
         }
@@ -23,12 +21,15 @@ extension ItemsUpdater on StepsGameBloc {
           if ((step.arrow == item)) {
             step.floor.updatePosition(offset, millis: millis);
           }
-          update = true;
+          hasItemBeenReached = true;
         }
       }
-      if (fillingIncluded && update && number.filling != null) {
+      if (hasItemBeenReached) {
         number.filling?.updatePosition(offset, millis: millis);
       }
+      // if (fillingIncluded && hasItemBeenReached) {
+      //   number.filling?.updatePosition(offset, millis: millis);
+      // }
     }
   }
 

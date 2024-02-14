@@ -75,11 +75,11 @@ extension ReductionHandler on StepsGameBloc {
       e.setOpacity(0, millis: millis);
     }
     var delta = -floor.state.size.value.dx;
-    floor.updateSize(Offset(delta + constants.arrowW / 4, 0), millis: millis);
+    floor.updateSize(Offset(delta + constants.arrowEndToCore, 0),
+        millis: millis);
     updatePositionSince(
         item: floor,
-        offset: Offset(delta + constants.arrowW / 4, 0),
-        fillingIncluded: false,
+        offset: Offset(delta + constants.arrowEndToCore, 0),
         millis: millis);
   }
 
@@ -98,26 +98,22 @@ extension ReductionHandler on StepsGameBloc {
       StepsGameStep step, int millis) {
     rightStep.floor.setLastInNumber();
     leftStep?.floor.setLastInNumber();
-    var inheritedWidth = 0.0;
-    inheritedWidth = rightStep.floor.state.size.value.dx -
-        constants.arrowW / 2 +
-        constants.arrowW / 4;
+    var rightStepWdt = rightStep.floor.state.size.value.dx;
+    var inheritedWid =
+        rightStepWdt - constants.arrowW / 2 + constants.arrowEndToCore;
 
     if (leftStep != null && !state.isLastItem(rightStep.floor)) {
-      leftStep.floor.updateSize(Offset(inheritedWidth, 0), millis: millis);
+      leftStep.floor.updateSize(Offset(inheritedWid, 0), millis: millis);
     }
     if (state.isFirstStep(step)) {
       updatePositionSince(
-          item: rightStep.floor,
-          offset: Offset(
-              -rightStep.floor.state.size.value.dx + 1 / 2 * constants.arrowW,
-              0),
-          millis: millis);
+        item: rightStep.floor,
+        offset: Offset(-rightStepWdt + constants.arrowW / 2, 0),
+        millis: millis,
+      );
     }
     if (leftStep == null) {
-      rightStep.floor.updateSize(
-          Offset(-rightStep.floor.state.size.value.dx, 0),
-          millis: millis);
+      rightStep.floor.updateSize(Offset(-rightStepWdt, 0), millis: millis);
     }
 
     rightStep.floor.setOpacity(0, delayInMillis: millis, millis: 0);

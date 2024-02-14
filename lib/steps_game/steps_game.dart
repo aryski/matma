@@ -203,7 +203,7 @@ class RawStepsGame extends StatelessWidget {
                         cubit: cubit,
                         key: cubit.state.id,
                       );
-                    } else if (cubit is FillingCubit) {
+                    } else if (cubit is FillingCubit && state.showFilling) {
                       return Filling(
                         cubit: cubit,
                         key: cubit.state.id,
@@ -218,12 +218,14 @@ class RawStepsGame extends StatelessWidget {
                     }
                   },
                 ),
-                ...items.whereType<FillingCubit>().map(
-                      (cubit) => Filling(
-                        cubit: cubit,
-                        key: cubit.state.id,
-                      ),
-                    ),
+                ...items.whereType<FillingCubit>().map((cubit) {
+                  return state.showFilling
+                      ? Filling(
+                          cubit: cubit,
+                          key: cubit.state.id,
+                        )
+                      : const SizedBox.shrink();
+                }),
                 ...items.whereType<FloorCubit>().map(
                       (cubit) => Floor(
                         cubit: cubit,

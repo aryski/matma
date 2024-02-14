@@ -3,8 +3,6 @@ part of 'package:matma/steps_game/bloc/steps_game_bloc.dart';
 extension JoinHandler on StepsGameBloc {
   void handleJoin(FloorCubit item, double delta, StepsGameState state,
       Emitter<StepsGameState> emit, int millis) {
-    print("JOIN");
-
     var numberInd = state.getNumberIndexFromItem(item);
     if (numberInd == null) return;
     var nextNumberInd = numberInd + 1;

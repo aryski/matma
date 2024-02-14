@@ -44,7 +44,11 @@ class StepsGameBloc extends Bloc<StepsTrigEvent, StepsGameState> {
   final QuestsBloc questsBloc;
   @override
   StepsGameBloc(this.board, this.questsBloc, this.allowedOps)
-      : super(StepsGameState(numbers: [], unorderedItems: {})) {
+      : super(StepsGameState(
+            showFilling:
+                allowedOps.contains(StepsGameOps.reducingArrowsCascadedly),
+            numbers: [],
+            unorderedItems: {})) {
     initializeSimulationItems();
 
     on<StepsTrigEventScrollFloor>((event, emit) async {
