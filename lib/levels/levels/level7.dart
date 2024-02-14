@@ -55,8 +55,7 @@ var _taskA1 = MiniQuest(
   prompts: [
     NextPrompt(text: 'Zamień 4 - 3 w 1 + 3 - 3', seconds: 3),
     NextPrompt(text: 'Podziel 4 na 1 + 3 scrollem.', seconds: 3),
-    NextPrompt(text: 'Ma powstać 1 + 3 - 3', seconds: 5),
-    NextPrompt(text: 'Podziel 4 na 1 + 3 scrollem.'),
+    NextPrompt(text: 'Ma powstać 1 + 3 - 3'),
   ],
   choices: [
     Choice(
