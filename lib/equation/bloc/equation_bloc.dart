@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:matma/equation/constants.dart' as constants;
@@ -29,10 +27,7 @@ class EquationBloc extends Bloc<EquationEvent, EquationState> {
   final List<int>? targetValues; //if not null then Equation is fixed
 
   EquationBloc(
-      {required this.init,
-      required List<int> initNumbers,
-      this.targetValues,
-      required int wUnits})
+      {required this.init, required List<int> initNumbers, this.targetValues})
       : super(Resetter.generateState(initNumbers, targetValues)) {
     on<EquationEventIncreaseNumber>((event, emit) {
       var item = state.getItem(event.ind);

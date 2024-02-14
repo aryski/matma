@@ -6,7 +6,6 @@ class FillingState extends GameItemState {
   final int steps;
   final double stepWdt;
   final double stepHgt;
-  // final double animProgress;
   final AnimatedProp<FillingFold> fold;
   FillingState(
       {required this.stepWdt,

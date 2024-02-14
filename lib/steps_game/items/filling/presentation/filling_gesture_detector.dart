@@ -18,7 +18,6 @@ class FillingGestureDetector extends StatelessWidget {
       },
       behavior: HitTestBehavior.deferToChild,
       child: MouseRegion(
-        // hitTestBehavior: HitTestBehavior.deferToChild,
         onEnter: (event) {
           hoverKepper = id;
           context.read<FillingCubit>().hoverStart();
@@ -31,30 +30,4 @@ class FillingGestureDetector extends StatelessWidget {
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   var bloc = context.read<StepsGameBloc>();
-  //   var id = context.read<ArrowCubit>().state.id;
-
-  //   return Listener(
-  //     onPointerDown: (event) =>
-  //         bloc.add(StepsTrigEventClickDown(id: id, time: DateTime.timestamp())),
-  //     onPointerUp: (event) =>
-  //         bloc.add(StepsTrigEventClickUp(id: id, time: DateTime.timestamp())),
-  //     behavior: HitTestBehavior.deferToChild,
-  //     child: MouseRegion(
-  //       hitTestBehavior: HitTestBehavior.deferToChild,
-  //       onEnter: (event) {
-  //         hoverKepper = id;
-  //         context.read<ArrowCubit>().hoverStart();
-  //       },
-  //       onExit: (event) {
-  //         hoverKepper = null;
-  //         context.read<ArrowCubit>().hoverEnd();
-  //       },
-  //       child: child,
-  //     ),
-  //   );
-  // }
 }

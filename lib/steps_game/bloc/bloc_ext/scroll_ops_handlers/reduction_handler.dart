@@ -80,7 +80,8 @@ extension ReductionHandler on StepsGameBloc {
     updatePositionSince(
         item: floor,
         offset: Offset(delta + constants.arrowEndToCore, 0),
-        millis: millis);
+        millis: millis,
+        withLeadingFilling: false);
   }
 
   Future<void> _performReduction(FloorCubit floor, StepsGameStep step,

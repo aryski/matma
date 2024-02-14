@@ -8,8 +8,6 @@ import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 4
 // Splitting numbers.
-//Zadanie 4
-//Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
 Level getLevel4() {
   return Level(
     next: getLevel5(),
@@ -104,8 +102,7 @@ var _taskC1 = MiniQuest(
     NextPrompt(text: 'Narób dużo strzałek', seconds: 1.5),
     NextPrompt(text: 'Ale, mają się zgadzać z górą', seconds: 5),
     NextPrompt(text: 'Ma powstać 1 + 1 + 1 - 1 - 1 - 1.', seconds: 5),
-    NextPrompt(
-        text: 'Scrolluj szare, żółte, klikaj co się da, w końcu się uda.'),
+    NextPrompt(text: 'Scrolluj podłogi, klikaj co się da, w końcu się uda.'),
   ],
   choices: [
     Choice(

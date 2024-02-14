@@ -8,9 +8,6 @@ import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 5
 // Joining numbers.
-//Zadanie 4
-//Rozbijanie 2 na 1+1, rozbijanie -3 na -1,-1,-1, rozbijanie 3-3 na 1 + 1 + 1 - 1 - 1 -1
-//błąd w steps game blocu z łączeniem jak jest -1,-1,-1 i pierwsze dwie laczymy wychodzi 3-3 xD
 Level getLevel5() {
   return Level(
     next: getLevel6(),

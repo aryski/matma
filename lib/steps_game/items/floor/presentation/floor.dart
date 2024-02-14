@@ -31,20 +31,6 @@ Color _colorGen(BuildContext context, FloorState state, bool isHovered) {
   return color;
 }
 
-// double _updateTime(FloorState state, bool isHovered) {
-//   if (state.isLastInGame) {
-//     return isHovered ? shadyDefYellow : defYellow;
-//   } else if (state.isLastInNumber) {
-//     return isHovered ? darkenColor(color, 0.1) : darkenColor(color, 0.0);
-//   } else if (state.direction == Direction.up) {
-//     return isHovered ? darkenColor(darkGreen, 0.2) : darkGreen;
-//   } else if (state.direction == Direction.down) {
-//     return isHovered ? darkenColor(darkRed, 0.2) : darkRed;
-//   } else {
-//     return color;
-//   }
-// }
-
 class Floor extends StatelessWidget {
   const Floor({super.key, required this.cubit});
   final FloorCubit cubit;

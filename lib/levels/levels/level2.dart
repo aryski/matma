@@ -8,7 +8,6 @@ import 'package:matma/quest/items/mini_quest.dart';
 
 // Level 2
 // Matching steps to shaded fixed steps, with above equation.
-// TODO maybe better "in" animation of the equation.
 Level getLevel2() {
   return Level(
     next: getLevel3(),

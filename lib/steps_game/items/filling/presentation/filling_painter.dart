@@ -65,7 +65,7 @@ class FillingPainter extends CustomPainter {
             degress,
             top);
         left = left + stepWdt;
-        top += stepHgt; //
+        top += stepHgt;
         rectWidth -= stepWdt * 2;
       }
     }

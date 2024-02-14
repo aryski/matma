@@ -18,7 +18,6 @@ class FloorGestureDetector extends StatelessWidget {
       onPointerUp: (event) => bloc.add(StepsTrigEventClickFloor(id: id)),
       behavior: HitTestBehavior.deferToChild,
       child: MouseRegion(
-        // hitTestBehavior: HitTestBehavior.deferToChild,
         onEnter: (event) {
           hoverKepper = id;
           context.read<FloorCubit>().hoverStart();

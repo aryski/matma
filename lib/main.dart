@@ -11,13 +11,6 @@ import 'package:matma/global_cubits/theme_mode_cubit.dart';
 import 'package:matma/menu/menu.dart';
 
 void main() async {
-  //TODO dodatkowe tabele z liczbami reprezentjące liczby tuż nad strzałkami
-  //zredukowac powtarzalny kod
-  //A można jeszcze dorzucic do TASK, informacje ile czasu zajęło userowi to,
-  //i jeżeli dłużej to dać ifa, który decyduje też w zależności od eventu,
-  //ale też w zależności od czasu do jakiego kolejnego taska trzeba przejść.
-  //wykombinuje jak bardzo rozwlekać poziomy w zależności od tego jak SZYBKO ktoś rozumie.
-  //Tak, aby każdy poziom się wydłużał dopóki ktoś nie będzie odpowiednio szybko kapował o co biega.
   Bloc.transformer = sequential();
   await Hive.initFlutter();
   await Hive.openBox<bool>('levels');

@@ -25,7 +25,6 @@ class Filling extends StatelessWidget {
             initialState: initialState,
             state: state,
             child: LayoutBuilder(builder: (context, constrains) {
-              // print("CONSTRAINS1:  ${constrains.maxWidth}");
               return DefaultTweenAnimationBuilder(
                   duration: Duration(milliseconds: state.fold.millis),
                   initial:
@@ -38,7 +37,6 @@ class Filling extends StatelessWidget {
                         updated: state.size.value.dx,
                         builder: (context, dx, child) {
                           return LayoutBuilder(builder: (context, constrains) {
-                            // print("CONSTRAINS2:  ${constrains.maxWidth}");
                             return FillingGestureDetector(
                                 id: state.id,
                                 child: DefaultColorAnimationBuilder(
